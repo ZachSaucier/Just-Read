@@ -33,7 +33,7 @@ If you want to customize the stylesheet or add and use your own, you can right c
 
 You can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. 
 
-###S Description of files:
+### Description of files:
 
 - `manifest.json`: The primary setup file for the Chrome extension. It sets everything up the way we need it to be.
 - `background.js`: Listens for the Just Read extension to be clicked and toggles the "on" badge.
