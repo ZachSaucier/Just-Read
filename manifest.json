@@ -1,0 +1,40 @@
+{
+  "name": "Just Read",
+  "version": "0.0.1",
+  "default_locale": "en",
+  "manifest_version": 2,
+  "description": "An attractive article formatter for readability. Essentially a pretty read mode.",
+  "homepage_url": "http://zachsaucier.com/",
+  "offline_enabled": true,
+
+  "browser_action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "Just Read"
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "background": {
+        "scripts": [
+          "background.js"
+        ]
+    },
+  
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*",
+    "storage"
+  ],
+
+  "web_accessible_resources": [
+    "required-styles.css",
+    "default-styles.css",
+    "page.css",
+    "options.js",
+    "options.css"
+  ],
+  "options_page": "options.html"
+}

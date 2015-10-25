@@ -1,0 +1,42 @@
+.simple-container {
+	max-width: 600px;
+	margin: 0 auto;
+	padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+.simple-close {
+	position: fixed;
+	top: 10px;
+    right: 8px;
+    font-size: 25px;
+
+    background: none;
+    border: 1px solid lightgrey;
+    color: lightgrey;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+.simple-close:hover {
+	border: 1px solid black;
+    color: black;
+}
+
+.simple-ext-info {
+	text-align: center;
+}
+
+@media (max-width: 750px) {
+	.simple-container {
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+}
+
+@media (max-width: 450px) {
+	.simple-container {
+		padding-top: 30px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}

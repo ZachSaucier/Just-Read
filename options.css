@@ -1,0 +1,78 @@
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+html, body, .flex-container, .editor,
+#css-editor { 
+	height: 100%; 
+}
+body {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding-top: 30px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 20px;
+}
+h1 {
+	border-bottom: 1px solid #d8d8d8;
+	padding-bottom: 13px;
+}
+h1 i {
+	color: #27AAE1;
+}
+.flex-container {
+	display: flex;
+	flex-direction: row;
+}
+body, .editor-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.stylesheet-list-container {
+	max-width: 250px;
+	margin-right: 50px;
+	border: 1px solid;
+	padding: 8px;
+}
+.stylesheets {
+	padding-left: 16px;
+}
+.stylesheets li {
+	cursor: pointer;
+}
+.stylesheets .active {
+	background: lightblue;
+}
+
+.controls-container {
+	margin-bottom: 10px;
+}
+.editor-container, .editor {
+	flex-grow: 2;
+}
+
+/* Work around for Chrome */
+.editor { position: relative; }
+#css-editor { position:absolute; }
+
+
+#css-editor {
+	width: 100%;
+	resize: none;
+}
+
+@media (max-width: 600px) {
+	body {
+		padding-top: 0px;
+	}
+	
+	.flex-container {
+		flex-direction: column;
+	}
+
+	.stylesheet-list-container {
+		margin-bottom: 10px;
+	}
+}

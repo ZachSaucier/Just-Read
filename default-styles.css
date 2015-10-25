@@ -1,0 +1,129 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700,600);
+@import url(https://fonts.googleapis.com/css?family=Merriweather:400,300,700);
+
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Merriweather', serif;
+}
+
+.simple-container {
+	max-width: 600px;
+	margin: 0 auto;
+	padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+p {
+	color: #282828;
+	font-weight: 300; /* Light */
+	font-size: 16px;
+	line-height: 28px;
+}
+
+h1,
+h2 {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 700; /* Bold */
+	color: #292929;
+}
+
+h1 {
+	font-size: 30px;
+	line-height: 34px;
+}
+
+h2 {
+	font-size: 20px;
+	line-height: 25px;
+}
+
+h3 {
+	font-family: 'Merriweather', serif;
+	font-size: 16px;
+	color: #292929;
+	line-height: 27px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #D8D8D8;
+	border-top: 1px solid #D8D8D8;
+}
+
+hr {
+	height:1px;
+	background-color: #d8d8d8;
+	border:none;
+	width:100%;
+	margin: 0px;
+}
+
+a {
+	color: #27AAE1;
+}
+
+a:hover {
+    color: #4ECAFF;
+}
+
+.simple-date {
+	display: inline-block;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 300;
+	font-size: 18px;
+	color: #292929;
+	padding-right: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-right: 1px solid #d8d8d8;
+}
+
+.simple-author {
+	display: inline-block;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 600; /* Semi-bold */
+	font-size: 18px;
+	color: #27AAE1;
+	line-height: 22px;
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.simple-close {
+	position: fixed;
+	top: 10px;
+    right: 8px;
+    font-size: 25px;
+
+    background: none;
+    border: 1px solid lightgrey;
+    color: lightgrey;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+.simple-close:hover {
+	border: 1px solid black;
+    color: black;
+}
+
+.simple-ext-info {
+	text-align: center;
+}
+
+@media (max-width: 750px) {
+	.simple-container {
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+}
+
+@media (max-width: 450px) {
+	.simple-container {
+		padding-top: 30px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
