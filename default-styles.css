@@ -14,7 +14,7 @@ body {
 	max-width: 600px;
 	margin: 0 auto;
 	padding-top: 70px;
-    padding-bottom: 20px;
+	padding-bottom: 20px;
 }
 
 p {
@@ -68,6 +68,10 @@ a:hover {
     color: #4ECAFF;
 }
 
+img {
+	max-width: 100%;
+}
+
 .simple-date {
 	display: inline-block;
 	font-family: 'Source Sans Pro', sans-serif;
@@ -95,18 +99,18 @@ a:hover {
 .simple-close {
 	position: fixed;
 	top: 10px;
-    right: 8px;
-    font-size: 25px;
+	right: 8px;
+	font-size: 25px;
 
-    background: none;
-    border: 1px solid lightgrey;
-    color: lightgrey;
-    -webkit-transition: .3s;
-    transition: .3s;
+	background: none;
+	border: 1px solid lightgrey;
+	color: lightgrey;
+	-webkit-transition: .3s;
+	transition: .3s;
 }
 .simple-close:hover {
 	border: 1px solid black;
-    color: black;
+	color: black;
 }
 
 .simple-ext-info {

@@ -45,6 +45,13 @@ body, .editor-container {
 .stylesheets .active {
 	background: lightblue;
 }
+.stylesheets .used {
+	font-weight: bold;
+	font-style: italic;
+}
+.stylesheets .locked {
+	color: grey;
+}
 
 .controls-container {
 	margin-bottom: 10px;

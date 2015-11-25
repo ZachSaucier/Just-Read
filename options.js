@@ -1,7 +1,9 @@
 
 var changed = false,
 	stylesheetObj = {},
-	editor = document.getElementById("css-editor");
+	editor = document.getElementById("css-editor"),
+	defaultLiItem,
+	defaultStylesheet = "default-styles.css";
 
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
@@ -14,55 +16,75 @@ function confirmChange() {
 				return false;
 			else
 				return true;
-		return false;
 }
 
 function styleListOnClick() {
-	var cancel = confirmChange();
+	// Don't do anything if it's already active
+	if(!this.classList.contains("active")) {
+		// Make sure any changes are saved
+		var cancel = confirmChange();
+		
+		if(!cancel) {
+			// Switch out current CSS for the selected one
+			var fileName = this.textContent;
 
-	if(!cancel) {
-		// Switch out current CSS for the selected one
-		var fileName = this.textContent;
+			// Open up the file from localStorage
+			editor.value = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
 
-		// Open up the file from localStorage
-		editor.value = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
+			// Toggle the active class on the list items
+			if(document.querySelector(".stylesheets .active"))
+				document.querySelector(".stylesheets .active").classList.remove("active");
+			this.classList.add("active");
 
-		// Toggle the active class on the list items
-		document.querySelector(".stylesheets .active").classList.remove("active");
-		this.classList.add("active");
+			localStorage.currentTheme = fileName;
 
-		localStorage.currentTheme = fileName;
-
-		changed = false;
+			changed = false;
+		}
 	}
 };
 
 
 // The stuff to fire after the stylesheets have been loaded
 function continueLoading() {
-	// Based on that object, populate the list values
-	var list = document.querySelector(".stylesheets"),
-		count = 0;
-	for (var stylesheet in stylesheetObj) {
-		var li = document.createElement("li");
-		li.innerText = stylesheet;
+	// Get the currently used stylesheet
+	chrome.storage.sync.get('currentTheme', function(result) {
+		var currTheme = result.currentTheme;
 
-		// Make the first one active
-		if(count === 0) {
-			li.classList.add("active");
-			var fileName = li.textContent;
-			editor.value = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
+		// Based on that object, populate the list values
+		var list = document.querySelector(".stylesheets"),
+			count = 0;
+		for (var stylesheet in stylesheetObj) {
+			var li = document.createElement("li"),
+				liClassList = li.classList;
+			li.innerText = stylesheet;
+
+			// If the sheet is the one currently applied, add a signifier class
+			if(stylesheet === currTheme)
+				liClassList.add("used");
+
+			// Lock the default-styles.css file (prevent deletion)
+			if(stylesheet === defaultStylesheet) {
+				defaultLiItem = li;
+				liClassList.add("locked");
+			}
+
+			// Make the first one active
+			if(count === 0) {
+				liClassList.add("active");
+				var fileName = li.textContent;
+				editor.value = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
+			}
+
+			list.appendChild(li);
+
+			count++;
 		}
 
-		list.appendChild(li);
+		stylesheetListItems = document.querySelectorAll(".stylesheets li");
 
-		count++;
-	}
-
-	stylesheetListItems = document.querySelectorAll(".stylesheets li");
-
-	[].forEach.call(stylesheetListItems, function(item, i) {
-		item.onclick = styleListOnClick;
+		[].forEach.call(stylesheetListItems, function(item, i) {
+			item.onclick = styleListOnClick;
+		});
 	});
 }
 
@@ -73,11 +95,11 @@ function getStylesheets() {
 		if(isEmpty(result)) { // Not found, so we add our default	        
 	        // Open the default CSS file and save it to our object
 			var xhr = new XMLHttpRequest();
-			xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
+			xhr.open('GET', chrome.extension.getURL(defaultStylesheet), true);
 			xhr.onreadystatechange = function() {
 			    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 			    	// Save the file's contents to our object
-			        stylesheetObj["default-styles.css"] =  xhr.responseText;
+			        stylesheetObj[defaultStylesheet] =  xhr.responseText;
 
 			        // Save it to Chrome storage
 					chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
@@ -117,7 +139,14 @@ editor.onkeyup = function() {
 // Create a new file with the given name
 add.onclick = function() {
 	if(newFileInput.value !== "") {
-		var fileName = newFileInput.value.replace(/[^a-z0-9]/gi, '-').toLowerCase() + ".css";
+		var fileName = newFileInput.value;
+
+		// If it has .css at the end, remove it
+		if(fileName.slice(-4) === ".css")
+			fileName = fileName.slice(0, -4);
+
+		// Parse out the other stuff we don't want and add .css
+		fileName = fileName.replace(/[^a-z0-9]/gi, '-').toLowerCase() + ".css";
 
 		// Add a new list element
 		var list = document.querySelector(".stylesheets"),
@@ -162,8 +191,14 @@ useButton.onclick = function() {
 	// Save the current theme
 	saveTheme();
 
+	// Remove the used class from the old list item
+	document.querySelector(".stylesheets .used").classList.remove("used");
+
+	// Update the class to shop it's applied
+	document.querySelector(".stylesheets .active").classList.add("used");
+
 	// Apply the current theme
-	var sheet = document.querySelector(".stylesheets .active").innerText;
+	var sheet = document.querySelector(".used").innerText;
 	chrome.storage.sync.set({"currentTheme": sheet});
 
 	// Tell that we changed it
@@ -172,22 +207,32 @@ useButton.onclick = function() {
 
 // Remove the selected file
 removeButton.onclick = function() {
-	// MAKE SURE THEY CAN'T DELETE ALL FILES. LOCK THE DEFAULT
+	// Select the item to be removed
+	var elem = document.querySelector(".stylesheets .active");
 
-	// Add confimation
-	if (window.confirm("Do you really want to remove this file?")) {
-		// Remove the file from our object
-		delete stylesheetObj[document.querySelector(".stylesheets .active").innerText]; 
+	// Make sure they can't delete locked files
+	if(!elem.classList.contains("locked")) {
+		// Add confimation
+		if (window.confirm("Do you really want to remove this file?")) {
+			// Remove the file from our object
+			delete stylesheetObj[document.querySelector(".stylesheets .active").innerText]; 
 
-		// Sync our object with Chrome storage
-		chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+			// Sync our object with Chrome storage
+			chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
 
-		// Update the list
-		var elem = document.querySelector(".stylesheets .active");
-		elem.parentNode.removeChild(elem);
+			// Check to see if it's the currently used sheet - if so set it to the default
+			if(elem.classList.contains("used")) {
+				defaultLiItem.classList.add("used");
+				chrome.storage.sync.set({"currentTheme": defaultStylesheet});
+			}
 
-		editor.value = "";
-	}
+			// Remove it from the list
+			elem.parentNode.removeChild(elem);
+
+			editor.value = "";
+		}
+	} else 
+		alert("This file is locked and cannot be deleted.");
 
 	// Otherwise we do nothing
 }

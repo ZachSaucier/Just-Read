@@ -144,8 +144,8 @@ function addExtInfo() {
 	extContainer.innerText = "Viewed using ";
 
 	var extAnchor = document.createElement("a");
-	extAnchor.href = "http://zachsaucier.com/";
-	extAnchor.innerText = "Simple Article";
+	extAnchor.href = "https://github.com/ZachSaucier/Just-Read";
+	extAnchor.innerText = "Just Read";
 	extContainer.appendChild(extAnchor);
 
 	return extContainer;
@@ -250,7 +250,13 @@ function createSimplifiedOverlay() {
 	
 
 	// Add our listeners we need
+	// The "X" button listener; exit if clicked
 	simpleArticleIframe.querySelector(".simple-close").addEventListener('click', closeOverlay);
+	// Listen for the "Esc" key and exit if so
+	simpleArticleIframe.onkeyup = function(e) {
+	    if(e.keyCode === 27) 
+	        closeOverlay();
+	}
 }
 
 

@@ -6,6 +6,7 @@
 }
 
 .simple-close {
+	cursor: pointer;
 	position: fixed;
 	top: 10px;
     right: 8px;
@@ -24,6 +25,8 @@
 
 .simple-ext-info {
 	text-align: center;
+	border-top: 1px solid black;
+    padding-top: 28px;
 }
 
 @media (max-width: 750px) {

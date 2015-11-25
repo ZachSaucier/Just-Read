@@ -7,9 +7,9 @@ This is a Chrome extension made at [UGA Hacks](http://ugahacks.herokuapp.com/) F
 
 ## How to install:
 
-1. Download the files (the easiest for most people would be in zip form and then unzip it once downloaded). 
+1. Download the files (in zip form -> unzip OR `git clone https://github.com/ZachSaucier/Just-Read.git`). 
 ![Asset loading effects](http://i.imgur.com/4WkK2CA.png)
-2. Open up your Chrome extensions page: [chrome://extensions/](chrome://extensions/)
+2. Open up your Chrome extensions page: chrome://extensions/
 3. Make sure the "Developer mode" checkbox is clicked. 
 ![Chrome extensions loader](http://i.imgur.com/7lS7JgW.png)
 4. Click "Load unpacked extension..." and select the folder that you downloaded Just Read to.
