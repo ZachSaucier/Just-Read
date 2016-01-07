@@ -1,10 +1,10 @@
 {
   "name": "Just Read",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "An attractive article formatter for readability. Essentially a pretty read mode.",
-  "homepage_url": "http://zachsaucier.com/",
+  "homepage_url": "https://github.com/ZachSaucier/Just-Read",
   "offline_enabled": true,
 
   "browser_action": {

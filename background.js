@@ -14,8 +14,4 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 
-// Allow simplified viewing of selected text (NEXT VERSION)
-
-// Add back to top?
-
-// Add print button?
+// Allow simplified viewing of selected text?

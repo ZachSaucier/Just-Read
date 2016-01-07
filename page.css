@@ -2,7 +2,7 @@
 	overflow: hidden !important;
 }
 
-#simple-article {
+#simple-article#simple-article {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -26,7 +26,7 @@
 	opacity: 1;
 }
 
-#simple-article.simple-fade-up {
+#simple-article#simple-article.simple-fade-up {
 	-webkit-transform: translateY(100px);
 	transform: translateY(100px);
 

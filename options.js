@@ -9,6 +9,89 @@ function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
 
+// Detect double click - pulled from http://stackoverflow.com/a/26296759/2065702
+function makeDoubleClick (doubleClickCallback, singleClickCallback) {
+    return (function () {
+        var clicks = 0,
+            timeout;
+        return function () {
+            var me = this;
+            clicks++;
+            if (clicks == 1) {
+                singleClickCallback && singleClickCallback.apply(me, arguments);
+                timeout = setTimeout(function () {
+                    clicks = 0;
+                }, 400);
+            } else {
+                timeout && clearTimeout(timeout);
+                doubleClickCallback && doubleClickCallback.apply(me, arguments);
+                clicks = 0;
+            }
+        };
+    }());
+}
+
+// Check to make sure there isn't a file with this name already. If so, add a number to the end
+function checkFileName(fileName) {
+	var tempName = fileName,
+		count = 1;
+	while(stylesheetObj[tempName])
+		tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css"); 
+	return tempName;
+}
+
+// Allow file names to be edited
+function rename() {
+	var liItem = this;
+
+	// Hide the list item
+	this.style.display = "none";
+
+	// Insert an input temporarily
+	var fileNameInput = document.createElement("input");
+	fileNameInput.type = "text";
+	fileNameInput.value = fileNameInput.dataset.originalName = liItem.innerText;
+
+	// Update the style sheet object on blur
+	fileNameInput.onblur = function() {
+		// If the file name has changed
+		if(fileNameInput.value != fileNameInput.dataset.originalName) {
+			fileNameInput.value = checkFileName(fileNameInput.value);
+
+			stylesheetObj[fileNameInput.value] = stylesheetObj[liItem.innerText];
+			delete stylesheetObj[liItem.innerText];
+
+			setTimeout(function() {
+				saveTheme();
+			}, 10);
+			
+
+			liItem.innerText = fileNameInput.value;
+		}
+
+		// Un-hide the list item
+		liItem.style.display = "list-item";
+
+		// Remove the input
+		fileNameInput.parentNode.removeChild(fileNameInput);
+	}
+
+	// Allow enter to be used to save the rename
+	fileNameInput.onkeyup = function(e) {
+		if(e.keyCode === 13)
+			fileNameInput.onblur();
+	}
+
+
+	if (liItem.nextSibling) {
+	  liItem.parentNode.insertBefore(fileNameInput, liItem.nextSibling);
+	}
+	else {
+	  liItem.parentNode.appendChild(fileNameInput);
+	}
+	fileNameInput.focus();
+}
+
 // Make sure the user wants to change files before saving
 function confirmChange() {
 	if(changed)
@@ -83,7 +166,10 @@ function continueLoading() {
 		stylesheetListItems = document.querySelectorAll(".stylesheets li");
 
 		[].forEach.call(stylesheetListItems, function(item, i) {
-			item.onclick = styleListOnClick;
+			if(!item.classList.contains("locked"))
+				item.onclick = makeDoubleClick(rename, styleListOnClick);
+			else // Prevent the locked items from being changed in name
+				item.onclick = styleListOnClick;
 		});
 	});
 }
@@ -119,6 +205,42 @@ function getStylesheets() {
 	});
 }
 
+function saveTheme() {
+	// Get the name of the current file being edited
+	var currFileElem = document.querySelector(".stylesheets .active");
+
+	// Save that file to localStorage
+	if(!currFileElem.classList.contains("locked")) {
+		stylesheetObj[currFileElem.innerText] = editor.value;
+		chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+	} else { // The file is locked, so make a new one with the same name
+		var fileName = checkFileName(currFileElem.innerText);
+
+		// Add a new list element
+		var list = document.querySelector(".stylesheets"),
+			li = document.createElement("li");
+		li.innerText = fileName;
+
+		// Make it active
+		if(document.querySelector(".stylesheets .active"))
+			document.querySelector(".stylesheets .active").classList.remove("active");
+		li.classList.add("active");
+
+		// Force them to save to keep it	
+		changed = true;
+
+		list.appendChild(li);
+
+		document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(rename, styleListOnClick);
+
+		// Update our stylesheet storage
+		saveTheme();
+	}
+
+	// Note that the file has been saved
+	changed = false;
+}
+
 getStylesheets();
 
 var newFileInput = document.getElementById("new-file"),
@@ -128,6 +250,12 @@ var newFileInput = document.getElementById("new-file"),
 	useButton = document.getElementById("use"),
 	removeButton = document.getElementById("remove"),
 	stylesheetListItems;
+
+// Allow the "Enter" key to be used to add new stylesheets
+newFileInput.onkeyup = function(e) {
+	if(e.keyCode === 13)
+		add.onclick();
+}
 
 
 // Keep track of changes since last save
@@ -148,39 +276,34 @@ add.onclick = function() {
 		// Parse out the other stuff we don't want and add .css
 		fileName = fileName.replace(/[^a-z0-9]/gi, '-').toLowerCase() + ".css";
 
+		// If there's already a file with this name, change it
+		fileName = checkFileName(fileName);
+
 		// Add a new list element
 		var list = document.querySelector(".stylesheets"),
 			li = document.createElement("li");
 		li.innerText = fileName;
 
 		// Make it active
-		document.querySelector(".stylesheets .active").classList.remove("active");
+		if(document.querySelector(".stylesheets .active"))
+			document.querySelector(".stylesheets .active").classList.remove("active");
 		li.classList.add("active");
 
-		// Clear out the editor
-		editor.value = "";
+		// Clear out the editor and add some smart defaults
+		editor.value = "/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n";
 
 		// Force them to save to keep it	
 		changed = true;
 
 		list.appendChild(li);
 
-		document.querySelector(".stylesheets").lastChild.onclick = styleListOnClick;
+		document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(rename, styleListOnClick);
+
+		// Update our stylesheet storage
+		saveTheme();
 
 		newFileInput.value = "";
 	}
-}
-
-function saveTheme() {
-	// Get the name of the current file being edited
-	var currFile = document.querySelector(".stylesheets .active").innerText;
-
-	// Save that file to localStorage
-	stylesheetObj[currFile] = editor.value;
-	chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
-
-	// Note that the file has been saved
-	changed = false;
 }
 
 // Save the current code to the current file

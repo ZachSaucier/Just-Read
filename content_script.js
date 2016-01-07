@@ -281,7 +281,7 @@ function continueLoading() {
 	});
 }
 
-// Remove the past overlay if necessary
+// Detect past overlay - don't show another
 if(!simpleArticleIframe) {
 	// Add the stylesheet for the loader/container
 	if(!document.head.querySelector(".page-styles")) 
@@ -294,7 +294,13 @@ if(!simpleArticleIframe) {
 	if(!simpleArticleIframe.head.querySelector(".required-styles"))
 		addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
 	
-
+	// Change the top most page when links are clicked
+	var linkNum = simpleArticleIframe.links.length;
+	for(var i = 0; i < linkNum; i++) {
+		simpleArticleIframe.links[i].onclick = function() {
+			top.window.location.href = this.href;
+		}
+	}
 
 
 
@@ -304,7 +310,7 @@ if(!simpleArticleIframe) {
 	// Check to see if the stylesheets are already in Chrome storage
 	chrome.storage.sync.get('just-read-stylesheets', function (result) {
 
-		if(isEmpty(result)) { // Not found, so we add our default	        
+		if(isEmpty(result) || isEmpty(result["just-read-stylesheets"])) { // Not found, so we add our default	        
 	        // Open the default CSS file and save it to our object
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
