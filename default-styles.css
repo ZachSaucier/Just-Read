@@ -1,18 +1,18 @@
 @font-face {
 	font-family: 'Source Sans Pro Semibold';
-	src: "./fonts/SourceSansPro-Semibold.ttf";
+	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Semibold.ttf");
 }
 @font-face {
 	font-family: 'Source Sans Pro Bold';
-	src: "./fonts/SourceSansPro-Bold.ttf";
+	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Bold.ttf");
 }
 @font-face {
 	font-family: 'Source Sans Pro Light';
-	src: "./fonts/SourceSansPro-Light.ttf";
+	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Light.ttf");
 }
 @font-face {
 	font-family: 'Merriweather';
-	src: "./fonts/Merriweather-Light.ttf";
+	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/Merriweather-Light.ttf");
 }
 
 * {
