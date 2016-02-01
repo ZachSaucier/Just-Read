@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "An attractive article formatter for readability. Essentially a pretty read mode.",
@@ -34,7 +34,8 @@
     "default-styles.css",
     "page.css",
     "options.js",
-    "options.css"
+    "options.css",
+    "fonts/*"
   ],
   "options_page": "options.html"
 }
