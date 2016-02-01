@@ -7,6 +7,11 @@ This is a Chrome extension made at [UGA Hacks](http://ugahacks.herokuapp.com/) F
 
 ## How to install:
 
+### Install from Chrome's webstore
+1. [View it on the webstore](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod) and click "Add to Chrome".
+
+### Insteall from GitHub (for developers)
+
 1. Download the files (in zip form -> unzip OR `git clone https://github.com/ZachSaucier/Just-Read.git`). 
 ![Asset loading effects](http://i.imgur.com/4WkK2CA.png)
 2. Open up your Chrome extensions page: chrome://extensions/
