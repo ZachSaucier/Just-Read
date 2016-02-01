@@ -151,8 +151,6 @@ function addExtInfo() {
 	return extContainer;
 }
 
-
-
 // Remove what we added (besides styles)
 function closeOverlay() {
 	// Fade out
@@ -170,7 +168,7 @@ function closeOverlay() {
 
 
 // Keep track of the element with the most ps in it
-var globalMostPs,
+var globalMostPs = document.body,
 	globalMostPCount = 0;
 // Check a given element and all of its child nodes to see if it has the most ps
 function checkLongestTextElement(container) {
@@ -221,10 +219,16 @@ function createSimplifiedOverlay() {
 	// Get the title, author, etc.
 	container.appendChild(addArticleMeta());
 
-	// If settings say so, strip images, etc.
+	// If settings say so, strip images, etc.?
 
 	// Set the text as our text
 	container.innerHTML += globalMostPs.innerHTML;
+
+	// Strip inline styles
+	var allElems = container.getElementsByTagName("*");
+	for (var i = 0, max = allElems.length; i < max; i++) {
+	     allElems[i].removeAttribute("style");
+	}
 
 	// Add small bit of info about our extension
 	container.appendChild(addExtInfo());

@@ -1,5 +1,19 @@
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700,600);
-@import url(https://fonts.googleapis.com/css?family=Merriweather:400,300,700);
+@font-face {
+	font-family: 'Source Sans Pro Semibold';
+	src: "./fonts/SourceSansPro-Semibold.ttf";
+}
+@font-face {
+	font-family: 'Source Sans Pro Bold';
+	src: "./fonts/SourceSansPro-Bold.ttf";
+}
+@font-face {
+	font-family: 'Source Sans Pro Light';
+	src: "./fonts/SourceSansPro-Light.ttf";
+}
+@font-face {
+	font-family: 'Merriweather';
+	src: "./fonts/Merriweather-Light.ttf";
+}
 
 * {
 	-webkit-box-sizing: border-box;
@@ -19,15 +33,13 @@ body {
 
 p {
 	color: #282828;
-	font-weight: 300; /* Light */
 	font-size: 16px;
 	line-height: 28px;
 }
 
 h1,
 h2 {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: 700; /* Bold */
+	font-family: 'Source Sans Pro Bold', sans-serif;
 	color: #292929;
 }
 
@@ -74,8 +86,7 @@ img {
 
 .simple-date {
 	display: inline-block;
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: 300;
+	font-family: 'Source Sans Pro Light', sans-serif;
 	font-size: 18px;
 	color: #292929;
 	padding-right: 15px;
@@ -86,8 +97,7 @@ img {
 
 .simple-author {
 	display: inline-block;
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: 600; /* Semi-bold */
+	font-family: 'Source Sans Pro Semibold', sans-serif;
 	font-size: 18px;
 	color: #27AAE1;
 	line-height: 22px;

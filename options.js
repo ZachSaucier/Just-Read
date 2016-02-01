@@ -312,7 +312,8 @@ saveButton.onclick = saveTheme;
 // Use the selected stylesheet
 useButton.onclick = function() {
 	// Save the current theme
-	saveTheme();
+	if(!document.querySelector(".stylesheets .active").classList.contains("locked"))
+		saveTheme();
 
 	// Remove the used class from the old list item
 	document.querySelector(".stylesheets .used").classList.remove("used");
