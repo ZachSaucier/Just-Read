@@ -317,9 +317,9 @@ if(!simpleArticleIframe) {
 			// Don't change the top most if it's referencing an anchor in the article
 			var hrefArr = this.href.split('#');
 			if(hrefArr.length < 2 // No anchor
-				|| (hrefArr[0] != top.window.location.href // Anchored to an ID on another page
-					&& hrefArr[0] != "about:blank")
-				|| !simpleArticleIframe.getElementById(hrefArr[1]) // The element is not in the article section
+			|| (hrefArr[0] != top.window.location.href // Anchored to an ID on another page
+				&& hrefArr[0] != "about:blank")
+			|| !simpleArticleIframe.getElementById(hrefArr[1]) // The element is not in the article section
 			) {
 				top.window.location.href = this.href; // Regular link
 			} else { // Anchored to an element in the article
@@ -333,7 +333,9 @@ if(!simpleArticleIframe) {
 
 
 	// GET THEMES CSS SHEETS FROM CHROME STORAGE
-	var stylesheetObj = {};
+	var stylesheetObj = {},
+		stylesheetVersion = 1; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+
 	// Check to see if the stylesheets are already in Chrome storage
 	chrome.storage.sync.get('just-read-stylesheets', function (result) {
 
@@ -341,16 +343,17 @@ if(!simpleArticleIframe) {
 		var needsUpdate = false; 
 		chrome.storage.sync.get('stylesheet-version', function (versionResult) {
 
+			// If the user has a version of the stylesheets and it is less than the cufrent one, update it
 			if(isEmpty(versionResult) 
-			   || versionResult['stylesheet-version'] < 1) {         // THIS NUMBER MUST BE CHANGED FOR
-				chrome.storage.sync.set({'stylesheet-version': 1}); // THE STYLESHEETS TO KNOW TO UPDATE
+			|| versionResult['stylesheet-version'] < stylesheetVersion) {        
+				chrome.storage.sync.set({'stylesheet-version': stylesheetVersion}); 
 
 				needsUpdate = true;
 			}
 
 			if(isEmpty(result) // Not found, so we add our default
-				|| isEmpty(result["just-read-stylesheets"])
-				|| needsUpdate) { // Update the default stylesheet if it's on a previous version
+			|| isEmpty(result["just-read-stylesheets"])
+			|| needsUpdate) { // Update the default stylesheet if it's on a previous version
 
 		        // Open the default CSS file and save it to our object
 				var xhr = new XMLHttpRequest();
