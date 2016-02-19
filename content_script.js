@@ -337,33 +337,50 @@ if(!simpleArticleIframe) {
 	// Check to see if the stylesheets are already in Chrome storage
 	chrome.storage.sync.get('just-read-stylesheets', function (result) {
 
-		if(isEmpty(result) || isEmpty(result["just-read-stylesheets"])) { // Not found, so we add our default	        
-	        // Open the default CSS file and save it to our object
-			var xhr = new XMLHttpRequest();
-			xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
-			xhr.onreadystatechange = function() {
-			    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-			    	// Save the file's contents to our object
-			        stylesheetObj["default-styles.css"] = xhr.responseText;
+		// Check to see if the default stylesheet needs to be updated
+		var needsUpdate = false; 
+		chrome.storage.sync.get('stylesheet-version', function (versionResult) {
 
-			        // Save it to Chrome storage
-					chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+			if(isEmpty(versionResult) 
+			   || versionResult['stylesheet-version'] < 1) {         // THIS NUMBER MUST BE CHANGED FOR
+				chrome.storage.sync.set({'stylesheet-version': 1}); // THE STYLESHEETS TO KNOW TO UPDATE
 
-					// Set it as our current theme
-					chrome.storage.sync.set({"currentTheme": "default-styles.css"});
-
-					continueLoading();
-			    }
+				needsUpdate = true;
 			}
-			xhr.send();
-	        return;
-	    }
 
-	    // It's already found, so we use it
+			if(isEmpty(result) // Not found, so we add our default
+				|| isEmpty(result["just-read-stylesheets"])
+				|| needsUpdate) { // Update the default stylesheet if it's on a previous version
 
-	    stylesheetObj = result["just-read-stylesheets"];
+		        // Open the default CSS file and save it to our object
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
+				xhr.onreadystatechange = function() {
+				    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+				    	// Save the file's contents to our object
+				        stylesheetObj["default-styles.css"] = xhr.responseText;
 
-	    continueLoading();
+				        // Save it to Chrome storage
+						chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+
+						// Set it as our current theme
+						chrome.storage.sync.set({"currentTheme": "default-styles.css"});
+
+						continueLoading();
+				    }
+				}
+				xhr.send();
+		        return;
+		    }
+
+		    // It's already found, so we use it
+
+		    stylesheetObj = result["just-read-stylesheets"];
+
+		    continueLoading();
+		});
+
+		
 	});
 } else {
 	console.log("Simple container is already applied on this page!");
