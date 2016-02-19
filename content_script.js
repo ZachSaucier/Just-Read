@@ -227,7 +227,17 @@ function createSimplifiedOverlay() {
 	// Strip inline styles
 	var allElems = container.getElementsByTagName("*");
 	for (var i = 0, max = allElems.length; i < max; i++) {
-	     allElems[i].removeAttribute("style");
+		var elem = allElems[i];
+	    elem.removeAttribute("style");
+	    // Remove styles from the depreciated font element
+	    if(elem.nodeName === "FONT") {
+	    	console.log("test");
+			var p = document.createElement('p');
+			p.innerHTML = elem.innerHTML;
+
+			elem.parentNode.insertBefore(p, elem);
+			elem.parentNode.removeChild(elem);
+	    }
 	}
 
 	// Add small bit of info about our extension
@@ -285,6 +295,7 @@ function continueLoading() {
 	});
 }
 
+
 // Detect past overlay - don't show another
 if(!simpleArticleIframe) {
 	// Add the stylesheet for the loader/container
@@ -298,11 +309,23 @@ if(!simpleArticleIframe) {
 	if(!simpleArticleIframe.head.querySelector(".required-styles"))
 		addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
 	
-	// Change the top most page when links are clicked
+	// Change the top most page when regular links are clicked
 	var linkNum = simpleArticleIframe.links.length;
 	for(var i = 0; i < linkNum; i++) {
 		simpleArticleIframe.links[i].onclick = function() {
-			top.window.location.href = this.href;
+
+			// Don't change the top most if it's referencing an anchor in the article
+			var hrefArr = this.href.split('#');
+			if(hrefArr.length < 2 // No anchor
+				|| (hrefArr[0] != top.window.location.href // Anchored to an ID on another page
+					&& hrefArr[0] != "about:blank")
+				|| !simpleArticleIframe.getElementById(hrefArr[1]) // The element is not in the article section
+			) {
+				top.window.location.href = this.href; // Regular link
+			} else { // Anchored to an element in the article
+				top.window.location.hash = hrefArr[1];
+				simpleArticleIframe.location.hash = hrefArr[1];
+			}
 		}
 	}
 
@@ -321,7 +344,7 @@ if(!simpleArticleIframe) {
 			xhr.onreadystatechange = function() {
 			    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 			    	// Save the file's contents to our object
-			        stylesheetObj["default-styles.css"] =  xhr.responseText;
+			        stylesheetObj["default-styles.css"] = xhr.responseText;
 
 			        // Save it to Chrome storage
 					chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});

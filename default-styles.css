@@ -22,6 +22,7 @@
 
 body {
 	font-family: 'Merriweather', serif;
+	line-height: 1.75em;
 }
 
 .simple-container {
@@ -34,7 +35,6 @@ body {
 p {
 	color: #282828;
 	font-size: 16px;
-	line-height: 28px;
 }
 
 h1,
@@ -72,16 +72,20 @@ hr {
 	margin: 0px;
 }
 
-a {
+a[href] {
 	color: #27AAE1;
 }
 
-a:hover {
+a[href]:hover {
     color: #4ECAFF;
 }
 
 img {
 	max-width: 100%;
+}
+
+li {
+	line-height: 1.5em;
 }
 
 .simple-date {

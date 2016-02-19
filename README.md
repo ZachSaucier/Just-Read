@@ -47,8 +47,8 @@ You can then select the file you want to edit or enter a new file name, edit the
 - `page.css`: This is the required CSS file that formats our iframe on the article page.
 - `required-styles.css`: This includes styles for things like the close button inside of our overlay. It is used in combination with whatever theme styles are used.
 - `default-styles.css`: Self-explanatory; our default theme.
-- `options.html` - Sets up and allows the options page to be used.
-- `options.css` - Styles the options page.
+- `options.html`: Sets up and allows the options page to be used.
+- `options.css`: Styles the options page.
 - `README.md`: This markdown file to describe and instruct the project.
 
 Let me know how I can improve this extension including any bugs you see and what features you'd like to see!
