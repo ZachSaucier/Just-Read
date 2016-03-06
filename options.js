@@ -112,7 +112,7 @@ function styleListOnClick() {
 			var fileName = this.textContent;
 
 			// Open up the file from localStorage
-			editor.value = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
+			editor.innerText = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
 
 			// Toggle the active class on the list items
 			if(document.querySelector(".stylesheets .active"))
@@ -155,7 +155,7 @@ function continueLoading() {
 			if(count === 0) {
 				liClassList.add("active");
 				var fileName = li.textContent;
-				editor.value = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
+				editor.innerText = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
 			}
 
 			list.appendChild(li);
@@ -211,7 +211,7 @@ function saveTheme() {
 
 	// Save that file to localStorage
 	if(!currFileElem.classList.contains("locked")) {
-		stylesheetObj[currFileElem.innerText] = editor.value;
+		stylesheetObj[currFileElem.innerText] = editor.innerText;
 		chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
 	} else { // The file is locked, so make a new one with the same name
 		var fileName = checkFileName(currFileElem.innerText);
@@ -290,7 +290,7 @@ add.onclick = function() {
 		li.classList.add("active");
 
 		// Clear out the editor and add some smart defaults
-		editor.value = "/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n";
+		editor.innerText = "/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n";
 
 		// Force them to save to keep it	
 		changed = true;
@@ -353,7 +353,7 @@ removeButton.onclick = function() {
 			// Remove it from the list
 			elem.parentNode.removeChild(elem);
 
-			editor.value = "";
+			editor.innerText = "";
 		}
 	} else 
 		alert("This file is locked and cannot be deleted.");
