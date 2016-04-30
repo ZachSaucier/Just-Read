@@ -23,6 +23,29 @@
     color: black;
 }
 
+.simple-print {
+	cursor: pointer;
+	position: fixed;
+	width: 36px;
+	height: 36px;
+	top: 10px;
+    right: 55px;
+    
+    border: 0;
+	background: none;
+	background-image: url("print.png");
+	background-size: 36px;
+	background-repeat: no-repeat;
+    background-position: center;
+    font-size: 0; /* Hide the print text */
+    -webkit-transition: .3s;
+    transition: .3s;
+    opacity: 0.15;
+}
+.simple-print:hover {
+    opacity: 0.75;
+}
+
 .simple-ext-info {
 	text-align: center;
 	border-top: 1px solid black;
@@ -42,4 +65,12 @@
 		padding-left: 20px;
 		padding-right: 20px;
 	}
+}
+
+@media print {
+	.simple-close,
+	.simple-print {
+		display: none;
+	}
+	@page :first { margin-top: 0; }
 }

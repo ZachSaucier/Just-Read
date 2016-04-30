@@ -137,6 +137,15 @@ function addCloseButton() {
 	return closeButton;
 }
 
+// Add the print button
+function addPrintButton() {
+	var printButton = document.createElement("button");
+	printButton.className = "simple-print";
+	printButton.textContent = "Print";
+
+	return printButton;
+}
+
 // Add some information about our extension
 function addExtInfo() {
 	var extContainer = document.createElement("div");
@@ -165,7 +174,6 @@ function closeOverlay() {
 		element.parentNode.removeChild(element);
 	}, 500); // Make sure we can animate it
 }
-
 
 // Keep track of the element with the most ps in it
 var globalMostPs = document.body,
@@ -212,6 +220,9 @@ function createSimplifiedOverlay() {
 
 	// Add the close button
 	container.appendChild(addCloseButton());
+
+	// Add the print button
+	container.appendChild(addPrintButton());
 
 	// Get element with the most text
 	checkLongestTextElement();
@@ -264,8 +275,15 @@ function createSimplifiedOverlay() {
 	
 
 	// Add our listeners we need
+
 	// The "X" button listener; exit if clicked
 	simpleArticleIframe.querySelector(".simple-close").addEventListener('click', closeOverlay);
+
+	// The print button
+	simpleArticleIframe.querySelector(".simple-print").addEventListener('click', function() {
+		simpleArticleIframe.defaultView.print();
+	});
+
 	// Listen for the "Esc" key and exit if so
 	simpleArticleIframe.onkeyup = function(e) {
 	    if(e.keyCode === 27) 
