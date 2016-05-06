@@ -15,8 +15,8 @@
     background: none;
     border: 1px solid lightgrey;
     color: lightgrey;
-    -webkit-transition: .3s;
-    transition: .3s;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
 }
 .simple-close:hover {
 	border: 1px solid black;
@@ -38,8 +38,8 @@
 	background-repeat: no-repeat;
     background-position: center;
     font-size: 0; /* Hide the print text */
-    -webkit-transition: .3s;
-    transition: .3s;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
     opacity: 0.15;
 }
 .simple-print:hover {
