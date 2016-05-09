@@ -290,7 +290,7 @@ add.onclick = function() {
 		li.classList.add("active");
 
 		// Clear out the editor and add some smart defaults
-		editor.innerText = "/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n";
+		editor.innerText = "/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n\n\n";
 
 		// Force them to save to keep it	
 		changed = true;
