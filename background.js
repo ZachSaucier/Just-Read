@@ -1,4 +1,4 @@
-chrome.browserAction.onClicked.addListener(function(tab) { 
+function startJustRead(tab) {
     chrome.tabs.executeScript(null, { // Defaults to the current tab
         file: "content_script.js", // Script to inject into page and run in sandbox
         allFrames: false // This injects script into iframes in the page and doesn't work before 4.0.266.0.
@@ -11,7 +11,11 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     setTimeout(function() {
         chrome.browserAction.setBadgeText({text:""});
     }, 3000);
-});
+}
 
+chrome.browserAction.onClicked.addListener(startJustRead);
+chrome.commands.onCommand.addListener(function(command) {
+    startJustRead();
+});
 
 // Allow simplified viewing of selected text?

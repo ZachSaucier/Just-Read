@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "An article formatter for readability. Essentially an attractive and customizable read mode.",
@@ -18,14 +18,25 @@
     "128": "icons/icon128.png"
   },
 
+  "commands": {
+    "open-just-read": {
+      "suggested_key": {
+        "default": "Ctrl+Q"
+      },
+      "description": "Opens the Just Read format for the current page"
+    }
+  },
+
   "background": {
-        "scripts": [
-          "background.js"
-        ]
-    },
+    "scripts": [
+      "background.js"
+    ]
+  },
   
   "permissions": [
-    "tabs", "http://*/*", "https://*/*",
+    "tabs", 
+    "http://*/*", 
+    "https://*/*",
     "storage"
   ],
 

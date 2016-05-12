@@ -315,7 +315,6 @@ function createSimplifiedOverlay() {
 
 	// Listen for CTRL+P and do our print function if so
 	simpleArticleIframe.onkeydown = function(e) {
-		console.log(e.ctrlKey + "" + e.keyCode);
 		if(e.ctrlKey && e.keyCode == 80) {
 	        simpleArticleIframe.defaultView.print();
 	        e.preventDefault();
@@ -345,17 +344,18 @@ function continueLoading() {
 	});
 }
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-	for (key in changes) {
-		var storageChange = changes[key];
-		console.log('Storage key "%s" in namespace "%s" changed. ' +
-		'Old value was "%s", new value is "%s".',
-		key,
-		namespace,
-		storageChange.oldValue,
-		storageChange.newValue);
-	}
-});
+// Used for testing Chrome storage
+// chrome.storage.onChanged.addListener(function(changes, namespace) {
+// 	for (key in changes) {
+// 		var storageChange = changes[key];
+// 		console.log('Storage key "%s" in namespace "%s" changed. ' +
+// 		'Old value was "%s", new value is "%s".',
+// 		key,
+// 		namespace,
+// 		storageChange.oldValue,
+// 		storageChange.newValue);
+// 	}
+// });
 
 
 // Detect past overlay - don't show another
