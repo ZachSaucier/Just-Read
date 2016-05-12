@@ -13,9 +13,22 @@ function startJustRead(tab) {
     }, 3000);
 }
 
+// Listen for the extension's click
 chrome.browserAction.onClicked.addListener(startJustRead);
+
+// Listen for the keyboard shortcut
 chrome.commands.onCommand.addListener(function(command) {
-    startJustRead();
+    if(command == "open-just-read")
+        startJustRead();
+});
+
+// Create a right click menu option
+chrome.runtime.onInstalled.addListener(function() { // Only do it once
+    chrome.contextMenus.create({
+         title: "Open with Just Read",
+         contexts:["page"], 
+         onclick: startJustRead
+    });
 });
 
 // Allow simplified viewing of selected text?
