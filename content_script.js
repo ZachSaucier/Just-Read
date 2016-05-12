@@ -312,6 +312,15 @@ function createSimplifiedOverlay() {
 	    if(e.keyCode === 27) 
 	        closeOverlay();
 	}
+
+	// Listen for CTRL+P and do our print function if so
+	simpleArticleIframe.onkeydown = function(e) {
+		console.log(e.ctrlKey + "" + e.keyCode);
+		if(e.ctrlKey && e.keyCode == 80) {
+	        simpleArticleIframe.defaultView.print();
+	        e.preventDefault();
+	    }
+	}
 }
 
 
