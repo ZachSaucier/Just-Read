@@ -96,7 +96,9 @@ function getArticleTitle() {
 		return text;
 	}
 
-	// Check meta title?
+	// Check meta title
+	if(document.head.querySelector("title"))
+		return document.head.querySelector("title").innerText;
 	
 	return "Unknown title";
 }
@@ -194,6 +196,21 @@ function checkLongestTextElement(container) {
 	// Check the children to see if they have more ps
 	for(var i = 0; i < container.children.length; i++)
 		checkLongestTextElement(container.children[i]);
+}
+
+// Mute a singular HTML5 element
+function muteMe(elem) {
+	elem.muted = true;
+	elem.pause();
+}
+
+// Try to mute all video and audio elements on the page
+function mutePage() {
+	var videos = document.querySelectorAll("video"),
+		audios = document.querySelectorAll("audio");
+
+	[].forEach.call(videos, function(video) { muteMe(video); });
+	[].forEach.call(audios, function(audio) { muteMe(audio); });
 }
 
 
@@ -364,6 +381,9 @@ if(!simpleArticleIframe) {
 	if(!document.head.querySelector(".page-styles")) 
 		addStylesheet(document, "page.css", "page-styles");
 
+	// Attempt to mute the elements on the original page
+	mutePage();
+
 	// Create our version of the article
 	createSimplifiedOverlay();
 
@@ -374,7 +394,14 @@ if(!simpleArticleIframe) {
 	// Change the top most page when regular links are clicked
 	var linkNum = simpleArticleIframe.links.length;
 	for(var i = 0; i < linkNum; i++) {
-		simpleArticleIframe.links[i].onclick = function() {
+		simpleArticleIframe.links[i].onclick = function(e) {
+			// Don't change the top most if it's not in the current window
+			if(e.ctrlKey 
+			|| e.shiftKey 
+			|| e.metaKey 
+			|| (e.button && e.button == 1)) {
+				return;
+			}
 
 			// Don't change the top most if it's referencing an anchor in the article
 			var hrefArr = this.href.split('#');
