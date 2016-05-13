@@ -1,7 +1,7 @@
 Just Read
 =========
 
-This is a Chrome extension made at [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 with the purpose of making articles on any given websites more readable and attractive, removing the distractions.
+ The purpose of this project is to make articles on any given websites more readable and attractive, removing the distractions including hiding ads from vision.
 
 
 
@@ -59,6 +59,8 @@ You can then select the file you want to edit or enter a new file name, edit the
 - `README.md`: This markdown file to describe and instruct the project.
 
 Let me know how I can improve this extension including any bugs you see and what features you'd like to see!
+
+This is a Chrome extension was initially made in 16 hours at [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 and has been updated since.
 
 ___
 
