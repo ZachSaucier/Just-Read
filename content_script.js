@@ -241,8 +241,16 @@ function createSimplifiedOverlay() {
 	// Add the print button
 	container.appendChild(addPrintButton());
 
-	// Get element with the most text
-	checkLongestTextElement();
+	// Set globalMostPs to what we think is the article container
+	globalMostPs = document.querySelector("article");
+
+	// If there is no <article> element, get the container with the most ps
+	if(globalMostPs == null) 
+		checkLongestTextElement(); // Get element with the most text
+
+	// See if the element we selected has the majority of ps found
+	if(globalMostPCount / document.querySelectorAll("p").length < 0.75)
+		globalMostPs = globalMostPs.parentNode;
 
 	// Get the title, author, etc.
 	container.appendChild(addArticleMeta());
