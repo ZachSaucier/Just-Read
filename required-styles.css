@@ -74,3 +74,11 @@
 	}
 	@page :first { margin-top: 0; }
 }
+
+
+/* For the text selection feature */
+.hovered,
+.hovered * {
+    cursor: pointer;
+    opacity: 0.7;
+}

@@ -22,14 +22,20 @@ ___
 
 ## How to use: 
 
-Once Just Read has been installed, there are three built in ways to apply the effects to a given page:
+Once Just Read has been installed, there are five built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text:
 
 1. Click the Just Read Chrome extension button. 
 ![extension button](http://i.imgur.com/aCOIuVV.png)
 
-2. Use the shortcut <kbd>CTRL</kbd>+<kbd>Q</kbd>.
+2. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>L</kbd>.
 
 3. Right click and choose the "Open this page using Just Read" option.
+
+The other two let the user specify exactly what text they want to read:
+
+4. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
+
+5. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
 
 > Please note: This extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
 

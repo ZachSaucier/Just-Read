@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "An article formatter for readability. Essentially an attractive and customizable read mode.",
@@ -21,9 +21,15 @@
   "commands": {
     "open-just-read": {
       "suggested_key": {
-        "default": "Ctrl+Q"
+        "default": "Ctrl+Shift+L"
       },
       "description": "Opens the Just Read format for the current page"
+    },
+    "select-text": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K"
+      },
+      "description": "Lets the user select the text they want to read using Just read"
     }
   },
 

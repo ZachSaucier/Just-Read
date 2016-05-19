@@ -26,6 +26,53 @@ function isEmpty(obj) {
 }
 
 
+// User-selected text functionality
+var last,
+    bgc,
+    selected;
+function startSelectElement(doc) {
+	var mouseFunc = function (e) {
+	    var elem = e.target;
+
+	    if (last != elem) {
+	        if (last != null) {
+	            last.classList.remove("hovered");
+	        }
+
+	        last = elem;
+	        elem.classList.add("hovered");
+	    }
+	},
+	clickFunc = function(e) {
+		selected = e.target;
+
+		doc.removeEventListener('mouseover', mouseFunc);
+		doc.removeEventListener('click', clickFunc);
+
+		doc.querySelector(".hovered").classList.remove("hovered");
+
+		if(doc.getElementById("tempStyle") != null)
+			doc.getElementById("tempStyle").parentNode.removeChild(doc.getElementById("tempStyle"));
+
+		isPaused = false;
+	}
+
+	doc.addEventListener('mouseover', mouseFunc);
+	doc.addEventListener('click', clickFunc);
+
+	// Add our styles temporarily
+	var tempStyle = doc.createElement("style");
+	tempStyle.id = "temp-style";
+	tempStyle.innerText = ".hovered, .hovered * { cursor: pointer !important; color: black !important; background-color: #2095f2 !important; }";
+
+	doc.head.appendChild(tempStyle);
+
+	// Make the next part wait until a user has selected an element to use
+	useText = false;
+	isPaused = true;
+}
+
+
 // Add our styles to the page
 function addStylesheet(doc, link, classN) {
 	var path = chrome.extension.getURL(link),
@@ -61,7 +108,7 @@ function checkHeading(elem, heading, del) {
 		var text = elem.querySelector(heading).innerText,
 		    element = elem.querySelector(heading);
 		if(del)
-			element.parentNode.removeChild(element);
+			element.dataset.simpleDelete = true; // Flag it for removal later
 		return text; 
 	} else {
 		return false;
@@ -225,14 +272,6 @@ function mutePage() {
 
 var simpleArticleIframe;
 function createSimplifiedOverlay() {
-	// Show temporary loader
-	// var loader = document.createElement("div"),
-	// 	centered = document.createElement("div");
-	// loader.className = "simple-loader";
-	// centered.innerText = "Loading simple page...";
-	// loader.appendChild(centered);
-	// document.body.appendChild(loader);
-
 
 	// Create an iframe so we don't use old styles
 	var simpleArticle = document.createElement("iframe");
@@ -249,8 +288,12 @@ function createSimplifiedOverlay() {
 	// Add the print button
 	container.appendChild(addPrintButton());
 
-	// Set globalMostPs to what we think is the article container
-	globalMostPs = document.querySelector("article");
+	// Try using the selected element's content
+	globalMostPs = selected;
+
+	// If there is no text selected, set globalMostPs to what we think is the article container
+	if(globalMostPs == null) 
+		globalMostPs = document.querySelector("article");
 
 	// If there is no <article> element, get the container with the most ps
 	if(globalMostPs == null) 
@@ -313,19 +356,24 @@ function createSimplifiedOverlay() {
 		}
 	}
 
+	// Remove the elements we flagged earlier
+	var deleteObjs = container.querySelectorAll("[data-simple-delete]");
+	for (var i = 0, max = deleteObjs.length; i < max; i++) {
+		deleteObjs[i].parentNode.removeChild(deleteObjs[i]);
+	};
+
 	// Add small bit of info about our extension
 	container.appendChild(addExtInfo());
 
 	// Add our iframe to the page
 	document.body.appendChild(simpleArticle);
 
+	// Focus the article so our shortcuts work from the start
+	document.getElementById("simple-article").focus(); 
+
 	// Append our custom HTML to the iframe
 	simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
 	simpleArticleIframe.body.appendChild(container);
-
-	// Remove the loader
-	// var remove = document.querySelector(".simple-loader");
-	// remove.parentNode.removeChild(remove);
 
 	// Fade in and move up the simple article
 	setTimeout(function() {
@@ -337,7 +385,6 @@ function createSimplifiedOverlay() {
 	
 
 	// Add our listeners we need
-
 	// The "X" button listener; exit if clicked
 	simpleArticleIframe.querySelector(".simple-close").addEventListener('click', closeOverlay);
 
@@ -397,105 +444,119 @@ function continueLoading() {
 // });
 
 
+var isPaused = false,
+	stylesheetObj = {},
+	stylesheetVersion = 1; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
-	// Add the stylesheet for the loader/container
-	if(!document.head.querySelector(".page-styles")) 
-		addStylesheet(document, "page.css", "page-styles");
+	var interval = setInterval(function() {
+		// Check to see if the user wants to select the text
+		if(typeof useText != "undefined" && useText && !isPaused) {
+			// Start the process of the user selecting text to read
+			startSelectElement(document);
+		} 
 
-	// Attempt to mute the elements on the original page
-	mutePage();
+		if(!isPaused) {
+			// Add the stylesheet for the loader/container
+			if(!document.head.querySelector(".page-styles")) 
+				addStylesheet(document, "page.css", "page-styles");
 
-	// Create our version of the article
-	createSimplifiedOverlay();
+			// Attempt to mute the elements on the original page
+			mutePage();
 
-	// Add our stylesheet for the article
-	if(!simpleArticleIframe.head.querySelector(".required-styles"))
-		addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
-	
-	// Change the top most page when regular links are clicked
-	var linkNum = simpleArticleIframe.links.length;
-	for(var i = 0; i < linkNum; i++) {
-		simpleArticleIframe.links[i].onclick = function(e) {
-			// Don't change the top most if it's not in the current window
-			if(e.ctrlKey 
-			|| e.shiftKey 
-			|| e.metaKey 
-			|| (e.button && e.button == 1)) {
-				return;
-			}
+			// Create our version of the article
+			createSimplifiedOverlay();
 
-			// Don't change the top most if it's referencing an anchor in the article
-			var hrefArr = this.href.split('#');
-			if(hrefArr.length < 2 // No anchor
-			|| (hrefArr[0] != top.window.location.href // Anchored to an ID on another page
-				&& hrefArr[0] != "about:blank")
-			|| !simpleArticleIframe.getElementById(hrefArr[1]) // The element is not in the article section
-			) {
-				top.window.location.href = this.href; // Regular link
-			} else { // Anchored to an element in the article
-				top.window.location.hash = hrefArr[1];
-				simpleArticleIframe.location.hash = hrefArr[1];
-			}
-		}
-	}
+			// Add our stylesheet for the article
+			if(!simpleArticleIframe.head.querySelector(".required-styles"))
+				addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
+			
+			// Change the top most page when regular links are clicked
+			var linkNum = simpleArticleIframe.links.length;
+			for(var i = 0; i < linkNum; i++) {
+				simpleArticleIframe.links[i].onclick = function(e) {
+					// Don't change the top most if it's not in the current window
+					if(e.ctrlKey 
+					|| e.shiftKey 
+					|| e.metaKey 
+					|| (e.button && e.button == 1)) {
+						return;
+					}
 
-
-
-
-	// GET THEMES CSS SHEETS FROM CHROME STORAGE
-	var stylesheetObj = {},
-		stylesheetVersion = 1; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
-
-	// Check to see if the stylesheets are already in Chrome storage
-	chrome.storage.sync.get('just-read-stylesheets', function (result) {
-
-		// Check to see if the default stylesheet needs to be updated
-		var needsUpdate = false; 
-		chrome.storage.sync.get('stylesheet-version', function (versionResult) {
-
-			// If the user has a version of the stylesheets and it is less than the cufrent one, update it
-			if(isEmpty(versionResult) 
-			|| versionResult['stylesheet-version'] < stylesheetVersion) {        
-				chrome.storage.sync.set({'stylesheet-version': stylesheetVersion}); 
-
-				needsUpdate = true;
-			}
-
-			if(isEmpty(result) // Not found, so we add our default
-			|| isEmpty(result["just-read-stylesheets"])
-			|| needsUpdate) { // Update the default stylesheet if it's on a previous version
-
-		        // Open the default CSS file and save it to our object
-				var xhr = new XMLHttpRequest();
-				xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
-				xhr.onreadystatechange = function() {
-				    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-				    	// Save the file's contents to our object
-				        stylesheetObj["default-styles.css"] = xhr.responseText;
-
-				        // Save it to Chrome storage
-						chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
-
-						// Set it as our current theme
-						chrome.storage.sync.set({"currentTheme": "default-styles.css"});
-
-						continueLoading();
-				    }
+					// Don't change the top most if it's referencing an anchor in the article
+					var hrefArr = this.href.split('#');
+					if(hrefArr.length < 2 // No anchor
+					|| (hrefArr[0] != top.window.location.href // Anchored to an ID on another page
+						&& hrefArr[0] != "about:blank")
+					|| !simpleArticleIframe.getElementById(hrefArr[1]) // The element is not in the article section
+					) {
+						top.window.location.href = this.href; // Regular link
+					} else { // Anchored to an element in the article
+						top.window.location.hash = hrefArr[1];
+						simpleArticleIframe.location.hash = hrefArr[1];
+					}
 				}
-				xhr.send();
-		        return;
-		    }
+			}
 
-		    // It's already found, so we use it
 
-		    stylesheetObj = result["just-read-stylesheets"];
 
-		    continueLoading();
-		});
 
-		
-	});
+			// GET THEMES CSS SHEETS FROM CHROME STORAGE
+
+			// Check to see if the stylesheets are already in Chrome storage
+			chrome.storage.sync.get('just-read-stylesheets', function (result) {
+
+				// Check to see if the default stylesheet needs to be updated
+				var needsUpdate = false; 
+				chrome.storage.sync.get('stylesheet-version', function (versionResult) {
+
+					// If the user has a version of the stylesheets and it is less than the cufrent one, update it
+					if(isEmpty(versionResult) 
+					|| versionResult['stylesheet-version'] < stylesheetVersion) {        
+						chrome.storage.sync.set({'stylesheet-version': stylesheetVersion}); 
+
+						needsUpdate = true;
+					}
+
+					if(isEmpty(result) // Not found, so we add our default
+					|| isEmpty(result["just-read-stylesheets"])
+					|| needsUpdate) { // Update the default stylesheet if it's on a previous version
+
+				        // Open the default CSS file and save it to our object
+						var xhr = new XMLHttpRequest();
+						xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
+						xhr.onreadystatechange = function() {
+						    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+						    	// Save the file's contents to our object
+						        stylesheetObj["default-styles.css"] = xhr.responseText;
+
+						        // Save it to Chrome storage
+								chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+
+								// Set it as our current theme
+								chrome.storage.sync.set({"currentTheme": "default-styles.css"});
+
+								continueLoading();
+						    }
+						}
+						xhr.send();
+				        return;
+				    }
+
+				    // It's already found, so we use it
+
+				    stylesheetObj = result["just-read-stylesheets"];
+
+				    continueLoading();
+				});
+
+				
+			});
+
+			window.clearInterval(interval);
+		}
+	}, 100);
+	
 } else {
 	if(document.querySelector(".simple-fade-up") == null) // Make sure it's been able to load
 		closeOverlay();

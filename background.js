@@ -13,6 +13,14 @@ function startJustRead(tab) {
     }, 3000);
 }
 
+function startSelectText() {
+    chrome.tabs.executeScript(null, {
+        code: 'var useText = true;' // Ghetto way of signaling to select text instead of 
+    }, function() {                 // using Chrome messages
+        startJustRead();
+    });
+}
+
 // Listen for the extension's click
 chrome.browserAction.onClicked.addListener(startJustRead);
 
@@ -21,14 +29,27 @@ chrome.commands.onCommand.addListener(function(command) {
     if(command == "open-just-read")
         startJustRead();
 });
-
-// Create a right click menu option
-chrome.runtime.onInstalled.addListener(function() { // Only do it once
-    chrome.contextMenus.create({
-         title: "Open this page using Just Read",
-         contexts:["page"], 
-         onclick: startJustRead
-    });
+chrome.commands.onCommand.addListener(function(command) {
+    if(command == "select-text")
+        startSelectText();
 });
 
-// Allow simplified viewing of selected text?
+//chrome.runtime.onInstalled.addListener(function() { // Only do it once
+    // Create a right click menu option
+    chrome.contextMenus.create({
+         title: "Open this page using Just Read",
+         contexts: ["page"], 
+         onclick: startJustRead
+    });
+
+    // Create an entry to allow selection of text
+    chrome.contextMenus.create({
+        title: "Select text to read",
+        contexts: ["browser_action"],
+        onclick: function() {
+            startSelectText();
+        }
+    });
+
+
+//});
