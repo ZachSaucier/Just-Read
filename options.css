@@ -38,7 +38,7 @@ body, .editor-container {
 }
 .stylesheets {
 	padding-left: 16px;
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 .stylesheets li {
 	cursor: pointer;
@@ -62,23 +62,23 @@ body, .editor-container {
 }
 
 .editor { 
-    position: relative; 
-    border: 1px solid;
-    padding: 5px;
-    overflow: auto;
+	position: relative; 
+	border: 1px solid;
+	padding: 5px;
+	overflow: auto;
 }
 code { 
-    position:absolute; 
-    width: 100%;
-    width: calc(100% - 10px);
+	position: absolute; 
+	width: 100%;
+	width: calc(100% - 10px);
 }
 
 
 #css-editor {
 	width: 100%;
 	resize: none;
-    padding: 5px;
-    margin-top: 0;
+	padding: 5px;
+	margin-top: 0;
 }
 
 @media (max-width: 600px) {

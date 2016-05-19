@@ -2,25 +2,25 @@
 	max-width: 600px;
 	margin: 0 auto;
 	padding-top: 70px;
-    padding-bottom: 20px;
+	padding-bottom: 20px;
 }
 
 .simple-close {
 	cursor: pointer;
 	position: fixed;
 	top: 10px;
-    right: 8px;
-    font-size: 25px;
+	right: 8px;
+	font-size: 25px;
 
-    background: none;
-    border: 1px solid lightgrey;
-    color: lightgrey;
-    -webkit-transition: 0.2s;
-    transition: 0.2s;
+	background: none;
+	border: 1px solid lightgrey;
+	color: lightgrey;
+	-webkit-transition: 0.2s;
+	transition: 0.2s;
 }
 .simple-close:hover {
 	border: 1px solid black;
-    color: black;
+	color: black;
 }
 
 .simple-print {
@@ -29,27 +29,27 @@
 	width: 36px;
 	height: 36px;
 	top: 10px;
-    right: 55px;
-    
-    border: 0;
+	right: 55px;
+	
+	border: 0;
 	background: none;
 	background-image: url("print.svg");
 	background-size: 36px;
 	background-repeat: no-repeat;
-    background-position: center;
-    font-size: 0; /* Hide the print text */
-    -webkit-transition: 0.2s;
-    transition: 0.2s;
-    opacity: 0.25;
+	background-position: center;
+	font-size: 0; /* Hide the print text */
+	-webkit-transition: 0.2s;
+	transition: 0.2s;
+	opacity: 0.25;
 }
 .simple-print:hover {
-    opacity: 1;
+	opacity: 1;
 }
 
 .simple-ext-info {
 	text-align: center;
 	border-top: 1px solid black;
-    padding-top: 28px;
+	padding-top: 28px;
 }
 
 @media (max-width: 750px) {

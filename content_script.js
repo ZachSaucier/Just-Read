@@ -28,8 +28,6 @@ function isEmpty(obj) {
 
 // Add our styles to the page
 function addStylesheet(doc, link, classN) {
-	// Possibly check settings for which stylesheet to use
-
 	var path = chrome.extension.getURL(link),
 		styleLink = document.createElement("link");
 
@@ -198,6 +196,16 @@ function checkLongestTextElement(container) {
 		checkLongestTextElement(container.children[i]);
 }
 
+// Count the number of ps in the children using recursion
+function countPs(container) {
+	var count = container.querySelectorAll("p").length;
+
+	for(var i = 0; i < container.children.length; i++) 
+		count += countPs(container.children[i]);
+
+	return count;
+}
+
 // Mute a singular HTML5 element
 function muteMe(elem) {
 	elem.muted = true;
@@ -215,7 +223,7 @@ function mutePage() {
 
 
 
-var simpleArticleIframe = false;
+var simpleArticleIframe;
 function createSimplifiedOverlay() {
 	// Show temporary loader
 	// var loader = document.createElement("div"),
@@ -249,8 +257,14 @@ function createSimplifiedOverlay() {
 		checkLongestTextElement(); // Get element with the most text
 
 	// See if the element we selected has the majority of ps found
-	if(globalMostPCount / document.querySelectorAll("p").length < 0.75)
-		globalMostPs = globalMostPs.parentNode;
+	if(document.querySelector("article") == null 
+	   && globalMostPCount / document.querySelectorAll("p").length < 0.75) {
+		var parent = globalMostPs.parentNode,
+			parentPNum = countPs(parent);
+
+		if(parentPNum > globalMostPCount)
+			globalMostPs = parent;
+	}
 
 	// Get the title, author, etc.
 	container.appendChild(addArticleMeta());
@@ -384,7 +398,7 @@ function continueLoading() {
 
 
 // Detect past overlay - don't show another
-if(!simpleArticleIframe) {
+if(document.getElementById("simple-article") == null) {
 	// Add the stylesheet for the loader/container
 	if(!document.head.querySelector(".page-styles")) 
 		addStylesheet(document, "page.css", "page-styles");
@@ -483,7 +497,8 @@ if(!simpleArticleIframe) {
 		
 	});
 } else {
-	console.log("Simple container is already applied on this page!");
+	if(document.querySelector(".simple-fade-up") == null) // Make sure it's been able to load
+		closeOverlay();
 }
 
 
