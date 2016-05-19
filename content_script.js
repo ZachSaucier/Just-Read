@@ -46,19 +46,32 @@ function startSelectElement(doc) {
 	clickFunc = function(e) {
 		selected = e.target;
 
+		isPaused = false; // Enable the extension to run
+
+		exitFunc();
+	},
+	escFunc = function(e) {
+		// Listen for the "Esc" key and exit if so
+	    if(e.keyCode === 27) 
+	        exitFunc();
+	},
+	exitFunc = function() {
 		doc.removeEventListener('mouseover', mouseFunc);
 		doc.removeEventListener('click', clickFunc);
+		doc.removeEventListener('keyup', escFunc);
 
-		doc.querySelector(".hovered").classList.remove("hovered");
+		if(doc.querySelector(".hovered") != null)
+			doc.querySelector(".hovered").classList.remove("hovered");
 
 		if(doc.getElementById("tempStyle") != null)
 			doc.getElementById("tempStyle").parentNode.removeChild(doc.getElementById("tempStyle"));
-
-		isPaused = false;
 	}
 
 	doc.addEventListener('mouseover', mouseFunc);
 	doc.addEventListener('click', clickFunc);
+	doc.addEventListener('keyup', escFunc);
+
+	doc.documentElement.focus();
 
 	// Add our styles temporarily
 	var tempStyle = doc.createElement("style");
