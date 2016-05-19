@@ -33,17 +33,17 @@
     
     border: 0;
 	background: none;
-	background-image: url("print.png");
+	background-image: url("print.svg");
 	background-size: 36px;
 	background-repeat: no-repeat;
     background-position: center;
     font-size: 0; /* Hide the print text */
     -webkit-transition: 0.2s;
     transition: 0.2s;
-    opacity: 0.15;
+    opacity: 0.25;
 }
 .simple-print:hover {
-    opacity: 0.75;
+    opacity: 1;
 }
 
 .simple-ext-info {
