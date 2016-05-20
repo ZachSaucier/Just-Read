@@ -76,9 +76,10 @@
 }
 
 
-/* For the text selection feature */
+/* For the element deletion feature */
 .hovered,
-.hovered * {
-    cursor: pointer;
-    opacity: 0.7;
+.hovered *:not(.simple-close):not(.simple-print) {
+    cursor: pointer !important;
+    color: black !important;
+    background-color: #ff5050 !important;
 }

@@ -85,6 +85,58 @@ function startSelectElement(doc) {
 	isPaused = true;
 }
 
+// Similar to ^^ but for deletion once the article is open
+function startDeleteElement(doc) {
+	var mouseFunc = function (e) {
+	    var elem = e.target;
+
+	    if(!elem.classList.contains("simple-close") 
+	    && !elem.classList.contains("simple-print")
+	    && doc.body != elem
+	    && doc.documentElement != elem) {
+		    if (last != elem) {
+		        if (last != null) {
+		            last.classList.remove("hovered");
+		        }
+
+		        last = elem;
+		        elem.classList.add("hovered");
+		    }
+		}
+	},
+	clickFunc = function(e) {
+		selected = e.target;
+
+		if(!selected.classList.contains("simple-close") 
+		&& !selected.classList.contains("simple-print")
+		&& doc.body != selected
+		&& doc.documentElement != selected)
+			selected.parentNode.removeChild(selected);
+	},
+	escFunc = function(e) {
+		// Listen for the "Esc" key and exit if so
+	    if(e.keyCode === 27) 
+	        exitFunc();
+	},
+	exitFunc = function() {
+		doc.removeEventListener('mouseover', mouseFunc);
+		doc.removeEventListener('click', clickFunc);
+		doc.removeEventListener('keyup', escFunc);
+
+		if(doc.querySelector(".hovered") != null)
+			doc.querySelector(".hovered").classList.remove("hovered");
+
+		doc.body.classList.remove("simple-deleting");
+
+		selected = null;
+	}
+
+	doc.body.classList.add("simple-deleting");
+
+	doc.addEventListener('mouseover', mouseFunc);
+	doc.addEventListener('click', clickFunc);
+	doc.addEventListener('keyup', escFunc);
+}
 
 // Add our styles to the page
 function addStylesheet(doc, link, classN) {
@@ -407,10 +459,15 @@ function createSimplifiedOverlay() {
 		simpleArticleIframe.defaultView.print();
 	});
 
-	// Listen for the "Esc" key and exit if so
 	simpleArticleIframe.onkeyup = function(e) {
-	    if(e.keyCode === 27) 
+		// Listen for the "Esc" key and exit if so
+	    if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting")) 
 	        closeOverlay();
+
+
+	    // Listen for CTRL + SHIFT + ; and allow node deletion if so
+	    if(e.keyCode === 186 && e.ctrlKey && e.shiftKey) 
+	    	startDeleteElement(simpleArticleIframe);
 	}
 
 	// Listen for CTRL+P and do our print function if so

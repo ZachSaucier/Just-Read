@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "An article formatter for readability. Essentially an attractive and customizable read mode.",
