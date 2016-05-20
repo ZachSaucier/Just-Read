@@ -289,7 +289,7 @@ function createSimplifiedOverlay() {
 	// Create an iframe so we don't use old styles
 	var simpleArticle = document.createElement("iframe");
 	simpleArticle.id = "simple-article";
-	simpleArticle.className = "simple-fade-up"; // Add fade
+	simpleArticle.className = "simple-fade-up no-trans"; // Add fade
 
 	var container = document.createElement("div");
 	container.className = "simple-container";
@@ -390,6 +390,7 @@ function createSimplifiedOverlay() {
 
 	// Fade in and move up the simple article
 	setTimeout(function() {
+		simpleArticle.classList.remove("no-trans");
 		simpleArticle.classList.remove("simple-fade-up");
 
 		// Disable scroll on main page until closed

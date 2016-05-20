@@ -36,3 +36,5 @@
 
 	opacity: 0;
 }
+
+.no-trans { -webkit-transition: none !important; transition: none !important; }
