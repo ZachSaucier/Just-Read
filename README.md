@@ -1,9 +1,9 @@
 Just Read
 =========
 
- The purpose of this project is to make articles on any given websites more readable and attractive, removing the distractions including hiding ads from vision.
+ The extension makes it easy to view web articles in a more readable, attractive, and custom format. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
 
-
+> **Please note**: This extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
 
 ## How to install:
 
@@ -22,7 +22,9 @@ ___
 
 ## How to use: 
 
-Once Just Read has been installed, there are five built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text:
+Once Just Read has been installed, there are five built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text and the other two allow the user to specify which text they want.
+
+### Use Just Read's built in selection
 
 1. Click the Just Read Chrome extension button. 
 ![extension button](http://i.imgur.com/aCOIuVV.png)
@@ -31,25 +33,29 @@ Once Just Read has been installed, there are five built in ways to apply the eff
 
 3. Right click and choose the "Open this page using Just Read" option.
 
-The other two let the user specify exactly what text they want to read:
+### User selection mode
 
 4. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
 
 5. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
 
-> Please note: This extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
+### Deletion mode
 
-By default the extension will use a theme that we made as seen here 
-![the effect of the extension](http://i.imgur.com/0aBizH4.png)
+Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd>. They can click on elements that they don't want to view (helpful for printing or if there are elements that aren't part of the article) and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd>. 
 
 ___
 
 ## Customization:
 
+By default the extension will use a theme that we made as seen here 
+![the effect of the extension](http://i.imgur.com/0aBizH4.png)
+
 If you want to customize the stylesheet or add and use your own, you can right click the extension and open the "Options" page (you can also get to this via the Chrome extensions page). That will open a page that looks similar to this 
 ![Options page](http://i.imgur.com/GHUcFHw.png)
 
 You can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
+
+___
 
 ### Description of files:
 
