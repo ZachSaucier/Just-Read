@@ -181,6 +181,10 @@ function checkHeading(elem, heading, del) {
 }
 
 function getArticleTitle() {
+	// Make sure that the globalMostPs isn't empty
+	if(globalMostPs == null)
+		globalMostPs = document.body;
+
 	// Check to see if there is a h1 within globalMostPs
 	var text = checkHeading(globalMostPs, 'h1', true);
 	// Check to see if there is a h2 within globalMostPs
@@ -418,6 +422,10 @@ function createSimplifiedOverlay() {
 				elem.parentNode.insertBefore(p, elem);
 				elem.parentNode.removeChild(elem);
 		    }
+
+		    // Remove any inline style elements
+		    if(elem.nodeName === "STYLE")
+		    	elem.dataset.simpleDelete = true;
 		}
 	}
 
