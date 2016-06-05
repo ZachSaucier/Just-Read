@@ -395,8 +395,11 @@ function createSimplifiedOverlay() {
 		    elem.removeAttribute("style");
 		    elem.removeAttribute("width");
 		    elem.removeAttribute("height");
+		    elem.removeAttribute("background");
 		    elem.removeAttribute("bgcolor");
 		    elem.removeAttribute("border");
+		    if(elem.innerHTML != elem.innerHTML.replace(/&nbsp;/g,'')) // Remove &nbsp; s
+		    	elem.innerHTML = elem.innerHTML.replace(/&nbsp;/g,''); 
 
 		    // See if the pres have code in them
 		    var isPreNoCode = true;
@@ -423,8 +426,10 @@ function createSimplifiedOverlay() {
 				elem.parentNode.removeChild(elem);
 		    }
 
-		    // Remove any inline style elements
-		    if(elem.nodeName === "STYLE")
+		    // Remove any inline style or script elements and things with aria hidden
+		    if(elem.nodeName === "STYLE"
+		    //|| elem.nodeName === "SCRIPT"
+		    || (elem.getAttribute("aria-hidden") == "true"))
 		    	elem.dataset.simpleDelete = true;
 		}
 	}
@@ -558,22 +563,25 @@ if(document.getElementById("simple-article") == null) {
 					if(e.ctrlKey 
 					|| e.shiftKey 
 					|| e.metaKey 
-					|| (e.button && e.button == 1)) {
-						return;
+					|| (e.button && e.button == 1)
+					|| e.target != "about:blank") {
+						return; // Do nothing
 					}
 
 					// Don't change the top most if it's referencing an anchor in the article
-					var hrefArr = this.href.split('#');
+					var hrefArr = this.href.split("#");
+					
 					if(hrefArr.length < 2 // No anchor
-					|| (hrefArr[0] != top.window.location.href // Anchored to an ID on another page
-						&& hrefArr[0] != "about:blank")
-					|| !simpleArticleIframe.getElementById(hrefArr[1]) // The element is not in the article section
+					|| hrefArr[0] != top.window.location.href // Anchored to an ID on another page
+					|| (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
+						&& simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null) 
 					) {
+						console.log("test");
 						top.window.location.href = this.href; // Regular link
 					} else { // Anchored to an element in the article
 						top.window.location.hash = hrefArr[1];
 						simpleArticleIframe.location.hash = hrefArr[1];
-					}
+					} 
 				}
 			}
 
