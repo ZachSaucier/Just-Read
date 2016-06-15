@@ -26,6 +26,8 @@ Once Just Read has been installed, there are five built in ways to apply the eff
 
 ### Use Just Read's built in selection
 
+You can start using Just Read's built in selection in three ways:
+
 1. Click the Just Read Chrome extension button. 
 ![extension button](http://i.imgur.com/aCOIuVV.png)
 
@@ -34,6 +36,8 @@ Once Just Read has been installed, there are five built in ways to apply the eff
 3. Right click and choose the "Open this page using Just Read" option.
 
 ### User selection mode
+
+You can also select exactly the text you want to read if the built in method doesn't select what you want. You can start doing that in two ways:
 
 4. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
 
