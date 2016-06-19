@@ -145,3 +145,116 @@ li {
 		padding-right: 20px;
 	}
 }
+
+
+
+/* Hide some things I dislike seeing when I read articles */
+/* Very simple ad hider */
+[class = "ad"],
+[class ^= "ad-"],
+[class ^= "ad_"],
+[class *= "-ad-"],
+[class $= "-ad"],
+[class $= "_ad"],
+[class ~= "ad"],
+[id = "ad"],
+[id ^= "ad-"],
+[id ^= "ad_"],
+[id *= "-ad-"],
+[id $= "-ad"],
+[id $= "_ad"],
+[id ~= "ad"] {
+    display: none;
+}
+
+/* Very simple sharing hider */
+[class ^= "share"],
+[class *= "-share-"],
+[class $= "-share"],
+[class $= "share"],
+[class ~= "share"],
+[class ^= "sharing"],
+[id ^= "share"],
+[id *= "-share-"],
+[id $= "-share"],
+[id $= "share"],
+[id ~= "share"],
+[id ^= "sharing"],
+[class ^= "social"],
+[class *= "-social-"],
+[class $= "-social"],
+[class $= "social"],
+[class ~= "social"],
+[id ^= "social"],
+[id *= "-social-"],
+[id $= "-social"],
+[id $= "social"],
+[id ~= "social"],
+[class *= "-socials-"],
+[class $= "-socials"],
+[class $= "socials"],
+[class ~= "socials"],
+[id *= "-socials-"],
+[id $= "-socials"],
+[id $= "socials"],
+[id ~= "socials"] {
+    display: none;
+}
+
+/* Very simple related hider */
+[class ^= "related"],
+[class *= "-related-"],
+[class $= "-related"],
+[class $= "_related"],
+[class ~= "related"],
+[id ^= "related"],
+[id *= "-related-"],
+[id $= "-related"],
+[id $= "_related"],
+[id ~= "related"] {
+    display: none;
+}
+
+/* Very simple comments hider */
+[class ^= "comment"],
+[class *= "-comments-"],
+[class $= "-comments"],
+[class $= "_comments"],
+[class ~= "comments"],
+[class *= "-comment-"],
+[class $= "-comment"],
+[class $= "_comment"],
+[class ~= "comment"],
+[id ^= "comment"],
+[id *= "-comments-"],
+[id $= "-comments"],
+[id $= "_comments"],
+[id ~= "comments"],
+[id *= "-comment-"],
+[id $= "-comment"],
+[id $= "_comment"],
+[id ~= "comment"] {
+    display: none;
+}
+
+/* Very simple tags hider */
+[class ^= "tag"],
+[class *= "-tag-"],
+[class $= "-tag"],
+[class $= "_tag"],
+[class ~= "tag"],
+[id ^= "tag"],
+[id *= "-tag-"],
+[id $= "-tag"],
+[id $= "_tag"],
+[id ~= "tag"],
+[class *= "-tags-"],
+[class $= "-tags"],
+[class $= "_tags"],
+[class ~= "tags"],
+[id *= "-tags-"],
+[id $= "-tags"],
+[id $= "_tags"],
+[id ~= "tags"] {
+    display: none;
+}

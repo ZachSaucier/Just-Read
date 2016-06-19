@@ -52,7 +52,7 @@ function startSelectElement(doc) {
 	},
 	escFunc = function(e) {
 		// Listen for the "Esc" key and exit if so
-	    if(e.keyCode === 27) 
+	    if(e.keyCode === 27)
 	        exitFunc();
 	},
 	exitFunc = function() {
@@ -90,7 +90,7 @@ function startDeleteElement(doc) {
 	var mouseFunc = function (e) {
 	    var elem = e.target;
 
-	    if(!elem.classList.contains("simple-close") 
+	    if(!elem.classList.contains("simple-close")
 	    && !elem.classList.contains("simple-print")
 	    && doc.body != elem
 	    && doc.documentElement != elem) {
@@ -107,15 +107,17 @@ function startDeleteElement(doc) {
 	clickFunc = function(e) {
 		selected = e.target;
 
-		if(!selected.classList.contains("simple-close") 
+		if(!selected.classList.contains("simple-close")
 		&& !selected.classList.contains("simple-print")
 		&& doc.body != selected
 		&& doc.documentElement != selected)
 			selected.parentNode.removeChild(selected);
+		
+	    e.preventDefault();
 	},
 	escFunc = function(e) {
 		// Listen for the "Esc" key and exit if so
-	    if(e.keyCode === 27) 
+	    if(e.keyCode === 27)
 	        exitFunc();
 	},
 	exitFunc = function() {
@@ -147,7 +149,7 @@ function addStylesheet(doc, link, classN) {
 	styleLink.setAttribute("type", "text/css");
 	styleLink.setAttribute("href", path);
 
-	if(classN) 
+	if(classN)
 		styleLink.className = classN;
 
 	doc.head.appendChild(styleLink);
@@ -158,7 +160,7 @@ function addStylesheet(doc, link, classN) {
 function getArticleDate() {
 	// Check to see if there is a date available in the meta, if so get it
 	if(document.head.querySelector('meta[name="date"]'))
-		return document.head.querySelector('meta[name="date"]').getAttribute("content"); 
+		return document.head.querySelector('meta[name="date"]').getAttribute("content");
 	
 	// Check to see if there's a time element, if so get it
 	if(document.body.querySelector('time'))
@@ -174,7 +176,7 @@ function checkHeading(elem, heading, del) {
 		    element = elem.querySelector(heading);
 		if(del)
 			element.dataset.simpleDelete = true; // Flag it for removal later
-		return text; 
+		return text;
 	} else {
 		return false;
 	}
@@ -231,8 +233,8 @@ function addArticleMeta() {
 	// Check a couple places for the date, othewise say it's unknown
 	date.innerText = getArticleDate();
 	// Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
-	author.innerText = document.head.querySelector('meta[name="author"]') 
-		? document.head.querySelector('meta[name="author"]').getAttribute("content") 
+	author.innerText = document.head.querySelector('meta[name="author"]')
+		? document.head.querySelector('meta[name="author"]').getAttribute("content")
 		  : "Unknown author";
 	// Check h1s for the title, otherwise say it's unknown
 	title.innerText = getArticleTitle();
@@ -281,6 +283,9 @@ function closeOverlay() {
 	// Fade out
 	document.body.querySelector("#simple-article").classList.add("simple-fade-up");
 	
+	// Reset our variables
+	globalMostPs = null;
+	
 	setTimeout(function() {
 		// Enable scroll
 		document.documentElement.classList.remove("simple-no-scroll");
@@ -312,11 +317,33 @@ function checkLongestTextElement(container) {
 		checkLongestTextElement(container.children[i]);
 }
 
+// Check all of the <article>s on the page and return the one with the most ps
+function getLongestArticle() {
+    var articles = document.querySelectorAll("article");
+    if(articles.length < 1)
+        return null;
+    
+    var largestArticle = articles[0],
+        mostPCount = countPs(largestArticle);
+    for(var i = 1; i < articles.length; i++) {
+        var pCount = countPs(articles[i]);
+        if(pCount > mostPCount) {
+            largestArticle = articles[i];
+            mostPCount = pCount;
+        }
+    }
+    
+    if(mostPCount > 0)
+        return {"article": largestArticle, "pCount": mostPCount};
+    else
+        return null;
+}
+
 // Count the number of ps in the children using recursion
 function countPs(container) {
 	var count = container.querySelectorAll("p").length;
 
-	for(var i = 0; i < container.children.length; i++) 
+	for(var i = 0; i < container.children.length; i++)
 		count += countPs(container.children[i]);
 
 	return count;
@@ -359,17 +386,23 @@ function createSimplifiedOverlay() {
 
 	// Try using the selected element's content
 	globalMostPs = selected;
-
-	// If there is no text selected, set globalMostPs to what we think is the article container
-	if(globalMostPs == null) 
-		globalMostPs = document.querySelector("article");
-
-	// If there is no <article> element, get the container with the most ps
-	if(globalMostPs == null) 
-		checkLongestTextElement(); // Get element with the most text
-
+	
+	// If there is no text selected, get the container with the most ps
+	if(!globalMostPs) {
+    	checkLongestTextElement();
+    	// globalMostPs is now updated, as is globalMostPCount
+    
+    	// Compare the longest article to the element with the most ps
+        var articleObj = getLongestArticle();
+        if(articleObj !== null
+        && articleObj.pCount > globalMostPCount - 3) {
+            globalMostPs = articleObj.article;
+            globalMostPCount = articleObj.pCount;
+        }
+	}
+    
 	// See if the element we selected has the majority of ps found
-	if(document.querySelector("article") == null 
+	if(document.querySelector("article") == null
 	   && globalMostPCount / document.querySelectorAll("p").length < 0.75) {
 		var parent = globalMostPs.parentNode,
 			parentPNum = countPs(parent);
@@ -399,7 +432,7 @@ function createSimplifiedOverlay() {
 		    elem.removeAttribute("bgcolor");
 		    elem.removeAttribute("border");
 		    if(elem.innerHTML != elem.innerHTML.replace(/&nbsp;/g,'')) // Remove &nbsp; s
-		    	elem.innerHTML = elem.innerHTML.replace(/&nbsp;/g,''); 
+		    	elem.innerHTML = elem.innerHTML.replace(/&nbsp;/g,'');
 
 		    // See if the pres have code in them
 		    var isPreNoCode = true;
@@ -447,7 +480,7 @@ function createSimplifiedOverlay() {
 	document.body.appendChild(simpleArticle);
 
 	// Focus the article so our shortcuts work from the start
-	document.getElementById("simple-article").focus(); 
+	document.getElementById("simple-article").focus();
 
 	// Append our custom HTML to the iframe
 	simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
@@ -474,12 +507,12 @@ function createSimplifiedOverlay() {
 
 	simpleArticleIframe.onkeyup = function(e) {
 		// Listen for the "Esc" key and exit if so
-	    if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting")) 
+	    if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting"))
 	        closeOverlay();
 
 
 	    // Listen for CTRL + SHIFT + ; and allow node deletion if so
-	    if(e.keyCode === 186 && e.ctrlKey && e.shiftKey) 
+	    if(e.keyCode === 186 && e.ctrlKey && e.shiftKey)
 	    	startDeleteElement(simpleArticleIframe);
 	}
 
@@ -530,7 +563,7 @@ function continueLoading() {
 
 var isPaused = false,
 	stylesheetObj = {},
-	stylesheetVersion = 1; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+	stylesheetVersion = 1.2; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
 	var interval = setInterval(function() {
@@ -538,11 +571,11 @@ if(document.getElementById("simple-article") == null) {
 		if(typeof useText != "undefined" && useText && !isPaused) {
 			// Start the process of the user selecting text to read
 			startSelectElement(document);
-		} 
+		}
 
 		if(!isPaused) {
-			// Add the stylesheet for the loader/container
-			if(!document.head.querySelector(".page-styles")) 
+			// Add the stylesheet for the container
+			if(!document.head.querySelector(".page-styles"))
 				addStylesheet(document, "page.css", "page-styles");
 
 			// Attempt to mute the elements on the original page
@@ -551,7 +584,7 @@ if(document.getElementById("simple-article") == null) {
 			// Create our version of the article
 			createSimplifiedOverlay();
 
-			// Add our stylesheet for the article
+			// Add our required stylesheet for the article
 			if(!simpleArticleIframe.head.querySelector(".required-styles"))
 				addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
 			
@@ -560,11 +593,11 @@ if(document.getElementById("simple-article") == null) {
 			for(var i = 0; i < linkNum; i++) {
 				simpleArticleIframe.links[i].onclick = function(e) {
 					// Don't change the top most if it's not in the current window
-					if(e.ctrlKey 
-					|| e.shiftKey 
-					|| e.metaKey 
+					if(e.ctrlKey
+					|| e.shiftKey
+					|| e.metaKey
 					|| (e.button && e.button == 1)
-					|| e.target != "about:blank") {
+					|| e.target.baseURI === "about:blank") {
 						return; // Do nothing
 					}
 
@@ -574,14 +607,13 @@ if(document.getElementById("simple-article") == null) {
 					if(hrefArr.length < 2 // No anchor
 					|| hrefArr[0] != top.window.location.href // Anchored to an ID on another page
 					|| (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
-						&& simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null) 
+						&& simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
 					) {
-						console.log("test");
 						top.window.location.href = this.href; // Regular link
 					} else { // Anchored to an element in the article
 						top.window.location.hash = hrefArr[1];
 						simpleArticleIframe.location.hash = hrefArr[1];
-					} 
+					}
 				}
 			}
 
@@ -594,13 +626,13 @@ if(document.getElementById("simple-article") == null) {
 			chrome.storage.sync.get('just-read-stylesheets', function (result) {
 
 				// Check to see if the default stylesheet needs to be updated
-				var needsUpdate = false; 
+				var needsUpdate = false;
 				chrome.storage.sync.get('stylesheet-version', function (versionResult) {
 
 					// If the user has a version of the stylesheets and it is less than the cufrent one, update it
-					if(isEmpty(versionResult) 
-					|| versionResult['stylesheet-version'] < stylesheetVersion) {        
-						chrome.storage.sync.set({'stylesheet-version': stylesheetVersion}); 
+					if(isEmpty(versionResult)
+					|| versionResult['stylesheet-version'] < stylesheetVersion) {
+						chrome.storage.sync.set({'stylesheet-version': stylesheetVersion});
 
 						needsUpdate = true;
 					}
