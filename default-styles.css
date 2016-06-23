@@ -23,10 +23,11 @@
 body {
 	font-family: 'Merriweather', serif;
 	line-height: 1.75em;
+	font-size: 18px;
 }
 
 .simple-container {
-	max-width: 600px;
+	max-width: 675px;
 	margin: 0 auto;
 	padding-top: 70px;
 	padding-bottom: 20px;
@@ -86,6 +87,15 @@ img {
 
 li {
 	line-height: 1.5em;
+}
+
+aside,
+[class *= "sidebar"],
+[id *= "sidebar"] {
+	max-width: 90%;
+    margin: 0 auto;
+    border: 1px solid lightgrey;
+    padding: 5px 15px;
 }
 
 .simple-date {
@@ -257,4 +267,33 @@ li {
 [id $= "_tags"],
 [id ~= "tags"] {
     display: none;
+}
+
+/* Very simple signup hider */
+[class ^= "signup"],
+[class *= "-signup-"],
+[class $= "-signup"],
+[class $= "_signup"],
+[class ~= "signup"],
+[id ^= "signup"],
+[id *= "-signup-"],
+[id $= "-signup"],
+[id $= "_signup"],
+[id ~= "signup"] {
+	display: none;
+}
+
+/* Very simple footer hider */
+footer,
+[class ^= "footer"],
+[class *= "-footer-"],
+[class $= "-footer"],
+[class $= "_footer"],
+[class ~= "footer"],
+[id ^= "footer"],
+[id *= "-footer-"],
+[id $= "-footer"],
+[id $= "_footer"],
+[id ~= "footer"] {
+	display: none;
 }

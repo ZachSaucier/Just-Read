@@ -171,6 +171,50 @@ function startDeleteElement(doc) {
 
 
 
+
+
+/////////////////////////////////////
+// Chrome storage functions
+/////////////////////////////////////
+
+// Given a chrome storage object add them to our local stylsheet obj
+function getStylesFromStorage(storage) {
+	for(var key in storage) {
+		// Convert the old format into the new format
+		if(key === "just-read-stylesheets") {
+			// Save each stylesheet in the new format
+			for(var stylesheet in storage[key]) {
+				var obj = {};
+				obj['jr-' + stylesheet] = storage[key][stylesheet];
+				chrome.storage.sync.set(obj);
+				stylesheetObj[stylesheet] = storage[key][stylesheet];
+			}
+
+			// Remove the old format
+			removeStyleFromStorage(key);
+
+		} else if(key.substring(0, 3) === "jr-") // Get stylesheets in the new format
+			stylesheetObj[key.substring(3)] = storage[key];
+	}
+}
+
+// Set the chrome storage based on our stylesheet object
+function setStylesOfStorage() {
+	for(var stylesheet in stylesheetObj) {
+		var obj = {};
+		obj['jr-' + stylesheet] = stylesheetObj[stylesheet];
+		chrome.storage.sync.set(obj);
+	}
+}
+
+// Remove a given element from chrome storage
+function removeStyleFromStorage(stylesheet) {
+	chrome.storage.sync.remove(stylesheet);
+}
+
+
+
+
 /////////////////////////////////////
 // Extension-related helper functions
 /////////////////////////////////////
@@ -581,18 +625,7 @@ function continueLoading() {
 	});
 }
 
-// Used for testing Chrome storage
-// chrome.storage.onChanged.addListener(function(changes, namespace) {
-// 	for (key in changes) {
-// 		var storageChange = changes[key];
-// 		console.log('Storage key "%s" in namespace "%s" changed. ' +
-// 		'Old value was "%s", new value is "%s".',
-// 		key,
-// 		namespace,
-// 		storageChange.oldValue,
-// 		storageChange.newValue);
-// 	}
-// });
+
 
 
 
@@ -603,7 +636,7 @@ function continueLoading() {
 
 var isPaused = false,
 	stylesheetObj = {},
-	stylesheetVersion = 1.2; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+	stylesheetVersion = 1.3; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
 	var interval = setInterval(function() {
@@ -663,7 +696,9 @@ if(document.getElementById("simple-article") == null) {
 			// GET THEMES CSS SHEETS FROM CHROME STORAGE
 
 			// Check to see if the stylesheets are already in Chrome storage
-			chrome.storage.sync.get('just-read-stylesheets', function (result) {
+			chrome.storage.sync.get(null, function (result) {
+				// Collect all of our stylesheets in our object
+				getStylesFromStorage(result);
 
 				// Check to see if the default stylesheet needs to be updated
 				var needsUpdate = false;
@@ -677,8 +712,7 @@ if(document.getElementById("simple-article") == null) {
 						needsUpdate = true;
 					}
 
-					if(isEmpty(result) // Not found, so we add our default
-					|| isEmpty(result["just-read-stylesheets"])
+					if(isEmpty(stylesheetObj) // Not found, so we add our default
 					|| needsUpdate) { // Update the default stylesheet if it's on a previous version
 
 				        // Open the default CSS file and save it to our object
@@ -687,18 +721,16 @@ if(document.getElementById("simple-article") == null) {
 						xhr.onreadystatechange = function() {
 						    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 						    	// Save the file's contents to our object
-						        result["just-read-stylesheets"]["default-styles.css"] = xhr.responseText;
-
-						        stylesheetObj = result["just-read-stylesheets"];
+						        stylesheetObj["default-styles.css"] =  xhr.responseText;
 
 						        // Save it to Chrome storage
-								chrome.storage.sync.set({'just-read-stylesheets': result["just-read-stylesheets"]}, function() {
-									continueLoading();
-								});
+								setStylesOfStorage();
+
+								// Continue on loading the page
+								continueLoading();
 
 								// Set it as our current theme
-								if(isEmpty(result))
-									chrome.storage.sync.set({"currentTheme": "default-styles.css"});
+								chrome.storage.sync.set({"currentTheme": "default-styles.css"});
 						    }
 						}
 						xhr.send();
@@ -709,8 +741,6 @@ if(document.getElementById("simple-article") == null) {
 				    }
 
 				    // It's already found, so we use it
-
-				    stylesheetObj = result["just-read-stylesheets"];
 
 				    continueLoading();
 				});

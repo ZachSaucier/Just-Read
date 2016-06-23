@@ -9,6 +9,54 @@ function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
 
+function byteLength(str) {
+  // returns the byte length of an utf8 string
+  var s = str.length;
+  for (var i=str.length-1; i>=0; i--) {
+    var code = str.charCodeAt(i);
+    if (code > 0x7f && code <= 0x7ff) s++;
+    else if (code > 0x7ff && code <= 0xffff) s+=2;
+    if (code >= 0xDC00 && code <= 0xDFFF) i--; //trail surrogate
+  }
+  return s;
+}
+
+// Given a chrome storage object add them to our local stylsheet obj
+function getStylesFromStorage(storage) {
+	for(var key in storage) {
+		// Convert the old format into the new format
+		if(key === "just-read-stylesheets") {
+			// Save each stylesheet in the new format
+			for(var stylesheet in storage[key]) {
+				var obj = {};
+				obj['jr-' + stylesheet] = storage[key][stylesheet];
+				chrome.storage.sync.set(obj);
+				stylesheetObj[stylesheet] = storage[key][stylesheet];
+			}
+
+			// Remove the old format
+			removeStyleFromStorage(key);
+
+		} else if(key.substring(0, 3) === "jr-") // Get stylesheets in the new format
+			stylesheetObj[key.substring(3)] = storage[key];
+	}
+}
+
+// Set the chrome storage based on our stylesheet object
+function setStylesOfStorage() {
+	for(var stylesheet in stylesheetObj) {
+		var obj = {};
+		obj['jr-' + stylesheet] = stylesheetObj[stylesheet];
+		chrome.storage.sync.set(obj);
+	}
+}
+
+// Remove a given element from chrome storage
+function removeStyleFromStorage(stylesheet) {
+	chrome.storage.sync.remove(stylesheet);
+}
+
+
 // Detect double click - pulled from http://stackoverflow.com/a/26296759/2065702
 function makeDoubleClick (doubleClickCallback, singleClickCallback) {
     return (function () {
@@ -176,9 +224,11 @@ function continueLoading() {
 
 // Obtain the stylesheet strings from localStorage and put them in our stylesheet object
 function getStylesheets() {
-	chrome.storage.sync.get('just-read-stylesheets', function (result) {
+	chrome.storage.sync.get(null, function (result) {
+		// Collect all of our stylesheets in our object
+		getStylesFromStorage(result);
 
-		if(isEmpty(result)) { // Not found, so we add our default	        
+		if(isEmpty(stylesheetObj)) { // Not found, so we add our default	        
 	        // Open the default CSS file and save it to our object
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', chrome.extension.getURL(defaultStylesheet), true);
@@ -188,7 +238,7 @@ function getStylesheets() {
 			        stylesheetObj[defaultStylesheet] =  xhr.responseText;
 
 			        // Save it to Chrome storage
-					chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+					setStylesOfStorage();
 
 					continueLoading();
 			    }
@@ -196,10 +246,6 @@ function getStylesheets() {
 			xhr.send();
 	        return;
 	    }
-
-	    // It's already found, so we use it
-
-	    stylesheetObj = result["just-read-stylesheets"];
 
 	    continueLoading();
 	});
@@ -209,11 +255,8 @@ function saveTheme() {
 	// Get the name of the current file being edited
 	var currFileElem = document.querySelector(".stylesheets .active");
 
-	// Save that file to localStorage
-	if(!currFileElem.classList.contains("locked")) {
-		stylesheetObj[currFileElem.innerText] = editor.innerText;
-		chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
-	} else { // The file is locked, so make a new one with the same name
+	
+	if(currFileElem.classList.contains("locked")) { // The file is locked, so make a new one with the same name
 		var fileName = checkFileName(currFileElem.innerText);
 
 		// Add a new list element
@@ -226,7 +269,7 @@ function saveTheme() {
 			document.querySelector(".stylesheets .active").classList.remove("active");
 		li.classList.add("active");
 
-		// Force them to save to keep it	
+		// Force them to save to keep it
 		changed = true;
 
 		list.appendChild(li);
@@ -234,11 +277,39 @@ function saveTheme() {
 		document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(rename, styleListOnClick);
 
 		// Update our stylesheet storage
-		saveTheme();
+		useTheme();
 	}
+
+	// Save that file to localStorage
+	if(byteLength(editor.innerText) > 8000) {
+		console.log("Stylesheet is too big. Trying to minify");
+		editor.innerText = editor.innerText.replace(/\s/g, '');
+	}
+	stylesheetObj[currFileElem.innerText] = editor.innerText;
+	setStylesOfStorage();
 
 	// Note that the file has been saved
 	changed = false;
+}
+
+function useTheme() {
+	// Save the current theme
+	if(!document.querySelector(".stylesheets .active").classList.contains("locked")) 
+		saveTheme();
+
+	// Remove the used class from the old list item
+	if(document.querySelector(".stylesheets .used") !== null) 
+		document.querySelector(".stylesheets .used").classList.remove("used");
+
+	// Update the class to show it's applied
+	document.querySelector(".stylesheets .active").classList.add("used");
+
+	// Apply the current theme
+	var sheet = document.querySelector(".used").innerText;
+	chrome.storage.sync.set({"currentTheme": sheet});
+
+	// Tell that we changed it
+	alert(sheet + " is now set as the active theme");
 }
 
 getStylesheets();
@@ -310,25 +381,7 @@ add.onclick = function() {
 saveButton.onclick = saveTheme;
 
 // Use the selected stylesheet
-useButton.onclick = function() {
-	// Save the current theme
-	if(!document.querySelector(".stylesheets .active").classList.contains("locked"))
-		saveTheme();
-
-	// Remove the used class from the old list item
-	if(document.querySelector(".stylesheets .used") !== null) 
-		document.querySelector(".stylesheets .used").classList.remove("used");
-
-	// Update the class to show it's applied
-	document.querySelector(".stylesheets .active").classList.add("used");
-
-	// Apply the current theme
-	var sheet = document.querySelector(".used").innerText;
-	chrome.storage.sync.set({"currentTheme": sheet});
-
-	// Tell that we changed it
-	alert(sheet + " is now set as the active theme");
-}
+useButton.onclick = useTheme;
 
 // Remove the selected file
 removeButton.onclick = function() {
@@ -342,8 +395,8 @@ removeButton.onclick = function() {
 			// Remove the file from our object
 			delete stylesheetObj[document.querySelector(".stylesheets .active").innerText]; 
 
-			// Sync our object with Chrome storage
-			chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+			// Remove the file from Chrome's storage
+			removeStyleFromStorage("jr-" + elem.innerText);
 
 			// Check to see if it's the currently used sheet - if so set it to the default
 			if(elem.classList.contains("used")) {
