@@ -647,18 +647,24 @@ if(document.getElementById("simple-article") == null) {
 						xhr.onreadystatechange = function() {
 						    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 						    	// Save the file's contents to our object
-						        stylesheetObj["default-styles.css"] = xhr.responseText;
+						        result["just-read-stylesheets"]["default-styles.css"] = xhr.responseText;
+
+						        stylesheetObj = result["just-read-stylesheets"];
 
 						        // Save it to Chrome storage
-								chrome.storage.sync.set({'just-read-stylesheets': stylesheetObj});
+								chrome.storage.sync.set({'just-read-stylesheets': result["just-read-stylesheets"]}, function() {
+									continueLoading();
+								});
 
 								// Set it as our current theme
-								chrome.storage.sync.set({"currentTheme": "default-styles.css"});
-
-								continueLoading();
+								if(isEmpty(result))
+									chrome.storage.sync.set({"currentTheme": "default-styles.css"});
 						    }
 						}
 						xhr.send();
+
+						needsUpdate = false;
+
 				        return;
 				    }
 

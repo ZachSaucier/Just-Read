@@ -316,9 +316,10 @@ useButton.onclick = function() {
 		saveTheme();
 
 	// Remove the used class from the old list item
-	document.querySelector(".stylesheets .used").classList.remove("used");
+	if(document.querySelector(".stylesheets .used") !== null) 
+		document.querySelector(".stylesheets .used").classList.remove("used");
 
-	// Update the class to shop it's applied
+	// Update the class to show it's applied
 	document.querySelector(".stylesheets .active").classList.add("used");
 
 	// Apply the current theme
