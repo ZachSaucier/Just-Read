@@ -31,7 +31,7 @@ You can start using Just Read's built in selection in three ways:
 1. Click the Just Read Chrome extension button. 
 ![extension button](http://i.imgur.com/aCOIuVV.png)
 
-2. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>L</kbd>.
+2. Use the shortcut <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>L</kbd>.
 
 3. Right click and choose the "Open this page using Just Read" option.
 
@@ -41,11 +41,11 @@ You can also select exactly the text you want to read if the built in method doe
 
 4. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
 
-5. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
+5. Use the shortcut <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
 
 ### Deletion mode
 
-Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd>. They can click on elements that they don't want to view (helpful for printing or if there are elements that aren't part of the article) and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd>. 
+Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>;</kbd>. They can click on elements that they don't want to view (helpful for printing or if there are elements that aren't part of the article) and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd>. 
 
 ___
 

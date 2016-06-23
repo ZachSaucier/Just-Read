@@ -1,3 +1,8 @@
+/////////////////////////////////////
+// Generic helper functions
+/////////////////////////////////////
+
+
 // Add :scope functionality to QS & QSA
 (function(doc, proto) {
   try { // Check if browser supports :scope natively
@@ -21,10 +26,32 @@
   }
 })(window.document, Element.prototype);
 
+
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
 
+// Mute a singular HTML5 element
+function muteMe(elem) {
+	elem.muted = true;
+	elem.pause();
+}
+
+// Try to mute all video and audio elements on the page
+function mutePage() {
+	var videos = document.querySelectorAll("video"),
+		audios = document.querySelectorAll("audio");
+
+	[].forEach.call(videos, function(video) { muteMe(video); });
+	[].forEach.call(audios, function(audio) { muteMe(audio); });
+}
+
+
+
+
+/////////////////////////////////////
+// State functions
+/////////////////////////////////////
 
 // User-selected text functionality
 var last,
@@ -140,22 +167,23 @@ function startDeleteElement(doc) {
 	doc.addEventListener('keyup', escFunc);
 }
 
-// Add our styles to the page
-function addStylesheet(doc, link, classN) {
-	var path = chrome.extension.getURL(link),
-		styleLink = document.createElement("link");
 
-	styleLink.setAttribute("rel", "stylesheet");
-	styleLink.setAttribute("type", "text/css");
-	styleLink.setAttribute("href", path);
 
-	if(classN)
-		styleLink.className = classN;
 
-	doc.head.appendChild(styleLink);
+
+/////////////////////////////////////
+// Extension-related helper functions
+/////////////////////////////////////
+
+// Count the number of ps in the children using recursion
+function countPs(container) {
+	var count = container.querySelectorAll("p").length;
+
+	for(var i = 0; i < container.children.length; i++)
+		count += countPs(container.children[i]);
+
+	return count;
 }
-
-
 
 function getArticleDate() {
 	// Check to see if there is a date available in the meta, if so get it
@@ -219,65 +247,6 @@ function getArticleTitle() {
 	return "Unknown title";
 }
 
-// Add the article author and date
-function addArticleMeta() {
-	var metaContainer = document.createElement("div");
-	metaContainer.className = "simple-meta";
-	var author = document.createElement("div"),
-		date = document.createElement("div"),
-		title = document.createElement("h1");
-
-	author.className = "simple-author";
-	date.className = "simple-date";
-
-	// Check a couple places for the date, othewise say it's unknown
-	date.innerText = getArticleDate();
-	// Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
-	author.innerText = document.head.querySelector('meta[name="author"]')
-		? document.head.querySelector('meta[name="author"]').getAttribute("content")
-		  : "Unknown author";
-	// Check h1s for the title, otherwise say it's unknown
-	title.innerText = getArticleTitle();
-
-	metaContainer.appendChild(date);
-	metaContainer.appendChild(author);
-	metaContainer.appendChild(title);
-
-	return metaContainer;
-}
-
-// Add the close button
-function addCloseButton() {
-	var closeButton = document.createElement("button");
-	closeButton.className = "simple-close";
-	closeButton.textContent = "X";
-
-	return closeButton;
-}
-
-// Add the print button
-function addPrintButton() {
-	var printButton = document.createElement("button");
-	printButton.className = "simple-print";
-	printButton.textContent = "Print";
-
-	return printButton;
-}
-
-// Add some information about our extension
-function addExtInfo() {
-	var extContainer = document.createElement("div");
-	extContainer.className = "simple-ext-info";
-	extContainer.innerText = "Viewed using ";
-
-	var extAnchor = document.createElement("a");
-	extAnchor.href = "https://github.com/ZachSaucier/Just-Read";
-	extAnchor.innerText = "Just Read";
-	extContainer.appendChild(extAnchor);
-
-	return extContainer;
-}
-
 // Remove what we added (besides styles)
 function closeOverlay() {
 	// Fade out
@@ -339,32 +308,97 @@ function getLongestArticle() {
         return null;
 }
 
-// Count the number of ps in the children using recursion
-function countPs(container) {
-	var count = container.querySelectorAll("p").length;
 
-	for(var i = 0; i < container.children.length; i++)
-		count += countPs(container.children[i]);
 
-	return count;
+
+
+
+/////////////////////////////////////
+// Extension-related adder functions
+/////////////////////////////////////
+
+
+// Add our styles to the page
+function addStylesheet(doc, link, classN) {
+	var path = chrome.extension.getURL(link),
+		styleLink = document.createElement("link");
+
+	styleLink.setAttribute("rel", "stylesheet");
+	styleLink.setAttribute("type", "text/css");
+	styleLink.setAttribute("href", path);
+
+	if(classN)
+		styleLink.className = classN;
+
+	doc.head.appendChild(styleLink);
 }
 
-// Mute a singular HTML5 element
-function muteMe(elem) {
-	elem.muted = true;
-	elem.pause();
+// Add the article author and date
+function addArticleMeta() {
+	var metaContainer = document.createElement("div");
+	metaContainer.className = "simple-meta";
+	var author = document.createElement("div"),
+		date = document.createElement("div"),
+		title = document.createElement("h1");
+
+	author.className = "simple-author";
+	date.className = "simple-date";
+
+	// Check a couple places for the date, othewise say it's unknown
+	date.innerText = getArticleDate();
+	// Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
+	author.innerText = document.head.querySelector('meta[name="author"]')
+		? document.head.querySelector('meta[name="author"]').getAttribute("content")
+		  : "Unknown author";
+	// Check h1s for the title, otherwise say it's unknown
+	title.innerText = getArticleTitle();
+
+	metaContainer.appendChild(date);
+	metaContainer.appendChild(author);
+	metaContainer.appendChild(title);
+
+	return metaContainer;
 }
 
-// Try to mute all video and audio elements on the page
-function mutePage() {
-	var videos = document.querySelectorAll("video"),
-		audios = document.querySelectorAll("audio");
+// Add the close button
+function addCloseButton() {
+	var closeButton = document.createElement("button");
+	closeButton.className = "simple-close";
+	closeButton.textContent = "X";
 
-	[].forEach.call(videos, function(video) { muteMe(video); });
-	[].forEach.call(audios, function(audio) { muteMe(audio); });
+	return closeButton;
+}
+
+// Add the print button
+function addPrintButton() {
+	var printButton = document.createElement("button");
+	printButton.className = "simple-print";
+	printButton.textContent = "Print";
+
+	return printButton;
+}
+
+// Add some information about our extension
+function addExtInfo() {
+	var extContainer = document.createElement("div");
+	extContainer.className = "simple-ext-info";
+	extContainer.innerText = "Viewed using ";
+
+	var extAnchor = document.createElement("a");
+	extAnchor.href = "https://github.com/ZachSaucier/Just-Read";
+	extAnchor.innerText = "Just Read";
+	extContainer.appendChild(extAnchor);
+
+	return extContainer;
 }
 
 
+
+
+
+/////////////////////////////////////
+// Actually create the iframe 
+/////////////////////////////////////
 
 var simpleArticleIframe;
 function createSimplifiedOverlay() {
@@ -512,7 +546,7 @@ function createSimplifiedOverlay() {
 
 
 	    // Listen for CTRL + SHIFT + ; and allow node deletion if so
-	    if(e.keyCode === 186 && e.ctrlKey && e.shiftKey)
+	    if(e.keyCode === 186 && e.ctrlKey && e.altKey)
 	    	startDeleteElement(simpleArticleIframe);
 	}
 
@@ -560,6 +594,12 @@ function continueLoading() {
 // 	}
 // });
 
+
+
+
+/////////////////////////////////////
+// Handle the stylesheet syncing 
+/////////////////////////////////////
 
 var isPaused = false,
 	stylesheetObj = {},
