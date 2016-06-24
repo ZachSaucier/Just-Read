@@ -1,7 +1,8 @@
 
 var changed = false,
 	stylesheetObj = {},
-	editor = document.getElementById("css-editor"),
+	editor = document.querySelector("#css-editor code"),
+	saveButton = document.getElementById("save"),
 	defaultLiItem,
 	defaultStylesheet = "default-styles.css";
 
@@ -108,6 +109,7 @@ function rename() {
 
 			stylesheetObj[fileNameInput.value] = stylesheetObj[liItem.innerText];
 			delete stylesheetObj[liItem.innerText];
+			removeStyleFromStorage("jr-" + liItem.innerText);
 
 			setTimeout(function() {
 				saveTheme();
@@ -186,12 +188,21 @@ function continueLoading() {
 			count = 0;
 		for (var stylesheet in stylesheetObj) {
 			var li = document.createElement("li"),
-				liClassList = li.classList;
-			li.innerText = stylesheet;
+				liClassList = li.classList,
+				radio = document.createElement("input");
+
+			radio.type = "radio";
+			radio.name = "activeStylesheetRadios";
 
 			// If the sheet is the one currently applied, add a signifier class
-			if(stylesheet === currTheme)
+			if(stylesheet === currTheme) {
 				liClassList.add("used");
+				radio.setAttribute("checked", true);
+			}
+
+			// Add them to the li element
+			li.appendChild(radio);
+			li.innerHTML += stylesheet;
 
 			// Lock the default-styles.css file (prevent deletion)
 			if(stylesheet === defaultStylesheet) {
@@ -204,7 +215,7 @@ function continueLoading() {
 				liClassList.add("active");
 				var fileName = li.textContent;
 				editor.innerText = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
-			}
+			}			
 
 			list.appendChild(li);
 
@@ -218,6 +229,21 @@ function continueLoading() {
 				item.onclick = makeDoubleClick(rename, styleListOnClick);
 			else // Prevent the locked items from being changed in name
 				item.onclick = styleListOnClick;
+		});
+
+		// Add the listener for the save animation
+		saveButton.addEventListener("animationend", function() {
+			saveButton.classList.remove("saved");
+		});
+		saveButton.addEventListener("webkitAnimationEnd", function() {
+			saveButton.classList.remove("saved");
+		});
+
+		// Add the listener that strips pastes of styling
+		editor.addEventListener("paste", function(e) {
+		    e.preventDefault();
+		    var text = e.clipboardData.getData("text/plain");
+		    document.execCommand("insertHTML", false, text);
 		});
 	});
 }
@@ -288,24 +314,33 @@ function saveTheme() {
 	stylesheetObj[currFileElem.innerText] = editor.innerText;
 	setStylesOfStorage();
 
+	// Show the save animation
+	saveButton.classList.add("saved");
+
 	// Note that the file has been saved
 	changed = false;
 }
 
 function useTheme() {
+	var themeToUse = document.querySelector(".stylesheets .active"),
+		previouslyUsed = document.querySelector(".stylesheets .used");
+
 	// Save the current theme
-	if(!document.querySelector(".stylesheets .active").classList.contains("locked")) 
+	if(!themeToUse.classList.contains("locked")) 
 		saveTheme();
 
 	// Remove the used class from the old list item
-	if(document.querySelector(".stylesheets .used") !== null) 
-		document.querySelector(".stylesheets .used").classList.remove("used");
+	if(previouslyUsed !== null) 
+		previouslyUsed.classList.remove("used");
 
 	// Update the class to show it's applied
-	document.querySelector(".stylesheets .active").classList.add("used");
+	themeToUse.classList.add("used");
+
+	// Make this radio button active
+	themeToUse.querySelector("input").checked = true;
 
 	// Apply the current theme
-	var sheet = document.querySelector(".used").innerText;
+	var sheet = themeToUse.innerText;
 	chrome.storage.sync.set({"currentTheme": sheet});
 
 	// Tell that we changed it

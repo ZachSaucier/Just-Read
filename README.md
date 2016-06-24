@@ -59,6 +59,10 @@ If you want to customize the stylesheet or add and use your own, you can right c
 
 You can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
+### Find themes or share your own
+
+If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
+
 ___
 
 ### Description of files:
