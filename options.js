@@ -172,6 +172,8 @@ function styleListOnClick() {
 			localStorage.currentTheme = fileName;
 
 			changed = false;
+
+			document.querySelector(".editor").scrollTop = 0;
 		}
 	}
 };

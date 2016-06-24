@@ -230,11 +230,29 @@ function countPs(container) {
 }
 
 function getArticleDate() {
+	// Make sure that the globalMostPs isn't empty
+	if(globalMostPs == null)
+		globalMostPs = document.body;
+
+	// Check to see if there's a date class
+	if(globalMostPs.querySelector('[class*="date"]')) {
+		var elem = globalMostPs.querySelector('[class*="date"]');
+		elem.dataset.simpleDelete = true; // Flag it for removal later
+		return elem.innerText;
+	}
+	if(document.body.querySelector('[class*="date"]'))
+		return document.body.querySelector('[class*="date"]').innerText;
+
 	// Check to see if there is a date available in the meta, if so get it
-	if(document.head.querySelector('meta[name="date"]'))
-		return document.head.querySelector('meta[name="date"]').getAttribute("content");
-	
+	if(document.head.querySelector('meta[name*="date"]'))
+		return document.head.querySelector('meta[name*="date"]').getAttribute("content");
+
 	// Check to see if there's a time element, if so get it
+	if(globalMostPs.querySelector('time')) {
+		var elem = globalMostPs.querySelector('time');
+		elem.dataset.simpleDelete = true; // Flag it for removal later
+		return elem.getAttribute("datetime");
+	}
 	if(document.body.querySelector('time'))
 		return document.body.querySelector('time').getAttribute("datetime");
 
@@ -289,6 +307,27 @@ function getArticleTitle() {
 		return document.head.querySelector("title").innerText;
 	
 	return "Unknown title";
+}
+
+function getArticleAuthor() {
+	// Make sure that the globalMostPs isn't empty
+	if(globalMostPs == null)
+		globalMostPs = document.body;
+
+	// Check to see if there's a date class
+	if(globalMostPs.querySelector('[class*="author"]')) {
+		var elem = globalMostPs.querySelector('[class*="author"]');
+		elem.dataset.simpleDelete = true; // Flag it for removal later
+		return elem.innerText;
+	}
+	if(document.body.querySelector('[class*="author"]'))
+		return document.body.querySelector('[class*="author"]').innerText;
+
+	// Check to see if there is a date available in the meta, if so get it
+	if(document.head.querySelector('meta[name*="author"]'))
+		return document.head.querySelector('meta[name*="author"]').getAttribute("content");
+
+	return "Unknown author";
 }
 
 // Remove what we added (besides styles)
@@ -371,10 +410,8 @@ function linkListener(e) {
 	|| (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
 		&& simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
 	) {
-		console.log("second");
 		top.window.location.href = this.href; // Regular link
 	} else { // Anchored to an element in the article
-		console.log("third");
 		top.window.location.hash = hrefArr[1];
 		simpleArticleIframe.location.hash = hrefArr[1];
 	}
@@ -417,9 +454,7 @@ function addArticleMeta() {
 	// Check a couple places for the date, othewise say it's unknown
 	date.innerText = getArticleDate();
 	// Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
-	author.innerText = document.head.querySelector('meta[name="author"]')
-		? document.head.querySelector('meta[name="author"]').getAttribute("content")
-		  : "Unknown author";
+	author.innerText = getArticleAuthor();
 	// Check h1s for the title, otherwise say it's unknown
 	title.innerText = getArticleTitle();
 

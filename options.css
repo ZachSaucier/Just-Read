@@ -74,8 +74,8 @@ body, .editor-container {
 	overflow: auto;
 }
 code { 
-	width: 100%;
-	width: calc(100% - 10px);
+	display: block;
+	padding: 5px;
 }
 
 
@@ -98,6 +98,7 @@ code {
     padding: 6px 8px;
     border-radius: 5px;
     border: 1px solid black;
+    background-color: white;
     opacity: 0;
     height: 0;
 }
