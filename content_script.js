@@ -352,7 +352,33 @@ function getLongestArticle() {
         return null;
 }
 
+// Handle link clicks
+function linkListener(e) {
+	// Don't change the top most if it's not in the current window
+	if(e.ctrlKey
+	|| e.shiftKey
+	|| e.metaKey
+	|| (e.button && e.button == 1)
+	|| this.target === "about:blank") {
+		return; // Do nothing
+	}
 
+	// Don't change the top most if it's referencing an anchor in the article
+	var hrefArr = this.href.split("#");
+	
+	if(hrefArr.length < 2 // No anchor
+	|| hrefArr[0] != top.window.location.href // Anchored to an ID on another page
+	|| (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
+		&& simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
+	) {
+		console.log("second");
+		top.window.location.href = this.href; // Regular link
+	} else { // Anchored to an element in the article
+		console.log("third");
+		top.window.location.hash = hrefArr[1];
+		simpleArticleIframe.location.hash = hrefArr[1];
+	}
+}
 
 
 
@@ -663,32 +689,8 @@ if(document.getElementById("simple-article") == null) {
 			
 			// Change the top most page when regular links are clicked
 			var linkNum = simpleArticleIframe.links.length;
-			for(var i = 0; i < linkNum; i++) {
-				simpleArticleIframe.links[i].onclick = function(e) {
-					// Don't change the top most if it's not in the current window
-					if(e.ctrlKey
-					|| e.shiftKey
-					|| e.metaKey
-					|| (e.button && e.button == 1)
-					|| e.target.baseURI === "about:blank") {
-						return; // Do nothing
-					}
-
-					// Don't change the top most if it's referencing an anchor in the article
-					var hrefArr = this.href.split("#");
-					
-					if(hrefArr.length < 2 // No anchor
-					|| hrefArr[0] != top.window.location.href // Anchored to an ID on another page
-					|| (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
-						&& simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
-					) {
-						top.window.location.href = this.href; // Regular link
-					} else { // Anchored to an element in the article
-						top.window.location.hash = hrefArr[1];
-						simpleArticleIframe.location.hash = hrefArr[1];
-					}
-				}
-			}
+			for(var i = 0; i < linkNum; i++)
+				simpleArticleIframe.links[i].onclick = linkListener;
 
 
 
