@@ -590,7 +590,7 @@ function createSimplifiedOverlay() {
 
 
 	    // Listen for CTRL + SHIFT + ; and allow node deletion if so
-	    if(e.keyCode === 186 && e.ctrlKey && e.altKey)
+	    if(e.keyCode === 186 && e.ctrlKey && e.shiftKey)
 	    	startDeleteElement(simpleArticleIframe);
 	}
 

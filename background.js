@@ -37,7 +37,7 @@ chrome.commands.onCommand.addListener(function(command) {
 //chrome.runtime.onInstalled.addListener(function() { // Only do it once
     // Create a right click menu option
     chrome.contextMenus.create({
-         title: "Open this page using Just Read",
+         title: "View this page using Just Read",
          contexts: ["page"], 
          onclick: startJustRead
     });
