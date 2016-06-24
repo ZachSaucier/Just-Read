@@ -52,10 +52,10 @@ ___
 ## Customization:
 
 By default the extension will use a theme that we made as seen here 
-![the effect of the extension](http://i.imgur.com/0aBizH4.png)
+![the effect of the extension](http://i.imgur.com/gNEpBfG.png)
 
 If you want to customize the stylesheet or add and use your own, you can right click the extension and open the "Options" page (you can also get to this via the Chrome extensions page). That will open a page that looks similar to this 
-![Options page](http://i.imgur.com/GHUcFHw.png)
+![Options page](http://i.imgur.com/1fKXKnF.png)
 
 You can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 

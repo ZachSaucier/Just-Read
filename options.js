@@ -115,8 +115,14 @@ function rename() {
 				saveTheme();
 			}, 10);
 			
+			var radio = document.createElement("input");
 
-			liItem.innerText = fileNameInput.value;
+			radio.type = "radio";
+			radio.name = "activeStylesheetRadios";
+
+			liItem.innerHTML = "";
+			liItem.appendChild(radio);
+			liItem.innerHTML += fileNameInput.value;
 		}
 
 		// Un-hide the list item
@@ -289,8 +295,14 @@ function saveTheme() {
 
 		// Add a new list element
 		var list = document.querySelector(".stylesheets"),
-			li = document.createElement("li");
-		li.innerText = fileName;
+			li = document.createElement("li"),
+			radio = document.createElement("input");
+
+		radio.type = "radio";
+		radio.name = "activeStylesheetRadios";
+
+		li.appendChild(radio);
+		li.innerHTML += fileName;
 
 		// Make it active
 		if(document.querySelector(".stylesheets .active"))
