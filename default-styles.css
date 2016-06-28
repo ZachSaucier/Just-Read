@@ -163,7 +163,6 @@ aside,
 }
 
 
-
 /* Hide some things I dislike seeing when I read articles */
 /* Very simple ad hider */
 [class = "ad"],
@@ -184,72 +183,30 @@ aside,
 }
 
 /* Very simple sharing hider */
-[class ^= "share"],
-[class *= "-share-"],
-[class $= "-share"],
-[class $= "share"],
-[class ~= "share"],
-[class ^= "sharing"],
-[id ^= "share"],
-[id *= "-share-"],
-[id $= "-share"],
-[id $= "share"],
-[id ~= "share"],
-[id ^= "sharing"],
-[class ^= "social"],
-[class *= "-social-"],
-[class $= "-social"],
-[class $= "social"],
-[class ~= "social"],
-[id ^= "social"],
-[id *= "-social-"],
-[id $= "-social"],
-[id $= "social"],
-[id ~= "social"],
-[class *= "-socials-"],
-[class $= "-socials"],
-[class $= "socials"],
-[class ~= "socials"],
-[id *= "-socials-"],
-[id $= "-socials"],
-[id $= "socials"],
-[id ~= "socials"] {
+[class *= "share"],
+[class *= "sharing"],
+[class *= "social"],
+[id *= "share"],
+[id *= "sharing"],
+[id *= "social"] {
     display: none;
 }
 
 /* Very simple related hider */
-[class ^= "related"],
-[class *= "-related-"],
-[class $= "-related"],
-[class $= "_related"],
-[class ~= "related"],
-[id ^= "related"],
-[id *= "-related-"],
-[id $= "-related"],
-[id $= "_related"],
-[id ~= "related"] {
+[class *= "meta"]:not(.simple-meta),
+[id *= "meta"] {
+    display: none;
+}
+
+/* Very simple related hider */
+[class *= "related"],
+[id *= "related"] {
     display: none;
 }
 
 /* Very simple comments hider */
-[class ^= "comment"],
-[class *= "-comments-"],
-[class $= "-comments"],
-[class $= "_comments"],
-[class ~= "comments"],
-[class *= "-comment-"],
-[class $= "-comment"],
-[class $= "_comment"],
-[class ~= "comment"],
-[id ^= "comment"],
-[id *= "-comments-"],
-[id $= "-comments"],
-[id $= "_comments"],
-[id ~= "comments"],
-[id *= "-comment-"],
-[id $= "-comment"],
-[id $= "_comment"],
-[id ~= "comment"] {
+[class *= "comment"],
+[id *= "comment"] {
     display: none;
 }
 
@@ -275,31 +232,96 @@ aside,
     display: none;
 }
 
-/* Very simple signup hider */
-[class ^= "signup"],
-[class *= "-signup-"],
-[class $= "-signup"],
-[class $= "_signup"],
-[class ~= "signup"],
-[id ^= "signup"],
-[id *= "-signup-"],
-[id $= "-signup"],
-[id $= "_signup"],
-[id ~= "signup"] {
+/* Very simple fav/favorites hider */
+[class ^= "fav"],
+[class *= "-fav-"],
+[class $= "-fav"],
+[class $= "_fav"],
+[class ~= "fav"],
+[id ^= "fav"],
+[id *= "-fav-"],
+[id $= "-fav"],
+[id $= "_fav"],
+[id ~= "fav"],
+[class *= "favorites"],
+[id *= "favorites"] {
+    display: none;
+}
+
+/* Very simple signup/signin hider */
+[class *= "signup"],
+[id *= "signup"],
+[class *= "signin"],
+[id *= "signin"],
+[class *= "signIn"],
+[id *= "signIn"] {
 	display: none;
 }
 
 /* Very simple footer hider */
 footer,
-[class ^= "footer"],
-[class *= "-footer-"],
-[class $= "-footer"],
-[class $= "_footer"],
-[class ~= "footer"],
-[id ^= "footer"],
-[id *= "-footer-"],
-[id $= "-footer"],
-[id $= "_footer"],
-[id ~= "footer"] {
+[class *= "footer"],
+[id *= "footer"] {
+	display: none;
+}
+
+
+/* Hide SVGs that use particular site names (usually icons) */
+svg[class *= "pinterest"],
+[class *= "pinterest"] svg,
+svg[id *= "pinterest"],
+[id *= "pinterest"] svg,
+svg[class *= "facebook"],
+[class *= "facebook"] svg,
+svg[id *= "facebook"],
+[id *= "facebook"] svg,
+svg[class *= "github"],
+[class *= "github"] svg,
+svg[id *= "github"],
+[id *= "github"] svg,
+svg[class *= "twitter"],
+[class *= "twitter"] svg,
+svg[id *= "twitter"],
+[id *= "twitter"] svg,
+svg[class *= "instagram"],
+[class *= "instagram"] svg,
+svg[id *= "instagram"],
+[id *= "instagram"] svg,
+svg[class *= "tumblr"],
+[class *= "tumblr"] svg,
+svg[id *= "tumblr"],
+[id *= "tumblr"] svg,
+svg[class *= "youtube"],
+[class *= "youtube"] svg,
+svg[id *= "youtube"],
+[id *= "youtube"] svg,
+svg[class *= "codepen"],
+[class *= "codepen"] svg,
+svg[id *= "codepen"],
+[id *= "codepen"] svg,
+svg[class *= "dribble"],
+[class *= "dribble"] svg,
+svg[id *= "dribble"],
+[id *= "dribble"] svg,
+svg[class *= "soundcloud"],
+[class *= "soundcloud"] svg,
+svg[id *= "soundcloud"],
+[id *= "soundcloud"] svg,
+svg[class *= "rss"],
+[class *= "rss"] svg,
+svg[id *= "rss"],
+[id *= "rss"] svg,
+svg[class *= "linkedin"],
+[class *= "linkedin"] svg,
+svg[id *= "linkedin"],
+[id *= "linkedin"] svg,
+svg[class *= "vimeo"],
+[class *= "vimeo"] svg,
+svg[id *= "vimeo"],
+[id *= "vimeo"] svg,
+svg[class *= "email"],
+[class *= "email"] svg,
+svg[id *= "email"],
+[id *= "email"] svg {
 	display: none;
 }

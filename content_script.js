@@ -235,26 +235,32 @@ function getArticleDate() {
 		globalMostPs = document.body;
 
 	// Check to see if there's a date class
+	var date = false;
 	if(globalMostPs.querySelector('[class*="date"]')) {
 		var elem = globalMostPs.querySelector('[class*="date"]');
 		elem.dataset.simpleDelete = true; // Flag it for removal later
-		return elem.innerText;
+		date = elem.innerText;
 	}
-	if(document.body.querySelector('[class*="date"]'))
-		return document.body.querySelector('[class*="date"]').innerText;
+	if(!date && document.body.querySelector('[class*="date"]'))
+		date = document.body.querySelector('[class*="date"]').innerText;
 
 	// Check to see if there is a date available in the meta, if so get it
-	if(document.head.querySelector('meta[name*="date"]'))
-		return document.head.querySelector('meta[name*="date"]').getAttribute("content");
+	if(!date && document.head.querySelector('meta[name^="date"]'))
+		date = document.head.querySelector('meta[name^="date"]').getAttribute("content");
+	if(!date && document.head.querySelector('meta[name*="-date"]'))
+		date = document.head.querySelector('meta[name*="-date"]').getAttribute("content");
 
 	// Check to see if there's a time element, if so get it
-	if(globalMostPs.querySelector('time')) {
+	if(!date && globalMostPs.querySelector('time')) {
 		var elem = globalMostPs.querySelector('time');
 		elem.dataset.simpleDelete = true; // Flag it for removal later
-		return elem.getAttribute("datetime");
+		date = elem.getAttribute("datetime");
 	}
-	if(document.body.querySelector('time'))
-		return document.body.querySelector('time').getAttribute("datetime");
+	if(!date && document.body.querySelector('time'))
+		date = document.body.querySelector('time').getAttribute("datetime");
+
+	if(date)
+		return date.replace(/on\s/ig, ''); // Replace "on"
 
 	return "Unknown date";
 }
@@ -356,8 +362,21 @@ function getArticleAuthor() {
 		}
 	}
 
-	if(author !== null && typeof author !== "undefined")
-		return author.replace(/by\s/ig, '');
+	if(author !== null && typeof author !== "undefined") {
+		// If it's all caps, try to properly capitalize it
+		if(author === author.toUpperCase()) {
+			var words = author.split(" "),
+				wordsLength = words.length;
+			for(var i = 0; i < wordsLength; i++) {
+				if(words[i].length < 3 && i != 0 && i != wordsLength)
+					words[i] = words[i].toLowerCase(); // Assume it's something like "de", "da", "van" etc.
+				else
+					words[i] = words[i].charAt(0).toUpperCase() + words[i].substr(1).toLowerCase();
+			}
+			author = words.join(' ');
+		}
+		return author.replace(/by\s/ig, ''); // Replace "by"
+	}
 
 	return "Unknown author";
 }
@@ -731,7 +750,7 @@ function continueLoading() {
 
 var isPaused = false,
 	stylesheetObj = {},
-	stylesheetVersion = 1.4; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+	stylesheetVersion = 1.5; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
 	var interval = setInterval(function() {
