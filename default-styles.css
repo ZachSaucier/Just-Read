@@ -23,7 +23,7 @@
 body {
 	font-family: 'Merriweather', serif;
 	line-height: 1.75em;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .simple-container {
@@ -153,6 +153,12 @@ aside,
 		padding-top: 30px;
 		padding-left: 20px;
 		padding-right: 20px;
+	}
+}
+
+@media (min-width: 1921px) {
+	body {
+		font-size: 18px;
 	}
 }
 

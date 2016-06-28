@@ -314,18 +314,50 @@ function getArticleAuthor() {
 	if(globalMostPs == null)
 		globalMostPs = document.body;
 
-	// Check to see if there's a date class
-	if(globalMostPs.querySelector('[class*="author"]')) {
-		var elem = globalMostPs.querySelector('[class*="author"]');
-		elem.dataset.simpleDelete = true; // Flag it for removal later
-		return elem.innerText;
-	}
-	if(document.body.querySelector('[class*="author"]'))
-		return document.body.querySelector('[class*="author"]').innerText;
+	var author = null;
 
-	// Check to see if there is a date available in the meta, if so get it
-	if(document.head.querySelector('meta[name*="author"]'))
-		return document.head.querySelector('meta[name*="author"]').getAttribute("content");
+	// Check to see if there's an author rel in the article
+	var elem = globalMostPs.querySelector('[rel*="author"]');
+	if(elem) {
+		if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
+			elem.dataset.simpleDelete = true; // Flag it for removal later
+			author = elem.innerText;
+		}
+	}
+
+	// Check to see if there's an author class
+	elem = globalMostPs.querySelector('[class*="author"]');
+	if(author === null && elem) {
+		if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
+			elem.dataset.simpleDelete = true; // Flag it for removal later
+			author = elem.innerText;
+		}
+	}
+
+	elem = document.head.querySelector('meta[name*="author"]');
+	// Check to see if there is an author available in the meta, if so get it
+	if(author === null && elem)
+		author = elem.getAttribute("content");
+
+	// Check to see if there's an author rel in the body
+	elem = document.body.querySelector('[rel*="author"]');
+	if(elem) {
+		if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
+			elem.dataset.simpleDelete = true; // Flag it for removal later
+			author = elem.innerText;
+		}
+	}
+
+	elem = document.body.querySelector('[class*="author"]')
+	if(author === null && elem) {
+		if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
+			elem.dataset.simpleDelete = true; // Flag it for removal later
+			author = elem.innerText;
+		}
+	}
+
+	if(author !== null && typeof author !== "undefined")
+		return author.replace(/by\s/ig, '');
 
 	return "Unknown author";
 }
@@ -406,7 +438,8 @@ function linkListener(e) {
 	var hrefArr = this.href.split("#");
 	
 	if(hrefArr.length < 2 // No anchor
-	|| hrefArr[0] != top.window.location.href // Anchored to an ID on another page
+	|| (hrefArr[0] != top.window.location.href // Anchored to an ID on another page
+		&& hrefArr[0] != "about:blank")
 	|| (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
 		&& simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
 	) {
@@ -570,8 +603,9 @@ function createSimplifiedOverlay() {
 		    elem.removeAttribute("background");
 		    elem.removeAttribute("bgcolor");
 		    elem.removeAttribute("border");
-		    if(elem.innerHTML != elem.innerHTML.replace(/&nbsp;/g,'')) // Remove &nbsp; s
-		    	elem.innerHTML = elem.innerHTML.replace(/&nbsp;/g,'');
+		    // if(elem.innerHTML != elem.innerHTML.replace(/&nbsp;&nbsp;/g,'&nbsp;')) // Remove &nbsp; s
+		    // 	elem.innerHTML = elem.innerHTML.replace(/&nbsp;&nbsp;/g,'&nbsp;');
+
 
 		    // See if the pres have code in them
 		    var isPreNoCode = true;
@@ -697,7 +731,7 @@ function continueLoading() {
 
 var isPaused = false,
 	stylesheetObj = {},
-	stylesheetVersion = 1.3; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+	stylesheetVersion = 1.4; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
 	var interval = setInterval(function() {
