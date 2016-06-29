@@ -5,27 +5,30 @@
 	padding-bottom: 20px;
 }
 
-.simple-close {
-	cursor: pointer;
+.simple-control {
 	position: fixed;
+	cursor: pointer;
+	-webkit-transition: 0.2s;
+	transition: 0.2s;
+
+	color: black;
+	fill: black;
+	opacity: 0.3;
+}
+.simple-control:hover {
+	opacity: 1;
+}
+
+.simple-close {
 	top: 10px;
 	right: 8px;
 	font-size: 25px;
 
 	background: none;
-	border: 1px solid lightgrey;
-	color: lightgrey;
-	-webkit-transition: 0.2s;
-	transition: 0.2s;
-}
-.simple-close:hover {
 	border: 1px solid black;
-	color: black;
 }
 
 .simple-print {
-	cursor: pointer;
-	position: fixed;
 	width: 36px;
 	height: 36px;
 	top: 10px;
@@ -33,17 +36,10 @@
 	
 	border: 0;
 	background: none;
-	background-image: url("print.svg");
-	background-size: 36px;
-	background-repeat: no-repeat;
-	background-position: center;
 	font-size: 0; /* Hide the print text */
-	-webkit-transition: 0.2s;
-	transition: 0.2s;
-	opacity: 0.25;
 }
-.simple-print:hover {
-	opacity: 1;
+.simple-print svg {
+	height: 100%;
 }
 
 .simple-ext-info {

@@ -275,7 +275,7 @@ function getArticleDate() {
 	}
 
 	if(date)
-		return date.replace(/on\s/ig, ''); // Replace "on"
+		return date.replace(/on\s/ig, '').replace(/[<]br[^>]*[>]/gi,'&nbsp;'); // Replace <br> and "on"
 
 	return "Unknown date";
 }
@@ -519,7 +519,7 @@ function addArticleMeta() {
 	date.className = "simple-date";
 
 	// Check a couple places for the date, othewise say it's unknown
-	date.innerText = getArticleDate();
+	date.innerHTML = getArticleDate();
 	// Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
 	author.innerText = getArticleAuthor();
 	// Check h1s for the title, otherwise say it's unknown
@@ -535,7 +535,7 @@ function addArticleMeta() {
 // Add the close button
 function addCloseButton() {
 	var closeButton = document.createElement("button");
-	closeButton.className = "simple-close";
+	closeButton.className = "simple-control simple-close";
 	closeButton.textContent = "X";
 
 	return closeButton;
@@ -544,8 +544,8 @@ function addCloseButton() {
 // Add the print button
 function addPrintButton() {
 	var printButton = document.createElement("button");
-	printButton.className = "simple-print";
-	printButton.textContent = "Print";
+	printButton.className = "simple-control simple-print";
+	printButton.innerHTML = '<?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve"><path d="M49,0H15v19H0v34h15v11h34V53h15V19H49V0z M17,2h30v17H17V2z M47,62H17V40h30V62z M62,21v30H49V38H15v13H2V21h13h34H62z"/><rect x="6" y="26" width="4" height="2"/><rect x="12" y="26" width="4" height="2"/><rect x="22" y="46" width="20" height="2"/><rect x="22" y="54" width="20" height="2"/></svg>Print';
 
 	return printButton;
 }
@@ -623,10 +623,12 @@ function createSimplifiedOverlay() {
 	// If settings say so, strip images, etc.?
 
 	// Set the text as our text
-	container.innerHTML += globalMostPs.innerHTML;
+	var contentContainer = document.createElement("div");
+	contentContainer.className = "content-container";
+	contentContainer.innerHTML = globalMostPs.innerHTML;
 
 	// Strip inline styles
-	var allElems = container.getElementsByTagName("*");
+	var allElems = contentContainer.getElementsByTagName("*");
 	for (var i = 0, max = allElems.length; i < max; i++) {
 		var elem = allElems[i];
 
@@ -637,8 +639,10 @@ function createSimplifiedOverlay() {
 		    elem.removeAttribute("background");
 		    elem.removeAttribute("bgcolor");
 		    elem.removeAttribute("border");
-		    // if(elem.innerHTML != elem.innerHTML.replace(/&nbsp;&nbsp;/g,'&nbsp;')) // Remove &nbsp; s
-		    // 	elem.innerHTML = elem.innerHTML.replace(/&nbsp;&nbsp;/g,'&nbsp;');
+
+		    // Remove elements that only have &nbsp;
+		    if(elem.dataset && elem.innerHTML.replace(/&nbsp;/g,'') === '') 
+		     	elem.dataset.simpleDelete = true;
 
 
 		    // See if the pres have code in them
@@ -673,6 +677,8 @@ function createSimplifiedOverlay() {
 		    	elem.dataset.simpleDelete = true;
 		}
 	}
+
+	container.appendChild(contentContainer);
 
 	// Remove the elements we flagged earlier
 	var deleteObjs = container.querySelectorAll("[data-simple-delete]");
@@ -740,7 +746,7 @@ function continueLoading() {
 		style = document.createElement('style');
 
 	chrome.storage.sync.get('currentTheme', function(result) {
-		theme = result.currentTheme;
+		theme = result.currentTheme || "default-styles.css";
 		style.type = 'text/css';
 
 		if(style.styleSheet) {
@@ -765,7 +771,7 @@ function continueLoading() {
 
 var isPaused = false,
 	stylesheetObj = {},
-	stylesheetVersion = 1.5; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+	stylesheetVersion = 1.6; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
 	var interval = setInterval(function() {
@@ -833,9 +839,6 @@ if(document.getElementById("simple-article") == null) {
 
 								// Continue on loading the page
 								continueLoading();
-
-								// Set it as our current theme
-								chrome.storage.sync.set({"currentTheme": "default-styles.css"});
 						    }
 						}
 						xhr.send();

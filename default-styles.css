@@ -26,13 +26,6 @@ body {
 	font-size: 16px;
 }
 
-.simple-container {
-	max-width: 675px;
-	margin: 0 auto;
-	padding-top: 70px;
-	padding-bottom: 20px;
-}
-
 p {
 	color: #282828;
 	font-size: 16px;
@@ -120,25 +113,54 @@ aside,
 	padding-bottom: 10px;
 }
 
-.simple-close {
+.simple-container {
+	max-width: 600px;
+	margin: 0 auto;
+	padding-top: 70px;
+	padding-bottom: 20px;
+}
+
+.simple-control {
 	position: fixed;
+	cursor: pointer;
+	-webkit-transition: 0.2s;
+	transition: 0.2s;
+
+	color: black;
+	fill: black;
+	opacity: 0.3;
+}
+.simple-control:hover {
+	opacity: 1;
+}
+
+.simple-close {
 	top: 10px;
 	right: 8px;
 	font-size: 25px;
 
 	background: none;
-	border: 1px solid lightgrey;
-	color: lightgrey;
-	-webkit-transition: .3s;
-	transition: .3s;
-}
-.simple-close:hover {
 	border: 1px solid black;
-	color: black;
+}
+
+.simple-print {
+	width: 36px;
+	height: 36px;
+	top: 10px;
+	right: 55px;
+	
+	border: 0;
+	background: none;
+	font-size: 0; /* Hide the print text */
+}
+.simple-print svg {
+	height: 100%;
 }
 
 .simple-ext-info {
 	text-align: center;
+	border-top: 1px solid black;
+	padding-top: 28px;
 }
 
 @media (max-width: 750px) {
@@ -156,10 +178,21 @@ aside,
 	}
 }
 
-@media (min-width: 1921px) {
-	body {
-		font-size: 18px;
+@media print {
+	.simple-close,
+	.simple-print {
+		display: none;
 	}
+	@page :first { margin-top: 0; }
+}
+
+
+/* For the element deletion feature */
+.hovered,
+.hovered *:not(.simple-close):not(.simple-print) {
+    cursor: pointer !important;
+    color: black !important;
+    background-color: #ff5050 !important;
 }
 
 
@@ -229,6 +262,14 @@ aside,
 [id $= "-tags"],
 [id $= "_tags"],
 [id ~= "tags"] {
+    display: none;
+}
+
+/* Very simple subscribe/subscription hider */
+[class *= "subscribe"],
+[id *= "subscribe"],
+[class *= "subscription"],
+[id *= "subscription"] {
     display: none;
 }
 
