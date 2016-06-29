@@ -236,13 +236,20 @@ function getArticleDate() {
 
 	// Check to see if there's a date class
 	var date = false;
-	if(globalMostPs.querySelector('[class*="date"]')) {
-		var elem = globalMostPs.querySelector('[class*="date"]');
+	if(globalMostPs.querySelector('[class^="date"]')) {
+		var elem = globalMostPs.querySelector('[class^="date"]');
 		elem.dataset.simpleDelete = true; // Flag it for removal later
 		date = elem.innerText;
 	}
-	if(!date && document.body.querySelector('[class*="date"]'))
-		date = document.body.querySelector('[class*="date"]').innerText;
+	if(!date && globalMostPs.querySelector('[class*="-date"]')) {
+		var elem = globalMostPs.querySelector('[class*="-date"]');
+		elem.dataset.simpleDelete = true; // Flag it for removal later
+		date = elem.innerText;
+	}
+	if(!date && document.body.querySelector('[class^="date"]'))
+		date = document.body.querySelector('[class^="date"]').innerText;
+	if(!date && document.body.querySelector('[class*="-date"]'))
+		date = document.body.querySelector('[class*="-date"]').innerText;
 
 	// Check to see if there is a date available in the meta, if so get it
 	if(!date && document.head.querySelector('meta[name^="date"]'))
@@ -255,9 +262,17 @@ function getArticleDate() {
 		var elem = globalMostPs.querySelector('time');
 		elem.dataset.simpleDelete = true; // Flag it for removal later
 		date = elem.getAttribute("datetime");
+
+		if(date === null)
+			date = elem.innerText;
 	}
-	if(!date && document.body.querySelector('time'))
-		date = document.body.querySelector('time').getAttribute("datetime");
+	if(!date && document.body.querySelector('time')) {
+		var elem = document.body.querySelector('time')
+		date = elem.getAttribute("datetime");
+
+		if(date === null)
+			date = elem.innerText;
+	}
 
 	if(date)
 		return date.replace(/on\s/ig, ''); // Replace "on"
