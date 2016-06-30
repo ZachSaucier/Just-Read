@@ -11,6 +11,7 @@
 	height: 100%;
 
 	background: white;
+	border: none;
 
 	overflow: auto;
 	z-index: 9999999999;

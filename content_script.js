@@ -641,7 +641,7 @@ function createSimplifiedOverlay() {
 		    elem.removeAttribute("border");
 
 		    // Remove elements that only have &nbsp;
-		    if(elem.dataset && elem.innerHTML.replace(/&nbsp;/g,'') === '') 
+		    if(elem.dataset && elem.innerHTML === '&nbsp;') 
 		     	elem.dataset.simpleDelete = true;
 
 
