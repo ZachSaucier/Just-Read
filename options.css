@@ -73,14 +73,11 @@ body, .editor-container {
 	padding: 5px;
 	overflow: auto;
 }
-code { 
-	display: block;
-	padding: 5px;
-}
 
 
 #css-editor {
 	width: 100%;
+	height: 100%;
 	resize: none;
 	padding: 5px;
 	margin-top: 0;

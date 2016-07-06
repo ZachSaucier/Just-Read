@@ -1,7 +1,14 @@
+/* Use Ace https://ace.c9.io/ to create our CSS editor */
+var editor = ace.edit("css-editor");
+//editor.setTheme("external-libraries/ace/crimson");
+editor.getSession().setMode("external-libraries/ace/css");
+editor.$blockScrolling = Infinity;
+
+
+
 
 var changed = false,
 	stylesheetObj = {},
-	editor = document.querySelector("#css-editor code"),
 	saveButton = document.getElementById("save"),
 	defaultLiItem,
 	defaultStylesheet = "default-styles.css";
@@ -168,7 +175,7 @@ function styleListOnClick() {
 			var fileName = this.textContent;
 
 			// Open up the file from localStorage
-			editor.innerText = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
+			editor.setValue(stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName], -1);
 
 			// Toggle the active class on the list items
 			if(document.querySelector(".stylesheets .active"))
@@ -178,8 +185,6 @@ function styleListOnClick() {
 			localStorage.currentTheme = fileName;
 
 			changed = false;
-
-			document.querySelector(".editor").scrollTop = 0;
 		}
 	}
 };
@@ -222,7 +227,7 @@ function continueLoading() {
 			if(count === 0) {
 				liClassList.add("active");
 				var fileName = li.textContent;
-				editor.innerText = stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName];
+				editor.setValue(stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName], -1);
 			}			
 
 			list.appendChild(li);
@@ -246,13 +251,13 @@ function continueLoading() {
 		saveButton.addEventListener("webkitAnimationEnd", function() {
 			saveButton.classList.remove("saved");
 		});
+	});
 
-		// Add the listener that strips pastes of styling
-		editor.addEventListener("paste", function(e) {
-		    e.preventDefault();
-		    var text = e.clipboardData.getData("text/plain");
-		    document.execCommand("insertHTML", false, text);
-		});
+
+	// Keep track of changes since last save
+	editor.on('change', function() {
+		if (editor.curOp && editor.curOp.command.name)
+			changed = true;
 	});
 }
 
@@ -321,11 +326,11 @@ function saveTheme() {
 	}
 
 	// Save that file to localStorage
-	if(byteLength(editor.innerText) > 8000) {
+	if(byteLength(editor.getValue()) > 8000) {
 		console.log("Stylesheet is too big. Trying to minify");
-		editor.innerText = editor.innerText.replace(/\s/g, '');
+		editor.setValue(editor.getValue().replace(/\s/g, ''), -1);
 	}
-	stylesheetObj[currFileElem.innerText] = editor.innerText;
+	stylesheetObj[currFileElem.innerText] = editor.getValue();
 	setStylesOfStorage();
 
 	// Show the save animation
@@ -366,7 +371,6 @@ getStylesheets();
 var newFileInput = document.getElementById("new-file"),
 	addButton = document.getElementById("add"),
 	saveButton = document.getElementById("save"),
-	//previewButton = document.getElementById("preview"),
 	useButton = document.getElementById("use"),
 	removeButton = document.getElementById("remove"),
 	stylesheetListItems;
@@ -375,12 +379,6 @@ var newFileInput = document.getElementById("new-file"),
 newFileInput.onkeyup = function(e) {
 	if(e.keyCode === 13)
 		add.onclick();
-}
-
-
-// Keep track of changes since last save
-editor.onkeyup = function() {
-	changed = true;
 }
 
 
@@ -410,7 +408,7 @@ add.onclick = function() {
 		li.classList.add("active");
 
 		// Clear out the editor and add some smart defaults
-		editor.innerText = "/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n\n\n";
+		editor.setValue("/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n\n\n", -1);
 
 		// Force them to save to keep it	
 		changed = true;
@@ -456,15 +454,10 @@ removeButton.onclick = function() {
 			// Remove it from the list
 			elem.parentNode.removeChild(elem);
 
-			editor.innerText = "";
+			editor.setValue("", -1);
 		}
 	} else 
 		alert("This file is locked and cannot be deleted.");
 
 	// Otherwise we do nothing
 }
-
-// Preview the current stylesheet with a made up article
-// preview.onclick = function() {
-// 	console.log("preview clicked");
-// }
