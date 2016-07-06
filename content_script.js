@@ -617,6 +617,10 @@ function createSimplifiedOverlay() {
 			globalMostPs = parent;
 	}
 
+	// If there's no text, grab the whole page
+	if(globalMostPs.textContent.replace(/\s/g, "")  === "")
+		globalMostPs = document.body;
+
 	// Get the title, author, etc.
 	container.appendChild(addArticleMeta());
 

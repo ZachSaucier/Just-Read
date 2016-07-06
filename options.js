@@ -1,9 +1,31 @@
 /* Use Ace https://ace.c9.io/ to create our CSS editor */
 var editor = ace.edit("css-editor");
-//editor.setTheme("external-libraries/ace/crimson");
-editor.getSession().setMode("external-libraries/ace/css");
+editor.setTheme("ace/theme/crimson_editor");
+editor.getSession().setMode("ace/mode/css");
 editor.$blockScrolling = Infinity;
 
+// Enable zooming of the editor itself
+editor.commands.addCommands([{
+    name: "increaseFontSize",
+    bindKey: "Ctrl-=|Ctrl-+",
+    exec: function(editor) {
+        var size = parseInt(editor.getFontSize(), 10) || 12;
+        editor.setFontSize(size + 1);
+    }
+}, {
+    name: "decreaseFontSize",
+    bindKey: "Ctrl+-|Ctrl-_",
+    exec: function(editor) {
+        var size = parseInt(editor.getFontSize(), 10) || 12;
+        editor.setFontSize(Math.max(size - 1 || 1));
+    }
+}, {
+    name: "resetFontSize",
+    bindKey: "Ctrl+0|Ctrl-Numpad0",
+    exec: function(editor) {
+        editor.setFontSize(12);
+    }
+}]);
 
 
 
