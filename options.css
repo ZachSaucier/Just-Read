@@ -70,7 +70,6 @@ body, .editor-container {
 .editor { 
 	position: relative; 
 	border: 1px solid;
-	padding: 5px;
 	overflow: auto;
 }
 
@@ -115,6 +114,12 @@ body, .editor-container {
 
 	.stylesheet-list-container {
 		margin-bottom: 10px;
+	}
+
+	#css-editor {
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 }
 

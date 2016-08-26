@@ -24,43 +24,38 @@ body {
 	font-family: 'Merriweather', serif;
 	line-height: 1.75em;
 	font-size: 16px;
-}
-
-p {
 	color: #282828;
-	font-size: 16px;
+	background-color: #fff;
 }
 
 h1,
 h2 {
 	font-family: 'Source Sans Pro Bold', sans-serif;
-	color: #292929;
 }
 
 h1 {
-	font-size: 30px;
-	line-height: 34px;
+	font-size: 1.875em;
+	line-height: 2.125em;
 }
 
 h2 {
-	font-size: 20px;
-	line-height: 25px;
+	font-size: 1.25em;
+	line-height: 1.5625em;
 }
 
 h3 {
 	font-family: 'Merriweather', serif;
-	font-size: 16px;
-	color: #292929;
-	line-height: 27px;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	font-size: 1em;
+	line-height: 1.7em;
+	padding-top: 0.9375em;
+	padding-bottom: 0.9375em;
 	border-bottom: 1px solid #D8D8D8;
 	border-top: 1px solid #D8D8D8;
 }
 
 hr {
 	height: 1px;
-	background-color: #d8d8d8;
+	background-color: #D8D8D8;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -95,7 +90,6 @@ aside,
 	display: inline-block;
 	font-family: 'Source Sans Pro Light', sans-serif;
 	font-size: 18px;
-	color: #292929;
 	padding-right: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -120,49 +114,6 @@ aside,
 	padding-bottom: 20px;
 }
 
-.simple-control {
-	position: fixed;
-	cursor: pointer;
-	-webkit-transition: 0.2s;
-	transition: 0.2s;
-
-	color: black;
-	fill: black;
-	opacity: 0.3;
-}
-.simple-control:hover {
-	opacity: 1;
-}
-
-.simple-close {
-	top: 10px;
-	right: 8px;
-	font-size: 25px;
-
-	background: none;
-	border: 1px solid black;
-}
-
-.simple-print {
-	width: 36px;
-	height: 36px;
-	top: 10px;
-	right: 55px;
-	
-	border: 0;
-	background: none;
-	font-size: 0; /* Hide the print text */
-}
-.simple-print svg {
-	height: 100%;
-}
-
-.simple-ext-info {
-	text-align: center;
-	border-top: 1px solid black;
-	padding-top: 28px;
-}
-
 @media (max-width: 750px) {
 	.simple-container {
 		padding-left: 50px;
@@ -176,23 +127,6 @@ aside,
 		padding-left: 20px;
 		padding-right: 20px;
 	}
-}
-
-@media print {
-	.simple-close,
-	.simple-print {
-		display: none;
-	}
-	@page :first { margin-top: 0; }
-}
-
-
-/* For the element deletion feature */
-.hovered,
-.hovered *:not(.simple-close):not(.simple-print) {
-    cursor: pointer !important;
-    color: black !important;
-    background-color: #ff5050 !important;
 }
 
 
@@ -215,31 +149,45 @@ aside,
     display: none;
 }
 
+/* Very simple popup hider */
+[class *= "popup"],
+[id *= "popup"] {
+    display: none;
+}
+
 /* Very simple sharing hider */
 [class *= "share"],
 [class *= "sharing"],
 [class *= "social"],
 [id *= "share"],
 [id *= "sharing"],
-[id *= "social"] {
+[id *= "social"],
+[class *= "follow"],
+[id *= "follow"],
+[class *= "newsletter"],
+[id *= "newsletter"] {
     display: none;
 }
 
-/* Very simple related hider */
+/* Very simple meta hider */
 [class *= "meta"]:not(.simple-meta),
 [id *= "meta"] {
     display: none;
 }
 
-/* Very simple related hider */
+/* Very simple related/recommended hider */
 [class *= "related"],
-[id *= "related"] {
+[id *= "related"],
+[class *= "recommended"],
+[id *= "recommended"] {
     display: none;
 }
 
 /* Very simple comments hider */
 [class *= "comment"],
-[id *= "comment"] {
+[id *= "comment"],
+[class *= "disqus"],
+[id *= "disqus"] {
     display: none;
 }
 

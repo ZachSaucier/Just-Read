@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "0.0.32",
+  "version": "1.0.0",
   "manifest_version": 2,
   "description": "An article formatter for readability. Essentially an attractive and customizable read mode.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
@@ -22,13 +22,13 @@
       "suggested_key": {
         "default": "Ctrl+Shift+L"
       },
-      "description": "Opens the Just Read format for the current page"
+      "description": "Open the Just Read format for the current page"
     },
     "select-text": {
       "suggested_key": {
         "default": "Ctrl+Shift+K"
       },
-      "description": "Lets the user select the text they want to read using Just read"
+      "description": "Enable user text selection mode using Just Read"
     }
   },
 

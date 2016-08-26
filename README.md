@@ -33,7 +33,7 @@ You can start using Just Read's built in selection in three ways:
 
 2. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>L</kbd>.
 
-3. Right click and choose the "Open this page using Just Read" option.
+3. Right click and choose the "View this page using Just Read" option.
 
 ### User selection mode
 
@@ -54,8 +54,14 @@ ___
 By default the extension will use a theme that we made as seen here 
 ![the effect of the extension](http://i.imgur.com/gNEpBfG.png)
 
-If you want to customize the stylesheet or add and use your own, you can right click the extension and open the "Options" page (you can also get to this via the Chrome extensions page). That will open a page that looks similar to this 
-![Options page](http://i.imgur.com/1fKXKnF.png)
+You can customize this theme using the GUI shown when you click [the paint brush icon](http://i.imgur.com/XW03mZW.png). Just make sure to click "saveAndClose" when you're done or the styles will not be updated in the actual stylesheet. The GUI looks like this:
+
+![GUI](http://i.imgur.com/VxsDdnP.png)
+
+Note that the GUI will only appear for the default theme or themes derived from the default.
+
+If you want to further customize the stylesheet or add and use your own, you can click the "openFullStyles" in the GUI or right click the extension button and open the "Options" page (you can also get to this via the Chrome extensions page). That will open a page that looks similar to this 
+![Options page](http://i.imgur.com/xXoUpEr.png)
 
 You can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
@@ -64,19 +70,6 @@ You can then select the file you want to edit or enter a new file name, edit the
 If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
 
 ___
-
-### Description of files:
-
-- `manifest.json`: The primary setup file for the Chrome extension. It sets everything up the way we need it to be.
-- `background.js`: Listens for the Just Read extension to be clicked and toggles the "on" badge.
-- `content_script.js`: This handles all of the logic for formatting articles but not the options page.
-- `options.js`: This handles all of the logic on the options page, not directly formatting articles.
-- `page.css`: This is the required CSS file that formats our iframe on the article page.
-- `required-styles.css`: This includes styles for things like the close button inside of our overlay. It is used in combination with whatever theme styles are used.
-- `default-styles.css`: Self-explanatory; our default theme.
-- `options.html`: Sets up and allows the options page to be used.
-- `options.css`: Styles the options page.
-- `README.md`: This markdown file to describe and instruct the project.
 
 Let me know how I can improve this extension including any bugs you see and what features you'd like to see!
 

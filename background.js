@@ -34,6 +34,13 @@ chrome.commands.onCommand.addListener(function(command) {
         startSelectText();
 });
 
+// Listen for requests to open the options page
+chrome.extension.onRequest.addListener(function(data, sender) {
+    if(data === "Open options") {
+        chrome.runtime.openOptionsPage();
+    }
+});
+
 //chrome.runtime.onInstalled.addListener(function() { // Only do it once
     // Create a right click menu option
     chrome.contextMenus.create({

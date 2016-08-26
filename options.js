@@ -422,7 +422,7 @@ add.onclick = function() {
 		// Add a new list element
 		var list = document.querySelector(".stylesheets"),
 			li = document.createElement("li");
-		li.innerText = fileName;
+		li.innerHTML = '<input type="radio" name="activeStylesheetRadios">' + fileName;
 
 		// Make it active
 		if(document.querySelector(".stylesheets .active"))

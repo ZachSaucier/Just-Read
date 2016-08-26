@@ -4,11 +4,15 @@
 }
 
 #simple-article#simple-article {
+	display: block;
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
+
+	margin: 0;
+	padding: 0;
 
 	background: white;
 	border: none;
@@ -39,3 +43,6 @@
 }
 
 .no-trans { -webkit-transition: none !important; transition: none !important; }
+
+.dg { z-index: 99999999999 !important; height: auto !important; }
+.simple-no-scroll .dg { overflow: visible !important; }

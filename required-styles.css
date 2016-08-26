@@ -28,9 +28,10 @@
 	border: 1px solid black;
 }
 
-.simple-print {
-	width: 36px;
-	height: 36px;
+.simple-print,
+.simple-edit {
+	width: 40px;
+	height: 40px;
 	top: 10px;
 	right: 55px;
 	
@@ -38,8 +39,14 @@
 	background: none;
 	font-size: 0; /* Hide the print text */
 }
-.simple-print svg {
+.simple-print svg,
+.simple-edit svg {
+	width: 100%;
 	height: 100%;
+}
+
+.simple-edit {
+    right: 105px;
 }
 
 .simple-ext-info {
@@ -64,8 +71,7 @@
 }
 
 @media print {
-	.simple-close,
-	.simple-print {
+	.simple-control {
 		display: none;
 	}
 	@page :first { margin-top: 0; }
@@ -79,3 +85,6 @@
     color: black !important;
     background-color: #ff5050 !important;
 }
+
+/* For the GUI theme editor */
+.saturation-field { margin-right: 1px !important; }
