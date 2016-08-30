@@ -24,6 +24,8 @@ ___
 
 Once Just Read has been installed, there are five built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text and the other two allow the user to specify which text they want.
 
+> **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/` and go to the very bottom. Click on "Keyboard shortcuts" and you can add/change shortcuts there.
+
 ### Use Just Read's built in selection
 
 You can start using Just Read's built in selection in three ways:
@@ -58,7 +60,7 @@ You can customize this theme using the GUI shown when you click [the paint brush
 
 ![GUI](http://i.imgur.com/VxsDdnP.png)
 
-Note that the GUI will only appear for the default theme or themes derived from the default.
+> **Note**: The theme editor GUI will only appear for the default theme or themes derived from the default (that share "default-stylesheet" as part of the file name).
 
 If you want to further customize the stylesheet or add and use your own, you can click the "openFullStyles" in the GUI or right click the extension button and open the "Options" page (you can also get to this via the Chrome extensions page). That will open a page that looks similar to this 
 ![Options page](http://i.imgur.com/xXoUpEr.png)
