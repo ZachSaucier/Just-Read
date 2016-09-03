@@ -1,92 +1,92 @@
 * {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 html, body, .flex-container, .editor { 
-	height: 100%; 
+    height: 100%; 
 }
 body {
-	max-width: 1000px;
-	margin: 0 auto;
-	padding-top: 30px;
-	padding-left: 50px;
-	padding-right: 50px;
-	padding-bottom: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
 }
 h1 {
-	border-bottom: 1px solid #d8d8d8;
-	padding-bottom: 13px;
+    border-bottom: 1px solid #d8d8d8;
+    padding-bottom: 13px;
 }
 h1 i {
-	color: #27AAE1;
+    color: #27AAE1;
 }
 .flex-container {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 body, .editor-container {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .stylesheet-list-container {
-	max-width: 250px;
-	margin-right: 50px;
-	border: 1px solid;
-	padding: 8px;
-	white-space: nowrap;
+    max-width: 250px;
+    margin-right: 50px;
+    border: 1px solid;
+    padding: 8px;
+    white-space: nowrap;
 }
 .stylesheets {
-	padding-left: 0px;
-	margin-bottom: 0;
+    padding-left: 0px;
+    margin-bottom: 0;
 }
 .stylesheets li {
-	cursor: pointer;
-	list-style: none;
-	padding-bottom: 3px;
+    cursor: pointer;
+    list-style: none;
+    padding-bottom: 3px;
 }
 .stylesheets li input {
-	-webkit-transform: translateY(2px);
-	transform: translateY(2px);
+    -webkit-transform: translateY(2px);
+    transform: translateY(2px);
 }
 .stylesheets .active {
-	background: lightblue;
+    background: lightblue;
 }
 .stylesheets .used {
-	font-weight: bold;
-	font-style: italic;
+    font-weight: bold;
+    font-style: italic;
 }
 .stylesheets .locked {
-	color: grey;
+    color: grey;
 }
 
 .controls-container {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 .editor-container, .editor {
-	flex-grow: 2;
+    flex-grow: 2;
 }
 
 .editor { 
-	position: relative; 
-	border: 1px solid;
-	overflow: auto;
+    position: relative; 
+    border: 1px solid;
+    overflow: auto;
 }
 
 
 #css-editor {
-	width: 100%;
-	height: 100%;
-	resize: none;
-	padding: 5px;
-	margin-top: 0;
+    width: 100%;
+    height: 100%;
+    resize: none;
+    padding: 5px;
+    margin-top: 0;
 }
 
 #save { 
-	position: relative;
+    position: relative;
 }
 #save::before {
-	content: "Saved!";
+    content: "Saved!";
     position: absolute;
     left: 50%;
     margin-left: -29px;
@@ -99,52 +99,52 @@ body, .editor-container {
     height: 0;
 }
 #save.saved::before {
-	-webkit-animation: fadeInAndOut 2s forwards;
-	animation: fadeInAndOut 2s forwards;
+    -webkit-animation: fadeInAndOut 2s forwards;
+    animation: fadeInAndOut 2s forwards;
 }
 
 @media (max-width: 600px) {
-	body {
-		padding-top: 0px;
-	}
-	
-	.flex-container {
-		flex-direction: column;
-	}
+    body {
+        padding-top: 0px;
+    }
+    
+    .flex-container {
+        flex-direction: column;
+    }
 
-	.stylesheet-list-container {
-		margin-bottom: 10px;
-	}
+    .stylesheet-list-container {
+        margin-bottom: 10px;
+    }
 
-	#css-editor {
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
+    #css-editor {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
 
 @-webkit-keyframes fadeInAndOut {
-	0%, 100% { 
-		height: auto;
-		opacity: 0;
-		-webkit-transform: translateY(30px);
-	}
-	
-	10%, 90% { 
-		opacity: 1;
-		-webkit-transform: translateY(0px);
-	}
+    0%, 100% { 
+        height: auto;
+        opacity: 0;
+        -webkit-transform: translateY(30px);
+    }
+    
+    10%, 90% { 
+        opacity: 1;
+        -webkit-transform: translateY(0px);
+    }
 }
 
 @keyframes fadeInAndOut {
-	0%, 100% { 
-		height: auto;
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	
-	10%, 90% { 
-		opacity: 1;
-		transform: translateY(0px);
-	}
+    0%, 100% { 
+        height: auto;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    
+    10%, 90% { 
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }

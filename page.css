@@ -1,45 +1,45 @@
 .simple-no-scroll, 
 .simple-no-scroll * {
-	overflow: hidden !important;
+    overflow: hidden !important;
 }
 
 #simple-article#simple-article {
-	display: block;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 
-	background: white;
-	border: none;
+    background: white;
+    border: none;
 
-	overflow: auto;
-	z-index: 9999999999;
+    overflow: auto;
+    z-index: 9999999999;
 
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 
-	-webkit-transform: translateY(0);
-	transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
 
-	-webkit-transition: .5s;
-	transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
 
-	opacity: 1;
+    opacity: 1;
 }
 
 #simple-article#simple-article.simple-fade-up {
-	-webkit-transform: translateY(100px);
-	transform: translateY(100px);
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
 
-	-webkit-transition: .3s
-	transition: .3s;
+    -webkit-transition: .3s
+    transition: .3s;
 
-	opacity: 0;
+    opacity: 0;
 }
 
 .no-trans { -webkit-transition: none !important; transition: none !important; }

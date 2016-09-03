@@ -1,132 +1,132 @@
 @font-face {
-	font-family: 'Source Sans Pro Semibold';
-	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Semibold.ttf");
+    font-family: 'Source Sans Pro Semibold';
+    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Semibold.ttf");
 }
 @font-face {
-	font-family: 'Source Sans Pro Bold';
-	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Bold.ttf");
+    font-family: 'Source Sans Pro Bold';
+    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Bold.ttf");
 }
 @font-face {
-	font-family: 'Source Sans Pro Light';
-	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Light.ttf");
+    font-family: 'Source Sans Pro Light';
+    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Light.ttf");
 }
 @font-face {
-	font-family: 'Merriweather';
-	src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/Merriweather-Light.ttf");
+    font-family: 'Merriweather';
+    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/Merriweather-Light.ttf");
 }
 
 * {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-	font-family: 'Merriweather', serif;
-	line-height: 1.75em;
-	font-size: 16px;
-	color: #282828;
-	background-color: #fff;
+    font-family: 'Merriweather', serif;
+    line-height: 1.75em;
+    font-size: 16px;
+    color: #282828;
+    background-color: #fff;
 }
 
 h1,
 h2 {
-	font-family: 'Source Sans Pro Bold', sans-serif;
+    font-family: 'Source Sans Pro Bold', sans-serif;
 }
 
 h1 {
-	font-size: 1.875em;
-	line-height: 2.125em;
+    font-size: 1.875em;
+    line-height: 2.125em;
 }
 
 h2 {
-	font-size: 1.25em;
-	line-height: 1.5625em;
+    font-size: 1.25em;
+    line-height: 1.5625em;
 }
 
 h3 {
-	font-family: 'Merriweather', serif;
-	font-size: 1em;
-	line-height: 1.7em;
-	padding-top: 0.9375em;
-	padding-bottom: 0.9375em;
-	border-bottom: 1px solid #D8D8D8;
-	border-top: 1px solid #D8D8D8;
+    font-family: 'Merriweather', serif;
+    font-size: 1em;
+    line-height: 1.7em;
+    padding-top: 0.9375em;
+    padding-bottom: 0.9375em;
+    border-bottom: 1px solid #D8D8D8;
+    border-top: 1px solid #D8D8D8;
 }
 
 hr {
-	height: 1px;
-	background-color: #D8D8D8;
-	border: none;
-	width: 100%;
-	margin: 0px;
+    height: 1px;
+    background-color: #D8D8D8;
+    border: none;
+    width: 100%;
+    margin: 0px;
 }
 
 a[href] {
-	color: #27AAE1;
+    color: #27AAE1;
 }
 
 a[href]:hover {
-	color: #4ECAFF;
+    color: #4ECAFF;
 }
 
 img {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 li {
-	line-height: 1.5em;
+    line-height: 1.5em;
 }
 
 aside,
 [class *= "sidebar"],
 [id *= "sidebar"] {
-	max-width: 90%;
+    max-width: 90%;
     margin: 0 auto;
     border: 1px solid lightgrey;
     padding: 5px 15px;
 }
 
 .simple-date {
-	display: inline-block;
-	font-family: 'Source Sans Pro Light', sans-serif;
-	font-size: 18px;
-	padding-right: 15px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	border-right: 1px solid #d8d8d8;
+    display: inline-block;
+    font-family: 'Source Sans Pro Light', sans-serif;
+    font-size: 18px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-right: 1px solid #d8d8d8;
 }
 
 .simple-author {
-	display: inline-block;
-	font-family: 'Source Sans Pro Semibold', sans-serif;
-	font-size: 18px;
-	color: #27AAE1;
-	line-height: 22px;
-	padding-left: 10px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    display: inline-block;
+    font-family: 'Source Sans Pro Semibold', sans-serif;
+    font-size: 18px;
+    color: #27AAE1;
+    line-height: 22px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .simple-container {
-	max-width: 600px;
-	margin: 0 auto;
-	padding-top: 70px;
-	padding-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 70px;
+    padding-bottom: 20px;
 }
 
 @media (max-width: 750px) {
-	.simple-container {
-		padding-left: 50px;
-		padding-right: 50px;
-	}
+    .simple-container {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
 }
 
 @media (max-width: 450px) {
-	.simple-container {
-		padding-top: 30px;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
+    .simple-container {
+        padding-top: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 
@@ -244,14 +244,14 @@ aside,
 [id *= "signin"],
 [class *= "signIn"],
 [id *= "signIn"] {
-	display: none;
+    display: none;
 }
 
 /* Very simple footer hider */
 footer,
 [class *= "footer"],
 [id *= "footer"] {
-	display: none;
+    display: none;
 }
 
 
@@ -260,6 +260,10 @@ svg[class *= "pinterest"],
 [class *= "pinterest"] svg,
 svg[id *= "pinterest"],
 [id *= "pinterest"] svg,
+svg[class *= "pinit"],
+[class *= "pinit"] svg,
+svg[id *= "pinit"],
+[id *= "pinit"] svg,
 svg[class *= "facebook"],
 [class *= "facebook"] svg,
 svg[id *= "facebook"],
@@ -312,5 +316,5 @@ svg[class *= "email"],
 [class *= "email"] svg,
 svg[id *= "email"],
 [id *= "email"] svg {
-	display: none;
+    display: none;
 }

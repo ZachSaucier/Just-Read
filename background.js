@@ -10,7 +10,7 @@ function startJustRead(tab) {
 
     setTimeout(function() {
         chrome.browserAction.setBadgeText({text:""});
-    }, 3000);
+    }, 2000);
 }
 
 function startSelectText() {
