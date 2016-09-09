@@ -1,8 +1,8 @@
 {
   "name": "Just Read",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "manifest_version": 2,
-  "description": "An article formatter for readability. Essentially an attractive and customizable read mode.",
+  "description": "A customizable read mode extension.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
   "offline_enabled": true,
 
@@ -51,7 +51,6 @@
     "required-styles.css",
     "default-styles.css",
     "page.css",
-    "dat-gui.js",
     "options.js",
     "options.css",
     "fonts/*"

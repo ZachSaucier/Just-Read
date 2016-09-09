@@ -250,6 +250,8 @@ function getArticleDate() {
         date = document.body.querySelector('[class^="date"]').innerText;
     if(!date && document.body.querySelector('[class*="-date"]'))
         date = document.body.querySelector('[class*="-date"]').innerText;
+    if(!date && document.body.querySelector('[class*="_date"]'))
+        date = document.body.querySelector('[class*="_date"]').innerText;
 
     // Check to see if there is a date available in the meta, if so get it
     if(!date && document.head.querySelector('meta[name^="date"]'))
@@ -275,7 +277,7 @@ function getArticleDate() {
     }
 
     if(date)
-        return date.replace(/on\s/ig, '').replace(/[<]br[^>]*[>]/gi,'&nbsp;'); // Replace <br> and "on"
+        return date.replace(/on\s/gi, '').replace(/(?:\r\n|\r|\n)/gi, '&nbsp;').replace(/[<]br[^>]*[>]/gi,'&nbsp;'); // Replace <br>, \n, and "on"
 
     return "Unknown date";
 }
@@ -370,7 +372,7 @@ function getArticleAuthor() {
 
     elem = document.body.querySelector('[class*="author"]');
     if(author === null && elem) {
-        if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
+        if(elem.innerText.split(/\s+/).length < 6 && elem.innerText.replace(/\s/g,'') !== "") {
             author = elem.innerText;
         }
     }
@@ -533,11 +535,11 @@ function addArticleMeta() {
 
     // Check a couple places for the date, othewise say it's unknown
     date.innerHTML = editSVG;
-    dateContent.innerText = getArticleDate();
+    dateContent.innerHTML = getArticleDate();
     date.appendChild(dateContent);
     // Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
     author.innerHTML = editSVG;
-    authorContent.innerText = getArticleAuthor();
+    authorContent.innerHTML = getArticleAuthor();
     author.appendChild(authorContent);
     // Check h1s for the title, otherwise say it's unknown
     title.innerHTML = editSVG;
@@ -827,7 +829,7 @@ function createSimplifiedOverlay() {
     }
 
     // If there's no text, grab the whole page
-    if(globalMostPs.textContent.replace(/\s/g, "")  === "")
+    if(globalMostPs != null && globalMostPs.textContent.replace(/\s/g, "")  === "")
         globalMostPs = document.body;
 
     // Get the title, author, etc.
@@ -870,7 +872,7 @@ function createSimplifiedOverlay() {
 
                 // If there's no code, format it
                 if(!isPreNoCode) {
-                    elem.innerHTML = elem.innerHTML.replace(/\n\n/g, '<br/><br/>')
+                    elem.innerHTML = elem.innerHTML.replace(/\n/g, '<br/>')
                 }
             }
 
@@ -997,7 +999,7 @@ function continueLoading() {
 
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.7; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.8; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
     var interval = setInterval(function() {
