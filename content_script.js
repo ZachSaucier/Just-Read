@@ -610,6 +610,7 @@ function addGUI() {
         this.backgroundColor = prevStyles.backgroundColor = getStylesheetValue(s, "body", "background-color");
         this.linkColor = prevStyles.linkColor = getStylesheetValue(s, "a[href]", "color");
         this.linkHoverColor = prevStyles.linkHoverColor = getStylesheetValue(s, "a[href]:hover", "color");
+        this.maxWidth = prevStyles.maxWidth = getStylesheetValue(s, ".simple-container", "max-width");
         this.openFullStyles = openFullStyles;
         this.saveAndClose = saveStyles;
     };
@@ -659,6 +660,7 @@ function addGUI() {
     function closeStyleEditor() {
         if(!saved) {
             changeStylesheetRule(s, "body", "font-size", prevStyles.fontSize);
+            changeStylesheetRule(s, ".simple-container", prevStyles.maxWidth);
             changeStylesheetRule(s, "body", "color", prevStyles.textColor);
             changeStylesheetRule(s, "body", "background-color", prevStyles.backgroundColor);
             changeStylesheetRule(s, ".simple-author", "color", prevStyles.linkColor);
@@ -676,10 +678,15 @@ function addGUI() {
         var editor = new StyleEditor();
         datGUI = new dat.GUI();
         
-        var fontSize = datGUI.add(editor, 'fontSize', 8, 25);
+        var fontSize = datGUI.add(editor, "fontSize", 8, 25);
         fontSize.onChange(function(value) { 
             saved = false; 
             changeStylesheetRule(s, "body", "font-size", value); 
+        });
+        var maxWidth = datGUI.add(editor, "maxWidth");
+        maxWidth.onChange(function(value) { 
+            saved = false; 
+            changeStylesheetRule(s, ".simple-container", "max-width", value); 
         });
         var textColor = datGUI.addColor(editor, 'textColor');
         textColor.onChange(function(value) { 
@@ -996,10 +1003,9 @@ function continueLoading() {
 /////////////////////////////////////
 // Handle the stylesheet syncing 
 /////////////////////////////////////
-
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.8; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.9; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
     var interval = setInterval(function() {

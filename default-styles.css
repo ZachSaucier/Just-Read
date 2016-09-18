@@ -133,6 +133,7 @@ aside,
 /* Hide some things I dislike seeing when I read articles */
 /* Very simple ad hider */
 [class = "ad"],
+[class *= "ads"],
 [class ^= "ad-"],
 [class ^= "ad_"],
 [class *= "-ad-"],
@@ -140,6 +141,7 @@ aside,
 [class $= "_ad"],
 [class ~= "ad"],
 [id = "ad"],
+[id *= "ads"],
 [id ^= "ad-"],
 [id ^= "ad_"],
 [id *= "-ad-"],
@@ -179,7 +181,11 @@ aside,
 [class *= "related"],
 [id *= "related"],
 [class *= "recommended"],
-[id *= "recommended"] {
+[id *= "recommended"],
+[class *= "see-also"],
+[id *= "see-also"],
+[class *= "popular"],
+[id *= "popular"] {
     display: none;
 }
 
