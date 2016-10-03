@@ -22,7 +22,7 @@ ___
 
 ## How to use: 
 
-Once Just Read has been installed, there are five built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text and the other two allow the user to specify which text they want.
+Once Just Read has been installed, there are six built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text and the other three allow the user to specify which text they want.
 
 > **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/` and go to the very bottom. Click on "Keyboard shortcuts" and you can add/change shortcuts there.
 
@@ -39,11 +39,13 @@ You can start using Just Read's built in selection in three ways:
 
 ### User selection mode
 
-You can also select exactly the text you want to read if the built in method doesn't select what you want. You can start doing that in two ways:
+You can also select exactly the text you want to read if the built in method doesn't select what you want. You can start doing that in three ways:
 
 4. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
 
 5. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
+
+6. Select the text you want to read. Right click the selection and click "View this text in Just Read".
 
 ### Deletion mode
 
