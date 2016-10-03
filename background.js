@@ -49,7 +49,7 @@ chrome.extension.onRequest.addListener(function(data, sender) {
          onclick: startJustRead
     });
 
-    // Create an entry to allow selection of text
+    // Create an entry to allow user to select an element to read from
     chrome.contextMenus.create({
         title: "Select text to read",
         contexts: ["browser_action"],
@@ -58,5 +58,16 @@ chrome.extension.onRequest.addListener(function(data, sender) {
         }
     });
 
+    // Create an entry to allow user to use currently selected text
+    chrome.contextMenus.create({title: "View this text in Just Read", 
+        contexts:["selection"], 
+        onclick: function(info, tab) { 
+            chrome.tabs.executeScript(null, {
+                code: 'var textToRead = \"' + info.selectionText + '\";'
+            }, function() { 
+                startJustRead();
+            });
+        }
+    });
 
 //});
