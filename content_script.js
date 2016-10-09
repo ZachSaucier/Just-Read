@@ -675,7 +675,7 @@ function addGUI() {
     function closeStyleEditor() {
         if(!saved) {
             changeStylesheetRule(s, "body", "font-size", prevStyles.fontSize);
-            changeStylesheetRule(s, ".simple-container", prevStyles.maxWidth);
+            changeStylesheetRule(s, ".simple-container", "max-width", prevStyles.maxWidth);
             changeStylesheetRule(s, "body", "color", prevStyles.textColor);
             changeStylesheetRule(s, "body", "background-color", prevStyles.backgroundColor);
             changeStylesheetRule(s, ".simple-author", "color", prevStyles.linkColor);
