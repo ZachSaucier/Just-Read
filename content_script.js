@@ -238,13 +238,20 @@ function getArticleDate() {
     var date = false;
     if(globalMostPs.querySelector('[class^="date"]')) {
         var elem = globalMostPs.querySelector('[class^="date"]');
-        elem.dataset.simpleDelete = true; // Flag it for removal later
-        date = elem.innerText;
+
+        // Make sure the date isn't absurdly long
+        if(elem.innerText.split(' ').length < 10) {
+            elem.dataset.simpleDelete = true; // Flag it for removal later
+            date = elem.innerText;
+        }
     }
     if(!date && globalMostPs.querySelector('[class*="-date"]')) {
         var elem = globalMostPs.querySelector('[class*="-date"]');
-        elem.dataset.simpleDelete = true; // Flag it for removal later
-        date = elem.innerText;
+        // Make sure the date isn't absurdly long
+        if(elem.innerText.split(' ').length < 10) {
+            elem.dataset.simpleDelete = true; // Flag it for removal later
+            date = elem.innerText;
+        }
     }
     if(!date && document.body.querySelector('[class^="date"]'))
         date = document.body.querySelector('[class^="date"]').innerText;
@@ -262,8 +269,11 @@ function getArticleDate() {
     // Check to see if there's a time element, if so get it
     if(!date && globalMostPs.querySelector('time')) {
         var elem = globalMostPs.querySelector('time');
-        elem.dataset.simpleDelete = true; // Flag it for removal later
-        date = elem.getAttribute("datetime");
+        // Make sure the date isn't absurdly long
+        if(elem.innerText.split(' ').length < 10) {
+            elem.dataset.simpleDelete = true; // Flag it for removal later
+            date = elem.getAttribute("datetime");
+        }
 
         if(date === null)
             date = elem.innerText;
@@ -275,6 +285,10 @@ function getArticleDate() {
         if(date === null)
             date = elem.innerText;
     }
+
+    // Make sure the date isn't absurdly long
+    if(date && date.split(' ').length >= 10)
+        date = false;
 
     if(date)
         return date.replace(/on\s/gi, '').replace(/(?:\r\n|\r|\n)/gi, '&nbsp;').replace(/[<]br[^>]*[>]/gi,'&nbsp;'); // Replace <br>, \n, and "on"
