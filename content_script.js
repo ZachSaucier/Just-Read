@@ -633,7 +633,7 @@ function addGUI() {
     function openStyleEditor() {
         if(closeBtn)
             closeBtn.click();
-        else 
+        else
             createStyleEditor();
     }
 
@@ -648,7 +648,7 @@ function addGUI() {
             count = 1;
         
         while(stylesheetObj[tempName])
-            tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css"); 
+            tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css");
         return tempName;
     }
 
@@ -694,35 +694,35 @@ function addGUI() {
         datGUI = new dat.GUI();
         
         var fontSize = datGUI.add(editor, "fontSize", 8, 25);
-        fontSize.onChange(function(value) { 
-            saved = false; 
-            changeStylesheetRule(s, "body", "font-size", value); 
+        fontSize.onChange(function(value) {
+            saved = false;
+            changeStylesheetRule(s, "body", "font-size", value);
         });
         var maxWidth = datGUI.add(editor, "maxWidth");
-        maxWidth.onChange(function(value) { 
-            saved = false; 
-            changeStylesheetRule(s, ".simple-container", "max-width", value); 
+        maxWidth.onChange(function(value) {
+            saved = false;
+            changeStylesheetRule(s, ".simple-container", "max-width", value);
         });
         var textColor = datGUI.addColor(editor, 'textColor');
-        textColor.onChange(function(value) { 
-            saved = false; 
-            changeStylesheetRule(s, "body", "color", value); 
+        textColor.onChange(function(value) {
+            saved = false;
+            changeStylesheetRule(s, "body", "color", value);
         });
         var backgroundColor = datGUI.addColor(editor, 'backgroundColor');
-        backgroundColor.onChange(function(value) { 
-            saved = false; 
-            changeStylesheetRule(s, "body", "background-color", value); 
+        backgroundColor.onChange(function(value) {
+            saved = false;
+            changeStylesheetRule(s, "body", "background-color", value);
         });
         var linkColor = datGUI.addColor(editor, 'linkColor');
-        linkColor.onChange(function(value) { 
-            saved = false; 
+        linkColor.onChange(function(value) {
+            saved = false;
             changeStylesheetRule(s, ".simple-author", "color", value);
-            changeStylesheetRule(s, "a[href]", "color", value); 
+            changeStylesheetRule(s, "a[href]", "color", value);
         });
         var linkHoverColor = datGUI.addColor(editor, 'linkHoverColor');
-        linkHoverColor.onChange(function(value) { 
-            saved = false; 
-            changeStylesheetRule(s, "a[href]:hover", "color", value); 
+        linkHoverColor.onChange(function(value) {
+            saved = false;
+            changeStylesheetRule(s, "a[href]:hover", "color", value);
         });
         datGUI.add(editor, 'openFullStyles');
         datGUI.add(editor, 'saveAndClose');
@@ -809,7 +809,7 @@ function editText(elem) {
 
 
 /////////////////////////////////////
-// Actually create the iframe 
+// Actually create the iframe
 /////////////////////////////////////
 
 var simpleArticleIframe;
@@ -883,7 +883,7 @@ function createSimplifiedOverlay() {
                 elem.removeAttribute("border");
 
                 // Remove elements that only have &nbsp;
-                if(elem.dataset && elem.innerHTML.trim() === '&nbsp;') 
+                if(elem.dataset && elem.innerHTML.trim() === '&nbsp;')
                     elem.dataset.simpleDelete = true;
 
 
@@ -1010,6 +1010,23 @@ function continueLoading() {
         } else {
             style.appendChild(document.createTextNode(stylesheetObj[theme]));
         }
+        
+        
+        // Create our version of the article
+        createSimplifiedOverlay();
+
+        // Add our required stylesheet for the article
+        if(!simpleArticleIframe.head.querySelector(".required-styles"))
+            addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
+        
+        // Change the top most page when regular links are clicked
+        var linkNum = simpleArticleIframe.links.length;
+        for(var i = 0; i < linkNum; i++)
+            simpleArticleIframe.links[i].onclick = linkListener;
+
+        // Navigate to the element specified by the URL # if it exists
+        if(top.window.location.hash != null)
+            simpleArticleIframe.location.hash = top.window.location.hash;
 
         // Append our theme styles to the overlay
         simpleArticleIframe.head.appendChild(style);
@@ -1022,7 +1039,7 @@ function continueLoading() {
 
 
 /////////////////////////////////////
-// Handle the stylesheet syncing 
+// Handle the stylesheet syncing
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
@@ -1043,23 +1060,6 @@ if(document.getElementById("simple-article") == null) {
 
             // Attempt to mute the elements on the original page
             mutePage();
-
-            // Create our version of the article
-            createSimplifiedOverlay();
-
-            // Add our required stylesheet for the article
-            if(!simpleArticleIframe.head.querySelector(".required-styles"))
-                addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
-            
-            // Change the top most page when regular links are clicked
-            var linkNum = simpleArticleIframe.links.length;
-            for(var i = 0; i < linkNum; i++)
-                simpleArticleIframe.links[i].onclick = linkListener;
-
-            // Navigate to the element specified by the URL # if it exists
-            if(top.window.location.hash != null)
-                simpleArticleIframe.location.hash = top.window.location.hash;
-
 
 
             // GET THEMES CSS SHEETS FROM CHROME STORAGE
