@@ -487,7 +487,8 @@ function linkListener(e) {
     || e.shiftKey
     || e.metaKey
     || (e.button && e.button == 1)
-    || this.target === "about:blank") {
+    || this.target === "about:blank"
+    || this.target === "_blank") {
         return; // Do nothing
     }
 
@@ -496,7 +497,8 @@ function linkListener(e) {
     
     if(hrefArr.length < 2 // No anchor
     || (hrefArr[0].replace(/\/$/, "") != top.window.location.origin + top.window.location.pathname.replace(/\/$/, "") // Anchored to an ID on another page
-        && hrefArr[0] != "about:blank")
+        && hrefArr[0] != "about:blank"
+        && hrefArr[0] != "_blank")
     || (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
         && simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
     ) {
@@ -592,14 +594,28 @@ function addPrintButton() {
 
 // Add some information about our extension
 function addExtInfo() {
-    var extContainer = document.createElement("div");
+    var extContainer = document.createElement("div"),
+        viewedUsing = document.createElement("p");
     extContainer.className = "simple-ext-info";
-    extContainer.innerText = "Viewed using ";
+    viewedUsing.innerText = "Viewed using ";
+    viewedUsing.className = "simple-viewed-using";
 
     var extAnchor = document.createElement("a");
     extAnchor.href = "https://github.com/ZachSaucier/Just-Read";
     extAnchor.innerText = "Just Read";
-    extContainer.appendChild(extAnchor);
+    extAnchor.target = "_blank";
+    viewedUsing.appendChild(extAnchor);
+
+    var bugReporter = document.createElement("p");
+    bugReporter.className = "simple-bug-reporter";
+    var bugAnchor = document.createElement("a");
+    bugAnchor.href = "https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3Abug%20";
+    bugAnchor.innerText = "Report an error";
+    bugAnchor.target = "_blank";
+    bugReporter.appendChild(bugAnchor);
+
+    extContainer.appendChild(viewedUsing);
+    extContainer.appendChild(bugReporter);
 
     return extContainer;
 }

@@ -87,6 +87,23 @@
     padding-top: 28px;
 }
 
+.simple-viewed-using {
+    margin-bottom: 0;
+}
+
+.simple-bug-reporter {
+    margin-top: 0;
+    font-size: 12px;
+}
+.simple-bug-reporter a[href] {
+    color: #282828;
+    opacity: 0.5;
+}
+.simple-bug-reporter a[href]:hover {
+    color: #282828;
+    opacity: 1;
+}
+
 @media (max-width: 750px) {
     .simple-container {
         padding-left: 50px;
@@ -103,7 +120,8 @@
 }
 
 @media print {
-    .simple-control {
+    .simple-control,
+    .simple-bug-reporter {
         display: none;
     }
     @page :first { margin-top: 0; }
