@@ -5,7 +5,7 @@ function startJustRead(tab) {
     });
 
     // Add a badge to signify the extension is in use
-    chrome.browserAction.setBadgeBackgroundColor({color:[242, 38, 19, 230], tabId: tab.tabId});
+    chrome.browserAction.setBadgeBackgroundColor({color:[242, 38, 19, 230]});
     chrome.browserAction.setBadgeText({text:"on"});
 
     setTimeout(function() {
@@ -63,7 +63,8 @@ chrome.extension.onRequest.addListener(function(data, sender) {
         contexts:["selection"], 
         onclick: function(info, tab) { 
             chrome.tabs.executeScript(null, {
-                code: 'var textToRead = \"' + info.selectionText + '\";'
+                code: 'var textToRead = true'
+                //code: 'var textToRead = \"' + info.selectionText.replace(/["]+/g, '\\\"').replace(/[']+/g, '\\\'') + '\";'
             }, function() { 
                 startJustRead();
             });

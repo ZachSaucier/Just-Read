@@ -510,6 +510,15 @@ function linkListener(e) {
 }
 
 
+// Handle selected text to read
+function getSelectedHTML() {
+    var selection = window.getSelection();
+    // Only works with a single range 
+    var range = selection.getRangeAt(0);
+    var container = range.commonAncestorContainer;
+    return container.innerHTML;
+}
+
 
 
 /////////////////////////////////////
@@ -880,62 +889,63 @@ function createSimplifiedOverlay() {
     contentContainer.className = "content-container";
 
     if(typeof textToRead != "undefined") {
-        contentContainer.innerHTML = textToRead;
+        contentContainer.innerHTML = getSelectedHTML();
     } else {
         contentContainer.innerHTML = globalMostPs.innerHTML;
+    }
 
 
-        // Strip inline styles
-        var allElems = contentContainer.getElementsByTagName("*");
-        for (var i = 0, max = allElems.length; i < max; i++) {
-            var elem = allElems[i];
+    // Strip inline styles
+    var allElems = contentContainer.getElementsByTagName("*");
+    for (var i = 0, max = allElems.length; i < max; i++) {
+        var elem = allElems[i];
 
-            if(elem != undefined) {
-                elem.removeAttribute("style");
-                elem.removeAttribute("width");
-                elem.removeAttribute("height");
-                elem.removeAttribute("background");
-                elem.removeAttribute("bgcolor");
-                elem.removeAttribute("border");
+        if(elem != undefined) {
+            elem.removeAttribute("style");
+            elem.removeAttribute("color");
+            elem.removeAttribute("width");
+            elem.removeAttribute("height");
+            elem.removeAttribute("background");
+            elem.removeAttribute("bgcolor");
+            elem.removeAttribute("border");
 
-                // Remove elements that only have &nbsp;
-                if(elem.dataset && elem.innerHTML.trim() === '&nbsp;')
-                    elem.dataset.simpleDelete = true;
+            // Remove elements that only have &nbsp;
+            if(elem.dataset && elem.innerHTML.trim() === '&nbsp;')
+                elem.dataset.simpleDelete = true;
 
 
-                // See if the pres have code in them
-                var isPreNoCode = true;
-                if(elem.nodeName === "PRE") {
-                    isPreNoCode = false;
+            // See if the pres have code in them
+            var isPreNoCode = true;
+            if(elem.nodeName === "PRE") {
+                isPreNoCode = false;
 
-                    for(var j = 0, len = elem.children.length; j < len; j++) {
-                        if(elem.children[j].nodeName === "CODE")
-                            isPreNoCode = true;
-                    }
-
-                    // If there's no code, format it
-                    if(!isPreNoCode) {
-                        elem.innerHTML = elem.innerHTML.replace(/\n/g, '<br/>')
-                    }
+                for(var j = 0, len = elem.children.length; j < len; j++) {
+                    if(elem.children[j].nodeName === "CODE")
+                        isPreNoCode = true;
                 }
 
-                // Replace the depreciated font element and pres without code with ps
-                if(elem.nodeName === "FONT" || !isPreNoCode) {
-                    var p = document.createElement('p');
-                    p.innerHTML = elem.innerHTML;
-
-                    elem.parentNode.insertBefore(p, elem);
-                    elem.parentNode.removeChild(elem);
+                // If there's no code, format it
+                if(!isPreNoCode) {
+                    elem.innerHTML = elem.innerHTML.replace(/\n/g, '<br/>')
                 }
-
-                // Remove any inline style, script, or noindex elements and things with aria hidden
-                if(elem.nodeName === "STYLE"
-                //|| elem.nodeName === "SCRIPT"
-                || elem.nodeName === "NOINDEX"
-                || (elem.getAttribute("aria-hidden") == "true")
-                   && typeof elem.dataset != "undefined")
-                    elem.dataset.simpleDelete = true;
             }
+
+            // Replace the depreciated font element and pres without code with ps
+            if(elem.nodeName === "FONT" || !isPreNoCode) {
+                var p = document.createElement('p');
+                p.innerHTML = elem.innerHTML;
+
+                elem.parentNode.insertBefore(p, elem);
+                elem.parentNode.removeChild(elem);
+            }
+
+            // Remove any inline style, script, or noindex elements and things with aria hidden
+            if(elem.nodeName === "STYLE"
+            //|| elem.nodeName === "SCRIPT"
+            || elem.nodeName === "NOINDEX"
+            || (elem.getAttribute("aria-hidden") == "true")
+               && typeof elem.dataset != "undefined")
+                elem.dataset.simpleDelete = true;
         }
     }
 
