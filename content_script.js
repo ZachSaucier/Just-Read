@@ -512,11 +512,10 @@ function linkListener(e) {
 
 // Handle selected text to read
 function getSelectedHTML() {
-    var selection = window.getSelection();
-    // Only works with a single range 
-    var range = selection.getRangeAt(0);
-    var container = range.commonAncestorContainer;
-    return container.innerHTML;
+    var range = window.getSelection().getRangeAt(0);
+    var div = document.createElement("div");
+    div.appendChild(range.cloneContents());
+    return div.innerHTML;
 }
 
 
