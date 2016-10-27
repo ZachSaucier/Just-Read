@@ -39,17 +39,15 @@ You can start using Just Read's built in selection in three ways:
 
 ### User selection mode
 
-You can also select exactly the text you want to read if the built in method doesn't select what you want. You can start doing that in three ways:
+You can also select exactly the text you want to read if the built in method doesn't select what you want. If you want to use a visual selector, you can start selection mode in two ways:
 
 4. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
 
 5. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
 
-6. Select the text you want to read. Right click the selection and click "View this text in Just Read".
-
 ### Highlight mode
 
-The last way you can select text to read is by highlighting it by clicking and dragging over the text. Once all the text you want to read is highlighted, right click it and select "View this text in Just Read".
+You can also select specific text by highlighting it (by clicking and dragging over the text), then right click it and select "View this text in Just Read".
 
 ### Deletion mode
 
