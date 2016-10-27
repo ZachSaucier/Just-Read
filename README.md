@@ -47,6 +47,10 @@ You can also select exactly the text you want to read if the built in method doe
 
 6. Select the text you want to read. Right click the selection and click "View this text in Just Read".
 
+### Highlight mode
+
+The last way you can select text to read is by highlighting it by clicking and dragging over the text. Once all the text you want to read is highlighted, right click it and select "View this text in Just Read".
+
 ### Deletion mode
 
 Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd>. They can click on elements that they don't want to view (helpful for printing or if there are elements that aren't part of the article) and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd>. 
