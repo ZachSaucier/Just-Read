@@ -12,12 +12,17 @@
     <h1>Edit <i>Just Read</i> styles</h1>
 
     <div class="flex-container">
-        <div class="stylesheet-list-container">
-            <input type="text" id="new-file" placeholder="New stylesheet..."/>
-            <button id="add">+</button>
-            <ul class="stylesheets">
-                <!-- This is populated by our JS -->
-            </ul>
+        <div class="left-column">
+            <div class="stylesheet-list-container">
+                <input type="text" id="new-file" placeholder="New stylesheet..."/>
+                <button id="add">+</button>
+                <ul class="stylesheets">
+                    <!-- This is populated by our JS -->
+                </ul>
+            </div>
+            
+            <h4>Auto-run domain list:</h4>
+            <textarea name="domainList" id="domainList"></textarea>
         </div>
 
         <div class="editor-container">

@@ -29,7 +29,10 @@ body, .editor-container {
     flex-direction: column;
 }
 
-.stylesheet-list-container {
+.left-column {
+    display: flex;
+    flex-direction: column;
+
     max-width: 250px;
     margin-right: 50px;
     border: 1px solid;
@@ -58,6 +61,15 @@ body, .editor-container {
 }
 .stylesheets .locked {
     color: grey;
+}
+
+.left-column h4 {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+#domainList {
+    width: 100%;
+    flex-grow: 1;
 }
 
 .controls-container {
@@ -112,7 +124,7 @@ body, .editor-container {
         flex-direction: column;
     }
 
-    .stylesheet-list-container {
+    .left-column {
         margin-bottom: 10px;
     }
 

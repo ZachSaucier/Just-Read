@@ -51,11 +51,23 @@ function byteLength(str) {
   return s;
 }
 
-// Given a chrome storage object add them to our local stylsheet obj
+// Given a chrome storage object, add them to our domain list
+function setDomains(domains) {
+    var domainString = "";
+    for(var i = 0; i < domains.length; i++) {
+        domainString += domains[i] + "\n";
+    }
+
+    domainList.value = domainString;
+}
+
+// Given a chrome storage object, add them to our domain list
 function getStylesFromStorage(storage) {
     for(var key in storage) {
         // Convert the old format into the new format
-        if(key === "just-read-stylesheets") {
+        if(key === "auto-enable-site-list") {
+            setDomains(storage[key]);
+        } else if(key === "just-read-stylesheets") {
             // Save each stylesheet in the new format
             for(var stylesheet in storage[key]) {
                 var obj = {};
@@ -388,14 +400,22 @@ function useTheme() {
     alert(sheet + " is now set as the active theme");
 }
 
-getStylesheets();
-
 var newFileInput = document.getElementById("new-file"),
     addButton = document.getElementById("add"),
     saveButton = document.getElementById("save"),
     useButton = document.getElementById("use"),
     removeButton = document.getElementById("remove"),
-    stylesheetListItems;
+    stylesheetListItems,
+    domainList = document.getElementById("domainList");
+
+getStylesheets();
+
+
+// Update the domain list with any new values
+domainList.onkeyup = function(e) {
+    var domainLine = domainList.value.split("\n").filter(String);
+    chrome.storage.sync.set({"auto-enable-site-list": domainLine});
+}
 
 // Allow the "Enter" key to be used to add new stylesheets
 newFileInput.onkeyup = function(e) {

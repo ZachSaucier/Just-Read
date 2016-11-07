@@ -53,6 +53,18 @@ function mutePage() {
 // State functions
 /////////////////////////////////////
 
+// Run on load functionality
+function runOnLoad() {
+    // When the content has finished loading, enable Just Read to run
+    window.onload = function(event) {
+        isPaused = false;
+    }
+
+    // Make the next part wait until the content is loaded
+    hideLoad = false;
+    isPaused = true;
+}
+
 // User-selected text functionality
 var last,
     bgc,
@@ -708,6 +720,7 @@ function addGUI() {
         }
 
         datGUI.destroy();
+        datGUI = undefined;
         
         closeBtn = null;
         saved = false;
@@ -1062,16 +1075,16 @@ function continueLoading() {
 
 
 
-
 /////////////////////////////////////
 // Handle the stylesheet syncing
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.9; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.10; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
     var interval = setInterval(function() {
+
         // Check to see if the user wants to select the text
         if(typeof useText != "undefined" && useText && !isPaused) {
             // Start the process of the user selecting text to read
@@ -1082,6 +1095,11 @@ if(document.getElementById("simple-article") == null) {
             // Add the stylesheet for the container
             if(!document.head.querySelector(".page-styles"))
                 addStylesheet(document, "page.css", "page-styles");
+
+            // Check to see if the user wants to hide the content while loading
+            if(typeof runOnLoad != "undefined" && runOnLoad) {
+                runOnLoad(document);
+            }
 
             // Attempt to mute the elements on the original page
             mutePage();

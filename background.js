@@ -72,3 +72,26 @@ chrome.extension.onRequest.addListener(function(data, sender) {
     });
 
 //});
+
+
+chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+    if (changeInfo.status == 'loading') {
+        // Auto enable on sites specified
+        chrome.storage.sync.get('auto-enable-site-list', function (siteListObj) {
+            var siteList = siteListObj['auto-enable-site-list'],
+                url = tab.url,
+                matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i),
+                domain = matches && matches[1];  // Domain will be null if no match is found
+            
+            for(var i = 0; i < siteList.length; i++) {
+                if(domain && siteList[i] === domain) {
+                    chrome.tabs.executeScript(null, {
+                        code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load 
+                    }, function() {                   // instead of using Chrome messages
+                        startJustRead();
+                    });
+                }
+            }
+        });
+    }
+});

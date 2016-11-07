@@ -151,6 +151,11 @@ aside,
     display: none;
 }
 
+/* Very simple 'nocontent' hider */
+[class *= "nocontent"] {
+    display: none;
+}
+
 /* Very simple popup hider */
 [class *= "popup"],
 [id *= "popup"] {
