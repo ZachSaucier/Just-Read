@@ -49,3 +49,8 @@
 .dg { z-index: 99999999999 !important; height: auto !important; }
 .simple-no-scroll .dg { overflow: visible !important; }
 .dg .cr.string:not(.color) input { float: none; }
+.dg.main .close-button.close-button {
+    bottom: -41px;
+    border-top: 1px solid grey; 
+}
+.dg.main .close-button.saveAndClose { bottom: -20px; }

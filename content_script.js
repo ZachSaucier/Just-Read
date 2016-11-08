@@ -663,7 +663,6 @@ function addGUI() {
         this.linkHoverColor = prevStyles.linkHoverColor = getStylesheetValue(s, "a[href]:hover", "color");
         this.maxWidth = prevStyles.maxWidth = getStylesheetValue(s, ".simple-container", "max-width");
         this.openFullStyles = openFullStyles;
-        this.saveAndClose = saveStyles;
     };
 
     function openStyleEditor() {
@@ -762,9 +761,25 @@ function addGUI() {
             changeStylesheetRule(s, "a[href]:hover", "color", value);
         });
         datGUI.add(editor, 'openFullStyles');
-        datGUI.add(editor, 'saveAndClose');
-        
-        closeBtn = document.querySelector(".close-button");
+
+
+        // Add the save and close buttons
+        closeBtn = document.querySelector(".dg .close-button");
+
+        var clone = closeBtn.cloneNode(true);
+        console.log(clone, closeBtn.parentNode);
+        closeBtn.parentNode.appendChild(clone);
+
+        // Switch the variables to match DOM order
+        var saveAndClose = closeBtn;
+        closeBtn = clone;
+
+        saveAndClose.className += " saveAndClose";
+
+        saveAndClose.innerText = "Save and close";
+        closeBtn.innerText = "Close without saving";
+
+        saveAndClose.onclick = saveStyles;
         closeBtn.onclick = closeStyleEditor;
     }
 
@@ -1080,7 +1095,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.10; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.11; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
     var interval = setInterval(function() {
