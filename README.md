@@ -53,6 +53,11 @@ You can also select specific text by highlighting it (by clicking and dragging o
 
 Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd>. They can click on elements that they don't want to view (helpful for printing or if there are elements that aren't part of the article) and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd>. 
 
+### Auto-enable Just Read on specific websites
+
+You can also opt to auto-enable Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) into the "Auto-run domain list" found on the extension's Options page. Just Read will then check each new site's URL to see if it matches one in the user-inputted list. If it does, it will start Just Read when the page loads.
+![Auto-enable](http://i.imgur.com/CVfW4Zc.png)
+
 ___
 
 ## Customization:
@@ -60,9 +65,9 @@ ___
 By default the extension will use a theme that we made as seen here 
 ![the effect of the extension](http://i.imgur.com/gNEpBfG.png)
 
-You can customize this theme using the GUI shown when you click [the paint brush icon](http://i.imgur.com/XW03mZW.png). Just make sure to click "saveAndClose" when you're done or the styles will not be updated in the actual stylesheet. The GUI looks like this:
+You can customize this theme using the GUI shown when you click [the paint brush icon](http://i.imgur.com/XW03mZW.png). Just make sure to click "Save and close" when you're done or the styles will not be updated in the actual stylesheet. The GUI looks like this:
 
-![GUI](http://i.imgur.com/VxsDdnP.png)
+![GUI](http://i.imgur.com/0AJXOFp.png)
 
 > **Note**: The theme editor GUI will only appear for the default theme or themes derived from the default (that share "default-stylesheet" as part of the file name).
 
