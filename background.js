@@ -1,5 +1,6 @@
 function startJustRead(tab) {
-    chrome.tabs.executeScript(null, { // Defaults to the current tab
+    var tabId = tab ? tab.id : null; // Defaults to the current tab
+    chrome.tabs.executeScript(tabId, {
         file: "content_script.js", // Script to inject into page and run in sandbox
         allFrames: false // This injects script into iframes in the page and doesn't work before 4.0.266.0.
     });
@@ -28,8 +29,6 @@ chrome.browserAction.onClicked.addListener(startJustRead);
 chrome.commands.onCommand.addListener(function(command) {
     if(command == "open-just-read")
         startJustRead();
-});
-chrome.commands.onCommand.addListener(function(command) {
     if(command == "select-text")
         startSelectText();
 });
@@ -64,10 +63,27 @@ chrome.extension.onRequest.addListener(function(data, sender) {
         onclick: function(info, tab) { 
             chrome.tabs.executeScript(null, {
                 code: 'var textToRead = true'
-                //code: 'var textToRead = \"' + info.selectionText.replace(/["]+/g, '\\\"').replace(/[']+/g, '\\\'') + '\";'
             }, function() { 
                 startJustRead();
             });
+        }
+    });
+
+    // Create an entry to allow user to open a given link using Just read
+    chrome.contextMenus.create({title: "View the linked page using Just Read", 
+        contexts:["link"], 
+        onclick: function(info, tab) { 
+            chrome.tabs.create(
+                { url: info.linkUrl, active: false },
+                function(newTab) {
+                    chrome.tabs.executeScript(newTab.id, {
+                        code: 'var runOnLoad = true'
+                    }, function() { 
+                        startJustRead(newTab);
+                    });
+                }
+            );
+            
         }
     });
 
@@ -83,10 +99,10 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
             
             for(var i = 0; i < siteList.length; i++) {
                 if(url.indexOf(siteList[i]) > -1) {
-                    chrome.tabs.executeScript(null, {
+                    chrome.tabs.executeScript(tabId, {
                         code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load 
                     }, function() {                   // instead of using Chrome messages
-                        startJustRead();
+                        startJustRead(tab);
                     });
                 }
             }

@@ -1,8 +1,8 @@
 {
   "name": "Just Read",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "manifest_version": 2,
-  "description": "A customizable read mode extension.",
+  "description": "A customizable reader extension.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
   "offline_enabled": true,
 
@@ -29,6 +29,12 @@
         "default": "Ctrl+Shift+K"
       },
       "description": "Enable user text selection mode using Just Read"
+    },
+    "open-new-article": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+Left-click"
+      },
+      "description": "Enable user to open an article in a new tab using Just Read"
     }
   },
 

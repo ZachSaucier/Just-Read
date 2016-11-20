@@ -151,6 +151,15 @@ aside,
     display: none;
 }
 
+/* Very simple nav, menu, and search hider */
+[class *= "navigation"],
+[class *= "nav"],
+nav, 
+[class *= "search"],
+[class *= "menu"] {
+    display: none;
+}
+
 /* Very simple 'nocontent' hider */
 [class *= "nocontent"] {
     display: none;

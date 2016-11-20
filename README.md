@@ -1,7 +1,10 @@
 Just Read
 =========
 
- The extension makes it easy to view web articles in a more readable, attractive, and custom format. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
+> I've started work on a paid version of Just Read. To find out more about it or to help contribute to what features should be included, please check out [the GitHub issue](https://github.com/ZachSaucier/Just-Read/issues/20).
+
+ The extension makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
+
 
 > **Please note**: This extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
 
@@ -28,22 +31,24 @@ Once Just Read has been installed, there are six built in ways to apply the effe
 
 ### Use Just Read's built in selection
 
-You can start using Just Read's built in selection in three ways:
+You can start using Just Read's built in selection in four ways:
 
 1. Click the Just Read Chrome extension button. 
 ![extension button](http://i.imgur.com/aCOIuVV.png)
 
 2. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>L</kbd>.
 
-3. Right click and choose the "View this page using Just Read" option.
+3. Right click the current page and choose the "View this page using Just Read" option.
+
+4. Right click a link and select "View the linked page using Just Read" (it will open it in a new tab).
 
 ### User selection mode
 
 You can also select exactly the text you want to read if the built in method doesn't select what you want. If you want to use a visual selector, you can start selection mode in two ways:
 
-4. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
+5. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
 
-5. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
+6. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
 
 ### Highlight mode
 

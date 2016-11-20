@@ -70,6 +70,7 @@ body, .editor-container {
 #domainList {
     width: 100%;
     flex-grow: 1;
+    resize: none;
 }
 
 .controls-container {
@@ -83,6 +84,11 @@ body, .editor-container {
     position: relative; 
     border: 1px solid;
     overflow: auto;
+}
+
+
+.view-other-stylesheets {
+    margin-top: 7px;
 }
 
 
