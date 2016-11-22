@@ -60,7 +60,7 @@ Once the text has been selected and the article is open in the Just Read format,
 
 ### Auto-enable Just Read on specific websites
 
-You can also opt to auto-enable Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) into the "Auto-run domain list" found on the extension's Options page. Just Read will then check each new site's URL to see if it matches one in the user-inputted list. If it does, it will start Just Read when the page loads.
+You can also opt to auto-enable Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) or a regular expression into the "Auto-run domain list" found on the extension's Options page (for more info as to what formats work, see [this post](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Just Read will then check each new site's URL to see if it matches the string or expression in the user-inputted list. If it does, it will start Just Read when the page loads.
 ![Auto-enable](http://i.imgur.com/CVfW4Zc.png)
 
 ___
