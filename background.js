@@ -98,7 +98,9 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
                 url = tab.url;
             
             for(var i = 0; i < siteList.length; i++) {
-                if(url.indexOf(siteList[i]) > -1) {
+                var regex = new RegExp(siteList[i], "i");
+
+                if( url.match( regex ) ) {
                     chrome.tabs.executeScript(tabId, {
                         code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load 
                     }, function() {                   // instead of using Chrome messages
