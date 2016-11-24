@@ -16,14 +16,113 @@ function startJustRead(tab) {
 
 function startSelectText() {
     chrome.tabs.executeScript(null, {
-        code: 'var useText = true;' // Ghetto way of signaling to select text instead of 
+        code: 'var useText = true;' // Ghetto way of signaling to select text instead of
     }, function() {                 // using Chrome messages
         startJustRead();
     });
 }
 
+function createPageCM() {
+    // Create a right click menu option
+    pageCMId = chrome.contextMenus.create({
+         title: "View this page using Just Read",
+         id: "pageCM",
+         contexts: ["page"],
+         onclick: startJustRead
+    });
+}
+function createHighlightCM() {
+    // Create an entry to allow user to use currently selected text
+    highlightCMId = chrome.contextMenus.create({
+        title: "View this text in Just Read",
+        id: "highlightCM",
+        contexts:["selection"],
+        onclick: function(info, tab) {
+            chrome.tabs.executeScript(null, {
+                code: 'var textToRead = true'
+            }, function() {
+                startJustRead();
+            });
+        }
+    });
+}
+function createLinkCM() {
+    // Create an entry to allow user to open a given link using Just read
+    linkCMId = chrome.contextMenus.create({
+        title: "View the linked page using Just Read",
+        id: "linkCM",
+        contexts:["link"],
+        onclick: function(info, tab) {
+            chrome.tabs.create(
+                { url: info.linkUrl, active: false },
+                function(newTab) {
+                    chrome.tabs.executeScript(newTab.id, {
+                        code: 'var runOnLoad = true'
+                    }, function() {
+                        startJustRead(newTab);
+                    });
+                }
+            );
+            
+        }
+    });
+}
+
+
+var pageCMId = highlightCMId = linkCMId = undefined;
+function updateCMs() {
+    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM", "enable-linkCM"], function (result) {
+        var size = 0;
+        
+        for(var key in result) {
+            size++;
+            
+            if(key === "enable-pageCM") {
+                if(result[key]) {
+                    if(typeof pageCMId == "undefined")
+                        createPageCM();
+                } else {
+                    if(typeof pageCMId == "undefined") {
+                        chrome.contextMenus.remove("pageCM");
+                        pageCMId = undefined;
+                    }
+                }
+            } else if(key === "enable-highlightCM") {
+                if(result[key]) {
+                    if(typeof highlightCMId == "undefined")
+                        createHighlightCM();
+                } else {
+                    if(typeof highlightCMId == "undefined") {
+                        chrome.contextMenus.remove("highlightCM");
+                        highlightCMId = undefined;
+                    }
+                }
+            } else if(key === "enable-linkCM") {
+                if(result[key]) {
+                    if(typeof linkCMId == "undefined")
+                        createLinkCM();
+                } else {
+                    if(typeof linkCMId != "undefined") {
+                        chrome.contextMenus.remove("linkCM");
+                        linkCMId = undefined;
+                    }
+                }
+            }
+        }
+        
+        if(size === 0) {
+            createPageCM();
+            createHighlightCM();
+            createLinkCM();
+        }
+    });
+}
+
 // Listen for the extension's click
 chrome.browserAction.onClicked.addListener(startJustRead);
+
+// Add our context menus
+updateCMs();
 
 // Listen for the keyboard shortcut
 chrome.commands.onCommand.addListener(function(command) {
@@ -40,55 +139,22 @@ chrome.extension.onRequest.addListener(function(data, sender) {
     }
 });
 
-//chrome.runtime.onInstalled.addListener(function() { // Only do it once
-    // Create a right click menu option
-    chrome.contextMenus.create({
-         title: "View this page using Just Read",
-         contexts: ["page"], 
-         onclick: startJustRead
-    });
+// Create an entry to allow user to select an element to read from
+chrome.contextMenus.create({
+    title: "Select text to read",
+    contexts: ["browser_action"],
+    onclick: function() {
+        startSelectText();
+    }
+});
 
-    // Create an entry to allow user to select an element to read from
-    chrome.contextMenus.create({
-        title: "Select text to read",
-        contexts: ["browser_action"],
-        onclick: function() {
-            startSelectText();
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if(request.updateCMs === "true") {
+            updateCMs();
         }
-    });
-
-    // Create an entry to allow user to use currently selected text
-    chrome.contextMenus.create({title: "View this text in Just Read", 
-        contexts:["selection"], 
-        onclick: function(info, tab) { 
-            chrome.tabs.executeScript(null, {
-                code: 'var textToRead = true'
-            }, function() { 
-                startJustRead();
-            });
-        }
-    });
-
-    // Create an entry to allow user to open a given link using Just read
-    chrome.contextMenus.create({title: "View the linked page using Just Read", 
-        contexts:["link"], 
-        onclick: function(info, tab) { 
-            chrome.tabs.create(
-                { url: info.linkUrl, active: false },
-                function(newTab) {
-                    chrome.tabs.executeScript(newTab.id, {
-                        code: 'var runOnLoad = true'
-                    }, function() { 
-                        startJustRead(newTab);
-                    });
-                }
-            );
-            
-        }
-    });
-
-//});
-
+    }
+);
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
     if (changeInfo.status == 'loading') {
@@ -97,15 +163,17 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
             var siteList = siteListObj['auto-enable-site-list'],
                 url = tab.url;
             
-            for(var i = 0; i < siteList.length; i++) {
-                var regex = new RegExp(siteList[i], "i");
-
-                if( url.match( regex ) ) {
-                    chrome.tabs.executeScript(tabId, {
-                        code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load 
-                    }, function() {                   // instead of using Chrome messages
-                        startJustRead(tab);
-                    });
+            if(typeof siteList != "undefined") {
+                for(var i = 0; i < siteList.length; i++) {
+                    var regex = new RegExp(siteList[i], "i");
+    
+                    if( url.match( regex ) ) {
+                        chrome.tabs.executeScript(tabId, {
+                            code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load
+                        }, function() {                   // instead of using Chrome messages
+                            startJustRead(tab);
+                        });
+                    }
                 }
             }
         });

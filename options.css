@@ -2,10 +2,11 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-html, body, .flex-container, .editor { 
-    height: 100%; 
+html, body, .flex-container, .editor {
+    height: 100%;
 }
 body {
+    position: relative;
     max-width: 1000px;
     margin: 0 auto;
     padding-top: 30px;
@@ -27,6 +28,15 @@ h1 i {
 body, .editor-container {
     display: flex;
     flex-direction: column;
+}
+
+.user-options {
+    position: absolute;
+    right: 50px;
+    top: 15px;
+}
+.user-options label {
+    display: block;
 }
 
 .left-column {
@@ -80,8 +90,8 @@ body, .editor-container {
     flex-grow: 2;
 }
 
-.editor { 
-    position: relative; 
+.editor {
+    position: relative;
     border: 1px solid;
     overflow: auto;
 }
@@ -100,7 +110,7 @@ body, .editor-container {
     margin-top: 0;
 }
 
-#save { 
+#save {
     position: relative;
 }
 #save::before {
@@ -142,26 +152,26 @@ body, .editor-container {
 }
 
 @-webkit-keyframes fadeInAndOut {
-    0%, 100% { 
+    0%, 100% {
         height: auto;
         opacity: 0;
         -webkit-transform: translateY(30px);
     }
     
-    10%, 90% { 
+    10%, 90% {
         opacity: 1;
         -webkit-transform: translateY(0px);
     }
 }
 
 @keyframes fadeInAndOut {
-    0%, 100% { 
+    0%, 100% {
         height: auto;
         opacity: 0;
         transform: translateY(30px);
     }
     
-    10%, 90% { 
+    10%, 90% {
         opacity: 1;
         transform: translateY(0px);
     }

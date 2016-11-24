@@ -67,6 +67,12 @@ function getStylesFromStorage(storage) {
         // Convert the old format into the new format
         if(key === "auto-enable-site-list") {
             setDomains(storage[key]);
+        } else if(key === "enable-pageCM") {
+            pageCM.checked = storage[key];
+        } else if(key === "enable-highlightCM") {
+            highlightCM.checked = storage[key];
+        } else if(key === "enable-linkCM") {
+            linkCM.checked = storage[key];
         } else if(key === "just-read-stylesheets") {
             // Save each stylesheet in the new format
             for(var stylesheet in storage[key]) {
@@ -126,7 +132,7 @@ function checkFileName(fileName) {
     var tempName = fileName,
         count = 1;
     while(stylesheetObj[tempName])
-        tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css"); 
+        tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css");
     return tempName;
 }
 
@@ -262,7 +268,7 @@ function continueLoading() {
                 liClassList.add("active");
                 var fileName = li.textContent;
                 editor.setValue(stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName], -1);
-            }           
+            }
 
             list.appendChild(li);
 
@@ -301,7 +307,7 @@ function getStylesheets() {
         // Collect all of our stylesheets in our object
         getStylesFromStorage(result);
 
-        if(isEmpty(stylesheetObj)) { // Not found, so we add our default            
+        if(isEmpty(stylesheetObj)) { // Not found, so we add our default
             // Open the default CSS file and save it to our object
             var xhr = new XMLHttpRequest();
             xhr.open('GET', chrome.extension.getURL(defaultStylesheet), true);
@@ -379,11 +385,11 @@ function useTheme() {
         previouslyUsed = document.querySelector(".stylesheets .used");
 
     // Save the current theme
-    if(!themeToUse.classList.contains("locked")) 
+    if(!themeToUse.classList.contains("locked"))
         saveTheme();
 
     // Remove the used class from the old list item
-    if(previouslyUsed !== null) 
+    if(previouslyUsed !== null)
         previouslyUsed.classList.remove("used");
 
     // Update the class to show it's applied
@@ -452,7 +458,7 @@ add.onclick = function() {
         // Clear out the editor and add some smart defaults
         editor.setValue("/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n\n\n", -1);
 
-        // Force them to save to keep it    
+        // Force them to save to keep it
         changed = true;
 
         list.appendChild(li);
@@ -482,7 +488,7 @@ removeButton.onclick = function() {
         // Add confimation
         if (window.confirm("Do you really want to remove this file?")) {
             // Remove the file from our object
-            delete stylesheetObj[document.querySelector(".stylesheets .active").innerText]; 
+            delete stylesheetObj[document.querySelector(".stylesheets .active").innerText];
 
             // Remove the file from Chrome's storage
             removeStyleFromStorage("jr-" + elem.innerText);
@@ -498,8 +504,26 @@ removeButton.onclick = function() {
 
             editor.setValue("", -1);
         }
-    } else 
+    } else
         alert("This file is locked and cannot be deleted.");
 
     // Otherwise we do nothing
+}
+
+
+var pageCM = document.getElementById("pageCM"),
+    highlightCM = document.getElementById("highlightCM"),
+    linkCM = document.getElementById("linkCM");
+
+pageCM.onchange = function() {
+    chrome.storage.sync.set({"enable-pageCM": this.checked});
+    chrome.runtime.sendMessage({updateCMs: "true"});
+}
+highlightCM.onchange = function() {
+    chrome.storage.sync.set({"enable-highlightCM": this.checked});
+    chrome.runtime.sendMessage({updateCMs: "true"});
+}
+linkCM.onchange = function() {
+    chrome.storage.sync.set({"enable-linkCM": this.checked});
+    chrome.runtime.sendMessage({updateCMs: "true"});
 }
