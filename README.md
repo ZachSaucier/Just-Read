@@ -81,6 +81,22 @@ If you want to further customize the stylesheet or add and use your own, you can
 
 You can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
+### Additional options
+
+If you click "Additional options" while on the options page, a new modal will show with the following options:
+
+![Additional options](http://i.imgur.com/C9Fg7hI.png)
+
+"Show button for deletion mode" adds a new button when Just Read is open to start/stop deletion mode to prevent the need of the keyboard shortcut (but still retains keyboard shortcut functionality).
+
+"Don't reformat pre tags" makes it so that Just Read doesn't turn any `<pre>` tags into paragraphs but retains their original formatting.
+
+"Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
+
+"Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
+
+"Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
+
 ### Find themes or share your own
 
 If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
