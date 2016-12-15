@@ -10,12 +10,6 @@
 </head>
 <body>
     <h1>Edit <i>Just Read</i> styles</h1>
-    
-    <div class="user-options">
-        <label><input id="pageCM" type="checkbox" checked /> Enable page context menu entry</label>
-        <label><input id="highlightCM" type="checkbox" checked /> Enable highlight context menu entry</label>
-        <label><input id="linkCM" type="checkbox" checked /> Enable link context menu entry</label>
-    </div>
 
     <div class="flex-container">
         <div class="left-column">
@@ -40,11 +34,22 @@
                 <button id="save">Save</button>
                 <button id="use">Use as current theme</button>
                 <button id="remove">Remove</button>
+                <button id="additional">Additional options</button>
             </div>
             <div class="editor">
                 <div id="css-editor"></div>
             </div>
         </div>
+    </div>
+
+    <div class="additional-options hidden">
+        <label><input id="delModeBtn" type="checkbox" /> Show a button for deletion mode</label>
+        <label><input id="leavePres" type="checkbox" /> Don't reformat pre tags</label>
+        <label><input id="pageCM" type="checkbox" checked /> Enable page context menu entry</label>
+        <label><input id="highlightCM" type="checkbox" checked /> Enable highlight context menu entry</label>
+        <label><input id="linkCM" type="checkbox" checked /> Enable link context menu entry</label>
+
+        <button id="closeAdditional">X</button>
     </div>
     
     <script src="external-libraries/ace/ace.js"></script>

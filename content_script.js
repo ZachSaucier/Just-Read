@@ -129,8 +129,14 @@ function startDeleteElement(doc) {
     var mouseFunc = function (e) {
         var elem = e.target;
 
-        if(!elem.classList.contains("simple-close")
+        if(!elem.classList.contains("simple-container")
+        && !elem.classList.contains("simple-close")
         && !elem.classList.contains("simple-print")
+        && !elem.parentNode.classList.contains("simple-print")
+        && !elem.classList.contains("simple-edit-theme")
+        && !elem.parentNode.classList.contains("simple-edit-theme")
+        && !elem.classList.contains("simple-delete")
+        && !elem.parentNode.classList.contains("simple-delete")
         && doc.body != elem
         && doc.documentElement != elem) {
             if (last != elem) {
@@ -146,8 +152,14 @@ function startDeleteElement(doc) {
     clickFunc = function(e) {
         selected = e.target;
 
-        if(!selected.classList.contains("simple-close")
+        if(!selected.classList.contains("simple-container")
+        && !selected.classList.contains("simple-close")
         && !selected.classList.contains("simple-print")
+        && !selected.parentNode.classList.contains("simple-print")
+        && !selected.classList.contains("simple-edit-theme")
+        && !selected.parentNode.classList.contains("simple-edit-theme")
+        && !selected.classList.contains("simple-delete")
+        && !selected.parentNode.classList.contains("simple-delete")
         && doc.body != selected
         && doc.documentElement != selected)
             selected.parentNode.removeChild(selected);
@@ -170,6 +182,11 @@ function startDeleteElement(doc) {
         doc.body.classList.remove("simple-deleting");
 
         selected = null;
+
+        sd.classList.remove("active");
+        sd.onclick = function() {
+            startDeleteElement(simpleArticleIframe);
+        };
     }
 
     doc.body.classList.add("simple-deleting");
@@ -177,6 +194,13 @@ function startDeleteElement(doc) {
     doc.addEventListener('mouseover', mouseFunc);
     doc.addEventListener('click', clickFunc);
     doc.addEventListener('keyup', escFunc);
+
+    var sd = simpleArticleIframe.querySelector(".simple-delete");
+
+    sd.classList.add("active");
+    sd.onclick = function() {
+        exitFunc();
+    };
 }
 
 
@@ -188,6 +212,9 @@ function startDeleteElement(doc) {
 /////////////////////////////////////
 // Chrome storage functions
 /////////////////////////////////////
+
+var leavePres = false,
+    showDelModeBtn = false;
 
 // Given a chrome storage object add them to our local stylsheet obj
 function getStylesFromStorage(storage) {
@@ -205,8 +232,13 @@ function getStylesFromStorage(storage) {
             // Remove the old format
             removeStyleFromStorage(key);
 
-        } else if(key.substring(0, 3) === "jr-") // Get stylesheets in the new format
+        } else if(key.substring(0, 3) === "jr-") { // Get stylesheets in the new format
             stylesheetObj[key.substring(3)] = storage[key];
+        } else if(key === "show-del-btn") {
+            showDelModeBtn = storage[key];
+        } else if(key === "leave-pres") {
+            leavePres = storage[key];
+        }
     }
 }
 
@@ -531,6 +563,21 @@ function getSelectedHTML() {
 }
 
 
+// Check given item against blacklist, return null if in blacklist
+var blacklist = ["comment"];
+function checkAgainstBlacklist(elem) {
+    if(typeof elem != "undefined" && elem != null) {
+        var className = elem.className;
+        for(var i = 0; i < blacklist.length; i++) {
+            if(typeof className != "undefined" && className.indexOf(blacklist[i]) >= 0) {
+                return null;
+            }
+        }
+    }
+    return elem;
+}
+
+
 
 /////////////////////////////////////
 // Extension-related adder functions
@@ -610,6 +657,15 @@ function addPrintButton() {
     printButton.innerHTML = '<?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve"><path d="M49,0H15v19H0v34h15v11h34V53h15V19H49V0z M17,2h30v17H17V2z M47,62H17V40h30V62z M62,21v30H49V38H15v13H2V21h13h34H62z"/><rect x="6" y="26" width="4" height="2"/><rect x="12" y="26" width="4" height="2"/><rect x="22" y="46" width="20" height="2"/><rect x="22" y="54" width="20" height="2"/></svg>Print';
 
     return printButton;
+}
+
+// Add the delete mode button
+function addDelModeButton() {
+    var delModeButton = document.createElement("button");
+    delModeButton.className = "simple-control simple-delete";
+    delModeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792"><style type="text/css">.st0{fill:#FFFFFF;}</style><path d="M938.9 668.7V1150c0 7.8-2.5 14.2-7.5 19.2 -5 5-11.4 7.5-19.2 7.5h-53.5c-7.8 0-14.2-2.5-19.2-7.5 -5-5-7.5-11.4-7.5-19.2V668.7c0-7.8 2.5-14.2 7.5-19.2s11.4-7.5 19.2-7.5h53.5c7.8 0 14.2 2.5 19.2 7.5C936.4 654.5 938.9 660.9 938.9 668.7zM1152.8 668.7V1150c0 7.8-2.5 14.2-7.5 19.2 -5 5-11.4 7.5-19.2 7.5h-53.5c-7.8 0-14.2-2.5-19.2-7.5 -5-5-7.5-11.4-7.5-19.2V668.7c0-7.8 2.5-14.2 7.5-19.2 5-5 11.4-7.5 19.2-7.5h53.5c7.8 0 14.2 2.5 19.2 7.5S1152.8 660.9 1152.8 668.7zM1366.7 668.7V1150c0 7.8-2.5 14.2-7.5 19.2 -5 5-11.4 7.5-19.2 7.5h-53.5c-7.8 0-14.2-2.5-19.2-7.5 -5-5-7.5-11.4-7.5-19.2V668.7c0-7.8 2.5-14.2 7.5-19.2 5-5 11.4-7.5 19.2-7.5h53.5c7.8 0 14.2 2.5 19.2 7.5S1366.7 660.9 1366.7 668.7zM1473.6 1273.6V481.6H725v792.1c0 12.3 1.9 23.5 5.8 33.8 3.9 10.3 7.9 17.8 12.1 22.6 4.2 4.7 7.1 7.1 8.8 7.1h695.1c1.7 0 4.6-2.4 8.8-7.1 4.2-4.7 8.2-12.3 12.1-22.6C1471.7 1297.2 1473.6 1285.9 1473.6 1273.6zM912.2 374.6h374.3l-40.1-97.8c-3.9-5-8.6-8.1-14.2-9.2H967.3c-5.6 1.1-10.3 4.2-14.2 9.2L912.2 374.6zM1687.5 401.4v53.5c0 7.8-2.5 14.2-7.5 19.2 -5 5-11.4 7.5-19.2 7.5h-80.2v792.1c0 46.2-13.1 86.2-39.3 119.9 -26.2 33.7-57.6 50.5-94.4 50.5H751.7c-36.8 0-68.2-16.3-94.4-48.9 -26.2-32.6-39.3-72-39.3-118.2V481.6h-80.2c-7.8 0-14.2-2.5-19.2-7.5 -5-5-7.5-11.4-7.5-19.2v-53.5c0-7.8 2.5-14.2 7.5-19.2 5-5 11.4-7.5 19.2-7.5H796l58.5-139.5c8.4-20.6 23.4-38.2 45.1-52.6 21.7-14.5 43.7-21.7 66-21.7H1233c22.3 0 44.3 7.2 66 21.7s36.8 32 45.1 52.6l58.5 139.5h258.2c7.8 0 14.2 2.5 19.2 7.5C1685 387.1 1687.5 393.6 1687.5 401.4z"/><path d="M1075.7 962.9v257.7c0 94.8-78.1 340.3-87 368 -5 15.6-19.5 26.2-35.9 26.2H475.4c-14.6 0-27.9-8.4-34.1-21.6 -0.5-1-48.6-102.4-66.7-133.7 -20.9-36-49.5-79.6-79.8-125.8 -41.4-63.1-88.4-134.7-131.6-210.6 -33.4-58.7-31.3-113.5 5.6-150.4 20.9-21 48.9-32.5 78.7-32.5 0.2 0 0.4 0 0.6 0 29.9 0.1 58 11.9 79.1 33 0.6 0.6 1.2 1.2 1.7 1.8l80.4 92V621.7c0-62 50.1-112.4 111.6-112.4 61.6 0 111.6 50.4 111.6 112.4v123.7c11.3-3.9 23.5-6.1 36.1-6.1 43 0 80.3 24.6 99 60.6 14.7-7.2 31.3-11.3 48.7-11.3 47 0 87.3 29.4 103.7 70.9 13.5-5.9 28.4-9.1 44-9.1C1025.6 850.4 1075.7 900.9 1075.7 962.9zM1000.2 1220.5V962.8c0-20.4-16.2-36.9-36.1-36.9S928 942.5 928 962.8v109.9c0 20.9-16.9 37.8-37.8 37.8 -20.9 0-37.8-16.9-37.8-37.8V901c0-20.4-16.2-36.9-36.1-36.9s-36.1 16.6-36.1 36.9v122.4c0 20.9-16.9 37.8-37.8 37.8 -20.9 0-37.8-16.9-37.8-37.8V851.8c0-20.3-16.2-36.9-36.1-36.9s-36.1 16.6-36.1 36.9v122.4c0 20.9-16.9 37.8-37.8 37.8 -20.9 0-37.8-16.9-37.8-37.8V621.7c0-20.3-16.2-36.9-36.1-36.9 -19.9 0-36.1 16.6-36.1 36.9v545.8c0 15.7-9.8 29.8-24.5 35.3 -14.7 5.5-31.3 1.3-41.7-10.5L273 1025.8c-6.9-6.5-15.8-10.1-25.3-10.1 -9.8 0.1-18.8 3.6-25.5 10.3 -14.4 14.4-4.3 40.4 6.6 59.7 42 73.8 88.3 144.3 129.1 206.5 30.9 47 60 91.5 82 129.3 14.3 24.7 43.7 85.1 59.3 117.7h425.9C951.8 1452.9 1000.2 1283.5 1000.2 1220.5z"/><path class="st0" d="M1000.2 962.8v257.7c0 63-48.4 232.4-75.1 318.7H499.2c-15.6-32.6-45-92.9-59.3-117.7 -21.9-37.8-51.1-82.3-82-129.3 -40.8-62.2-87.1-132.7-129.1-206.5 -11-19.3-21-45.3-6.6-59.7 6.7-6.7 15.7-10.2 25.5-10.3 9.5 0.1 18.5 3.6 25.3 10.1l145.6 166.6c10.3 11.8 27 16 41.7 10.5 14.7-5.5 24.5-19.6 24.5-35.3V621.7c0-20.3 16.2-36.9 36.1-36.9 19.9 0 36.1 16.6 36.1 36.9v352.5c0 20.9 16.9 37.8 37.8 37.8 20.9 0 37.8-16.9 37.8-37.8V851.8c0-20.3 16.2-36.9 36.1-36.9s36.1 16.6 36.1 36.9v171.7c0 20.9 16.9 37.8 37.8 37.8 20.8 0 37.8-16.9 37.8-37.8V901c0-20.4 16.2-36.9 36.1-36.9s36.1 16.6 36.1 36.9v171.7c0 20.9 16.9 37.8 37.8 37.8 20.9 0 37.8-16.9 37.8-37.8V962.8c0-20.4 16.2-36.9 36.1-36.9S1000.2 942.5 1000.2 962.8z"/></svg>';
+
+    return delModeButton;
 }
 
 // Add some information about our extension
@@ -767,7 +823,6 @@ function addGUI() {
         closeBtn = document.querySelector(".dg .close-button");
 
         var clone = closeBtn.cloneNode(true);
-        console.log(clone, closeBtn.parentNode);
         closeBtn.parentNode.appendChild(clone);
 
         // Switch the variables to match DOM order
@@ -864,7 +919,8 @@ function editText(elem) {
 // Actually create the iframe
 /////////////////////////////////////
 
-var simpleArticleIframe;
+var simpleArticleIframe,
+    isInDelMode = false;
 function createSimplifiedOverlay() {
 
     // Create an iframe so we don't use old styles
@@ -880,11 +936,11 @@ function createSimplifiedOverlay() {
     
     // If there is no text selected, get the container with the most ps
     if(!globalMostPs) {
-        checkLongestTextElement();
+        checkAgainstBlacklist(checkLongestTextElement());
         // globalMostPs is now updated, as is globalMostPCount
     
         // Compare the longest article to the element with the most ps
-        var articleObj = getLongestArticle();
+        var articleObj = checkAgainstBlacklist(getLongestArticle());
         if(articleObj !== null
         && articleObj.pCount > globalMostPCount - 3) {
             globalMostPs = articleObj.article;
@@ -899,7 +955,7 @@ function createSimplifiedOverlay() {
             parentPNum = countPs(parent);
 
         if(parentPNum > globalMostPCount)
-            globalMostPs = parent;
+            globalMostPs = checkAgainstBlacklist(parent);
     }
 
     // If there's no text, grab the whole page
@@ -943,7 +999,7 @@ function createSimplifiedOverlay() {
 
             // See if the pres have code in them
             var isPreNoCode = true;
-            if(elem.nodeName === "PRE") {
+            if(elem.nodeName === "PRE" && !leavePres) {
                 isPreNoCode = false;
 
                 for(var j = 0, len = elem.children.length; j < len; j++) {
@@ -1016,6 +1072,11 @@ function createSimplifiedOverlay() {
         // Disable scroll on main page until closed
         document.documentElement.classList.add("simple-no-scroll");
     }, 500); // Make sure we can animate it
+
+    // Add the deletion mode button if needed
+    if(showDelModeBtn) {
+        container.appendChild(addDelModeButton());
+    }
     
 
     // Add our listeners we need
@@ -1026,6 +1087,14 @@ function createSimplifiedOverlay() {
     simpleArticleIframe.querySelector(".simple-print").addEventListener('click', function() {
         simpleArticleIframe.defaultView.print();
     });
+
+    // The deletion mode button
+    var sd = simpleArticleIframe.querySelector(".simple-delete");
+    if(sd) {
+        sd.onclick = function() {
+            startDeleteElement(simpleArticleIframe);
+        };
+    }
 
     simpleArticleIframe.onkeyup = function(e) {
         // Listen for the "Esc" key and exit if so
@@ -1095,7 +1164,8 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.12; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.13; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
     var interval = setInterval(function() {

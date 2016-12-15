@@ -73,6 +73,10 @@ function getStylesFromStorage(storage) {
             highlightCM.checked = storage[key];
         } else if(key === "enable-linkCM") {
             linkCM.checked = storage[key];
+        } else if(key === "show-del-btn") {
+            delMode.checked = storage[key];
+        } else if(key === "leave-pres") {
+            leavePres.checked = storage[key];
         } else if(key === "just-read-stylesheets") {
             // Save each stylesheet in the new format
             for(var stylesheet in storage[key]) {
@@ -403,7 +407,15 @@ function useTheme() {
     chrome.storage.sync.set({"currentTheme": sheet});
 
     // Tell that we changed it
-    alert(sheet + " is now set as the active theme");
+    useButton.classList.add("used");
+
+    // Add the listener for the use animation
+    useButton.addEventListener("animationend", function() {
+        useButton.classList.remove("used");
+    });
+    useButton.addEventListener("webkitAnimationEnd", function() {
+        useButton.classList.remove("used");
+    });
 }
 
 var newFileInput = document.getElementById("new-file"),
@@ -526,4 +538,23 @@ highlightCM.onchange = function() {
 linkCM.onchange = function() {
     chrome.storage.sync.set({"enable-linkCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});
+}
+
+var addOptBtn = document.getElementById("additional"),
+    closeAddBtn = document.getElementById("closeAdditional"),
+    addOpt = document.querySelector(".additional-options");
+
+addOptBtn.onclick = closeAddBtn.onclick = function() {
+    addOpt.classList.toggle("hidden");
+}
+
+
+var delMode = document.getElementById("delModeBtn"),
+    leavePres = document.getElementById("leavePres");
+
+delMode.onchange = function() {
+    chrome.storage.sync.set({"show-del-btn": this.checked});
+}
+leavePres.onchange = function() {
+    chrome.storage.sync.set({"leave-pres": this.checked});
 }

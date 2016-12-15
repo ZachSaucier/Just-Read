@@ -15,9 +15,10 @@
     fill: black;
     opacity: 0.3;
 }
-.simple-control:hover {
+.simple-control:hover,
+.simple-control.active {
     opacity: 1;
-}
+} 
 
 .simple-close {
     top: 10px;
@@ -29,7 +30,8 @@
 }
 
 .simple-print,
-.simple-edit-theme {
+.simple-edit-theme,
+.simple-delete {
     width: 40px;
     height: 40px;
     top: 10px;
@@ -40,13 +42,19 @@
     font-size: 0; /* Hide the print text */
 }
 .simple-print svg,
-.simple-edit-theme svg {
+.simple-edit-theme svg,
+.simple-delete svg {
     width: 100%;
     height: 100%;
 }
 
 .simple-edit-theme {
     right: 105px;
+}
+
+.simple-delete {
+    right: 149px;
+    width: 43px;
 }
 
 .simple-edit {

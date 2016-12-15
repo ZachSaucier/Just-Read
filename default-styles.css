@@ -129,6 +129,7 @@ aside,
     }
 }
 
+.emoji, svg.icon { width: 1em; }
 
 /* Hide some things I dislike seeing when I read articles */
 /* Very simple ad hider */
@@ -188,6 +189,13 @@ nav,
 /* Very simple meta hider */
 [class *= "meta"]:not(.simple-meta),
 [id *= "meta"] {
+    display: none;
+}
+
+/* Very simple form hider */
+form
+[class *= "form"]
+[id *= "form"] {
     display: none;
 }
 

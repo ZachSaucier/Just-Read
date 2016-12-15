@@ -5,6 +5,10 @@
 html, body, .flex-container, .editor {
     height: 100%;
 }
+.hidden {
+    display: none;
+}
+
 body {
     position: relative;
     max-width: 1000px;
@@ -28,15 +32,6 @@ h1 i {
 body, .editor-container {
     display: flex;
     flex-direction: column;
-}
-
-.user-options {
-    position: absolute;
-    right: 50px;
-    top: 15px;
-}
-.user-options label {
-    display: block;
 }
 
 .left-column {
@@ -110,10 +105,12 @@ body, .editor-container {
     margin-top: 0;
 }
 
-#save {
+#save,
+#use {
     position: relative;
 }
-#save::before {
+#save::before,
+#use::before {
     content: "Saved!";
     position: absolute;
     left: 50%;
@@ -126,9 +123,45 @@ body, .editor-container {
     opacity: 0;
     height: 0;
 }
-#save.saved::before {
+#save.saved::before,
+#use.used::before {
     -webkit-animation: fadeInAndOut 2s forwards;
     animation: fadeInAndOut 2s forwards;
+}
+#use::before {
+    content: 'Done!';
+}
+
+.additional-options {
+    position: absolute;
+    right: 50px;
+    top: 108px;
+    background-color: white;
+    border: 1px solid;
+    z-index: 6;
+    width: calc(100% - 100px);
+    height: calc(100% - 120px);
+    padding: 8px;
+}
+.additional-options label {
+    display: block;
+}
+.additional-options .left-column {
+    border: none;
+    padding: 0;
+}
+#additional {
+    position: absolute;
+    right: 50px;
+}
+#closeAdditional {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: 1px solid black;
+    font-size: 25px;
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {
