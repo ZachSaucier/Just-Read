@@ -58,6 +58,8 @@ You can also select specific text by highlighting it (by clicking and dragging o
 
 Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd>. They can click on elements that they don't want to view (helpful for printing or if there are elements that aren't part of the article) and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd>. 
 
+You can also enable an icon to enter/exit deletion mode in Just Read's [additional options](https://github.com/ZachSaucier/Just-Read#additional-options) which [looks like this](http://i.imgur.com/87Z8QXX.png)
+
 ### Auto-enable Just Read on specific websites
 
 You can also opt to auto-enable Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) or a regular expression into the "Auto-run domain list" found on the extension's Options page (for more info as to what formats work, see [this post](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Just Read will then check each new site's URL to see if it matches the string or expression in the user-inputted list. If it does, it will start Just Read when the page loads.
