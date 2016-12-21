@@ -77,6 +77,12 @@ li {
     line-height: 1.5em;
 }
 
+pre {
+    background-color: #E0E0E0;
+    padding: 10px;
+    overflow: auto;
+}
+
 aside,
 [class *= "sidebar"],
 [id *= "sidebar"] {
@@ -140,15 +146,7 @@ aside,
 [class *= "-ad-"],
 [class $= "-ad"],
 [class $= "_ad"],
-[class ~= "ad"],
-[id = "ad"],
-[id *= "ads"],
-[id ^= "ad-"],
-[id ^= "ad_"],
-[id *= "-ad-"],
-[id $= "-ad"],
-[id $= "_ad"],
-[id ~= "ad"] {
+[class ~= "ad"] {
     display: none;
 }
 
@@ -157,18 +155,19 @@ aside,
 [class *= "nav"],
 nav, 
 [class *= "search"],
-[class *= "menu"] {
+[class *= "menu"],
+[class *= "print"] {
     display: none;
 }
 
 /* Very simple 'nocontent' hider */
-[class *= "nocontent"] {
+[class *= "nocontent"],
+[class *= "hidden"] {
     display: none;
 }
 
 /* Very simple popup hider */
-[class *= "popup"],
-[id *= "popup"] {
+[class *= "popup"] {
     display: none;
 }
 
@@ -176,44 +175,35 @@ nav,
 [class *= "share"],
 [class *= "sharing"],
 [class *= "social"],
-[id *= "share"],
-[id *= "sharing"],
-[id *= "social"],
 [class *= "follow"],
-[id *= "follow"],
-[class *= "newsletter"],
-[id *= "newsletter"] {
+[class *= "newsletter"] {
     display: none;
 }
 
 /* Very simple meta hider */
 [class *= "meta"]:not(.simple-meta),
-[id *= "meta"] {
+[class *= "author"]:not(".simple-author"),
+[id *= "author"] {
     display: none;
 }
 
 /* Very simple form hider */
-form
-[class *= "form"]
-[id *= "form"] {
+form,
+[class *= "form"] {
     display: none;
 }
 
 /* Very simple related/recommended hider */
 [class *= "related"],
-[id *= "related"],
 [class *= "recommended"],
-[id *= "recommended"],
 [class *= "see-also"],
-[id *= "see-also"],
 [class *= "popular"],
-[id *= "popular"] {
+[class *= "trail"] {
     display: none;
 }
 
 /* Very simple comments hider */
 [class *= "comment"],
-[id *= "comment"],
 [class *= "disqus"],
 [id *= "disqus"] {
     display: none;
@@ -225,11 +215,6 @@ form
 [class $= "-tag"],
 [class $= "_tag"],
 [class ~= "tag"],
-[id ^= "tag"],
-[id *= "-tag-"],
-[id $= "-tag"],
-[id $= "_tag"],
-[id ~= "tag"],
 [class *= "-tags-"],
 [class $= "-tags"],
 [class $= "_tags"],

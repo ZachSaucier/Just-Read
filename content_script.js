@@ -138,7 +138,9 @@ function startDeleteElement(doc) {
         && !elem.classList.contains("simple-delete")
         && !elem.parentNode.classList.contains("simple-delete")
         && doc.body != elem
-        && doc.documentElement != elem) {
+        && doc.documentElement != elem
+        && elem.tagName !== "path"
+        && elem.tagName !== "rect") {
             if (last != elem) {
                 if (last != null) {
                     last.classList.remove("hovered");
@@ -1164,7 +1166,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.13; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.14; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
