@@ -156,7 +156,7 @@ aside,
 nav, 
 [class *= "search"],
 [class *= "menu"],
-[class *= "print"] {
+[class *= "print"]:not(.simple-print) {
     display: none;
 }
 
