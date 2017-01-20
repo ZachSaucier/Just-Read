@@ -1034,6 +1034,10 @@ function createSimplifiedOverlay() {
         }
     }
 
+    // Handle RTL sites
+    var direction = window.getComputedStyle(document.body).getPropertyValue("direction");
+    contentContainer.style.direction = direction;
+
     container.appendChild(contentContainer);
 
     // Remove the elements we flagged earlier
