@@ -111,4 +111,11 @@ This is a Chrome extension was initially made in 16 hours at [UGA Hacks](http://
 
 ___
 
+##### Donate
+
+I created and maintain this extension for no pay and will always keep Just Read free. If you want to be generous and show appreciation for the product I've created, you can donate to help me take my girlfriend out for a nice dinner via the PayPal donate link below.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=Y3GG9ANMQ9JML&lc=US&item_name=Zach%20Saucier&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
+
+
 Follow me: [Twitter](http://www.twitter.com/ZachSaucier), [CodePen](http://codepen.io/Zeaklous), [GitHub](https://github.com/ZachSaucier)
