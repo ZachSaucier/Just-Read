@@ -105,6 +105,12 @@ If you're looking to use other themes that people have built and use, you can ch
 
 ___
 
+#### Privacy statement
+
+Just Read collects absolutely zero personal data from users and sends nothing at all to any server, so you have no worry of any abuse from Just Read. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. 
+
+___
+
 Let me know how I can improve this extension including any bugs you see and what features you'd like to see!
 
 This is a Chrome extension was initially made in 16 hours at [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 and has been updated since.
