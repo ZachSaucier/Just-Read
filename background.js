@@ -124,6 +124,12 @@ chrome.browserAction.onClicked.addListener(startJustRead);
 // Add our context menus
 updateCMs();
 
+chrome.storage.sync.get("show-del-btn", function(result) {
+    if(result["show-del-btn"] === "undefined") {
+        chrome.storage.sync.set("show-del-btn", true);
+    }
+});
+
 // Listen for the keyboard shortcut
 chrome.commands.onCommand.addListener(function(command) {
     if(command == "open-just-read")

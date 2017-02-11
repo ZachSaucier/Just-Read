@@ -1,3 +1,7 @@
+.rtl {
+    direction: rtl;
+}
+
 .simple-container {
     max-width: 600px;
     margin: 0 auto;
@@ -62,18 +66,32 @@
     height: 20px;
     position: absolute;
     top: 10px;
-    left: 100%;
-    padding-left: 10px;
+    right: 100%;
+    padding-right: 10px;
+    
     cursor: pointer;
 
     display: none;
 }
+.rtl .simple-edit {
+    right: auto;
+    padding-right: 0;
+    left: 100%;
+    padding-left: 10px;
+}
 
-.simple-date .simple-edit {
+
+.simple-author .simple-edit {
+    right: auto;
+    padding-right: 0;
+    left: 100%;
+    padding-left: 10px;
+}
+.rtl .simple-author .simple-edit {
     left: auto;
-    padding-left: 0;
     right: 100%;
     padding-right: 10px;
+    padding-left: 0;
 }
 
 .simple-title .simple-edit {

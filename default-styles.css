@@ -101,6 +101,12 @@ aside,
     padding-bottom: 10px;
     border-right: 1px solid #d8d8d8;
 }
+.rtl .simple-date {
+    border-left: 1px solid #d8d8d8;
+    border-right: none;
+    padding-right: 0;
+    padding-left: 15px;
+}
 
 .simple-author {
     display: inline-block;
@@ -111,6 +117,10 @@ aside,
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+.rtl .simple-author {
+    padding-left: 0;
+    padding-right: 10px;
 }
 
 .simple-container {

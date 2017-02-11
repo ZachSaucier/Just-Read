@@ -133,6 +133,7 @@ function startDeleteElement(doc) {
         && !elem.classList.contains("simple-close")
         && !elem.classList.contains("simple-print")
         && !elem.parentNode.classList.contains("simple-print")
+        && !elem.classList.contains("simple-edit")
         && !elem.classList.contains("simple-edit-theme")
         && !elem.parentNode.classList.contains("simple-edit-theme")
         && !elem.classList.contains("simple-delete")
@@ -140,7 +141,8 @@ function startDeleteElement(doc) {
         && doc.body != elem
         && doc.documentElement != elem
         && elem.tagName !== "path"
-        && elem.tagName !== "rect") {
+        && elem.tagName !== "rect"
+        && elem.tagName !== "polygon") {
             if (last != elem) {
                 if (last != null) {
                     last.classList.remove("hovered");
@@ -158,12 +160,16 @@ function startDeleteElement(doc) {
         && !selected.classList.contains("simple-close")
         && !selected.classList.contains("simple-print")
         && !selected.parentNode.classList.contains("simple-print")
+        && !selected.classList.contains("simple-edit")
         && !selected.classList.contains("simple-edit-theme")
         && !selected.parentNode.classList.contains("simple-edit-theme")
         && !selected.classList.contains("simple-delete")
         && !selected.parentNode.classList.contains("simple-delete")
         && doc.body != selected
-        && doc.documentElement != selected)
+        && doc.documentElement != selected
+        && selected.tagName !== "path"
+        && selected.tagName !== "rect"
+        && selected.tagName !== "polygon")
             selected.parentNode.removeChild(selected);
         
         e.preventDefault();
@@ -1036,7 +1042,9 @@ function createSimplifiedOverlay() {
 
     // Handle RTL sites
     var direction = window.getComputedStyle(document.body).getPropertyValue("direction");
-    contentContainer.style.direction = direction;
+    if(direction === "rtl") {
+        container.classList.add("rtl");
+    }
 
     container.appendChild(contentContainer);
 
@@ -1170,7 +1178,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.15; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.16; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
