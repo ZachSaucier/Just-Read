@@ -948,8 +948,9 @@ function createSimplifiedOverlay() {
 	    var pageContent = document.createElement("div");
 	    pageContent.innerHTML = document.body.innerHTML.replace(pattern, "</p><p>");
         
-        checkAgainstBlacklist(checkLongestTextElement(pageContent));
+        checkLongestTextElement(pageContent);
         // globalMostPs is now updated, as is globalMostPCount
+        globalMostPs = checkAgainstBlacklist(globalMostPs);
     
         // Compare the longest article to the element with the most ps
         var articleObj = checkAgainstBlacklist(getLongestArticle());
