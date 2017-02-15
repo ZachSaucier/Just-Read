@@ -944,7 +944,11 @@ function createSimplifiedOverlay() {
     
     // If there is no text selected, get the container with the most ps
     if(!globalMostPs) {
-        checkAgainstBlacklist(checkLongestTextElement());
+        var pattern =  new RegExp ("<br/?>[ \r\n\s]*<br/?>", "g");
+	    var pageContent = document.createElement("div");
+	    pageContent.innerHTML = document.body.innerHTML.replace(pattern, "</p><p>");
+        
+        checkAgainstBlacklist(checkLongestTextElement(pageContent));
         // globalMostPs is now updated, as is globalMostPCount
     
         // Compare the longest article to the element with the most ps
@@ -1178,7 +1182,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.16; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.17; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {

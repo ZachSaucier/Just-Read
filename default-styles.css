@@ -163,7 +163,7 @@ aside,
 /* Very simple nav, menu, and search hider */
 [class *= "navigation"],
 [class *= "nav"],
-nav, 
+nav,
 [class *= "search"],
 [class *= "menu"],
 [class *= "print"]:not(.simple-print) {
@@ -199,7 +199,12 @@ nav,
 
 /* Very simple form hider */
 form,
-[class *= "form"] {
+[class ^= "form-"],
+[class ^= "form"],
+[class *= "-form-"],
+[class $= "-form"],
+[class $= "form"],
+[class ~= "form"]{
     display: none;
 }
 
