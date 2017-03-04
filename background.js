@@ -82,7 +82,7 @@ function updateCMs() {
                     if(typeof pageCMId == "undefined")
                         createPageCM();
                 } else {
-                    if(typeof pageCMId == "undefined") {
+                    if(typeof pageCMId != "undefined") {
                         chrome.contextMenus.remove("pageCM");
                         pageCMId = undefined;
                     }
@@ -92,7 +92,7 @@ function updateCMs() {
                     if(typeof highlightCMId == "undefined")
                         createHighlightCM();
                 } else {
-                    if(typeof highlightCMId == "undefined") {
+                    if(typeof highlightCMId != "undefined") {
                         chrome.contextMenus.remove("highlightCM");
                         highlightCMId = undefined;
                     }
