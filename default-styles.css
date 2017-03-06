@@ -15,9 +15,11 @@
     src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/Merriweather-Light.ttf");
 }
 
-* {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+@media screen { /* Fix a bug in Chrome printing */
+    * {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 }
 
 body {

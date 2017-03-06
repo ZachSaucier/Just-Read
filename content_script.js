@@ -1183,7 +1183,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.17; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.18; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
