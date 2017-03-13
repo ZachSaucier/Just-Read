@@ -130,6 +130,16 @@
     opacity: 1;
 }
 
+/* LaTeX plain text show on hover */
+.mwe-math-fallback-image-inline:hover + .simple-plain-text,
+.simple-plain-text:hover {
+    display: block;
+}
+.simple-plain-text {
+    display: none;
+    margin-top: -5px;
+}
+
 @media (max-width: 750px) {
     .simple-container {
         padding-left: 50px;

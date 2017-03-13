@@ -1035,13 +1035,21 @@ function createSimplifiedOverlay() {
                 elem.parentNode.removeChild(elem);
             }
 
-            // Remove any inline style, script, or noindex elements and things with aria hidden
-            if(elem.nodeName === "STYLE"
-            //|| elem.nodeName === "SCRIPT"
+            // Remove any inline style, LaTeX text, or noindex elements and things with aria hidden
+            if((elem.nodeName === "STYLE"
             || elem.nodeName === "NOINDEX"
-            || (elem.getAttribute("aria-hidden") == "true")
-               && typeof elem.dataset != "undefined")
-                elem.dataset.simpleDelete = true;
+            || elem.getAttribute("encoding") == "application/x-tex"
+            || (elem.getAttribute("aria-hidden") == "true" 
+               && !elem.classList.contains("mwe-math-fallback-image-inline"))))
+                elem.setAttribute("data-simple-delete", true);
+
+            // Show LaTeX plain text on hover
+            if(elem.classList.contains("mwe-math-fallback-image-inline")) {
+                var plainText = document.createElement("div");
+                plainText.className = "simple-plain-text";
+                plainText.innerText = elem.alt;
+                elem.parentNode.insertBefore(plainText, elem.nextSibling);
+            }
         }
     }
 
