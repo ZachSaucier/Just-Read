@@ -8,6 +8,9 @@
     padding-top: 70px;
     padding-bottom: 20px;
 }
+.content-container > * {
+    display: block !important;
+}
 
 .simple-control {
     position: fixed;
