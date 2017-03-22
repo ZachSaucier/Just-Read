@@ -71,6 +71,21 @@ a[href]:hover {
     color: #4ECAFF;
 }
 
+.youtubeContainer {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+}
+iframe[src *= "youtube.com/embed/"] {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 img {
     max-width: 100%;
 }
@@ -147,7 +162,14 @@ aside,
     }
 }
 
-.emoji, svg.icon { width: 1em; }
+/* Make emojis and icons a reasonable */
+[class *= "emoji"], 
+[class *= "icon"] { width: 1em; }
+
+/* Hide scripts */
+script {
+    display: none;
+}
 
 /* Hide some things I dislike seeing when I read articles */
 /* Very simple ad hider */

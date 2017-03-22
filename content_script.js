@@ -281,66 +281,52 @@ function countPs(container) {
     return count;
 }
 
+function checkElemForDate(elem, attrList, deleteMe) {
+    var myDate = false;
+    if(elem) {
+        for(var i = 0; i < attrList.length; i++) {
+            if(elem[attrList[i]]
+             && elem[attrList[i]] != "" //  Make sure it's
+             && elem[attrList[i]].split(' ').length < 10) { // Make sure the date isn't absurdly long
+                myDate = elem[attrList[i]];
+
+                if(deleteMe) {
+                    elem.dataset.simpleDelete = true; // Flag it for removal later
+                }
+            }
+        }
+    }
+
+    return myDate;
+}
+
 function getArticleDate() {
     // Make sure that the globalMostPs isn't empty
     if(globalMostPs == null)
         globalMostPs = document.body;
 
     // Check to see if there's a date class
-    var date = false;
-    if(globalMostPs.querySelector('[class^="date"]')) {
-        var elem = globalMostPs.querySelector('[class^="date"]');
+    var date = false,
+        toCheck = [
+            [globalMostPs.querySelector('[class^="date"]'), ["innerText"], true],
+            [globalMostPs.querySelector('[class*="-date"]'), ["innerText"], true],
+            [globalMostPs.querySelector('[class*="_date"]'), ["innerText"], true],
+            [document.body.querySelector('[class^="date"]'), ["innerText"], false],
+            [document.body.querySelector('[class*="-date"]'), ["innerText"], false],
+            [document.body.querySelector('[class*="_date"]'), ["innerText"], false],
+            [document.head.querySelector('meta[name^="date"]'), ["content"], false],
+            [document.head.querySelector('meta[name*="-date"]'), ["content"], false],
+            [globalMostPs.querySelector('time'), ["datetime", "innerText"], true],
+            [document.body.querySelector('time'), ["datetime", "innerText"], false],
+        ];
 
-        // Make sure the date isn't absurdly long
-        if(elem.innerText.split(' ').length < 10) {
-            elem.dataset.simpleDelete = true; // Flag it for removal later
-            date = elem.innerText;
+
+    for(var i = 0; i < toCheck.length; i++) {
+        if(!date) {
+            var checkObj = toCheck[i];
+            date = checkElemForDate(checkObj[0], checkObj[1], checkObj[2])
         }
     }
-    if(!date && globalMostPs.querySelector('[class*="-date"]')) {
-        var elem = globalMostPs.querySelector('[class*="-date"]');
-        // Make sure the date isn't absurdly long
-        if(elem.innerText.split(' ').length < 10) {
-            elem.dataset.simpleDelete = true; // Flag it for removal later
-            date = elem.innerText;
-        }
-    }
-    if(!date && document.body.querySelector('[class^="date"]'))
-        date = document.body.querySelector('[class^="date"]').innerText;
-    if(!date && document.body.querySelector('[class*="-date"]'))
-        date = document.body.querySelector('[class*="-date"]').innerText;
-    if(!date && document.body.querySelector('[class*="_date"]'))
-        date = document.body.querySelector('[class*="_date"]').innerText;
-
-    // Check to see if there is a date available in the meta, if so get it
-    if(!date && document.head.querySelector('meta[name^="date"]'))
-        date = document.head.querySelector('meta[name^="date"]').getAttribute("content");
-    if(!date && document.head.querySelector('meta[name*="-date"]'))
-        date = document.head.querySelector('meta[name*="-date"]').getAttribute("content");
-
-    // Check to see if there's a time element, if so get it
-    if(!date && globalMostPs.querySelector('time')) {
-        var elem = globalMostPs.querySelector('time');
-        // Make sure the date isn't absurdly long
-        if(elem.innerText.split(' ').length < 10) {
-            elem.dataset.simpleDelete = true; // Flag it for removal later
-            date = elem.getAttribute("datetime");
-        }
-
-        if(date === null)
-            date = elem.innerText;
-    }
-    if(!date && document.body.querySelector('time')) {
-        var elem = document.body.querySelector('time')
-        date = elem.getAttribute("datetime");
-
-        if(date === null)
-            date = elem.innerText;
-    }
-
-    // Make sure the date isn't absurdly long
-    if(date && date.split(' ').length >= 10)
-        date = false;
 
     if(date)
         return date.replace(/on\s/gi, '').replace(/(?:\r\n|\r|\n)/gi, '&nbsp;').replace(/[<]br[^>]*[>]/gi,'&nbsp;'); // Replace <br>, \n, and "on"
@@ -1141,6 +1127,12 @@ function createSimplifiedOverlay() {
             e.preventDefault();
         }
     }
+
+    // Size our YouTube containers appropriately
+    var youtubeFrames = simpleArticleIframe.querySelectorAll("iframe[src *= 'youtube.com/embed/']");
+    for(var i = 0; i < youtubeFrames.length; i++) {
+        youtubeFrames[i].parentElement.classList.add("youtubeContainer");
+    }
 }
 
 
@@ -1191,8 +1183,8 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.18; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
-
+    stylesheetVersion = 1.19; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+chrome.storage.sync.set({'stylesheet-version': 1});
 // Detect past overlay - don't show another
 if(document.getElementById("simple-article") == null) {
     var interval = setInterval(function() {
