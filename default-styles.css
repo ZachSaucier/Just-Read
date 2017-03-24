@@ -163,7 +163,7 @@ aside,
 }
 
 /* Make emojis and icons a reasonable */
-[class *= "emoji"], 
+[class *= "emoji"],
 [class *= "icon"] { width: 1em; }
 
 /* Hide scripts */
@@ -196,7 +196,7 @@ nav,
 
 /* Very simple 'nocontent' hider */
 [class *= "nocontent"],
-[class *= "hidden"] {
+.hidden {
     display: none;
 }
 
