@@ -8,7 +8,7 @@
     padding-top: 70px;
     padding-bottom: 20px;
 }
-.content-container > * {
+.content-container > *:not(script) {
     display: block !important;
 }
 
