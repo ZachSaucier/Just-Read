@@ -361,15 +361,16 @@ function getArticleTitle() {
     // Check to see if there's a h1 within the previous sibling of the article
     if(!text)
         text = checkHeading(globalMostPs.previousElementSibling, 'h1');
+    // Check to see if there's a h1 more generally
+    if(!text)
+        if(document.body.querySelector('h1'))
+            text = document.body.querySelector('h1').innerText;
+  
     // Check to see if there's a h2 within the previous sibling of the article
     if(!text)
         text = checkHeading(globalMostPs.previousElementSibling, 'h2');
 
     if(!text) {
-        // Check to see if there's a h1 more generally
-        if(document.body.querySelector('h1'))
-            return document.body.querySelector('h1').innerText;
-
         // Check to see if there's a h2 more generally
         if(document.body.querySelector('h2'))
             return document.body.querySelector('h2').innerText;
