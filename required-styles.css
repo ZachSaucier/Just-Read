@@ -8,7 +8,7 @@
     padding-top: 70px;
     padding-bottom: 20px;
 }
-.content-container > *:not(script) {
+.content-container > *:not(script):not(style) {
     display: block !important;
 }
 
@@ -25,7 +25,7 @@
 .simple-control:hover,
 .simple-control.active {
     opacity: 1;
-} 
+}
 
 .simple-close {
     top: 10px;
