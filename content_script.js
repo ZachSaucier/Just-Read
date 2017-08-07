@@ -271,16 +271,6 @@ function removeStyleFromStorage(stylesheet) {
 // Extension-related helper functions
 /////////////////////////////////////
 
-// Count the number of ps in the children using recursion
-function countPs(container) {
-    var count = container.querySelectorAll("p").length;
-
-    for(var i = 0; i < container.children.length; i++)
-        count += countPs(container.children[i]);
-
-    return count;
-}
-
 function checkElemForDate(elem, attrList, deleteMe) {
     var myDate = false;
     if(elem) {
@@ -301,22 +291,22 @@ function checkElemForDate(elem, attrList, deleteMe) {
 }
 
 function getArticleDate() {
-    // Make sure that the globalMostPs isn't empty
-    if(globalMostPs == null)
-        globalMostPs = document.body;
+    // Make sure that the pageSelectedContainer isn't empty
+    if(pageSelectedContainer == null)
+        pageSelectedContainer = document.body;
 
     // Check to see if there's a date class
     var date = false,
         toCheck = [
-            [globalMostPs.querySelector('[class^="date"]'), ["innerText"], true],
-            [globalMostPs.querySelector('[class*="-date"]'), ["innerText"], true],
-            [globalMostPs.querySelector('[class*="_date"]'), ["innerText"], true],
+            [pageSelectedContainer.querySelector('[class^="date"]'), ["innerText"], true],
+            [pageSelectedContainer.querySelector('[class*="-date"]'), ["innerText"], true],
+            [pageSelectedContainer.querySelector('[class*="_date"]'), ["innerText"], true],
             [document.body.querySelector('[class^="date"]'), ["innerText"], false],
             [document.body.querySelector('[class*="-date"]'), ["innerText"], false],
             [document.body.querySelector('[class*="_date"]'), ["innerText"], false],
             [document.head.querySelector('meta[name^="date"]'), ["content"], false],
             [document.head.querySelector('meta[name*="-date"]'), ["content"], false],
-            [globalMostPs.querySelector('time'), ["datetime", "innerText"], true],
+            [pageSelectedContainer.querySelector('time'), ["datetime", "innerText"], true],
             [document.body.querySelector('time'), ["datetime", "innerText"], false],
         ];
 
@@ -348,22 +338,22 @@ function checkHeading(elem, heading, del) {
 }
 
 function getArticleTitle() {
-    // Make sure that the globalMostPs isn't empty
-    if(globalMostPs == null)
-        globalMostPs = document.body;
+    // Make sure that the pageSelectedContainer isn't empty
+    if(pageSelectedContainer == null)
+        pageSelectedContainer = document.body;
 
-    // Check to see if there is a h1 within globalMostPs
-    var text = checkHeading(globalMostPs, 'h1', true);
-    // Check to see if there is a h2 within globalMostPs
+    // Check to see if there is a h1 within pageSelectedContainer
+    var text = checkHeading(pageSelectedContainer, 'h1', true);
+    // Check to see if there is a h2 within pageSelectedContainer
     if(!text)
-        text = checkHeading(globalMostPs, 'h2', true);
+        text = checkHeading(pageSelectedContainer, 'h2', true);
 
     // Check to see if there's a h1 within the previous sibling of the article
     if(!text)
-        text = checkHeading(globalMostPs.previousElementSibling, 'h1');
+        text = checkHeading(pageSelectedContainer.previousElementSibling, 'h1');
     // Check to see if there's a h2 within the previous sibling of the article
     if(!text)
-        text = checkHeading(globalMostPs.previousElementSibling, 'h2');
+        text = checkHeading(pageSelectedContainer.previousElementSibling, 'h2');
 
     if(!text) {
         // Check to see if there's a h1 more generally
@@ -385,14 +375,14 @@ function getArticleTitle() {
 }
 
 function getArticleAuthor() {
-    // Make sure that the globalMostPs isn't empty
-    if(globalMostPs == null)
-        globalMostPs = document.body;
+    // Make sure that the pageSelectedContainer isn't empty
+    if(pageSelectedContainer == null)
+        pageSelectedContainer = document.body;
 
     var author = null;
 
     // Check to see if there's an author rel in the article
-    var elem = globalMostPs.querySelector('[rel*="author"]');
+    var elem = pageSelectedContainer.querySelector('[rel*="author"]');
     if(elem) {
         if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
             elem.dataset.simpleDelete = true; // Flag it for removal later
@@ -401,7 +391,7 @@ function getArticleAuthor() {
     }
 
     // Check to see if there's an author class
-    elem = globalMostPs.querySelector('[class*="author"]');
+    elem = pageSelectedContainer.querySelector('[class*="author"]');
     if(author === null && elem) {
         if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
             elem.dataset.simpleDelete = true; // Flag it for removal later
@@ -460,9 +450,8 @@ function closeOverlay() {
     document.body.querySelector("#simple-article").classList.add("simple-fade-up");
     
     // Reset our variables
-    globalMostPs = null;
+    pageSelectedContainer = null;
     selected = null;
-    textToRead = undefined;
     
     setTimeout(function() {
         // Enable scroll
@@ -475,48 +464,48 @@ function closeOverlay() {
     }, 500); // Make sure we can animate it
 }
 
-// Keep track of the element with the most ps in it
-var globalMostPs = document.body,
-    globalMostPCount = 0;
-// Check a given element and all of its child nodes to see if it has the most ps
-function checkLongestTextElement(container) {
-    container = container || document.body; // Default to the whole page
+function getContainer() {
+    var numWordsOnPage = document.body.innerText.match(/\S+/g).length,
+        ps = document.body.querySelectorAll("p");
+    
+    // Find the paragraphs with the most words in it
+    var pWithMostWords = document.body,
+        highestWordCount = 0;
 
-    // Count the number of p direct children
-    var pChildren = container.querySelectorAll(":scope > p");
-
-    // Compare total to the largest total so far
-    if(pChildren.length > globalMostPCount) {
-        globalMostPCount = pChildren.length;
-        globalMostPs = container;
+    if(ps.length === 0) {
+        ps = document.body.querySelectorAll("div");
     }
 
-    // Check the children to see if they have more ps
-    for(var i = 0; i < container.children.length; i++)
-        checkLongestTextElement(container.children[i]);
-}
-
-// Check all of the <article>s on the page and return the one with the most ps
-function getLongestArticle() {
-    var articles = document.querySelectorAll("article");
-    if(articles.length < 1)
-        return null;
-    
-    var largestArticle = articles[0],
-        mostPCount = countPs(largestArticle);
-    for(var i = 1; i < articles.length; i++) {
-        var pCount = countPs(articles[i]);
-        if(pCount > mostPCount) {
-            largestArticle = articles[i];
-            mostPCount = pCount;
+    for(var i = 0; i < ps.length; i++) {
+        // Make sure it's not in our blacklist
+        console.log(checkAgainstBlacklist(ps[i]));
+        if(checkAgainstBlacklist(ps[i])
+        && checkAgainstBlacklist(ps[i].parentNode)) {
+            var myInnerText = ps[i].innerText.match(/\S+/g);
+            if(myInnerText) {
+                var wordCount = myInnerText.length;
+                if(wordCount > highestWordCount) {
+                    highestWordCount = wordCount;
+                    pWithMostWords = ps[i];
+                }
+            }
         }
     }
+
+    // Keep selecting more generally until over 2/5th of the words on the page have been selected
+    var selectedContainer = pWithMostWords,
+        wordCountSelected = highestWordCount;
     
-    if(mostPCount > 0)
-        return {"article": largestArticle, "pCount": mostPCount};
-    else
-        return null;
+    while(wordCountSelected / numWordsOnPage < 0.4 
+    && selectedContainer != document.body
+    && selectedContainer.parentNode.innerText) {
+        selectedContainer = selectedContainer.parentNode;
+        wordCountSelected = selectedContainer.innerText.match(/\S+/g).length;
+    }
+    
+    return selectedContainer;
 }
+
 
 // Handle link clicks
 function linkListener(e) {
@@ -546,16 +535,6 @@ function linkListener(e) {
         simpleArticleIframe.location.hash = hrefArr[1];
     }
 }
-
-
-// Handle selected text to read
-function getSelectedHTML() {
-    var range = window.getSelection().getRangeAt(0);
-    var div = document.createElement("div");
-    div.appendChild(range.cloneContents());
-    return div.innerHTML;
-}
-
 
 // Check given item against blacklist, return null if in blacklist
 var blacklist = ["comment"];
@@ -915,6 +894,7 @@ function editText(elem) {
 
 var simpleArticleIframe,
     isInDelMode = false;
+var pageSelectedContainer;
 function createSimplifiedOverlay() {
 
     // Create an iframe so we don't use old styles
@@ -926,55 +906,23 @@ function createSimplifiedOverlay() {
     container.className = "simple-container";
 
     // Try using the selected element's content
-    globalMostPs = selected;
+    pageSelectedContainer = selected;
     
-    // If there is no text selected, get the container with the most ps
-    if(!globalMostPs) {
+    // If there is no text selected, get auto-select the content
+    if(!pageSelectedContainer) {
+        pageSelectedContainer = getContainer();
+
         var pattern =  new RegExp ("<br/?>[ \r\n\s]*<br/?>", "g");
-	    var pageContent = document.createElement("div");
-	    pageContent.innerHTML = document.body.innerHTML.replace(pattern, "</p><p>");
-        
-        checkLongestTextElement(pageContent);
-        // globalMostPs is now updated, as is globalMostPCount
-        globalMostPs = checkAgainstBlacklist(globalMostPs);
-    
-        // Compare the longest article to the element with the most ps
-        var articleObj = checkAgainstBlacklist(getLongestArticle());
-        if(articleObj !== null
-        && articleObj.pCount > globalMostPCount - 3) {
-            globalMostPs = articleObj.article;
-            globalMostPCount = articleObj.pCount;
-        }
+        pageSelectedContainer.innerHTML = pageSelectedContainer.innerHTML.replace(pattern, "</p><p>");
     }
-    
-    // See if the element we selected has the majority of ps found
-    if(document.querySelector("article") == null
-       && globalMostPCount / document.querySelectorAll("p").length < 0.75) {
-        var parent = globalMostPs.parentNode,
-            parentPNum = countPs(parent);
-
-        if(parentPNum > globalMostPCount)
-            globalMostPs = checkAgainstBlacklist(parent);
-    }
-
-    // If there's no text, grab the whole page
-    if(globalMostPs != null && globalMostPs.textContent.replace(/\s/g, "")  === "")
-        globalMostPs = document.body;
 
     // Get the title, author, etc.
-    container.appendChild(addArticleMeta());
-
-    // If settings say so, strip images, etc.?
+    container.appendChild(addArticleMeta())
 
     // Set the text as our text
     var contentContainer = document.createElement("div");
     contentContainer.className = "content-container";
-
-    if(typeof textToRead != "undefined") {
-        contentContainer.innerHTML = getSelectedHTML();
-    } else {
-        contentContainer.innerHTML = globalMostPs.innerHTML;
-    }
+    contentContainer.innerHTML = pageSelectedContainer.innerHTML;
 
 
     // Strip inline styles
