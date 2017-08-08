@@ -478,7 +478,6 @@ function getContainer() {
 
     for(var i = 0; i < ps.length; i++) {
         // Make sure it's not in our blacklist
-        console.log(checkAgainstBlacklist(ps[i]));
         if(checkAgainstBlacklist(ps[i])
         && checkAgainstBlacklist(ps[i].parentNode)) {
             var myInnerText = ps[i].innerText.match(/\S+/g);
@@ -1019,6 +1018,22 @@ function createSimplifiedOverlay() {
 
     // Add the print button
     container.appendChild(addPrintButton());
+
+    // Add MathJax support
+    var mj = document.querySelector("script[src *= 'mathjax");
+    if(mj) {
+        var mathjax = document.createElement("script");
+        mathjax.src = mj.src;
+        simpleArticleIframe.head.appendChild(mathjax);
+
+        var scripts = document.getElementsByTagName("script");
+        for(var i = 0; i < scripts.length; i++) {
+            if(scripts[i].innerText.indexOf("MathJax.Hub.Config") >= 0) {
+                var clone = scripts[i].cloneNode(true);
+                container.appendChild(clone);
+            }
+        }
+    }
 
     // Fade in and move up the simple article
     setTimeout(function() {
