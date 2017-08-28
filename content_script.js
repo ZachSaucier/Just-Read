@@ -347,6 +347,9 @@ function getArticleTitle() {
     // Check to see if there is a h2 within pageSelectedContainer
     if(!text)
         text = checkHeading(pageSelectedContainer, 'h2', true);
+    // Check to see if there is a h3 within pageSelectedContainer
+    if(!text)
+        text = checkHeading(pageSelectedContainer, 'h3', true);
 
     // Check to see if there's a h1 within the previous sibling of the article
     if(!text)
@@ -354,6 +357,9 @@ function getArticleTitle() {
     // Check to see if there's a h2 within the previous sibling of the article
     if(!text)
         text = checkHeading(pageSelectedContainer.previousElementSibling, 'h2');
+    // Check to see if there's a h3 within the previous sibling of the article
+    if(!text)
+        text = checkHeading(pageSelectedContainer.previousElementSibling, 'h3');
 
     if(!text) {
         // Check to see if there's a h1 more generally
@@ -363,6 +369,10 @@ function getArticleTitle() {
         // Check to see if there's a h2 more generally
         if(document.body.querySelector('h2'))
             return document.body.querySelector('h2').innerText;
+
+        // Check to see if there's a h3 more generally
+        if(document.body.querySelector('h3'))
+            return document.body.querySelector('h3').innerText;
     } else {
         return text;
     }
@@ -486,6 +496,7 @@ function getContainer() {
                 if(wordCount > highestWordCount) {
                     highestWordCount = wordCount;
                     pWithMostWords = ps[i];
+                    console.log(checkAgainstBlacklist(ps[i]), checkAgainstBlacklist(ps[i].parentNode))
                 }
             }
         }
@@ -500,6 +511,11 @@ function getContainer() {
     && selectedContainer.parentNode.innerText) {
         selectedContainer = selectedContainer.parentNode;
         wordCountSelected = selectedContainer.innerText.match(/\S+/g).length;
+    }
+
+    // Make sure a single p tag is not selected
+    if(selectedContainer.tagName === "P") {
+        selectedContainer = selectedContainer.parentNode;
     }
     
     return selectedContainer;
@@ -914,6 +930,8 @@ function createSimplifiedOverlay() {
         var pattern =  new RegExp ("<br/?>[ \r\n\s]*<br/?>", "g");
         pageSelectedContainer.innerHTML = pageSelectedContainer.innerHTML.replace(pattern, "</p><p>");
     }
+
+    selected = pageSelectedContainer;
 
     // Get the title, author, etc.
     container.appendChild(addArticleMeta())
