@@ -487,19 +487,22 @@ function getContainer() {
     }
 
     for(var i = 0; i < ps.length; i++) {
-        // Make sure it's not in our blacklist
-        if(checkAgainstBlacklist(ps[i])
-        && checkAgainstBlacklist(ps[i].parentNode)) {
+        if(checkAgainstBlacklist(ps[i]) // Make sure it's not in our blacklist
+        && checkAgainstBlacklist(ps[i].parentNode) // and its parent...
+        && ps[i].offsetHeight !== 0) { //  Make sure it's visible on the regular page
             var myInnerText = ps[i].innerText.match(/\S+/g);
             if(myInnerText) {
                 var wordCount = myInnerText.length;
                 if(wordCount > highestWordCount) {
                     highestWordCount = wordCount;
                     pWithMostWords = ps[i];
-                    console.log(checkAgainstBlacklist(ps[i]), checkAgainstBlacklist(ps[i].parentNode))
                 }
             }
         }
+
+        // Remove elements in JR that were hidden on the original page
+        if(ps[i].offsetHeight === 0)
+            ps[i].dataset.simpleDelete = true;
     }
 
     // Keep selecting more generally until over 2/5th of the words on the page have been selected
@@ -555,9 +558,12 @@ function linkListener(e) {
 var blacklist = ["comment"];
 function checkAgainstBlacklist(elem) {
     if(typeof elem != "undefined" && elem != null) {
-        var className = elem.className;
+        var className = elem.className,
+            id = elem.id;
         for(var i = 0; i < blacklist.length; i++) {
-            if(typeof className != "undefined" && className.indexOf(blacklist[i]) >= 0) {
+            if((typeof className != "undefined" && className.indexOf(blacklist[i]) >= 0) 
+            || (typeof id != "undefined" && id.indexOf(blacklist[i]) >= 0)
+            ) {
                 return null;
             }
         }
@@ -959,7 +965,6 @@ function createSimplifiedOverlay() {
             // Remove elements that only have &nbsp;
             if(elem.dataset && elem.innerHTML.trim() === '&nbsp;')
                 elem.dataset.simpleDelete = true;
-
 
             // See if the pres have code in them
             var isPreNoCode = true;

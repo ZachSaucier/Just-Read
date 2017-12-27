@@ -94,6 +94,11 @@ li {
     line-height: 1.5em;
 }
 
+td {
+    border: 1px solid black;
+    padding: 3px 7px;
+}
+
 pre {
     background-color: #E0E0E0;
     padding: 10px;

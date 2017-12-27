@@ -51,6 +51,7 @@ function byteLength(str) {
   return s;
 }
 
+
 // Given a chrome storage object, add them to our domain list
 function setDomains(domains) {
     var domainString = "";
@@ -338,50 +339,50 @@ function saveTheme() {
     // Get the name of the current file being edited
     var currFileElem = document.querySelector(".stylesheets .active");
 
-    
-    if(currFileElem.classList.contains("locked")) { // The file is locked, so make a new one with the same name
-        var fileName = checkFileName(currFileElem.innerText);
-
-        // Add a new list element
-        var list = document.querySelector(".stylesheets"),
-            li = document.createElement("li"),
-            radio = document.createElement("input");
-
-        radio.type = "radio";
-        radio.name = "activeStylesheetRadios";
-
-        li.appendChild(radio);
-        li.innerHTML += fileName;
-
-        // Make it active
-        if(document.querySelector(".stylesheets .active"))
-            document.querySelector(".stylesheets .active").classList.remove("active");
-        li.classList.add("active");
-
-        // Force them to save to keep it
-        changed = true;
-
-        list.appendChild(li);
-
-        document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(rename, styleListOnClick);
-
-        // Update our stylesheet storage
-        useTheme();
-    }
-
-    // Save that file to localStorage
     if(byteLength(editor.getValue()) > 8000) {
-        console.log("Stylesheet is too big. Trying to minify");
-        editor.setValue(editor.getValue().replace(/\s/g, ''), -1);
+        alert("File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/");
+    } else {
+
+        if(currFileElem.classList.contains("locked")) { // The file is locked, so make a new one with the same name
+            var fileName = checkFileName(currFileElem.innerText);
+
+            // Add a new list element
+            var list = document.querySelector(".stylesheets"),
+                li = document.createElement("li"),
+                radio = document.createElement("input");
+
+            radio.type = "radio";
+            radio.name = "activeStylesheetRadios";
+
+            li.appendChild(radio);
+            li.innerHTML += fileName;
+
+            // Make it active
+            if(document.querySelector(".stylesheets .active"))
+                document.querySelector(".stylesheets .active").classList.remove("active");
+            li.classList.add("active");
+
+            // Force them to save to keep it
+            changed = true;
+
+            list.appendChild(li);
+
+            document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(rename, styleListOnClick);
+
+            // Update our stylesheet storage
+            useTheme();
+        }
+
+        // Save that file to localStorage
+        stylesheetObj[currFileElem.innerText] = editor.getValue();
+        setStylesOfStorage();
+
+        // Show the save animation
+        saveButton.classList.add("saved");
+
+        // Note that the file has been saved
+        changed = false;
     }
-    stylesheetObj[currFileElem.innerText] = editor.getValue();
-    setStylesOfStorage();
-
-    // Show the save animation
-    saveButton.classList.add("saved");
-
-    // Note that the file has been saved
-    changed = false;
 }
 
 function useTheme() {
