@@ -338,50 +338,25 @@ function checkHeading(elem, heading, del) {
 }
 
 function getArticleTitle() {
-    // Make sure that the pageSelectedContainer isn't empty
-    if(pageSelectedContainer == null)
-        pageSelectedContainer = document.body;
+    // Get the page's title
+    var title = document.head.querySelector("title").innerText;
 
-    // Check to see if there is a h1 within pageSelectedContainer
-    var text = checkHeading(pageSelectedContainer, 'h1', true);
-    // Check to see if there is a h2 within pageSelectedContainer
-    if(!text)
-        text = checkHeading(pageSelectedContainer, 'h2', true);
-    // Check to see if there is a h3 within pageSelectedContainer
-    if(!text)
-        text = checkHeading(pageSelectedContainer, 'h3', true);
-
-    // Check to see if there's a h1 within the previous sibling of the article
-    if(!text)
-        text = checkHeading(pageSelectedContainer.previousElementSibling, 'h1');
-    // Check to see if there's a h2 within the previous sibling of the article
-    if(!text)
-        text = checkHeading(pageSelectedContainer.previousElementSibling, 'h2');
-    // Check to see if there's a h3 within the previous sibling of the article
-    if(!text)
-        text = checkHeading(pageSelectedContainer.previousElementSibling, 'h3');
-
-    if(!text) {
-        // Check to see if there's a h1 more generally
-        if(document.body.querySelector('h1'))
-            return document.body.querySelector('h1').innerText;
-
-        // Check to see if there's a h2 more generally
-        if(document.body.querySelector('h2'))
-            return document.body.querySelector('h2').innerText;
-
-        // Check to see if there's a h3 more generally
-        if(document.body.querySelector('h3'))
-            return document.body.querySelector('h3').innerText;
-    } else {
-        return text;
+    // Get the part before the first — if it exists
+    if(title.indexOf('—') > 0) {
+        return title.substr(0, title.indexOf('—'));
     }
 
-    // Check meta title
-    if(document.head.querySelector("title"))
-        return document.head.querySelector("title").innerText;
-    
-    return "Unknown title";
+    // Get the part before the first | if it exists
+    if(title.indexOf('|') > 0) {
+        return title.substr(0, title.indexOf('|'));
+    }
+
+    // Get the part before the first - if it exists
+    if(title.indexOf('-') > 0) {
+        return title.substr(0, title.indexOf('-'));
+    }
+
+    return title;
 }
 
 function getArticleAuthor() {
