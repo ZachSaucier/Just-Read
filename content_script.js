@@ -53,22 +53,10 @@ function mutePage() {
 // State functions
 /////////////////////////////////////
 
-// Run on load functionality
-function runOnLoad() {
-    // When the content has finished loading, enable Just Read to run
-    window.onload = function(event) {
-        isPaused = false;
-    }
-
-    // Make the next part wait until the content is loaded
-    hideLoad = false;
-    isPaused = true;
-}
-
 // User-selected text functionality
 var last,
     bgc,
-    selected;
+    userSelected;
 function startSelectElement(doc) {
     var mouseFunc = function (e) {
         var elem = e.target;
@@ -83,9 +71,7 @@ function startSelectElement(doc) {
         }
     },
     clickFunc = function(e) {
-        selected = e.target;
-
-        isPaused = false; // Enable the extension to run
+        userSelected = e.target;
 
         exitFunc();
     },
@@ -104,6 +90,8 @@ function startSelectElement(doc) {
 
         if(doc.getElementById("tempStyle") != null)
             doc.getElementById("tempStyle").parentNode.removeChild(doc.getElementById("tempStyle"));
+
+        launch();
     }
 
     doc.addEventListener('mouseover', mouseFunc);
@@ -121,7 +109,6 @@ function startSelectElement(doc) {
 
     // Make the next part wait until a user has selected an element to use
     useText = false;
-    isPaused = true;
 }
 
 // Similar to ^^ but for deletion once the article is open
@@ -189,7 +176,7 @@ function startDeleteElement(doc) {
 
         doc.body.classList.remove("simple-deleting");
 
-        selected = null;
+        userSelected = null;
 
         sd.classList.remove("active");
         sd.onclick = function() {
@@ -324,19 +311,6 @@ function getArticleDate() {
     return "Unknown date";
 }
 
-function checkHeading(elem, heading, del) {
-    if(elem && elem.querySelector(heading)) {
-        // Remove it so we don't duplicate it
-        var text = elem.querySelector(heading).innerText,
-            element = elem.querySelector(heading);
-        if(del)
-            element.dataset.simpleDelete = true; // Flag it for removal later
-        return text;
-    } else {
-        return false;
-    }
-}
-
 function getArticleTitle() {
     // Get the page's title
     var title = document.head.querySelector("title").innerText;
@@ -436,7 +410,7 @@ function closeOverlay() {
     
     // Reset our variables
     pageSelectedContainer = null;
-    selected = null;
+    userSelected = null;
     
     setTimeout(function() {
         // Enable scroll
@@ -552,6 +526,58 @@ function checkAgainstBlacklist(elem) {
 // Extension-related adder functions
 /////////////////////////////////////
 
+// GET THEMES CSS SHEETS FROM CHROME STORAGE
+function getStyles() {
+    // Check to see if the stylesheets are already in Chrome storage
+    chrome.storage.sync.get(null, function (result) {
+        // Collect all of our stylesheets in our object
+        getStylesFromStorage(result);
+
+        // Check to see if the default stylesheet needs to be updated
+        var needsUpdate = false;
+        chrome.storage.sync.get('stylesheet-version', function (versionResult) {
+
+            // If the user has a version of the stylesheets and it is less than the cufrent one, update it
+            if(isEmpty(versionResult)
+            || versionResult['stylesheet-version'] < stylesheetVersion) {
+                chrome.storage.sync.set({'stylesheet-version': stylesheetVersion});
+
+                needsUpdate = true;
+            }
+
+            if(isEmpty(stylesheetObj) // Not found, so we add our default
+            || needsUpdate) { // Update the default stylesheet if it's on a previous version
+
+                // Open the default CSS file and save it to our object
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        // Save the file's contents to our object
+                        stylesheetObj["default-styles.css"] = xhr.responseText;
+
+                        // Save it to Chrome storage
+                        setStylesOfStorage();
+
+                        // Continue on loading the page
+                        continueLoading();
+                    }
+                }
+                xhr.send();
+
+                needsUpdate = false;
+
+                return;
+            }
+
+            // It's already found, so we use it
+
+            continueLoading();
+        });
+
+            
+    });
+}
 
 // Add our styles to the page
 function addStylesheet(doc, link, classN) {
@@ -902,7 +928,7 @@ function createSimplifiedOverlay() {
     container.className = "simple-container";
 
     // Try using the selected element's content
-    pageSelectedContainer = selected;
+    pageSelectedContainer = userSelected;
     
     // If there is no text selected, get auto-select the content
     if(!pageSelectedContainer) {
@@ -1104,7 +1130,12 @@ function continueLoading() {
     var style = document.createElement('style');
 
     chrome.storage.sync.get('currentTheme', function(result) {
-        theme = result.currentTheme || "default-styles.css";
+        if(result.currentTheme) {
+            theme = result.currentTheme;
+        } else {
+            chrome.storage.sync.set({'currentTheme': "default-styles.css"});
+            theme = "default-styles.css";
+        }
         style.type = 'text/css';
 
         if(style.styleSheet) {
@@ -1146,88 +1177,37 @@ var isPaused = false,
     stylesheetObj = {},
     stylesheetVersion = 1.19; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 chrome.storage.sync.set({'stylesheet-version': 1});
-// Detect past overlay - don't show another
-if(document.getElementById("simple-article") == null) {
-    var interval = setInterval(function() {
+
+function launch() {
+    // Detect past overlay - don't show another
+    if(document.getElementById("simple-article") == null) {
 
         // Check to see if the user wants to select the text
-        if(typeof useText != "undefined" && useText && !isPaused) {
+        if(typeof useText != "undefined" && useText) {
             // Start the process of the user selecting text to read
             startSelectElement(document);
         }
 
-        if(!isPaused) {
+        else {
             // Add the stylesheet for the container
             if(!document.head.querySelector(".page-styles"))
                 addStylesheet(document, "page.css", "page-styles");
 
             // Check to see if the user wants to hide the content while loading
             if(typeof runOnLoad != "undefined" && runOnLoad) {
-                runOnLoad(document);
+                window.onload = getStyles();
+            } else {
+                getStyles();
             }
 
             // Attempt to mute the elements on the original page
             mutePage();
-
-
-            // GET THEMES CSS SHEETS FROM CHROME STORAGE
-
-            // Check to see if the stylesheets are already in Chrome storage
-            chrome.storage.sync.get(null, function (result) {
-                // Collect all of our stylesheets in our object
-                getStylesFromStorage(result);
-
-                // Check to see if the default stylesheet needs to be updated
-                var needsUpdate = false;
-                chrome.storage.sync.get('stylesheet-version', function (versionResult) {
-
-                    // If the user has a version of the stylesheets and it is less than the cufrent one, update it
-                    if(isEmpty(versionResult)
-                    || versionResult['stylesheet-version'] < stylesheetVersion) {
-                        chrome.storage.sync.set({'stylesheet-version': stylesheetVersion});
-
-                        needsUpdate = true;
-                    }
-
-                    if(isEmpty(stylesheetObj) // Not found, so we add our default
-                    || needsUpdate) { // Update the default stylesheet if it's on a previous version
-
-                        // Open the default CSS file and save it to our object
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
-                        xhr.onreadystatechange = function() {
-                            if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                                // Save the file's contents to our object
-                                stylesheetObj["default-styles.css"] = xhr.responseText;
-
-                                // Save it to Chrome storage
-                                setStylesOfStorage();
-
-                                // Continue on loading the page
-                                continueLoading();
-                            }
-                        }
-                        xhr.send();
-
-                        needsUpdate = false;
-
-                        return;
-                    }
-
-                    // It's already found, so we use it
-
-                    continueLoading();
-                });
-
-                
-            });
-
-            window.clearInterval(interval);
         }
-    }, 100);
-    
-} else {
-    if(document.querySelector(".simple-fade-up") == null) // Make sure it's been able to load
-        closeOverlay();
-}
 
+        
+    } else {
+        if(document.querySelector(".simple-fade-up") == null) // Make sure it's been able to load
+            closeOverlay();
+    }
+}
+launch();

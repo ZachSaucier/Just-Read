@@ -125,7 +125,7 @@ chrome.browserAction.onClicked.addListener(startJustRead);
 updateCMs();
 
 chrome.storage.sync.get("show-del-btn", function(result) {
-    if(result["show-del-btn"] === "undefined") {
+    if(result && result["show-del-btn"] === "undefined") {
         chrome.storage.sync.set("show-del-btn", true);
     }
 });
@@ -139,7 +139,7 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 // Listen for requests to open the options page
-chrome.extension.onRequest.addListener(function(data, sender) {
+chrome.runtime.onMessage.addListener(function(data, sender) {
     if(data === "Open options") {
         chrome.runtime.openOptionsPage();
     }
@@ -166,19 +166,22 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
     if (changeInfo.status == 'loading') {
         // Auto enable on sites specified
         chrome.storage.sync.get('auto-enable-site-list', function (siteListObj) {
-            var siteList = siteListObj['auto-enable-site-list'],
-                url = tab.url;
-            
-            if(typeof siteList != "undefined") {
-                for(var i = 0; i < siteList.length; i++) {
-                    var regex = new RegExp(siteList[i], "i");
-    
-                    if( url.match( regex ) ) {
-                        chrome.tabs.executeScript(tabId, {
-                            code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load
-                        }, function() {                   // instead of using Chrome messages
-                            startJustRead(tab);
-                        });
+            var siteList;   
+            if(siteListObj) {
+                siteList = siteListObj['auto-enable-site-list'];
+                var url = tab.url;
+                
+                if(typeof siteList != "undefined") {
+                    for(var i = 0; i < siteList.length; i++) {
+                        var regex = new RegExp(siteList[i], "i");
+        
+                        if( url.match( regex ) ) {
+                            chrome.tabs.executeScript(tabId, {
+                                code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load
+                            }, function() {                   // instead of using Chrome messages
+                                startJustRead(tab);
+                            });
+                        }
                     }
                 }
             }

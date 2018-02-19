@@ -1,7 +1,7 @@
 Just Read
 =========
 
-> I've started work on a paid version of Just Read. To find out more about it or to help contribute to what features should be included, please check out [the GitHub issue](https://github.com/ZachSaucier/Just-Read/issues/20).
+> There's potential for a paid version of Just Read. To find out more about it or to help contribute to what features should be included, please check out [the GitHub issue](https://github.com/ZachSaucier/Just-Read/issues/20).
 
  The extension makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
 
@@ -13,13 +13,12 @@ Just Read
 ### Install from Chrome's webstore:
 1. [View it on the webstore](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod) and click "Add to Chrome".
 
+<!-- ### Install from Firefox's webstore:
+1. [View it on the webstore](https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/) and click "Add to Firefox". -->
+
 ### Install from GitHub (for developers):
 
-1. Download the files ([in zip form](http://i.imgur.com/4WkK2CA.png) -> unzip OR `git clone https://github.com/ZachSaucier/Just-Read.git`). 
-2. Open up your Chrome extensions page: [chrome://extensions/](chrome://extensions/)
-3. Make sure the ["Developer mode" checkbox is checked](http://i.imgur.com/7lS7JgW.png). 
-4. Click "Load unpacked extension..." and select the folder that you downloaded Just Read to.
-5. Once that folder has been selected, Just Read should [show up](http://i.imgur.com/hwnoLZi.png)! 
+You can clone this repo or download the ZIP and load it as an unpacked extension. This is useful if you want to help contribute to Just Read and test your code. 
 
 ___
 
@@ -33,7 +32,7 @@ Once Just Read has been installed, there are six built in ways to apply the effe
 
 You can start using Just Read's built in selection in four ways:
 
-1. Click the Just Read Chrome extension button. 
+1. Click the Just Read extension button. 
 ![extension button](http://i.imgur.com/aCOIuVV.png)
 
 2. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>L</kbd>.
@@ -46,7 +45,7 @@ You can start using Just Read's built in selection in four ways:
 
 You can also select exactly the text you want to read if the built in method doesn't select what you want. If you want to use a visual selector, you can start selection mode in two ways:
 
-5. Right click the Just Read Chrome extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
+5. Right click the Just Read extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
 
 6. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
 
@@ -113,7 +112,7 @@ ___
 
 Let me know how I can improve this extension including any bugs you see and what features you'd like to see!
 
-This is a Chrome extension was initially made in 16 hours at [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 and has been updated since.
+This Chrome extension was initially made in 16 hours at [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 and has been updated since.
 
 ___
 
