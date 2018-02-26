@@ -83,7 +83,7 @@ function startSelectElement(doc) {
     exitFunc = function() {
         doc.removeEventListener('mouseover', mouseFunc);
         doc.removeEventListener('click', clickFunc);
-        doc.removeEventListener('keyup', escFunc);
+        doc.removeEventListener('keydown', escFunc);
 
         if(doc.querySelector(".hovered") != null)
             doc.querySelector(".hovered").classList.remove("hovered");
@@ -96,7 +96,7 @@ function startSelectElement(doc) {
 
     doc.addEventListener('mouseover', mouseFunc);
     doc.addEventListener('click', clickFunc);
-    doc.addEventListener('keyup', escFunc);
+    doc.addEventListener('keydown', escFunc);
 
     doc.documentElement.focus();
 
@@ -169,7 +169,7 @@ function startDeleteElement(doc) {
     exitFunc = function() {
         doc.removeEventListener('mouseover', mouseFunc);
         doc.removeEventListener('click', clickFunc);
-        doc.removeEventListener('keyup', escFunc);
+        doc.removeEventListener('keydown', escFunc);
 
         if(doc.querySelector(".hovered") != null)
             doc.querySelector(".hovered").classList.remove("hovered");
@@ -188,7 +188,7 @@ function startDeleteElement(doc) {
 
     doc.addEventListener('mouseover', mouseFunc);
     doc.addEventListener('click', clickFunc);
-    doc.addEventListener('keyup', escFunc);
+    doc.addEventListener('keydown', escFunc);
 
     var sd = simpleArticleIframe.querySelector(".simple-delete");
 
@@ -896,7 +896,7 @@ function editText(elem) {
     }
 
     // Allow enter to be used to save the edit
-    textInput.onkeyup = function(e) {
+    textInput.onkeydown = function(e) {
         if(e.keyCode === 13)
             textInput.onblur();
     }
@@ -1096,19 +1096,16 @@ function createSimplifiedOverlay() {
         };
     }
 
-    simpleArticleIframe.onkeyup = function(e) {
+    simpleArticleIframe.onkeydown = function(e) {
         // Listen for the "Esc" key and exit if so
-        if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting"))
+        if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting") && document.hasFocus()) 
             closeOverlay();
-
 
         // Listen for CTRL + SHIFT + ; and allow node deletion if so
         if(e.keyCode === 186 && e.ctrlKey && e.shiftKey)
             startDeleteElement(simpleArticleIframe);
-    }
 
-    // Listen for CTRL+P and do our print function if so
-    simpleArticleIframe.onkeydown = function(e) {
+        // Listen for CTRL+P and do our print function if so
         if(e.ctrlKey && e.keyCode == 80) {
             simpleArticleIframe.defaultView.print();
             e.preventDefault();
