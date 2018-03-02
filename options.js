@@ -25,6 +25,10 @@ editor.commands.addCommands([{
     exec: function(editor) {
         editor.setFontSize(12);
     }
+}, {
+    name: "save",
+    bindKey: "Ctrl+s",
+    exec: saveTheme
 }]);
 
 
@@ -37,18 +41,6 @@ var changed = false,
 
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
-}
-
-function byteLength(str) {
-  // returns the byte length of an utf8 string
-  var s = str.length;
-  for (var i=str.length-1; i>=0; i--) {
-    var code = str.charCodeAt(i);
-    if (code > 0x7f && code <= 0x7ff) s++;
-    else if (code > 0x7ff && code <= 0xffff) s+=2;
-    if (code >= 0xDC00 && code <= 0xDFFF) i--; //trail surrogate
-  }
-  return s;
 }
 
 
@@ -65,7 +57,6 @@ function setDomains(domains) {
 // Given a chrome storage object, add them to our domain list
 function getStylesFromStorage(storage) {
     for(var key in storage) {
-        // Convert the old format into the new format
         if(key === "auto-enable-site-list") {
             setDomains(storage[key]);
         } else if(key === "enable-pageCM") {
@@ -78,29 +69,24 @@ function getStylesFromStorage(storage) {
             delMode.checked = storage[key];
         } else if(key === "leave-pres") {
             leavePres.checked = storage[key];
-        } else if(key === "just-read-stylesheets") {
-            // Save each stylesheet in the new format
-            for(var stylesheet in storage[key]) {
-                var obj = {};
-                obj['jr-' + stylesheet] = storage[key][stylesheet];
-                chrome.storage.sync.set(obj);
-                stylesheetObj[stylesheet] = storage[key][stylesheet];
-            }
-
-            // Remove the old format
-            removeStyleFromStorage(key);
-
-        } else if(key.substring(0, 3) === "jr-") // Get stylesheets in the new format
+        } else if(key.substring(0, 3) === "jr-") // Get the user's stylesheets
             stylesheetObj[key.substring(3)] = storage[key];
     }
 }
 
 // Set the chrome storage based on our stylesheet object
-function setStylesOfStorage() {
+function setStylesOfStorage(nextFunc) {
     for(var stylesheet in stylesheetObj) {
         var obj = {};
         obj['jr-' + stylesheet] = stylesheetObj[stylesheet];
-        chrome.storage.sync.set(obj);
+        chrome.storage.sync.set(obj, function() {
+            if(chrome.runtime.lastError 
+            && chrome.runtime.lastError.message === "QUOTA_BYTES_PER_ITEM quota exceeded") {
+                alert("File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/");
+            } else {
+                nextFunc();
+            }
+        });
     }
 }
 
@@ -207,12 +193,13 @@ function confirmChange() {
                 return false;
             else
                 return true;
+    else 
+        return false;
 }
 
 function styleListOnClick() {
     // Don't do anything if it's already active
     if(!this.classList.contains("active")) {
-        // Make sure any changes are saved
         var cancel = confirmChange();
         
         if(!cancel) {
@@ -239,7 +226,7 @@ function styleListOnClick() {
 function continueLoading() {
     // Get the currently used stylesheet
     chrome.storage.sync.get('currentTheme', function(result) {
-        var currTheme = result.currentTheme;
+        var currTheme = result.currentTheme || defaultStylesheet;
 
         // Based on that object, populate the list values
         var list = document.querySelector(".stylesheets"),
@@ -329,60 +316,59 @@ function getStylesheets() {
             }
             xhr.send();
             return;
-        }
-
-        continueLoading();
+        } else {
+            continueLoading();
+        }        
     });
+}
+
+function continueSaving() {
+    var currFileElem = document.querySelector(".stylesheets .active");
+
+    if(currFileElem.classList.contains("locked")) { // The file is locked, so make a new one with the same name
+        var fileName = checkFileName(currFileElem.innerText);
+
+        // Add a new list element
+        var list = document.querySelector(".stylesheets"),
+            li = document.createElement("li"),
+            radio = document.createElement("input");
+
+        radio.type = "radio";
+        radio.name = "activeStylesheetRadios";
+
+        li.appendChild(radio);
+        li.innerHTML += fileName;
+
+        // Make it active
+        if(document.querySelector(".stylesheets .active"))
+            document.querySelector(".stylesheets .active").classList.remove("active");
+        li.classList.add("active");
+
+        // Force them to save to keep it
+        changed = true;
+
+        list.appendChild(li);
+
+        document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(rename, styleListOnClick);
+
+        // Update our stylesheet storage
+        useTheme();
+    }
+
+    // Show the save animation
+    saveButton.classList.add("saved");
+
+    // Note that the file has been saved
+    changed = false;
 }
 
 function saveTheme() {
     // Get the name of the current file being edited
     var currFileElem = document.querySelector(".stylesheets .active");
 
-    if(byteLength(editor.getValue()) > 8000) {
-        alert("File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/");
-    } else {
-
-        if(currFileElem.classList.contains("locked")) { // The file is locked, so make a new one with the same name
-            var fileName = checkFileName(currFileElem.innerText);
-
-            // Add a new list element
-            var list = document.querySelector(".stylesheets"),
-                li = document.createElement("li"),
-                radio = document.createElement("input");
-
-            radio.type = "radio";
-            radio.name = "activeStylesheetRadios";
-
-            li.appendChild(radio);
-            li.innerHTML += fileName;
-
-            // Make it active
-            if(document.querySelector(".stylesheets .active"))
-                document.querySelector(".stylesheets .active").classList.remove("active");
-            li.classList.add("active");
-
-            // Force them to save to keep it
-            changed = true;
-
-            list.appendChild(li);
-
-            document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(rename, styleListOnClick);
-
-            // Update our stylesheet storage
-            useTheme();
-        }
-
-        // Save that file to localStorage
-        stylesheetObj[currFileElem.innerText] = editor.getValue();
-        setStylesOfStorage();
-
-        // Show the save animation
-        saveButton.classList.add("saved");
-
-        // Note that the file has been saved
-        changed = false;
-    }
+    // Save that file to localStorage
+    stylesheetObj[currFileElem.innerText] = editor.getValue();
+    setStylesOfStorage(continueSaving);
 }
 
 function useTheme() {
@@ -508,8 +494,12 @@ removeButton.onclick = function() {
 
             // Check to see if it's the currently used sheet - if so set it to the default
             if(elem.classList.contains("used")) {
-                defaultLiItem.classList.add("used");
-                chrome.storage.sync.set({"currentTheme": defaultStylesheet});
+                elem.classList.remove("active");
+                chrome.storage.sync.set({"currentTheme": defaultStylesheet}, function() {
+                    defaultLiItem.querySelector("input").checked = true;
+                    styleListOnClick.call(defaultLiItem);
+                    defaultLiItem.classList.add("used", "active");
+                });
             }
 
             // Remove it from the list
@@ -526,7 +516,8 @@ removeButton.onclick = function() {
 
 var pageCM = document.getElementById("pageCM"),
     highlightCM = document.getElementById("highlightCM"),
-    linkCM = document.getElementById("linkCM");
+    linkCM = document.getElementById("linkCM"),
+    fullScrn = document.getElementById("fullScrn");
 
 pageCM.onchange = function() {
     chrome.storage.sync.set({"enable-pageCM": this.checked});
@@ -539,6 +530,11 @@ highlightCM.onchange = function() {
 linkCM.onchange = function() {
     chrome.storage.sync.set({"enable-linkCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});
+}
+
+fullScrn.onchange = function() {
+    chrome.storage.sync.set({"fullscreen": this.checked});
+    chrome.runtime.sendMessage({fullscreen: "true"});
 }
 
 var addOptBtn = document.getElementById("additional"),
