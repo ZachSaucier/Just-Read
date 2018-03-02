@@ -316,18 +316,28 @@ function getArticleTitle() {
     var title = document.head.querySelector("title").innerText;
 
     // Get the part before the first — if it exists
-    if(title.indexOf('—') > 0) {
-        return title.substr(0, title.indexOf('—'));
+    if(title.indexOf(' — ') > 0) {
+        return title.substr(0, title.indexOf(' — '));
     }
 
-    // Get the part before the first | if it exists
-    if(title.indexOf('|') > 0) {
-        return title.substr(0, title.indexOf('|'));
+    // Get the part before the first – if it exists
+    if(title.indexOf(' – ') > 0) {
+        return title.substr(0, title.indexOf(' – '));
     }
 
     // Get the part before the first - if it exists
-    if(title.indexOf('-') > 0) {
-        return title.substr(0, title.indexOf('-'));
+    if(title.indexOf(' - ') > 0) {
+        return title.substr(0, title.indexOf(' - '));
+    }
+
+    // Get the part before the first | if it exists
+    if(title.indexOf(' | ') > 0) {
+        return title.substr(0, title.indexOf(' | '));
+    }
+
+    // Get the part before the first : if it exists
+    if(title.indexOf(' : ') > 0) {
+        return title.substr(0, title.indexOf(' : '));
     }
 
     return title;
