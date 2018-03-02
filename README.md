@@ -98,6 +98,8 @@ If you click "Additional options" while on the options page, a new modal will sh
 
 "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
 
+"Always auto-enable fullscreen when Just Read is started" makes the screen automatically go to fullscreen when Just Read is active if the page is the active page. 
+
 ### Find themes or share your own
 
 If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
