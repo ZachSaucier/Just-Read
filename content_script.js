@@ -171,6 +171,10 @@ function startDeleteElement(doc) {
             exitFunc();
     },
     exitFunc = function() {
+        anchors.forEach(function(a) {
+            a.removeEventListener("click", anchorFunc);
+        });
+
         doc.removeEventListener('mouseover', mouseFunc);
         doc.removeEventListener('click', clickFunc);
         doc.removeEventListener('keydown', escFunc);
@@ -186,7 +190,15 @@ function startDeleteElement(doc) {
         sd.onclick = function() {
             startDeleteElement(simpleArticleIframe);
         };
+    },
+    anchorFunc = function(e) {
+        e.preventDefault();
     }
+
+    var anchors = doc.querySelectorAll("a");
+    anchors.forEach(function(a) {
+        a.addEventListener("click", anchorFunc);
+    });
 
     doc.body.classList.add("simple-deleting");
 
@@ -317,31 +329,36 @@ function getArticleDate() {
 
 function getArticleTitle() {
     // Get the page's title
-    var title = document.head.querySelector("title").innerText;
+    var title = document.head.querySelector("title");
+    if(title) {
+        title = title.innerText;
 
-    // Get the part before the first — if it exists
-    if(title.indexOf(' — ') > 0) {
-        return title.substr(0, title.indexOf(' — '));
-    }
+        // Get the part before the first — if it exists
+        if(title.indexOf(' — ') > 0) {
+            return title.substr(0, title.indexOf(' — '));
+        }
 
-    // Get the part before the first – if it exists
-    if(title.indexOf(' – ') > 0) {
-        return title.substr(0, title.indexOf(' – '));
-    }
+        // Get the part before the first – if it exists
+        if(title.indexOf(' – ') > 0) {
+            return title.substr(0, title.indexOf(' – '));
+        }
 
-    // Get the part before the first - if it exists
-    if(title.indexOf(' - ') > 0) {
-        return title.substr(0, title.indexOf(' - '));
-    }
+        // Get the part before the first - if it exists
+        if(title.indexOf(' - ') > 0) {
+            return title.substr(0, title.indexOf(' - '));
+        }
 
-    // Get the part before the first | if it exists
-    if(title.indexOf(' | ') > 0) {
-        return title.substr(0, title.indexOf(' | '));
-    }
+        // Get the part before the first | if it exists
+        if(title.indexOf(' | ') > 0) {
+            return title.substr(0, title.indexOf(' | '));
+        }
 
-    // Get the part before the first : if it exists
-    if(title.indexOf(' : ') > 0) {
-        return title.substr(0, title.indexOf(' : '));
+        // Get the part before the first : if it exists
+        if(title.indexOf(' : ') > 0) {
+            return title.substr(0, title.indexOf(' : '));
+        }
+    } else {
+        title = "Unknown title";
     }
 
     return title;
@@ -490,30 +507,32 @@ function getContainer() {
 
 // Handle link clicks
 function linkListener(e) {
-    // Don't change the top most if it's not in the current window
-    if(e.ctrlKey
-    || e.shiftKey
-    || e.metaKey
-    || (e.button && e.button == 1)
-    || this.target === "about:blank"
-    || this.target === "_blank") {
-        return; // Do nothing
-    }
+    if(!simpleArticleIframe.body.classList.contains("simple-deleting")) {
+        // Don't change the top most if it's not in the current window
+        if(e.ctrlKey
+        || e.shiftKey
+        || e.metaKey
+        || (e.button && e.button == 1)
+        || this.target === "about:blank"
+        || this.target === "_blank") {
+            return; // Do nothing
+        }
 
-    // Don't change the top most if it's referencing an anchor in the article
-    var hrefArr = this.href.split("#");
-    
-    if(hrefArr.length < 2 // No anchor
-    || (hrefArr[0].replace(/\/$/, "") != top.window.location.origin + top.window.location.pathname.replace(/\/$/, "") // Anchored to an ID on another page
-        && hrefArr[0] != "about:blank"
-        && hrefArr[0] != "_blank")
-    || (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
-        && simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
-    ) {
-        top.window.location.href = this.href; // Regular link
-    } else { // Anchored to an element in the article
-        top.window.location.hash = hrefArr[1];
-        simpleArticleIframe.location.hash = hrefArr[1];
+        // Don't change the top most if it's referencing an anchor in the article
+        var hrefArr = this.href.split("#");
+        
+        if(hrefArr.length < 2 // No anchor
+        || (hrefArr[0].replace(/\/$/, "") != top.window.location.origin + top.window.location.pathname.replace(/\/$/, "") // Anchored to an ID on another page
+            && hrefArr[0] != "about:blank"
+            && hrefArr[0] != "_blank")
+        || (simpleArticleIframe.getElementById(hrefArr[1]) == null // The element is not in the article section
+            && simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") == null)
+        ) {
+            top.window.location.href = this.href; // Regular link
+        } else { // Anchored to an element in the article
+            top.window.location.hash = hrefArr[1];
+            simpleArticleIframe.location.hash = hrefArr[1];
+        }
     }
 }
 
@@ -1009,6 +1028,7 @@ function createSimplifiedOverlay() {
             // Remove any inline style, LaTeX text, or noindex elements and things with aria hidden
             if((elem.nodeName === "STYLE"
             || elem.nodeName === "NOINDEX"
+            || elem.nodeName === "LINK"
             || elem.getAttribute("encoding") == "application/x-tex"
             || (elem.getAttribute("aria-hidden") == "true" 
                && !elem.classList.contains("mwe-math-fallback-image-inline"))))

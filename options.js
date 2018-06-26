@@ -69,6 +69,8 @@ function getStylesFromStorage(storage) {
             delMode.checked = storage[key];
         } else if(key === "leave-pres") {
             leavePres.checked = storage[key];
+        } else if(key === "fullscreen") {
+            fullScrn.checked = storage[key];
         } else if(key.substring(0, 3) === "jr-") // Get the user's stylesheets
             stylesheetObj[key.substring(3)] = storage[key];
     }
