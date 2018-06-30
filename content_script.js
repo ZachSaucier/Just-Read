@@ -51,8 +51,6 @@ function mutePage() {
 }
 
 
-
-
 /////////////////////////////////////
 // State functions
 /////////////////////////////////////
@@ -273,6 +271,15 @@ function removeStyleFromStorage(stylesheet) {
 /////////////////////////////////////
 // Extension-related helper functions
 /////////////////////////////////////
+
+// From https://stackoverflow.com/a/14824756/2065702
+function isRTL(s) {           
+    var ltrChars    = 'A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF'+'\u2C00-\uFB1C\uFDFE-\uFE6F\uFEFD-\uFFFF',
+        rtlChars    = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC',
+        rtlDirCheck = new RegExp('^[^'+ltrChars+']*['+rtlChars+']');
+
+    return rtlDirCheck.test(s);
+};
 
 function checkElemForDate(elem, attrList, deleteMe) {
     var myDate = false;
@@ -1046,7 +1053,7 @@ function createSimplifiedOverlay() {
 
     // Handle RTL sites
     var direction = window.getComputedStyle(document.body).getPropertyValue("direction");
-    if(direction === "rtl") {
+    if(direction === "rtl" || isRTL(contentContainer.firstChild.innerText)) {
         container.classList.add("rtl");
     }
 
