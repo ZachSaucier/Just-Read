@@ -75,6 +75,11 @@
     cursor: pointer;
 
     display: none;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+.simple-edit:hover {
+    opacity: 1;
 }
 .rtl .simple-edit {
     right: auto;
@@ -163,6 +168,7 @@
     .simple-bug-reporter {
         display: none;
     }
+    * { overflow: auto !important; }
     @page :first { margin-top: 0; }
 }
 
