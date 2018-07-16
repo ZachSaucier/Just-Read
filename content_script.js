@@ -41,6 +41,8 @@ function muteMe(elem) {
     elem.pause();
 }
 
+
+
 // Try to mute all video and audio elements on the page
 function mutePage() {
     var videos = document.querySelectorAll("video"),
@@ -50,6 +52,22 @@ function mutePage() {
     [].forEach.call(audios, function(audio) { muteMe(audio); });
 }
 
+// Automatically add domain to domainlist each time user activates just-read on new webpage
+chrome.storage.sync.get('auto-enable-site-list', function(result) {
+          domain = window.location.hostname
+          console.log(result['auto-enable-site-list'])
+          if (result['auto-enable-site-list'] == null) {
+            chrome.storage.sync.set({"auto-enable-site-list": [domain] });
+          }
+          else {
+            if ( result['auto-enable-site-list'].indexOf(domain) < 0) {
+                result['auto-enable-site-list'].push(domain)
+                chrome.storage.sync.set({"auto-enable-site-list": result['auto-enable-site-list'] });
+            }
+          }
+          
+           
+}); 
 
 /////////////////////////////////////
 // State functions
