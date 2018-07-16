@@ -1,3 +1,16 @@
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+function checkArrayForString(arr, string) {
+    for(let i = 0; i < arr.length; i++) {
+        if(arr[i].indexOf(string) > -1) {
+            console.log("test");
+            return true;
+        }
+    };
+    return false;
+}
+
 function startJustRead(tab) {
     var tabId = tab ? tab.id : null; // Defaults to the current tab
     chrome.tabs.executeScript(tabId, {
@@ -8,6 +21,13 @@ function startJustRead(tab) {
     // Add a badge to signify the extension is in use
     chrome.browserAction.setBadgeBackgroundColor({color:[242, 38, 19, 230]});
     chrome.browserAction.setBadgeText({text:"on"});
+
+    // Check if we need to add the site to JR's autorun list
+    chrome.storage.sync.get("alwaysAddAR", function(result) {
+        if(result && result["alwaysAddAR"]) {
+            addSiteToAutorunList(null, tab);
+        }
+    });
 
     setTimeout(function() {
         chrome.browserAction.setBadgeText({text:""});
@@ -67,6 +87,45 @@ function createLinkCM() {
         }
     });
 }
+function createAutorunCM() {
+    // Create an entry to allow user to open a given link using Just read
+    autorunCMId = chrome.contextMenus.create({
+        title: "Add this site to Just Read Plus' auto-run list",
+        id: "autorunCM",
+        contexts:["page"],
+        onclick: addSiteToAutorunList
+    });
+}
+function addSiteToAutorunList(info, tab) {
+    chrome.storage.sync.get('auto-enable-site-list', function(result) {
+        let url = new URL((info != null && info.pageUrl) || tab.url);
+        let entry;
+        if(url.pathname !== "/"
+        && url.pathname !== "") {
+            entry = url.hostname + "/.+";
+        } else {
+            entry = url.hostname;
+        }
+
+        let currentDomains = result['auto-enable-site-list'];
+
+        if(!isEmpty(currentDomains)) {
+            if(!currentDomains.includes(entry)) {
+                chrome.storage.sync.set({
+                    'auto-enable-site-list': [...currentDomains, entry],
+                }, function() {
+                    if(checkArrayForString(currentDomains, url.hostname)) {
+                        console.log("Auto-run entry added.\n\nWarning: An auto-run entry with the same hostname has already been added. Be careful to not add two duplicates.");
+                    } else {
+                        console.log('Auto-run entry added.');
+                    }
+                });
+            } else {
+                console.log("Entry already exists inside of Just Read Plus' auto-run list. Not adding new entry.")
+            }
+        }
+    });
+}
 
 
 var pageCMId = highlightCMId = linkCMId = undefined;
@@ -107,13 +166,24 @@ function updateCMs() {
                         linkCMId = undefined;
                     }
                 }
-            }
+            } else if(key === "enable-autorunCM") {
+                if(result[key]) {
+                    if(typeof autorunCMId == "undefined")
+                        createAutorunCM();
+                } else {
+                    if(typeof autorunCMId != "undefined") {
+                        chrome.contextMenus.remove("autorunCM");
+                        autorunCMId = undefined;
+                    }
+                }
+            } 
         }
         
         if(size === 0) {
             createPageCM();
             createHighlightCM();
             createLinkCM();
+            createAutorunCM();
         }
     });
 }
@@ -139,10 +209,12 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 // Listen for requests to open the options page
-chrome.runtime.onMessage.addListener(function(data, sender) {
-    if(data === "Open options") {
+chrome.runtime.onMessage.addListener(function(request, sender) {
+    if(request === "Open options") {
         chrome.runtime.openOptionsPage();
-    }
+    } else if(request.updateCMs === "true") {
+        updateCMs();
+    } 
 });
 
 // Create an entry to allow user to select an element to read from
@@ -153,14 +225,6 @@ chrome.contextMenus.create({
         startSelectText();
     }
 });
-
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if(request.updateCMs === "true") {
-            updateCMs();
-        }
-    }
-);
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
     if (changeInfo.status == 'loading') {

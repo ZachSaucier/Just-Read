@@ -65,10 +65,14 @@ function getStylesFromStorage(storage) {
             highlightCM.checked = storage[key];
         } else if(key === "enable-linkCM") {
             linkCM.checked = storage[key];
+        } else if(key === "enable-autorunCM") {
+            autorunCM.checked = storage[key];
         } else if(key === "show-del-btn") {
             delMode.checked = storage[key];
         } else if(key === "leave-pres") {
             leavePres.checked = storage[key];
+        } else if(key === "alwaysAddAR") {
+            alwaysAddAR.checked = storage[key];
         } else if(key === "fullscreen") {
             fullScrn.checked = storage[key];
         } else if(key.substring(0, 3) === "jr-") // Get the user's stylesheets
@@ -519,6 +523,8 @@ removeButton.onclick = function() {
 var pageCM = document.getElementById("pageCM"),
     highlightCM = document.getElementById("highlightCM"),
     linkCM = document.getElementById("linkCM"),
+    autorunCM = document.getElementById("autorunCM"),
+    alwaysAddAR = document.getElementById("alwaysAddAR"),
     fullScrn = document.getElementById("fullScrn");
 
 pageCM.onchange = function() {
@@ -532,6 +538,15 @@ highlightCM.onchange = function() {
 linkCM.onchange = function() {
     chrome.storage.sync.set({"enable-linkCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});
+}
+autorunCM.onchange = function() {
+    console.log(this.checked);
+    chrome.storage.sync.set({"enable-autorunCM": this.checked});
+    chrome.runtime.sendMessage({updateCMs: "true"});
+}
+
+alwaysAddAR.onchange = function() {
+    chrome.storage.sync.set({"alwaysAddAR": this.checked});
 }
 
 fullScrn.onchange = function() {

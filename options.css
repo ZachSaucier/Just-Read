@@ -142,6 +142,7 @@ body, .editor-container {
     width: calc(100% - 100px);
     height: calc(100% - 120px);
     padding: 8px;
+    overflow: auto;
 }
 .additional-options label {
     display: block;
@@ -164,7 +165,7 @@ body, .editor-container {
     cursor: pointer;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 740px) {
     body {
         padding-top: 0px;
     }

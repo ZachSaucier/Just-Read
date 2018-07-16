@@ -119,14 +119,11 @@ function startDeleteElement(doc) {
         var elem = e.target;
 
         if(!elem.classList.contains("simple-container")
-        && !elem.classList.contains("simple-close")
-        && !elem.classList.contains("simple-print")
-        && !elem.parentNode.classList.contains("simple-print")
+        && !elem.classList.contains("simple-control")
+        && !elem.classList.contains("simple-add-comment")
+        && !elem.classList.contains("simple-comments")
         && !elem.classList.contains("simple-edit")
-        && !elem.classList.contains("simple-edit-theme")
-        && !elem.parentNode.classList.contains("simple-edit-theme")
-        && !elem.classList.contains("simple-delete")
-        && !elem.parentNode.classList.contains("simple-delete")
+        && (elem.parentNode.classList && !elem.parentNode.classList.contains("simple-control"))
         && doc.body != elem
         && doc.documentElement != elem
         && elem.tagName !== "path"
@@ -146,14 +143,11 @@ function startDeleteElement(doc) {
         selected = e.target;
 
         if(!selected.classList.contains("simple-container")
-        && !selected.classList.contains("simple-close")
-        && !selected.classList.contains("simple-print")
-        && !selected.parentNode.classList.contains("simple-print")
+        && !selected.classList.contains("simple-control")
+        && !selected.classList.contains("simple-add-comment")
+        && !selected.classList.contains("simple-comments")
         && !selected.classList.contains("simple-edit")
-        && !selected.classList.contains("simple-edit-theme")
-        && !selected.parentNode.classList.contains("simple-edit-theme")
-        && !selected.classList.contains("simple-delete")
-        && !selected.parentNode.classList.contains("simple-delete")
+        && (selected.parentNode.classList && !selected.parentNode.classList.contains("simple-control"))
         && doc.body != selected
         && doc.documentElement != selected
         && selected.tagName !== "path"
@@ -915,35 +909,37 @@ function addGUI() {
 
 // Add edit meta functionality
 function editText(elem) {
-    // Hide the item
-    elem.style.display = "none";
+    if(!simpleArticleIframe.body.classList.contains("simple-deleting")) {
+        // Hide the item
+        elem.style.display = "none";
 
-    // Insert an input temporarily
-    var textInput = document.createElement("input");
-    textInput.type = "text";
-    textInput.value = elem.innerText;
+        // Insert an input temporarily
+        var textInput = document.createElement("input");
+        textInput.type = "text";
+        textInput.value = elem.innerText;
 
-    // Update the element on blur
-    textInput.onblur = function() {
-        // Change the value
-        elem.innerText = textInput.value;
+        // Update the element on blur
+        textInput.onblur = function() {
+            // Change the value
+            elem.innerText = textInput.value;
 
-        // Un-hide the elem
-        elem.style.display = "block";
+            // Un-hide the elem
+            elem.style.display = "block";
 
-        // Remove the input
-        textInput.parentNode.removeChild(textInput);
+            // Remove the input
+            textInput.parentNode.removeChild(textInput);
+        }
+
+        // Allow enter to be used to save the edit
+        textInput.onkeydown = function(e) {
+            if(e.keyCode === 13)
+                textInput.onblur();
+        }
+
+        elem.parentNode.appendChild(textInput);
+
+        textInput.focus();
     }
-
-    // Allow enter to be used to save the edit
-    textInput.onkeydown = function(e) {
-        if(e.keyCode === 13)
-            textInput.onblur();
-    }
-
-    elem.parentNode.appendChild(textInput);
-
-    textInput.focus();
 }
 
 
