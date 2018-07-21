@@ -120,8 +120,6 @@ function startDeleteElement(doc) {
 
         if(!elem.classList.contains("simple-container")
         && !elem.classList.contains("simple-control")
-        && !elem.classList.contains("simple-add-comment")
-        && !elem.classList.contains("simple-comments")
         && !elem.classList.contains("simple-edit")
         && (elem.parentNode.classList && !elem.parentNode.classList.contains("simple-control"))
         && doc.body != elem
@@ -144,8 +142,6 @@ function startDeleteElement(doc) {
 
         if(!selected.classList.contains("simple-container")
         && !selected.classList.contains("simple-control")
-        && !selected.classList.contains("simple-add-comment")
-        && !selected.classList.contains("simple-comments")
         && !selected.classList.contains("simple-edit")
         && (selected.parentNode.classList && !selected.parentNode.classList.contains("simple-control"))
         && doc.body != selected
