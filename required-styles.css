@@ -1,6 +1,8 @@
-body {
-    height: 100vh;
-    overflow: auto;
+@media screen  {
+    body {
+        height: 100vh;
+        overflow: auto;
+    }
 }
 
 .rtl {
