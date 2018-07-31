@@ -26,7 +26,7 @@ ___
 
 Once Just Read has been installed, there are six built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text and the other three allow the user to specify which text they want.
 
-> **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/` and go to the very bottom. Click on "Keyboard shortcuts" and you can add/change shortcuts there.
+> **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` and you can add/change shortcuts there.
 
 ### Use Just Read's built in selection
 
@@ -123,6 +123,3 @@ ___
 I created and maintain this extension for no pay and will always keep Just Read free. If you want to be generous and show appreciation for the product I've created, you can donate to help me take my girlfriend out for a nice dinner via the PayPal donate link below.
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=Y3GG9ANMQ9JML&lc=US&item_name=Zach%20Saucier&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
-
-
-Follow me: [Twitter](http://www.twitter.com/ZachSaucier), [CodePen](http://codepen.io/Zeaklous), [GitHub](https://github.com/ZachSaucier)

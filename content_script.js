@@ -702,7 +702,7 @@ function addExtInfo() {
     viewedUsing.className = "simple-viewed-using";
 
     var extAnchor = document.createElement("a");
-    extAnchor.href = "https://github.com/ZachSaucier/Just-Read";
+    extAnchor.href = "https://justread.link/";
     extAnchor.innerText = "Just Read";
     extAnchor.target = "_blank";
     viewedUsing.appendChild(extAnchor);
@@ -938,6 +938,13 @@ function editText(elem) {
     }
 }
 
+function addPremiumNofifier() {
+    var notifier = document.createElement("div");
+    notifier.className = "tooltip notifier";
+    notifier.innerHTML = '<p>Thanks for using Just Read! I recently released a premium version of Just Read that has additional features like the ability to save and share Just Read versions of pages. I thought you might be interested in hearing about it.</p><div class="right-align-buttons"><button class="jr-secondary" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)">I\'m not interested</button><a href="https://justread.link" target="_blank"><button class="jr-primary">Learn more</button></a></div>';
+    return notifier;
+}
+
 
 
 
@@ -1076,6 +1083,12 @@ function createSimplifiedOverlay() {
     // Add the print button
     container.appendChild(addPrintButton());
 
+    // Add the notification of premium if necessary
+    if(jrCount === 0
+    || jrCount % 1 === 0) {
+        container.appendChild(addPremiumNofifier());
+    }
+
     // Add MathJax support
     var mj = document.querySelector("script[src *= 'mathjax");
     if(mj) {
@@ -1168,12 +1181,12 @@ function createSimplifiedOverlay() {
 
 
 // Loads the styles after the xhr request finishes
-var theme;
+var theme, jrCount;
 function continueLoading() {
     // Create a style tag and place our styles in there from localStorage
     var style = document.createElement('style');
 
-    chrome.storage.sync.get('currentTheme', function(result) {
+    chrome.storage.sync.get(['currentTheme', 'jrCount'], function(result) {
         if(result.currentTheme) {
             theme = result.currentTheme;
         } else {
@@ -1186,6 +1199,15 @@ function continueLoading() {
             style.styleSheet.cssText = stylesheetObj[theme];
         } else {
             style.appendChild(document.createTextNode(stylesheetObj[theme]));
+        }
+
+        // Get how many times the user has opened Just Read
+        if(typeof result.jrCount === "undefined") {
+            chrome.storage.sync.set({'jrCount': '0'});
+            jrCount = 0;
+        } else {
+            jrCount = result.jrCount;
+            chrome.storage.sync.set({'jrCount': jrCount + 1});
         }
         
         

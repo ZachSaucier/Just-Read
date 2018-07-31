@@ -190,3 +190,52 @@
 
 /* For the GUI theme editor */
 .saturation-field { margin-right: 1px !important; }
+
+/* For the premium notifier */
+.right-align-buttons {
+    text-align: right;
+}
+
+.tooltip {
+    font-family: sans-serif;
+    width: 320px;
+    padding: 20px;
+    font-size: 0.8em;
+    line-height: 1.4;
+    background-color: white;
+    color: black;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.15);
+}
+
+.notifier {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    padding: 20px;
+}
+
+.jr-primary,
+.jr-secondary {
+    outline: none;
+    background-color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid black;
+    opacity: 0.5;
+    border-radius: 5px;
+    transition: 0.1s;
+}
+
+.jr-primary {
+    background-color: #27AAE1;
+    color: white;
+    opacity: 1;
+    margin-left: 10px;
+    border-color: transparent;
+}
+.jr-primary:hover {
+    background-color: #4ECAFF;
+}
+.jr-secondary:hover {
+    opacity: 1;
+}
