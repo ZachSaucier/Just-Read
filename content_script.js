@@ -1085,7 +1085,7 @@ function createSimplifiedOverlay() {
 
     // Add the notification of premium if necessary
     if(jrCount === 0
-    || jrCount % 1 === 0) {
+    || jrCount % 30 === 0) {
         container.appendChild(addPremiumNofifier());
     }
 
