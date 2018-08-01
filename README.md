@@ -1,30 +1,22 @@
 Just Read
 =========
 
-> There's potential for a paid version of Just Read. To find out more about it or to help contribute to what features should be included, please check out [the GitHub issue](https://github.com/ZachSaucier/Just-Read/issues/20).
+> **Note**: There is a premium and a free version of Just Read. For more information about the difference between the two, see [this page](https://justread.link/).
 
- The extension makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
-
+Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
 
 > **Please note**: This extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
 
-## How to install:
+## Installation:
 
-### Install from Chrome's webstore:
-1. [View it on the webstore](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod) and click "Add to Chrome".
-
-<!-- ### Install from Firefox's webstore:
-1. [View it on the webstore](https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/) and click "Add to Firefox". -->
-
-### Install from GitHub (for developers):
-
-You can clone this repo or download the ZIP and load it as an unpacked extension. This is useful if you want to help contribute to Just Read and test your code. 
+- [Just Read](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
+- [Just Read Premium](https://chrome.google.com/webstore/detail/just-read-premium/dpamdgmnffodphoamchpmbclkpmccjga)
 
 ___
 
 ## How to use: 
 
-Once Just Read has been installed, there are six built in ways to apply the effects to a given page. The first three use the default mechanism of selecting text and the other three allow the user to specify which text they want.
+Start Just Read by using one of the following options:
 
 > **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` and you can add/change shortcuts there.
 
@@ -53,22 +45,22 @@ You can also select exactly the text you want to read if the built in method doe
 
 You can also select specific text by highlighting it (by clicking and dragging over the text), then right click it and select "View this text in Just Read".
 
+### Auto-enable Just Read on specific websites
+
+You can also opt to auto-enable Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) or a regular expression into the "Auto-run domain list" found on the extension's Options page (for more info as to what formats work, see [this post](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Just Read will then check each new site's URL to see if it matches the string or expression in the user-inputted list. If it does, it will start Just Read when the page loads.
+![Auto-enable](http://i.imgur.com/CVfW4Zc.png)
+
 ### Deletion mode
 
 Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd>. They can click on elements that they don't want to view (helpful for printing or if there are elements that aren't part of the article) and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd>. 
 
 You can also enable an icon to enter/exit deletion mode in Just Read's [additional options](https://github.com/ZachSaucier/Just-Read#additional-options) which [looks like this](http://i.imgur.com/87Z8QXX.png)
 
-### Auto-enable Just Read on specific websites
-
-You can also opt to auto-enable Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) or a regular expression into the "Auto-run domain list" found on the extension's Options page (for more info as to what formats work, see [this post](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Just Read will then check each new site's URL to see if it matches the string or expression in the user-inputted list. If it does, it will start Just Read when the page loads.
-![Auto-enable](http://i.imgur.com/CVfW4Zc.png)
-
 ___
 
 ## Customization:
 
-By default the extension will use a theme that we made as seen here 
+By default the extension will use a theme similar to the one seen here:  
 ![the effect of the extension](http://i.imgur.com/gNEpBfG.png)
 
 You can customize this theme using the GUI shown when you click [the paint brush icon](http://i.imgur.com/XW03mZW.png). Just make sure to click "Save and close" when you're done or the styles will not be updated in the actual stylesheet. The GUI looks like this:
@@ -120,6 +112,6 @@ ___
 
 ##### Donate
 
-I created and maintain this extension for no pay and will always keep Just Read free. If you want to be generous and show appreciation for the product I've created, you can donate to help me take my girlfriend out for a nice dinner via the PayPal donate link below.
+I will always keep Just Read free. If you want to be generous and show appreciation for the product I've created, you can [get the premium version](https://justread.link/) or donate via the PayPal donate link below to help me take my fiance out for a nice dinner.
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=Y3GG9ANMQ9JML&lc=US&item_name=Zach%20Saucier&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
+[![PayPal link](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=Y3GG9ANMQ9JML&lc=US&item_name=Zach%20Saucier&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)

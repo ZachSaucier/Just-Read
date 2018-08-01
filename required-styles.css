@@ -172,7 +172,8 @@
 
 @media print {
     .simple-control,
-    .simple-bug-reporter {
+    .simple-bug-reporter,
+    .tooltip {
         display: none;
     }
     * { overflow: auto !important; }
