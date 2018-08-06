@@ -54,8 +54,6 @@ Start Just Read by using Just Read's auto-selection, user-selection mode, or hig
 
 > **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` and you can add/change shortcuts there.
 
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
 ##### Auto-selection
 
 You can start using Just Read's built in auto-selection selection in four ways:
@@ -80,6 +78,8 @@ You can select exactly the text you want to read if the built in method doesn't 
 ##### Highlight mode
 
 You can select specific text by highlighting it (by clicking and dragging over the text), then right click it and select "View this text in Just Read".
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
 ___
 
