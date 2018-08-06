@@ -89,7 +89,7 @@ function createLinkCM() {
 function createAutorunCM() {
     // Create an entry to allow user to open a given link using Just read
     autorunCMId = chrome.contextMenus.create({
-        title: "Add this site to Just Read Plus' auto-run list",
+        title: "Add this site to Just Read' auto-run list",
         id: "autorunCM",
         contexts:["page"],
         onclick: addSiteToAutorunList

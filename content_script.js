@@ -1250,7 +1250,7 @@ function continueLoading() {
 
         // Get how many times the user has opened Just Read
         if(typeof result.jrCount === "undefined") {
-            chrome.storage.sync.set({'jrCount': '0'});
+            chrome.storage.sync.set({'jrCount': 0});
             jrCount = 0;
         } else {
             jrCount = result.jrCount;
