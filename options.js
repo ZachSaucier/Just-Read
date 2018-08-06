@@ -37,7 +37,7 @@ var changed = false,
     stylesheetObj = {},
     saveButton = document.getElementById("save"),
     defaultLiItem,
-    defaultStylesheet = "default-styles.css";
+    defaultStylesheet = "default-styles.min.css";
 
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
@@ -255,7 +255,7 @@ function continueLoading() {
             li.appendChild(radio);
             li.innerHTML += stylesheet;
 
-            // Lock the default-styles.css file (prevent deletion)
+            // Lock the default-styles.min.css file (prevent deletion)
             if(stylesheet === defaultStylesheet) {
                 defaultLiItem = li;
                 liClassList.add("locked");

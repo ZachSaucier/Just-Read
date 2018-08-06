@@ -1,0 +1,30 @@
+{
+  "name": "just-read",
+  "version": "1.0.0",
+  "description": "Just Read =========",
+  "main": "test-page.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify": "npx postcss default-styles.css > default-styles.min.css",
+    "add-min": "git add default-styles.min.css"
+  },
+  "pre-commit": ["minify", "add-min"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZachSaucier/Just-Read.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZachSaucier/Just-Read/issues"
+  },
+  "homepage": "https://github.com/ZachSaucier/Just-Read#readme",
+  "devDependencies": {
+    "cssnano": "^4.0.5",
+    "postcss-cli": "^6.0.0",
+    "pre-commit": "^1.2.2"
+  }
+}

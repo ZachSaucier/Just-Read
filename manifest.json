@@ -48,7 +48,7 @@
   "web_accessible_resources": [
     "print.svg",
     "required-styles.css",
-    "default-styles.css",
+    "default-styles.min.css",
     "page.css",
     "options.js",
     "options.css",
