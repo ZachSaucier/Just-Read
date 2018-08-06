@@ -9,8 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "minify": "npx postcss default-styles.css > default-styles.min.css",
-    "precommit": "npm run minify"
   },
+  "pre-commit": ["minify"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ZachSaucier/Just-Read.git"
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/ZachSaucier/Just-Read#readme",
   "devDependencies": {
     "cssnano": "^4.0.5",
-    "postcss-cli": "^6.0.0"
+    "postcss-cli": "^6.0.0",
+    "pre-commit": "^1.2.2"
   }
 }
