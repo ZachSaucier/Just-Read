@@ -149,7 +149,7 @@ function startDeleteElement(doc) {
         && selected.tagName !== "path"
         && selected.tagName !== "rect"
         && selected.tagName !== "polygon")
-            selected.parentNode.removeChild(selected);
+            actionWithStack("delete", selected);
         
         e.preventDefault();
     },
@@ -200,6 +200,43 @@ function startDeleteElement(doc) {
     sd.onclick = function() {
         exitFunc();
     };
+}
+
+var stack = [];
+function actionWithStack(actionName, elem, startText) {
+    hasSavedLink = false;
+
+    let actionObj;
+    if(actionName === "delete") {
+        let parent = elem.parentNode;
+        
+        actionObj = {
+            "type": "delete",
+            "index": Array.from(parent.children).indexOf(elem),
+            "parent": parent,
+            "elem": parent.removeChild(elem)
+        };
+        
+    } else if(actionName === "edit") {
+        actionObj = {
+            "type": "edit",
+            "elem": elem,
+            "text": startText
+        };
+    };
+
+    if(actionName)
+        stack.push(actionObj);
+}
+
+function popStack() {
+    let actionObj = stack.pop();
+
+    if(actionObj && actionObj.type === "delete") {
+        actionObj.parent.insertBefore(actionObj.elem, actionObj.parent.children[actionObj.index]);
+    } else if(actionObj && actionObj.type === "edit") {
+        actionObj.elem.innerText = actionObj.text;
+    }
 }
 
 
@@ -906,6 +943,8 @@ function addGUI() {
 // Add edit meta functionality
 function editText(elem) {
     if(!simpleArticleIframe.body.classList.contains("simple-deleting")) {
+        let startText = elem.innerText;
+        
         // Hide the item
         elem.style.display = "none";
 
@@ -918,6 +957,9 @@ function editText(elem) {
         textInput.onblur = function() {
             // Change the value
             elem.innerText = textInput.value;
+
+            if(elem.innerText !== startText)
+                actionWithStack("edit", elem, startText);
 
             // Un-hide the elem
             elem.style.display = "block";
@@ -1169,6 +1211,11 @@ function createSimplifiedOverlay() {
         if(e.ctrlKey && e.keyCode == 80) {
             simpleArticleIframe.defaultView.print();
             e.preventDefault();
+        }
+
+        // Listen for Ctrl + z for our undo function
+        if(e.ctrlKey && e.keyCode === 90) {
+            popStack();
         }
     }
 
