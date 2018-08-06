@@ -617,11 +617,11 @@ function getStyles() {
 
                 // Open the default CSS file and save it to our object
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
+                xhr.open('GET', chrome.extension.getURL('default-styles.min.css'), true);
                 xhr.onreadystatechange = function() {
                     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                         // Save the file's contents to our object
-                        stylesheetObj["default-styles.css"] = xhr.responseText;
+                        stylesheetObj["default-styles.min.css"] = xhr.responseText;
 
                         // Save it to Chrome storage
                         setStylesOfStorage();
@@ -807,8 +807,8 @@ function addGUI() {
 
     function saveStyles() {
         // Save styles to the stylesheet
-        if(theme === "default-styles.css") {
-            theme = checkFileName("default-styles.css");
+        if(theme === "default-styles.min.css") {
+            theme = checkFileName("default-styles.min.css");
             chrome.storage.sync.set({'currentTheme': theme});
         }
 
@@ -1150,7 +1150,7 @@ function createSimplifiedOverlay() {
     // Fade in and move up the simple article
     setTimeout(function() {
         // See if we should add the theme editor button
-        if(theme.indexOf("default-styles") !== -1) {
+        if(theme.indexOf("default-styles.min") !== -1) {
             container.appendChild(addGUI());
         }
 
@@ -1237,8 +1237,8 @@ function continueLoading() {
         if(result.currentTheme) {
             theme = result.currentTheme;
         } else {
-            chrome.storage.sync.set({'currentTheme': "default-styles.css"});
-            theme = "default-styles.css";
+            chrome.storage.sync.set({'currentTheme': "default-styles.min.css"});
+            theme = "default-styles.min.css";
         }
         style.type = 'text/css';
 

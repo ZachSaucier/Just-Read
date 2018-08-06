@@ -17,7 +17,7 @@ body {
 h1,
 h2,
 h3 {
-    font-family: 'Aktiv Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
     font-weight: 600;
 }
 
@@ -61,7 +61,7 @@ blockquote {
     margin-left: 0;
     padding: 15px 10% 15px 8%;
     margin: 1em 0;
-    font-size: 1.5em;
+    font-size: 1.25em;
     line-height: 1.4;
 }
 blockquote > *:first-child {
@@ -127,7 +127,7 @@ aside,
 
 .simple-date {
     display: inline-block;
-    font-family: 'Aktiv Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
     font-size: 18px;
     padding-right: 15px;
     padding-top: 10px;
@@ -143,7 +143,7 @@ aside,
 
 .simple-author {
     display: inline-block;
-    font-family: 'Aktiv Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
     font-size: 18px;
     color: #27AAE1;
     line-height: 22px;
@@ -232,7 +232,7 @@ nav,
 
 /* Very simple meta hider */
 [class *= "meta"]:not(.simple-meta),
-[class *= "author"]:not(".simple-author"),
+[class *= "author"]:not(.simple-author),
 [id *= "author"] {
     display: none;
 }
@@ -387,31 +387,6 @@ svg[id *= "email"],
     display: none;
 }
 
-@font-face {
-    font-family: "Aktiv Grotesk";
-    font-style: normal;
-    font-weight: 400;
-    src: url("./fonts/ActiveGrotesk_R.woff2") format("woff2");
-}
-@font-face {
-    font-family: "Aktiv Grotesk";
-    font-style: normal;
-    font-weight: 500;
-    src: url("./fonts/ActiveGrotesk_M.woff2") format("woff2");
-}
-@font-face {
-    font-family: "Aktiv Grotesk";
-    font-style: normal;
-    font-weight: 700;
-    src: url("./fonts/ActiveGrotesk_B.woff2") format("woff2");
-}
-@font-face {
-    font-family: "Aktiv Grotesk";
-    font-style: italic;
-    font-weight: 400;
-    src: url("./fonts/ActiveGrotesk_It.woff2") format("woff2");
-}
-
 
 @font-face {
     font-family: 'Leitura News';
@@ -429,29 +404,7 @@ svg[id *= "email"],
 
 @font-face {
     font-family: 'Leitura News';
-    src: url('./fonts/LeituraNews-Roman2.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Leitura News';
-    src: url('LeituraNews-Italic2.woff2') format('woff2');
-    font-weight: 500;
-    font-style: italic;
-}
-
-
-@font-face {
-    font-family: 'Leitura News';
-    src: url('LeituraNews-Roman4.woff2') format('woff2');
-    font-weight: 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Leitura News';
-    src: url('LeituraNews-Roman3.woff2') format('woff2');
+    src: url('./fonts/LeituraNews-Roman3.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
