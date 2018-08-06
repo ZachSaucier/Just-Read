@@ -1,7 +1,7 @@
 Just Read
 =========
 
-> **Note**: There is a premium and a free version of Just Read. For more information about the difference between the two, see [Just Read's homepage](https://justread.link/) or [the FAQ below]().
+> **Note**: There is a premium and a free version of Just Read. For more information about the difference between the two, see [Just Read's homepage](https://justread.link/) or [the FAQ below](https://github.com/ZachSaucier/Just-Read/#faq).
 
 Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
 
@@ -25,28 +25,28 @@ ___
 
 ## FAQ
 
-- [How can I start Just Read?]()
-- [How can I auto-run Just Read on specific websites?]()
-- [How can I delete parts of the page once Just Read has started?]()
-- [How can I customize the look of Just Read?]()
-- [How can I edit the article's date, author, and title once in Just Read?]()
-- [How can I remove Just Read's entries from the right-click context menu?]()
-- [How do I prevent `<pre>` tags from being reformatted into paragraphs?]()
-- [How can I auto-enable fullscreen when Just Read is started?]()
-- [How can I find other themes to use?]()
-- [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?]()
-- [How do I report an error?]()
-- [How can I share my Just Read version of a page with someone?]()
-- [How can I send the article to my Kindle?]()
-- [How can I send the article to Google Drive?]()
-- [How can I view and delete pages that I have shared previously?]()
-- [My theme from the original version breaks the page when I am using Premium. What's going on?]()
-- [Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?]()
-- [How can I add annotations and comments?]()
-- [How can I link to a specific part of a shared article?]()
-- [How can I enable a custom scrollbar to use?]()
-- [What is Just Read's gradient functionality? And how can I turn it on?]()
-- [How can I get Just Read to auto-scroll the article?]()
+- [How can I start Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-start-just-read)
+- [How can I auto-run Just Read on specific websites?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-run-just-read-on-specific-websites)
+- [How can I delete parts of the page once Just Read has started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-delete-parts-of-the-page-once-just-read-has-started)
+- [How can I customize the look of Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-customize-the-look-of-just-read)
+- [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
+- [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
+- [How do I prevent `<pre>` tags from being reformatted into paragraphs?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-prevent-pre-tags-from-being-reformatted-into-paragraphs)
+- [How can I auto-enable fullscreen when Just Read is started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-enable-fullscreen-when-just-read-is-started)
+- [How can I find other themes to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-find-other-themes-to-use)
+- [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?](https://github.com/ZachSaucier/Just-Read/#q-x-extension-doesnt-work-with-the-just-read-version-of-my-page-how-can-i-get-it-to-work)
+- [How do I report an error?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-report-an-error)
+- [How can I share my Just Read version of a page with someone?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-share-my-just-read-version-of-a-page-with-someone)
+- [How can I send the article to my Kindle?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-my-kindle)
+- [How can I send the article to Google Drive?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-google-drive)
+- [How can I view and delete pages that I have shared previously?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-view-and-delete-pages-that-i-have-shared-previously)
+- [My theme from the original version breaks the page when I am using Premium. What's going on?](https://github.com/ZachSaucier/Just-Read/#q-my-theme-from-the-original-version-breaks-the-page-when-i-am-using-premium-whats-going-on)
+- [Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?](https://github.com/ZachSaucier/Just-Read/#q-can-i-customize-which-selectors-just-read-uses-for-selecting-the-date-author-title-header-image-and-content)
+- [How can I add annotations and comments?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-annotations-and-comments)
+- [How can I link to a specific part of a shared article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-link-to-a-specific-part-of-a-shared-article)
+- [How can I enable a custom scrollbar to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-enable-a-custom-scrollbar-to-use)
+- [What is Just Read's gradient functionality? And how can I turn it on?](https://github.com/ZachSaucier/Just-Read/#what-is-just-reads-gradient-functionality-and-how-can-i-turn-it-on)
+- [How can I get Just Read to auto-scroll the article?](https://github.com/ZachSaucier/Just-Read/#how-can-i-get-just-read-to-auto-scroll-the-article)
 
 #### Q: How can I start Just Read?
 
@@ -107,7 +107,7 @@ You can directly edit your theme's CSS file by clicking "openFullStyles" in the 
 
 ___
 
-### Q: How can I edit the article's date, author, and title once in Just Read?
+#### Q: How can I edit the article's date, author, and title once in Just Read?
 
 If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png) will appear. Click that to edit the text that you want. 
 
