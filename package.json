@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "minify": "npx postcss default-styles.css > default-styles.min.css"
+    "minify": "npx postcss default-styles.css > default-styles.min.css",
+    "precommint": "npm run minify"
   },
   "repository": {
     "type": "git",

@@ -17,8 +17,15 @@ body {
 h1,
 h2,
 h3 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
     font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+.simple-date,
+.simple-author {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
 }
 
 h1 {
@@ -127,7 +134,6 @@ aside,
 
 .simple-date {
     display: inline-block;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
     font-size: 18px;
     padding-right: 15px;
     padding-top: 10px;
@@ -143,7 +149,6 @@ aside,
 
 .simple-author {
     display: inline-block;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
     font-size: 18px;
     color: #27AAE1;
     line-height: 22px;
