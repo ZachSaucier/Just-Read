@@ -707,7 +707,7 @@ function addArticleMeta() {
 function addCloseButton() {
     var closeButton = document.createElement("button");
     closeButton.className = "simple-control simple-close";
-    closeButton.textContent = "X";
+    closeButton.textContent = "×";
 
     return closeButton;
 }
