@@ -1150,7 +1150,7 @@ function createSimplifiedOverlay() {
     // Fade in and move up the simple article
     setTimeout(function() {
         // See if we should add the theme editor button
-        if(theme.indexOf("default-styles.min") !== -1) {
+        if(theme.indexOf("default-styles") !== -1) {
             container.appendChild(addGUI());
         }
 
