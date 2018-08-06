@@ -18,7 +18,7 @@ Just Read collects absolutely zero personal data from users and sends analytics 
 
 ### End-user license agreement (EULA)
 
-By using Just Read, you are agreeing to [Just Read's EULA](https://github.com/ZachSaucier/Just-Read/blob/master/EULA.md). 
+By using Just Read, you are agreeing to [Just Read's EULA](https://github.com/ZachSaucier/Just-Read/blob/master/docs/EULA.md). 
 
 ___
 
