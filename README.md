@@ -48,6 +48,8 @@ ___
 - [What is Just Read's gradient functionality? And how can I turn it on?](https://github.com/ZachSaucier/Just-Read/#what-is-just-reads-gradient-functionality-and-how-can-i-turn-it-on)
 - [How can I get Just Read to auto-scroll the article?](https://github.com/ZachSaucier/Just-Read/#how-can-i-get-just-read-to-auto-scroll-the-article)
 
+___
+
 #### Q: How can I start Just Read?
 
 Start Just Read by using Just Read's auto-selection, user-selection mode, or highlight mode.
