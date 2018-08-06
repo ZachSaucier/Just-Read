@@ -540,7 +540,6 @@ linkCM.onchange = function() {
     chrome.runtime.sendMessage({updateCMs: "true"});
 }
 autorunCM.onchange = function() {
-    console.log(this.checked);
     chrome.storage.sync.set({"enable-autorunCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});
 }

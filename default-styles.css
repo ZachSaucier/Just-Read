@@ -1,19 +1,4 @@
-@font-face {
-    font-family: 'Source Sans Pro Semibold';
-    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Semibold.ttf");
-}
-@font-face {
-    font-family: 'Source Sans Pro Bold';
-    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Bold.ttf");
-}
-@font-face {
-    font-family: 'Source Sans Pro Light';
-    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/SourceSansPro-Light.ttf");
-}
-@font-face {
-    font-family: 'Merriweather';
-    src: url("chrome-extension://dgmanlpmmkibanfdgjocnabmcaclkmod/fonts/Merriweather-Light.ttf");
-}
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Source+Sans+Pro:400,700');
 
 @media screen { /* Fix a bug in Chrome printing */
     * {
@@ -32,7 +17,8 @@ body {
 
 h1,
 h2 {
-    font-family: 'Source Sans Pro Bold', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 700;
 }
 
 h1 {
@@ -116,7 +102,7 @@ aside,
 
 .simple-date {
     display: inline-block;
-    font-family: 'Source Sans Pro Light', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 18px;
     padding-right: 15px;
     padding-top: 10px;
@@ -132,7 +118,7 @@ aside,
 
 .simple-author {
     display: inline-block;
-    font-family: 'Source Sans Pro Semibold', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 18px;
     color: #27AAE1;
     line-height: 22px;

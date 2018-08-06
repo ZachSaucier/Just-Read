@@ -4,7 +4,6 @@ function isEmpty(obj) {
 function checkArrayForString(arr, string) {
     for(let i = 0; i < arr.length; i++) {
         if(arr[i].indexOf(string) > -1) {
-            console.log("test");
             return true;
         }
     };
@@ -121,8 +120,10 @@ function addSiteToAutorunList(info, tab) {
                     }
                 });
             } else {
-                console.log("Entry already exists inside of Just Read Plus' auto-run list. Not adding new entry.")
+                console.log("Entry already exists inside of Just Read's auto-run list. Not adding new entry.")
             }
+        } else {
+            chrome.storage.sync.set({ 'auto-enable-site-list': [entry] });
         }
     });
 }
@@ -193,12 +194,6 @@ chrome.browserAction.onClicked.addListener(startJustRead);
 
 // Add our context menus
 updateCMs();
-
-chrome.storage.sync.get("show-del-btn", function(result) {
-    if(result && result["show-del-btn"] === "undefined") {
-        chrome.storage.sync.set("show-del-btn", true);
-    }
-});
 
 // Listen for the keyboard shortcut
 chrome.commands.onCommand.addListener(function(command) {
