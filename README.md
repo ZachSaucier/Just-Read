@@ -54,6 +54,8 @@ Start Just Read by using Just Read's auto-selection, user-selection mode, or hig
 
 > **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` and you can add/change shortcuts there.
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ##### Auto-selection
 
 You can start using Just Read's built in auto-selection selection in four ways:
@@ -87,11 +89,15 @@ You can opt to auto-run Just Read on certain websites by entering a part of the 
 
 You can also enable "Always add current site to Just Read's autorun list when Just Read is started on a page" under "Options" -> "Additional options" -> "Additional preferences" if you want *every* site that you start Just Read to be added to the auto-run list. For more information on how this works, see [this post](https://github.com/ZachSaucier/Just-Read/pull/166#issuecomment-404371640).
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 #### Q: How can I delete parts of the page once Just Read has started?
 
 Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd> or by clicking on [the deletion mode icon](https://i.imgur.com/QD5G2j4.png) (Note that this icon has be enabled under "Options" -> "Additional options" -> "Additional preferences"). 
 
 Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. 
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -105,11 +111,15 @@ To use the GUI, click [the paint brush icon](http://i.imgur.com/XW03mZW.png) and
 
 You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via the Chrome extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### Q: How can I edit the article's date, author, and title once in Just Read?
 
 If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png) will appear. Click that to edit the text that you want. 
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -123,11 +133,15 @@ Under "Options" -> "Additional options" -> "Context menu entries", you can enabl
 - "Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
 - "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### Q: How do I prevent `<pre>` tags from being reformatted into paragraphs?
 
 Under "Options" -> "Additional options" -> "Additional preferences" there is an option to "Never reformat pre tags" to do this. This is probably most useful if you're a developer and read a lot of code-related articles. 
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -135,11 +149,15 @@ ___
 
 Under "Options" -> "Additional options" -> "Additional preferences" there is an option to "Always auto-enable fullscreen when Just Read is started." Checking this box will make Just Read be fullscreen (like when you press <kbd>F11</kbd>) when you start Just Read on a page.
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### Q: How can I find other themes to use?
 
 If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -148,6 +166,8 @@ ___
 As covered [in this post](https://github.com/ZachSaucier/Just-Read/issues/29#issue-196499408), this is an issue with the other extension and not Just Read. They will need to modify their code to work with iframe content. 
 
 However, most all extensions should work with a *shared* Just Read page, i.e. one on [justread.link](https://justread.link), but this is a Premium-only feature. 
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -165,6 +185,8 @@ You can share a page in Just Read's format by clicking [the share icon](https://
 
 Note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address). 
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### Q: How can I send the article to my Kindle?
@@ -172,6 +194,8 @@ ___
 > **Note that this is a Premium-only feature.**
 
 In order to send the article content from Just Read to your Kindle, you must first [share it](). Then you can scroll to the bottom of the shared page and click the "Send to Kindle" button. This will then create a popup which you can follow to send the article to your Kindle.
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -189,6 +213,8 @@ You can view and delete pages that you shared previously by going to https://jus
 
 Note that you can only view this page if you currently have Just Read Premium installed on the browser that you're using. 
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### Q: My theme from the original version breaks the page when I am using Premium. What's going on?
@@ -201,6 +227,8 @@ Just Read Premium uses a slightly modified structure and selectors. Check these 
 - When you're adding comments, the comments section is a default 300px in width. This works fine with the default 600px article width inside of the 1000px width parent container, but if you have edited the widths they may have to be changed to accommodate comments if desired. 
 - There are new elements that may need styling if your theme varies much from the default, such as `.simple-comments` and all of its children for adding comments, `.simple-share` (the share button), `.pause-scroll` for auto-scrolling, and `.simple-find` for the search functionality.
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### Q: Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?
@@ -210,6 +238,8 @@ ___
 Yes you can! Using the Premium version, you can go to "Options" -> "Additional options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need. 
 
 Note that the `domainPattern` is checked using the same regex technique [as the auto-run list]. Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector).
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -221,6 +251,8 @@ If you select any text in Just Read, a toolbar [like this](https://i.imgur.com/g
 
 You can add comments by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added. 
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### Q: How can I link to a specific part of a shared article?
@@ -228,6 +260,8 @@ ___
 > **Note that this is a Premium-only feature.**
 
 If you make any highlights, color change, or other edits to a text selection as described [above](), Just Read will add a unique ID to that selection. You can then use that ID to get a link to a specific portion of an article as you would any ID. For more information, [look at this post](https://stackoverflow.com/a/2835151/2065702). 
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
@@ -237,7 +271,9 @@ ___
 
 You can enable a custom scrollbar by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use a custom scrollbar instead of the browser's default" option. This will make Just Read use its built-in, custom scrollbar and Just Read will retain this custom scrollbar on pages you share as well. 
 
-If you want to customize the look of the scrollbar even further, you can modify your theme to edit `progress`, `progress::-webkit-progress-bar`, and `progress::-webkit-progress-value` as needed. 
+If you want to customize the look of the scrollbar even further, you can modify your theme to edit `progress`, `progress::-webkit-progress-bar`, and `progress::-webkit-progress-value` as needed.
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq) 
 
 ___
 
@@ -249,6 +285,8 @@ Just Read's gradient functionality makes it so that each line of text starts and
 
 You can turn it on by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors by a comma!
 
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
+
 ___
 
 #### How can I get Just Read to auto-scroll the article?
@@ -256,6 +294,8 @@ ___
 > **Note that this is a Premium-only feature.**
 
 You can do this by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
+
+[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)
 
 ___
 
