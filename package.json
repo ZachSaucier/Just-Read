@@ -8,9 +8,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "minify": "npx postcss default-styles.css > default-styles.min.css"
+    "minify": "npx postcss default-styles.css > default-styles.min.css",
+    "add-min": "git add default-styles.min.css"
   },
-  "pre-commit": ["minify"],
+  "pre-commit": ["minify", "add-min"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ZachSaucier/Just-Read.git"
