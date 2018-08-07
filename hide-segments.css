@@ -1,0 +1,187 @@
+script {
+    display: none;
+}
+
+[class = "ad"],
+[class *= "ads"],
+[class ^= "ad-"],
+[class ^= "ad_"],
+[class *= "-ad-"],
+[class $= "-ad"],
+[class $= "_ad"],
+[class ~= "ad"] {
+    display: none;
+}
+
+[class *= "navigation"],
+[class *= "nav"],
+nav,
+[class *= "search"],
+[class *= "menu"],
+[class *= "print"]:not(.simple-print) {
+    display: none;
+}
+
+[class *= "nocontent"],
+.hidden {
+    display: none;
+}
+
+[class *= "popup"] {
+    display: none;
+}
+
+[class *= "share"]:not([class ^= "simple-share"]),
+[class *= "sharing"],
+[class *= "social"],
+[class *= "follow"],
+[class *= "newsletter"] {
+    display: none;
+}
+
+[class *= "meta"]:not(.simple-meta),
+[class *= "author"]:not(.simple-author),
+[id *= "author"] {
+    display: none;
+}
+
+form:not(.usertext),
+[class ^= "form-"],
+[class ^= "form"],
+[class *= "-form-"],
+[class $= "-form"],
+[class $= "form"],
+[class ~= "form"]{
+    display: none;
+}
+
+[class *= "related"],
+[class *= "recommended"],
+[class *= "see-also"],
+[class *= "popular"],
+[class *= "trail"] {
+    display: none;
+}
+
+[class *= "comment"]:not([class *= "simple-"]),
+[class *= "disqus"],
+[id *= "disqus"] {
+    display: none;
+}
+
+[class ^= "tag"],
+[class *= "-tag-"],
+[class $= "-tag"],
+[class $= "_tag"],
+[class ~= "tag"],
+[class *= "-tags-"],
+[class $= "-tags"],
+[class $= "_tags"],
+[class ~= "tags"],
+[id *= "-tags-"],
+[id $= "-tags"],
+[id $= "_tags"],
+[id ~= "tags"] {
+    display: none;
+}
+
+[class *= "subscribe"],
+[id *= "subscribe"],
+[class *= "subscription"],
+[id *= "subscription"] {
+    display: none;
+}
+
+[class ^= "fav"],
+[class *= "-fav-"],
+[class $= "-fav"],
+[class $= "_fav"],
+[class ~= "fav"],
+[id ^= "fav"],
+[id *= "-fav-"],
+[id $= "-fav"],
+[id $= "_fav"],
+[id ~= "fav"],
+[class *= "favorites"],
+[id *= "favorites"] {
+    display: none;
+}
+
+[class *= "signup"],
+[id *= "signup"],
+[class *= "signin"],
+[id *= "signin"],
+[class *= "signIn"],
+[id *= "signIn"] {
+    display: none;
+}
+
+footer,
+[class *= "footer"],
+[id *= "footer"] {
+    display: none;
+}
+
+
+svg[class *= "pinterest"],
+[class *= "pinterest"] svg,
+svg[id *= "pinterest"],
+[id *= "pinterest"] svg,
+svg[class *= "pinit"],
+[class *= "pinit"] svg,
+svg[id *= "pinit"],
+[id *= "pinit"] svg,
+svg[class *= "facebook"],
+[class *= "facebook"] svg,
+svg[id *= "facebook"],
+[id *= "facebook"] svg,
+svg[class *= "github"],
+[class *= "github"] svg,
+svg[id *= "github"],
+[id *= "github"] svg,
+svg[class *= "twitter"],
+[class *= "twitter"] svg,
+svg[id *= "twitter"],
+[id *= "twitter"] svg,
+svg[class *= "instagram"],
+[class *= "instagram"] svg,
+svg[id *= "instagram"],
+[id *= "instagram"] svg,
+svg[class *= "tumblr"],
+[class *= "tumblr"] svg,
+svg[id *= "tumblr"],
+[id *= "tumblr"] svg,
+svg[class *= "youtube"],
+[class *= "youtube"] svg,
+svg[id *= "youtube"],
+[id *= "youtube"] svg,
+svg[class *= "codepen"],
+[class *= "codepen"] svg,
+svg[id *= "codepen"],
+[id *= "codepen"] svg,
+svg[class *= "dribble"],
+[class *= "dribble"] svg,
+svg[id *= "dribble"],
+[id *= "dribble"] svg,
+svg[class *= "soundcloud"],
+[class *= "soundcloud"] svg,
+svg[id *= "soundcloud"],
+[id *= "soundcloud"] svg,
+svg[class *= "rss"],
+[class *= "rss"] svg,
+svg[id *= "rss"],
+[id *= "rss"] svg,
+svg[class *= "linkedin"],
+[class *= "linkedin"] svg,
+svg[id *= "linkedin"],
+[id *= "linkedin"] svg,
+svg[class *= "vimeo"],
+[class *= "vimeo"] svg,
+svg[id *= "vimeo"],
+[id *= "vimeo"] svg,
+svg[class *= "email"],
+[class *= "email"] svg,
+svg[id *= "email"],
+[id *= "email"] svg {
+    display: none;
+}
