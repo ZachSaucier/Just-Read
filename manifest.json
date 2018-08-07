@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "manifest_version": 2,
   "description": "A customizable reader extension.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
@@ -49,6 +49,7 @@
     "print.svg",
     "required-styles.css",
     "default-styles.css",
+    "hide-segments.css",
     "page.css",
     "options.js",
     "options.css",

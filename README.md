@@ -37,6 +37,7 @@ ___
 - [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?](https://github.com/ZachSaucier/Just-Read/#q-x-extension-doesnt-work-with-the-just-read-version-of-my-page-how-can-i-get-it-to-work)
 - [How do I report an error?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-report-an-error)
 - [How can I share my Just Read version of a page with someone?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-share-my-just-read-version-of-a-page-with-someone)
+- [Why am I getting a "You have too many shared articles" error?]()
 - [How can I send the article to my Kindle?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-my-kindle)
 - [How can I send the article to Google Drive?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-google-drive)
 - [How can I view and delete pages that I have shared previously?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-view-and-delete-pages-that-i-have-shared-previously)
@@ -191,6 +192,14 @@ Note that the [justread.link](https://justread.link) version of a page *cannot b
 
 ___
 
+#### Q: Why am I getting a "You have too many shared articles" error?
+
+Currently Just Read Premium has a shared article limit of 100 articles. This is to prevent users from filling up the entire server with their pages (especially with malicious intent). To get rid of this error, you must go to https://justread.link/dashboard and delete some old articles that you're not using any longer.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
 #### Q: How can I send the article to my Kindle?
 
 > **Note that this is a Premium-only feature.**
@@ -224,7 +233,7 @@ ___
 Just Read Premium uses a slightly modified structure and selectors. Check these common errors to help ease the translation process:
 
 - Local fonts built into Just Read have been removed. Please load from an external link (like Google Fonts) if you wish to have custom fonts. 
-- Please update your stylesheet to include the [new segment hider CSS](https://gist.github.com/ZachSaucier/a34bca134e2a2fcd33cb433354dddd3b) if you included the segment hider CSS before. This is because some of Just Read's premiums features use class names that may be hidden using the old version.
+- `hide-segments.css` is now loaded separately from the default stylesheet. If you don't want it enabled, please uncheck the box that says 'Use hide-segments.css' on the Options page. If you include an old version of the segment hider CSS in your theme, please remove it for premium because some of Just Read's premiums features use class names that may be hidden using the old version.
 - Most selectors previously affecting `.simple-container` should now affect `.simple-article-container` instead.
 - When you're adding comments, the comments section is a default 300px in width. This works fine with the default 600px article width inside of the 1000px width parent container, but if you have edited the widths they may have to be changed to accommodate comments if desired. 
 - There are new elements that may need styling if your theme varies much from the default, such as `.simple-comments` and all of its children for adding comments, `.simple-share` (the share button), `.pause-scroll` for auto-scrolling, and `.simple-find` for the search functionality.

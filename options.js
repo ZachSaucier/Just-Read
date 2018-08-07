@@ -59,6 +59,8 @@ function getStylesFromStorage(storage) {
     for(var key in storage) {
         if(key === "auto-enable-site-list") {
             setDomains(storage[key]);
+        } else if(key === "hideSegments") {
+            hideSegments.checked = storage[key];
         } else if(key === "enable-pageCM") {
             pageCM.checked = storage[key];
         } else if(key === "enable-highlightCM") {
@@ -520,12 +522,17 @@ removeButton.onclick = function() {
 }
 
 
-var pageCM = document.getElementById("pageCM"),
+var hideSegments = document.getElementById("hideSegments"),
+    pageCM = document.getElementById("pageCM"),
     highlightCM = document.getElementById("highlightCM"),
     linkCM = document.getElementById("linkCM"),
     autorunCM = document.getElementById("autorunCM"),
     alwaysAddAR = document.getElementById("alwaysAddAR"),
     fullScrn = document.getElementById("fullScrn");
+
+hideSegments.onchange = function() {
+    chrome.storage.sync.set({"hideSegments": this.checked});
+}
 
 pageCM.onchange = function() {
     chrome.storage.sync.set({"enable-pageCM": this.checked});
