@@ -25,6 +25,13 @@ h1 {
 h1 i {
     color: #27AAE1;
 }
+input[type="checkbox"] {
+    margin-bottom: 0;
+    vertical-align: bottom;
+}
+label {
+    margin-top: 3px;
+}
 .flex-container {
     display: flex;
     flex-direction: row;

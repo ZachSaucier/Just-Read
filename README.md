@@ -31,6 +31,7 @@ ___
 - [How can I customize the look of Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-customize-the-look-of-just-read)
 - [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
 - [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
+- [Just Read isn't selecting all of the content I want it to. What can I do to fix this?](https://github.com/ZachSaucier/Just-Read/#q-just-read-isnt-selecting-all-of-the-content-i-want-it-to-what-can-i-do-to-fix-this)
 - [How do I prevent `<pre>` tags from being reformatted into paragraphs?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-prevent-pre-tags-from-being-reformatted-into-paragraphs)
 - [How can I auto-enable fullscreen when Just Read is started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-enable-fullscreen-when-just-read-is-started)
 - [How can I find other themes to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-find-other-themes-to-use)
@@ -135,6 +136,16 @@ Under "Options" -> "Additional options" -> "Context menu entries", you can enabl
 - "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
 - "Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
 - "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: Just Read isn't selecting all of the content I want it to. What can I do to fix this?
+
+Usually you can fix this by using [user selection mode](https://github.com/ZachSaucier/Just-Read#user-selection-mode) to select the content that you want to view. Usually this means selecting more generally than Just Read's more conservative auto-selection. You can then delete unwanted elements from the selection after Just Read has started.
+
+In order to see content within the selection that Just Read has automatically hidden because it thought it was irrelevant, you may have to disable `hide-segments.css`, which can be doing by going to Options then unchecking "Use hide-segments.css".
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
