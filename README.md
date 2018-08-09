@@ -47,8 +47,8 @@ ___
 - [How can I add annotations and comments?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-annotations-and-comments)
 - [How can I link to a specific part of a shared article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-link-to-a-specific-part-of-a-shared-article)
 - [How can I enable a custom scrollbar to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-enable-a-custom-scrollbar-to-use)
-- [What is Just Read's gradient functionality? And how can I turn it on?](https://github.com/ZachSaucier/Just-Read/#what-is-just-reads-gradient-functionality-and-how-can-i-turn-it-on)
-- [How can I get Just Read to auto-scroll the article?](https://github.com/ZachSaucier/Just-Read/#how-can-i-get-just-read-to-auto-scroll-the-article)
+- [What is Just Read's gradient functionality? And how can I turn it on?](https://github.com/ZachSaucier/Just-Read/#q-what-is-just-reads-gradient-functionality-and-how-can-i-turn-it-on)
+- [How can I get Just Read to auto-scroll the article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-to-auto-scroll-the-article)
 
 ___
 
@@ -94,6 +94,8 @@ You can opt to auto-run Just Read on certain websites by entering a part of the 
 You can also enable "Always add current site to Just Read's autorun list when Just Read is started on a page" under "Options" -> "Additional options" -> "Additional preferences" if you want *every* site that you start Just Read to be added to the auto-run list. For more information on how this works, see [this post](https://github.com/ZachSaucier/Just-Read/pull/166#issuecomment-404371640).
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
 
 #### Q: How can I delete parts of the page once Just Read has started?
 
@@ -225,6 +227,8 @@ ___
 
 Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so is to "print" the page (either using your browser's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". 
 
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
 ___
 
 #### Q: How can I view and delete pages that I have shared previously?
@@ -299,7 +303,7 @@ If you want to customize the look of the scrollbar even further, you can modify 
 
 ___
 
-#### What is Just Read's gradient functionality? And how can I turn it on?
+#### Q: What is Just Read's gradient functionality? And how can I turn it on?
 
 > **Note that this is a Premium-only feature.**
 
@@ -311,7 +315,7 @@ You can turn it on by going to "Options" -> "Additional options" -> "Additional 
 
 ___
 
-#### How can I get Just Read to auto-scroll the article?
+#### Q: How can I get Just Read to auto-scroll the article?
 
 > **Note that this is a Premium-only feature.**
 
