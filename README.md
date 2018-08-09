@@ -191,6 +191,8 @@ ___
 
 Please [create a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) to report errors that you have. Also please [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
 
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
 ___
 
 #### Q: How can I share my Just Read version of a page with someone?
