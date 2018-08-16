@@ -29,6 +29,7 @@ ___
 - [How can I auto-run Just Read on specific websites?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-run-just-read-on-specific-websites)
 - [How can I delete parts of the page once Just Read has started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-delete-parts-of-the-page-once-just-read-has-started)
 - [How can I customize the look of Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-customize-the-look-of-just-read)
+- [How can I get Just Read on all of my computers?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-on-all-of-my-computers)
 - [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
 - [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
 - [Just Read isn't selecting all of the content I want it to. What can I do to fix this?](https://github.com/ZachSaucier/Just-Read/#q-just-read-isnt-selecting-all-of-the-content-i-want-it-to-what-can-i-do-to-fix-this)
@@ -116,6 +117,14 @@ To use the GUI, click [the paint brush icon](http://i.imgur.com/XW03mZW.png) and
 > **Note**: The theme editor GUI will only appear for the default theme or themes derived from the default (that share "default-stylesheet" as part of the file name).
 
 You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via the Chrome extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I get Just Read on all of my computers?
+
+When you log into Chrome using a Google account (as the primary Chrome user), Chrome automatically installs all extensions that you've installed to your account from Chrome's web store. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices, so you don't need to do anything special to get it working the same way on all of your devices. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 

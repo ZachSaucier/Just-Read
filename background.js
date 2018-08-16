@@ -221,6 +221,15 @@ chrome.contextMenus.create({
     }
 });
 
+// Create an entry to give information about the premium version
+chrome.contextMenus.create({
+    title: "Get Just Read Premium",
+    contexts: ["browser_action"],
+    onclick: function() {
+        window.open('https://justread.link', '_blank');
+    }
+});
+
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
     if (changeInfo.status == 'loading') {
         // Auto enable on sites specified
