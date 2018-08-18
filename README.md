@@ -29,6 +29,7 @@ ___
 - [How can I auto-run Just Read on specific websites?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-run-just-read-on-specific-websites)
 - [How can I delete parts of the page once Just Read has started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-delete-parts-of-the-page-once-just-read-has-started)
 - [How can I customize the look of Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-customize-the-look-of-just-read)
+- [How can I add a custom Google Font to Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-a-custom-google-font-to-just-read)
 - [How can I get Just Read on all of my computers?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-on-all-of-my-computers)
 - [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
 - [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
@@ -117,6 +118,16 @@ To use the GUI, click [the paint brush icon](http://i.imgur.com/XW03mZW.png) and
 > **Note**: The theme editor GUI will only appear for the default theme or themes derived from the default (that share "default-stylesheet" as part of the file name).
 
 You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via the Chrome extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I add a custom Google Font to Just Read?
+
+You can add a custom Google Font (or any other web-hosted font) by customizing the CSS for your theme. Go to Options then click on the theme that is currently in use (it should have a filled in circle next to the file name). Once there, you can follow [these instructions](https://graphicdesign.stackexchange.com/a/76551/23061) to get the necessary CSS code to use the font in your theme. The only change you'll have to make is replacing the `Font Name` with whatever font you want, and replacing `.someSelector` with whatever selector you want. The selectors you most likely want to change are `body, h3` and `h1, h2` because this is what Just Read changes by default.
+
+Since you only have access to the CSS
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 

@@ -476,6 +476,7 @@ function closeOverlay() {
     // Reset our variables
     pageSelectedContainer = null;
     userSelected = null;
+    textToRead = null;
     
     setTimeout(function() {
         // Enable scroll
@@ -1014,6 +1015,11 @@ function createSimplifiedOverlay() {
 
     // Try using the selected element's content
     pageSelectedContainer = userSelected;
+
+    // Use the highlighted text if started from that
+    if(!pageSelectedContainer && typeof textToRead !== "undefined" && textToRead) {
+        pageSelectedContainer = window.getSelection().toString();
+    }
     
     // If there is no text selected, get auto-select the content
     if(!pageSelectedContainer) {
