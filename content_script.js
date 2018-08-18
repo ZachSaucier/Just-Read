@@ -50,6 +50,28 @@ function mutePage() {
     [].forEach.call(audios, function(audio) { muteMe(audio); });
 }
 
+// Select text from highlight functionality
+function getSelectionHtml() {
+    var html = "";
+    var sel = window.getSelection();
+    if (sel.rangeCount) {
+        var container = document.createElement("div");
+        for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+            container.appendChild(sel.getRangeAt(i).cloneContents());
+        }
+        html = container.innerHTML;
+    }
+    return html;
+}
+
+// Use the highlighted text if started from that
+var pageSelectedContainer;
+if(typeof textToRead !== "undefined" && textToRead) {  
+    pageSelectedContainer = document.createElement("div");
+    pageSelectedContainer.className = "highlighted-html";
+    pageSelectedContainer.innerHTML = getSelectionHtml();
+}
+
 
 /////////////////////////////////////
 // State functions
@@ -1002,7 +1024,6 @@ function addPremiumNofifier() {
 
 var simpleArticleIframe,
     isInDelMode = false;
-var pageSelectedContainer;
 function createSimplifiedOverlay() {
 
     // Create an iframe so we don't use old styles
@@ -1014,7 +1035,8 @@ function createSimplifiedOverlay() {
     container.className = "simple-container";
 
     // Try using the selected element's content
-    pageSelectedContainer = userSelected;
+    if(!pageSelectedContainer)
+        pageSelectedContainer = userSelected;
 
     // Use the highlighted text if started from that
     if(!pageSelectedContainer && typeof textToRead !== "undefined" && textToRead) {

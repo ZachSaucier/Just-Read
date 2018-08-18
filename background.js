@@ -53,7 +53,7 @@ function createPageCM() {
 function createHighlightCM() {
     // Create an entry to allow user to use currently selected text
     highlightCMId = chrome.contextMenus.create({
-        title: "View this text in Just Read",
+        title: "View this selection in Just Read",
         id: "highlightCM",
         contexts:["selection"],
         onclick: function(info, tab) {
@@ -214,7 +214,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 
 // Create an entry to allow user to select an element to read from
 chrome.contextMenus.create({
-    title: "Select text to read",
+    title: "Select content to read",
     contexts: ["browser_action"],
     onclick: function() {
         startSelectText();

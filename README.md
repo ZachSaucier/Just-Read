@@ -77,13 +77,13 @@ You can start using Just Read's built in auto-selection selection in four ways:
 
 You can select exactly the text you want to read if the built in method doesn't select what you want. If you want to use a visual selector, you can start selection mode in two ways:
 
-5. Right click the Just Read extension button, click "Select text to read", and then click the part of the page highlighted that you want to read.
+5. Right click the Just Read extension button, click "Select content to read", and then click the part of the page highlighted that you want to read.
 
 6. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
 
 ##### Highlight mode
 
-You can select specific text by highlighting it (by clicking and dragging over the text), then right click it and select "View this text in Just Read".
+You can select specific text by highlighting it (by clicking and dragging over the content), then right click it and select "View this content in Just Read".
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -125,7 +125,9 @@ ___
 
 #### Q: How can I add a custom Google Font to Just Read?
 
-You can add a custom Google Font (or any other web-hosted font) by customizing the CSS for your theme. Go to Options then click on the theme that is currently in use (it should have a filled in circle next to the file name). Once there, you can follow [these instructions](https://graphicdesign.stackexchange.com/a/76551/23061) to get the necessary CSS code to use the font in your theme. The only change you'll have to make is replacing the `Font Name` with whatever font you want, and replacing `.someSelector` with whatever selector you want. The selectors you most likely want to change are `body, h3` and `h1, h2` because this is what Just Read changes by default.
+You can add a custom Google Font (or any other web-hosted font) by customizing the CSS for your theme. Go to Options then click on the theme that is currently in use (it should have a filled in circle next to the file name). 
+
+Once there, you can follow [these instructions](https://graphicdesign.stackexchange.com/a/76551/23061) to get the necessary CSS code to use the font in your theme. The only change you'll have to make is replacing the `Font Name` with whatever font you want, and replacing `.someSelector` with whatever selector you want. The selectors you most likely want to change are `body, h3` and `h1, h2` because this is what Just Read changes by default.
 
 Since you only have access to the CSS
 
