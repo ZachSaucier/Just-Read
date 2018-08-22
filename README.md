@@ -105,6 +105,8 @@ Once the text has been selected and the article is open in the Just Read format,
 
 Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. 
 
+If you have the premium version of Just Read, you can also delete anything that you highlight using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>d</kbd> or clicking the trash can icon on the toolbar that shows up. 
+
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
 ___
