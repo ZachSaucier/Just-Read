@@ -174,7 +174,7 @@
 @media print {
     .simple-control,
     .simple-bug-reporter,
-    .tooltip {
+    .jr-tooltip {
         display: none;
     }
     * { overflow: auto !important; }
@@ -183,8 +183,8 @@
 
 
 /* For the element deletion feature */
-.hovered,
-.hovered *:not(.simple-close):not(.simple-print) {
+.jr-hovered,
+.jr-hovered *:not(.simple-close):not(.simple-print) {
     cursor: pointer !important;
     color: black !important;
     background-color: #ff5050 !important;
@@ -198,7 +198,7 @@
     text-align: right;
 }
 
-.tooltip {
+.jr-tooltip {
     font-family: sans-serif;
     width: 320px;
     padding: 20px;
@@ -209,7 +209,7 @@
     box-shadow: 0 3px 3px rgba(0,0,0,0.15);
 }
 
-.notifier {
+.jr-notifier {
     position: fixed;
     bottom: 15px;
     right: 15px;

@@ -87,11 +87,11 @@ function startSelectElement(doc) {
 
         if (last != elem) {
             if (last != null) {
-                last.classList.remove("hovered");
+                last.classList.remove("jr-hovered");
             }
 
             last = elem;
-            elem.classList.add("hovered");
+            elem.classList.add("jr-hovered");
         }
     },
     clickFunc = function(e) {
@@ -109,8 +109,8 @@ function startSelectElement(doc) {
         doc.removeEventListener('click', clickFunc);
         doc.removeEventListener('keydown', escFunc);
 
-        if(doc.querySelector(".hovered") != null)
-            doc.querySelector(".hovered").classList.remove("hovered");
+        if(doc.querySelector(".jr-hovered") != null)
+            doc.querySelector(".jr-hovered").classList.remove("jr-hovered");
 
         if(doc.getElementById("tempStyle") != null)
             doc.getElementById("tempStyle").parentNode.removeChild(doc.getElementById("tempStyle"));
@@ -127,7 +127,7 @@ function startSelectElement(doc) {
     // Add our styles temporarily
     var tempStyle = doc.createElement("style");
     tempStyle.id = "temp-style";
-    tempStyle.innerText = ".hovered, .hovered * { cursor: pointer !important; color: black !important; background-color: #2095f2 !important; }";
+    tempStyle.innerText = ".jr-hovered, .jr-hovered * { cursor: pointer !important; color: black !important; background-color: #2095f2 !important; }";
 
     doc.head.appendChild(tempStyle);
 
@@ -151,11 +151,11 @@ function startDeleteElement(doc) {
         && elem.tagName !== "polygon") {
             if (last != elem) {
                 if (last != null) {
-                    last.classList.remove("hovered");
+                    last.classList.remove("jr-hovered");
                 }
 
                 last = elem;
-                elem.classList.add("hovered");
+                elem.classList.add("jr-hovered");
             }
         }
     },
@@ -189,8 +189,8 @@ function startDeleteElement(doc) {
         doc.removeEventListener('click', clickFunc);
         doc.removeEventListener('keydown', escFunc);
 
-        if(doc.querySelector(".hovered") != null)
-            doc.querySelector(".hovered").classList.remove("hovered");
+        if(doc.querySelector(".jr-hovered") != null)
+            doc.querySelector(".jr-hovered").classList.remove("jr-hovered");
 
         doc.body.classList.remove("simple-deleting");
 
@@ -1009,7 +1009,7 @@ function editText(elem) {
 
 function addPremiumNofifier() {
     var notifier = document.createElement("div");
-    notifier.className = "tooltip notifier";
+    notifier.className = "jr-tooltip jr-notifier";
     notifier.innerHTML = '<p>Thanks for using Just Read! Did you know there was a premium version of Just Read? It has additional features like the ability to save and share Just Read versions of pages.</p><div class="right-align-buttons"><button class="jr-secondary" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)">I\'m not interested</button><a href="https://justread.link" target="_blank"><button class="jr-primary" onclick="this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode)">Learn more</button></a></div>';
     return notifier;
 }
@@ -1331,7 +1331,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.22; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.23; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
     // Detect past overlay - don't show another
