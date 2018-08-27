@@ -5,7 +5,7 @@ Just Read
 
 Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
 
-> **Please note**: This extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
+**Please note** that this extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
 
 ### Installation:
 
@@ -14,7 +14,7 @@ Just Read makes it easy to view web articles in a more readable, attractive, and
 
 ### Privacy statement
 
-Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a unique but anonymous string based on your Google account is used to verify identity, not anything related to your personal information. 
+Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a unique but anonymous string based on your Google account is used to verify identity, not anything related to your personal information.
 
 ### End-user license agreement (EULA)
 
