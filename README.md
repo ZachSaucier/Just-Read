@@ -12,9 +12,19 @@ Just Read makes it easy to view web articles in a more readable, attractive, and
 - [Just Read](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
 - [Just Read Premium](https://chrome.google.com/webstore/detail/just-read-premium/dpamdgmnffodphoamchpmbclkpmccjga)
 
+___
+
+### The story behind Just Read
+
+Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make an reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it ever since. 
+
+___
+
 ### Privacy statement
 
 Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a unique but anonymous string based on your Google account is used to verify identity, not anything related to your personal information. 
+
+___
 
 ### End-user license agreement (EULA)
 
@@ -243,7 +253,7 @@ ___
 
 > **Note that this is a Premium-only feature.**
 
-In order to send the article content from Just Read to your Kindle, you must first [share it](). Then you can scroll to the bottom of the shared page and click the "Send to Kindle" button. This will then create a popup which you can follow to send the article to your Kindle.
+In order to send the article content from Just Read to your Kindle, you must first [install the free Send to Kindle extension](https://chrome.google.com/webstore/detail/send-to-kindle-for-google/cgdjpilhipecahhcilnafpblkieebhea). Then you can use it on any shared Just Read page (or any other web page). 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -348,15 +358,3 @@ ___
 You can do this by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-This Chrome extension was initially made in 16 hours at [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 and has been updated since.
-
-___
-
-##### Donate
-
-I will always keep Just Read free. If you want to be generous and show appreciation for the product I've created, you can [get the premium version](https://justread.link/) or donate via the PayPal donate link below to help me take my fiance out for a nice dinner.
-
-[![PayPal link](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=Y3GG9ANMQ9JML&lc=US&item_name=Zach%20Saucier&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
