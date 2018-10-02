@@ -6,6 +6,7 @@
 > 
 > - Just Read version (free/premium version as well as the specific version number if possible)
 > - Your operating system
-> - Steps to recreate the issue (including the relevant URL if necessary)
+> - Steps to recreate the issue including the relevant URL if necessary
+> - A screenshot of what the page looks like (if relevant)
 > 
 > Please delete this text from your post before posting.
