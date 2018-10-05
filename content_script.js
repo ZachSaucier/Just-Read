@@ -819,7 +819,7 @@ function addGUI() {
 
     function openFullStyles() {
         // Open the Options page
-        chrome.extension.sendRequest("Open options");
+        chrome.runtime.sendMessage("Open options");
     }
 
     // Check to make sure there isn't a file with this name already. If so, add a number to the end
@@ -1158,8 +1158,8 @@ function createSimplifiedOverlay() {
     container.appendChild(addPrintButton());
 
     // Add the notification of premium if necessary
-    if((jrCount === 0
-    || jrCount % 30 === 0)
+    if((jrCount === 5
+    || jrCount % 15 === 0)
     && jrCount < 151) {
         container.appendChild(addPremiumNofifier());
     }
