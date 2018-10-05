@@ -15,8 +15,6 @@ ___
 - [Just Read Premium](https://chrome.google.com/webstore/detail/just-read-premium/dpamdgmnffodphoamchpmbclkpmccjga)
 
 ___
-
-<<<<<<< HEAD
 ### The story behind Just Read
 
 Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make an reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it ever since. 
@@ -26,8 +24,6 @@ ___
 ### Privacy statement
 
 Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a unique but anonymous string based on your Google account is used to verify identity, not anything related to your personal information.
-
-___
 
 ___
 
@@ -66,6 +62,7 @@ ___
 - [How can I enable a custom scrollbar to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-enable-a-custom-scrollbar-to-use)
 - [What is Just Read's gradient functionality? And how can I turn it on?](https://github.com/ZachSaucier/Just-Read/#q-what-is-just-reads-gradient-functionality-and-how-can-i-turn-it-on)
 - [How can I get Just Read to auto-scroll the article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-to-auto-scroll-the-article)
+- [I can't buy the Premium version on Chrome's webstore. What can I do?](https://github.com/ZachSaucier/Just-Read/#q-i-cant-buy-the-premium-version-on-chromes-webstore-what-can-i-do)
 
 ___
 
@@ -361,5 +358,15 @@ ___
 > **Note that this is a Premium-only feature.**
 
 You can do this by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: I can't buy the Premium version on Chrome's webstore. What can I do?
+
+> **Note that this is a Premium-only feature.**
+
+Chrome's webstore prevents Chrome extensions from being bought in some regions. As an alternative, you can contact me at support@justread.link to arrange an alternative way of payment. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
