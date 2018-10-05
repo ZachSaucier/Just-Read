@@ -1,11 +1,13 @@
 Just Read
 =========
 
-> **Note**: There is a premium and a free version of Just Read. For more information about the difference between the two, see [Just Read's homepage](https://justread.link/) or [the FAQ below](https://github.com/ZachSaucier/Just-Read/#faq).
-
 Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
 
-> **Please note**: This extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
+**Please note** that this extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
+
+There is a premium and a free version of Just Read. For more information about the difference between the two, see [Just Read's homepage](https://justread.link/) or [the FAQ below](https://github.com/ZachSaucier/Just-Read/#faq).
+
+___
 
 ### Installation:
 
@@ -14,6 +16,7 @@ Just Read makes it easy to view web articles in a more readable, attractive, and
 
 ___
 
+<<<<<<< HEAD
 ### The story behind Just Read
 
 Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make an reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it ever since. 
@@ -22,7 +25,9 @@ ___
 
 ### Privacy statement
 
-Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a unique but anonymous string based on your Google account is used to verify identity, not anything related to your personal information. 
+Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a unique but anonymous string based on your Google account is used to verify identity, not anything related to your personal information.
+
+___
 
 ___
 
