@@ -151,7 +151,7 @@ ___
 
 #### Q: How can I get Just Read on all of my computers?
 
-When you log into Chrome using a Google account (as the primary Chrome user), Chrome automatically installs all extensions that you've installed to your account from Chrome's web store. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices, so you don't need to do anything special to get it working the same way on all of your devices. 
+When you log into Chrome using a Google account (as the primary Chrome user), Chrome automatically installs all extensions that you've installed to your account from Chrome's web store. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices, so you don't need to do anything special to get it working the same way on all of your devices. Note that mobile devices currently do not support Chrome extensions, so Just Read cannot be installed on these devices. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -217,7 +217,7 @@ ___
 
 As covered [in this post](https://github.com/ZachSaucier/Just-Read/issues/29#issue-196499408), this is an issue with the other extension and not Just Read. They will need to modify their code to work with iframe content. 
 
-However, most all extensions should work with a *shared* Just Read page, i.e. one on [justread.link](https://justread.link), but this is a Premium-only feature. 
+However, most all extensions should work with a *shared* Just Read page, i.e. one on [justread.link](https://justread.link), but this is a [Premium-only feature](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-share-my-just-read-version-of-a-page-with-someone). 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -301,7 +301,7 @@ ___
 
 Yes you can! Using the Premium version, you can go to "Options" -> "Additional options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need. 
 
-Note that the `domainPattern` is checked using the same regex technique [as the auto-run list]. Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector).
+Note that the `domainPattern` is checked using the same regex technique [as the auto-run list](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector).
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -364,8 +364,6 @@ You can do this by going to "Options" -> "Additional options" -> "Additional fea
 ___
 
 #### Q: I can't buy the Premium version on Chrome's webstore. What can I do?
-
-> **Note that this is a Premium-only feature.**
 
 Chrome's webstore prevents Chrome extensions from being bought in some regions. As an alternative, you can contact me at support@justread.link to arrange an alternative way of payment. 
 
