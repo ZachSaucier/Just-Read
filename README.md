@@ -50,6 +50,7 @@ ___
 - [How can I find other themes to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-find-other-themes-to-use)
 - [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?](https://github.com/ZachSaucier/Just-Read/#q-x-extension-doesnt-work-with-the-just-read-version-of-my-page-how-can-i-get-it-to-work)
 - [How do I report an error?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-report-an-error)
+- [How can I get rid of the ad for the premium version?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-rid-of-the-ad-for-the-premium-version)
 - [How can I share my Just Read version of a page with someone?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-share-my-just-read-version-of-a-page-with-someone)
 - [Why am I getting a "You have too many shared articles" error?](https://github.com/ZachSaucier/Just-Read#q-why-am-i-getting-a-you-have-too-many-shared-articles-error)
 - [How can I send the article to my Kindle?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-my-kindle)
@@ -226,6 +227,14 @@ ___
 #### Q: How do I report an error?
 
 Please [create a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) to report errors that you have. Also please [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I get rid of the ad for the premium version?
+
+Although this ad only shows occassionally and will eventually stop if you continue using Just Read, you can get rid of it by adding the following to your stylesheet: `.jr-notifier { display: none; }`
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
