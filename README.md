@@ -134,6 +134,8 @@ To use the GUI, click [the paint brush icon](http://i.imgur.com/XW03mZW.png) and
 
 You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via the Chrome extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
+You can also use themes that others have made. [Check them out here!](https://github.com/ZachSaucier/Just-Read/issues/4)
+
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
 ___
