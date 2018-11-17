@@ -141,6 +141,7 @@ function startDeleteElement(doc) {
         var elem = e.target;
 
         if(!elem.classList.contains("simple-container")
+        && !elem.classList.contains("simple-ui-container")
         && !elem.classList.contains("simple-control")
         && !elem.classList.contains("simple-edit")
         && (elem.parentNode.classList && !elem.parentNode.classList.contains("simple-control"))
@@ -163,6 +164,7 @@ function startDeleteElement(doc) {
         selected = e.target;
 
         if(!selected.classList.contains("simple-container")
+        && !selected.classList.contains("simple-ui-container")
         && !selected.classList.contains("simple-control")
         && !selected.classList.contains("simple-edit")
         && (selected.parentNode.classList && !selected.parentNode.classList.contains("simple-control"))
@@ -247,8 +249,10 @@ function actionWithStack(actionName, elem, startText) {
         };
     };
 
-    if(actionName)
+    if(actionName) {
         stack.push(actionObj);
+        undoBtn.classList.add("shown");
+    }
 }
 
 function popStack() {
@@ -258,6 +262,11 @@ function popStack() {
         actionObj.parent.insertBefore(actionObj.elem, actionObj.parent.children[actionObj.index]);
     } else if(actionObj && actionObj.type === "edit") {
         actionObj.elem.innerText = actionObj.text;
+    }
+
+    // If empty, hide undo button
+    if(stack.length === 0) {
+        undoBtn.classList.remove("shown");
     }
 }
 
@@ -271,8 +280,7 @@ function popStack() {
 // Chrome storage functions
 /////////////////////////////////////
 
-var leavePres = false,
-    showDelModeBtn = false;
+var leavePres = false;
 
 // Given a chrome storage object add them to our local stylsheet obj
 function getStylesFromStorage(storage) {
@@ -292,8 +300,6 @@ function getStylesFromStorage(storage) {
 
         } else if(key.substring(0, 3) === "jr-") { // Get stylesheets in the new format
             stylesheetObj[key.substring(3)] = storage[key];
-        } else if(key === "show-del-btn") {
-            showDelModeBtn = storage[key];
         } else if(key === "leave-pres") {
             leavePres = storage[key];
         }
@@ -728,7 +734,7 @@ function addArticleMeta() {
 
 // Add the close button
 function addCloseButton() {
-    var closeButton = document.createElement("button");
+    let closeButton = document.createElement("button");
     closeButton.className = "simple-control simple-close";
     closeButton.title = "Close Just Read";
     closeButton.textContent = "x";
@@ -738,7 +744,7 @@ function addCloseButton() {
 
 // Add the print button
 function addPrintButton() {
-    var printButton = document.createElement("button");
+    let printButton = document.createElement("button");
     printButton.className = "simple-control simple-print";
     printButton.title = "Print article";
     printButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M49,0H15v19H0v34h15v11h34V53h15V19H49V0z M17,2h30v17H17V2z M47,62H17V40h30V62z M62,21v30H49V38H15v13H2V21h13h34H62z"/><rect x="6" y="26" width="4" height="2"/><rect x="12" y="26" width="4" height="2"/><rect x="22" y="46" width="20" height="2"/><rect x="22" y="54" width="20" height="2"/></svg>Print';
@@ -748,12 +754,21 @@ function addPrintButton() {
 
 // Add the delete mode button
 function addDelModeButton() {
-    var delModeButton = document.createElement("button");
+    let delModeButton = document.createElement("button");
     delModeButton.className = "simple-control simple-delete";
     delModeButton.title = "Start/end deletion mode";
     delModeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-255.5 -411.5 1648 1676"><path d="M1044.6,215.65v481.3c0,7.8-2.5,14.2-7.5,19.2s-11.399,7.5-19.199,7.5h-53.5c-7.801,0-14.2-2.5-19.2-7.5s-7.5-11.4-7.5-19.2v-481.3c0-7.8,2.5-14.2,7.5-19.2s11.399-7.5,19.2-7.5h53.5c7.8,0,14.199,2.5,19.199,7.5S1044.6,207.85,1044.6,215.65z M823.2,196.45c-5-5-11.4-7.5-19.2-7.5h-53.5c-7.8,0-14.2,2.5-19.2,7.5s-7.5,11.4-7.5,19.2v481.3c0,7.8,2.5,14.2,7.5,19.2s11.4,7.5,19.2,7.5H804c7.8,0,14.2-2.5,19.2-7.5s7.5-11.4,7.5-19.2v-481.3C830.7,207.85,828.2,201.45,823.2,196.45z M609.3,196.45c-5-5-11.399-7.5-19.2-7.5h-53.5c-7.8,0-14.199,2.5-19.199,7.5s-7.5,11.4-7.5,19.2v199.07c12.06,5.96,20.399,18.59,20.399,33.23v171.7c0,20.899,16.9,37.8,37.8,37.8c20.9,0,37.801-16.9,37.801-37.8v-109.9c0-10.31,4.18-19.66,10.899-26.37V215.65C616.8,207.85,614.3,201.45,609.3,196.45z M1365.4-51.65v53.5c0,7.8-2.5,14.2-7.5,19.2s-11.4,7.5-19.2,7.5h-80.2V820.65c0,46.199-13.1,86.199-39.3,119.899s-57.601,50.5-94.4,50.5H631.02c9.82-34.97,19.681-72.2,27.82-106.899h465.86c1.7,0,4.6-2.4,8.8-7.101s8.2-12.3,12.1-22.6c4-10.3,5.9-21.601,5.9-33.9v-792H402.9v575.37c-12.13-6.28-20.4-18.95-20.4-33.57v-171.6c0-20.3-16.2-36.9-36.1-36.9s-36.1,16.6-36.1,36.9v122.4c0,12.06-5.63,22.79-14.4,29.699V28.55h-80.2c-7.8,0-14.2-2.5-19.2-7.5S189,9.65,189,1.85v-53.5c0-7.8,2.5-14.2,7.5-19.2s11.4-7.5,19.2-7.5h258.2l58.5-139.5c8.399-20.6,23.399-38.2,45.1-52.6c21.7-14.5,43.7-21.7,66-21.7h267.4c22.3,0,44.3,7.2,66,21.7c21.699,14.5,36.8,32,45.1,52.6l58.5,139.5h258.2c7.8,0,14.2,2.5,19.2,7.5C1362.9-65.95,1365.4-59.45,1365.4-51.65z M964.4-78.45l-40.101-97.8c-3.899-5-8.6-8.1-14.2-9.2H645.2c-5.601,1.1-10.3,4.2-14.2,9.2l-40.9,97.8H964.4z"/><path d="M723.8,433.45c-20.41-22.19-49.569-36.1-81.899-36.1c-8.62,0-17.021,0.98-25.101,2.85c-6.54,1.51-12.859,3.61-18.899,6.25c-14.54-36.8-47.87-64.08-88-69.79c-5.131-0.73-10.371-1.11-15.7-1.11c-17.4,0-34,4.1-48.7,11.3c-9.75-18.77-24.56-34.45-42.6-45.14c-16.55-9.83-35.82-15.46-56.4-15.46c-12.6,0-24.8,2.2-36.1,6.1v-123.7c0-20.13-5.27-39.03-14.5-55.39c-19.19-34.02-55.5-57.01-97.1-57.01c-61.5,0-111.6,50.4-111.6,112.4v445.3l-80.4-92c-0.5-0.601-1.1-1.2-1.7-1.8c-21.1-21.101-49.2-32.9-79.1-33h-0.6c-29.8,0-57.8,11.5-78.7,32.5c-36.9,36.899-39,91.699-5.6,150.399c43.2,75.9,90.2,147.5,131.6,210.601c30.3,46.199,58.9,89.8,79.8,125.8c18.1,31.3,66.2,132.7,66.7,133.7c6.2,13.199,19.5,21.6,34.1,21.6h477.4c16.399,0,30.899-10.6,35.899-26.2c4.17-12.979,23.54-73.78,42.94-144.5c9.53-34.74,19.08-71.87,26.83-106.899C746.52,838.32,753.6,796.1,753.6,767.55v-257.7C753.6,480.39,742.29,453.52,723.8,433.45z M678.1,767.45c0,25.58-7.979,68.72-19.26,116.7c-8.14,34.699-18,71.93-27.82,106.899c-10.029,35.771-20,69.181-28.02,95.101H177.1c-15.6-32.601-45-93-59.3-117.7c-22-37.8-51.1-82.3-82-129.3c-40.8-62.2-87.1-132.7-129.1-206.5c-10.9-19.301-21-45.301-6.6-59.7c6.7-6.7,15.7-10.2,25.5-10.3c9.5,0,18.4,3.6,25.3,10.1l145.4,166.5c10.4,11.8,27,16,41.7,10.5s24.5-19.6,24.5-35.3v-545.8c0-20.3,16.2-36.9,36.1-36.9s36.1,16.6,36.1,36.9v352.5c0,20.899,16.9,37.8,37.8,37.8c8.84,0,16.96-3.03,23.4-8.101c8.77-6.909,14.4-17.64,14.4-29.699v-122.4c0-20.3,16.2-36.9,36.1-36.9s36.1,16.6,36.1,36.9v171.6c0,14.62,8.27,27.29,20.4,33.57c5.21,2.7,11.12,4.23,17.4,4.23c20.9,0,37.8-16.9,37.8-37.801V447.95c0-20.3,16.2-36.9,36.1-36.9c5.62,0,10.95,1.32,15.7,3.67c12.06,5.96,20.399,18.59,20.399,33.23v171.7c0,20.899,16.9,37.8,37.8,37.8c20.9,0,37.801-16.9,37.801-37.8v-109.9c0-10.31,4.18-19.66,10.899-26.37c6.5-6.51,15.41-10.53,25.2-10.53c19.9,0,36.1,16.5,36.1,36.9V767.45z"/></svg>';
 
     return delModeButton;
+}
+
+// Add the undo button
+function addUndoButton() {
+    undoBtn = document.createElement("button");
+    undoBtn.className = "simple-undo simple-control";
+    undoBtn.title = "Undo last action";
+    undoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 438.536 438.536"><path d="m421.12 134.19c-11.608-27.03-27.217-50.347-46.819-69.949-19.606-19.603-42.922-35.209-69.953-46.822-27.028-11.613-55.384-17.415-85.078-17.415-27.978 0-55.052 5.277-81.227 15.843-26.169 10.564-49.438 25.457-69.805 44.683l-37.12-36.835c-5.711-5.901-12.275-7.232-19.701-3.999-7.615 3.24-11.422 8.857-11.422 16.85v127.91c0 4.948 1.809 9.231 5.426 12.847 3.619 3.617 7.902 5.426 12.85 5.426h127.91c7.996 0 13.61-3.807 16.846-11.421 3.234-7.423 1.903-13.988-3.999-19.701l-39.115-39.398c13.328-12.563 28.553-22.222 45.683-28.98 17.131-6.757 35.021-10.138 53.675-10.138 19.793 0 38.687 3.858 56.674 11.563 17.99 7.71 33.544 18.131 46.679 31.265 13.134 13.131 23.555 28.69 31.265 46.679 7.703 17.987 11.56 36.875 11.56 56.674 0 19.798-3.856 38.686-11.56 56.672-7.71 17.987-18.131 33.544-31.265 46.679-13.135 13.134-28.695 23.558-46.679 31.265-17.987 7.707-36.881 11.561-56.674 11.561-22.651 0-44.064-4.949-64.241-14.843-20.174-9.894-37.209-23.883-51.104-41.973-1.331-1.902-3.521-3.046-6.567-3.429-2.856 0-5.236 0.855-7.139 2.566l-39.114 39.402c-1.521 1.53-2.33 3.478-2.426 5.853-0.094 2.385 0.527 4.524 1.858 6.427 20.749 25.125 45.871 44.587 75.373 58.382 29.502 13.798 60.625 20.701 93.362 20.701 29.694 0 58.05-5.808 85.078-17.416 27.031-11.607 50.34-27.22 69.949-46.821 19.605-19.609 35.211-42.921 46.822-69.949s17.411-55.392 17.411-85.08c1e-3 -29.698-5.803-58.047-17.41-85.076z"/></svg>';
+     return undoBtn;
 }
 
 // Add some information about our extension
@@ -982,23 +997,25 @@ function editText(elem) {
 
         // Update the element on blur
         textInput.onblur = function() {
-            // Change the value
-            elem.innerText = textInput.value;
+            if(textInput.parentNode.contains(textInput)) {
+                // Change the value
+                elem.innerText = textInput.value;
 
-            if(elem.innerText !== startText)
-                actionWithStack("edit", elem, startText);
+                if(elem.innerText !== startText)
+                    actionWithStack("edit", elem, startText);
 
-            // Un-hide the elem
-            elem.style.display = "block";
+                // Un-hide the elem
+                elem.style.display = "block";
 
-            // Remove the input
-            textInput.parentNode.removeChild(textInput);
+                // Remove the input
+                textInput.parentNode.removeChild(textInput);
+            }
         }
 
         // Allow enter to be used to save the edit
         textInput.onkeydown = function(e) {
             if(e.keyCode === 13)
-                textInput.onblur();
+                textInput.blur();
         }
 
         elem.parentNode.appendChild(textInput);
@@ -1023,6 +1040,7 @@ function addPremiumNofifier() {
 /////////////////////////////////////
 
 var simpleArticleIframe,
+    undoBtn,
     isInDelMode = false;
 function createSimplifiedOverlay() {
 
@@ -1075,10 +1093,6 @@ function createSimplifiedOverlay() {
             elem.removeAttribute("background");
             elem.removeAttribute("bgcolor");
             elem.removeAttribute("border");
-
-            // Remove elements that only have &nbsp;
-            if(elem.dataset && elem.innerHTML.trim() === '&nbsp;')
-                elem.dataset.simpleDelete = true;
 
             // See if the pres have code in them
             var isPreNoCode = true;
@@ -1151,11 +1165,24 @@ function createSimplifiedOverlay() {
     simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
     simpleArticleIframe.body.appendChild(container);
 
+    // Create a container for the UI buttons
+    let uiContainer = document.createElement("div");
+    uiContainer.className = "simple-ui-container";
+
     // Add the close button
-    container.appendChild(addCloseButton());
+    uiContainer.appendChild(addCloseButton());
 
     // Add the print button
-    container.appendChild(addPrintButton());
+    uiContainer.appendChild(addPrintButton());
+
+    // Add the deletion mode button
+    let delModeBtn = addDelModeButton();
+    uiContainer.appendChild(delModeBtn);
+
+    // Add the undo button
+    uiContainer.appendChild(addUndoButton());
+
+    container.appendChild(uiContainer);
 
     // Add the notification of premium if necessary
     if((jrCount === 5
@@ -1184,7 +1211,7 @@ function createSimplifiedOverlay() {
     setTimeout(function() {
         // See if we should add the theme editor button
         if(theme.indexOf("default-styles") !== -1) {
-            container.appendChild(addGUI());
+            uiContainer.insertBefore(addGUI(), delModeBtn);
         }
 
         simpleArticle.classList.remove("no-trans");
@@ -1207,11 +1234,6 @@ function createSimplifiedOverlay() {
             }
         });
     }, 500); // Make sure we can animate it
-
-    // Add the deletion mode button if needed
-    if(showDelModeBtn) {
-        container.appendChild(addDelModeButton());
-    }
     
 
     // Add our listeners we need
@@ -1230,6 +1252,9 @@ function createSimplifiedOverlay() {
             startDeleteElement(simpleArticleIframe);
         };
     }
+
+    // The undo button
+    undoBtn.addEventListener('click', popStack);
 
     simpleArticleIframe.onkeydown = function(e) {
         // Listen for the "Esc" key and exit if so

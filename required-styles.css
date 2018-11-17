@@ -19,11 +19,23 @@
     display: block !important;
 }
 
-.simple-control {
+.simple-ui-container {
     position: fixed;
+    top: 10px;
+    right: 8px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.rtl .simple-ui-container {
+    right: auto;
+    left: 8px;
+}
+
+.simple-control {
     cursor: pointer;
-    -webkit-transition: 0.2s;
     transition: 0.2s;
+    margin: 0 3px;
+    padding: 1px 6px;
 
     color: black;
     fill: black;
@@ -35,22 +47,25 @@
 }
 
 .simple-close {
-    top: 10px;
-    right: 8px;
     font-size: 25px;
+    height: 37px;
 
     background: none;
     border: 1px solid black;
-    padding: 1px 10px 5px;
+    padding: 0px 10px 5px;
+    margin-left: 8px;
+}
+.rtl .simple-close {
+    margin-left: auto;
+    margin-right: 8px;
 }
 
 .simple-print,
 .simple-edit-theme,
-.simple-delete {
+.simple-delete,
+.simple-undo {
     width: 40px;
     height: 40px;
-    top: 10px;
-    right: 55px;
     
     border: 0;
     background: none;
@@ -63,13 +78,20 @@
     height: 100%;
 }
 
-.simple-edit-theme {
-    right: 105px;
+.simple-undo {
+    display: none;
+    padding: 7px;
+}
+.simple-undo.shown {
+    display: inline;
 }
 
 .simple-delete {
-    right: 149px;
     width: 43px;
+}
+
+.simple-edit-theme {
+    margin: 0;
 }
 
 .simple-edit {
@@ -108,10 +130,6 @@
     right: 100%;
     padding-right: 10px;
     padding-left: 0;
-}
-
-.simple-title .simple-edit {
-    top: 25px;
 }
 
 .simple-meta > * {

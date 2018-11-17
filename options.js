@@ -69,8 +69,6 @@ function getStylesFromStorage(storage) {
             linkCM.checked = storage[key];
         } else if(key === "enable-autorunCM") {
             autorunCM.checked = storage[key];
-        } else if(key === "show-del-btn") {
-            delMode.checked = storage[key];
         } else if(key === "leave-pres") {
             leavePres.checked = storage[key];
         } else if(key === "alwaysAddAR") {
@@ -569,12 +567,8 @@ addOptBtn.onclick = closeAddBtn.onclick = function() {
 }
 
 
-var delMode = document.getElementById("delModeBtn"),
-    leavePres = document.getElementById("leavePres");
+var leavePres = document.getElementById("leavePres");
 
-delMode.onchange = function() {
-    chrome.storage.sync.set({"show-del-btn": this.checked});
-}
 leavePres.onchange = function() {
     chrome.storage.sync.set({"leave-pres": this.checked});
 }

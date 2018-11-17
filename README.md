@@ -114,7 +114,7 @@ ___
 
 #### Q: How can I delete parts of the page once Just Read has started?
 
-Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd> or by clicking on [the deletion mode icon](https://i.imgur.com/QD5G2j4.png) (Note that this icon has be enabled under "Options" -> "Additional options" -> "Additional preferences"). 
+Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd> or by clicking on [the deletion mode icon](https://i.imgur.com/QD5G2j4.png). 
 
 Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. 
 
@@ -172,7 +172,6 @@ ___
 
 Under "Options" -> "Additional options" -> "Context menu entries", you can enable or disable the context menu entries that Just Read creates.
 
-- "Show button for deletion mode" adds a new button when Just Read is open to start/stop deletion mode to prevent the need of the keyboard shortcut (but still retains keyboard shortcut functionality).
 - "Don't reformat pre tags" makes it so that Just Read doesn't turn any `<pre>` tags into paragraphs but retains their original formatting.
 - "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
 - "Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
