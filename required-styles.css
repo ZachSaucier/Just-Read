@@ -193,7 +193,7 @@
     .simple-control,
     .simple-bug-reporter,
     .jr-tooltip {
-        display: none;
+        display: none !important;
     }
     * { overflow: auto !important; }
     @page :first { margin-top: 0; }
