@@ -116,7 +116,7 @@ ___
 
 Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd> or by clicking on [the deletion mode icon](https://i.imgur.com/QD5G2j4.png). 
 
-Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. 
+Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
 
 If you have the premium version of Just Read, you can also delete anything that you highlight using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>d</kbd> or clicking the trash can icon on the toolbar that shows up. 
 
@@ -163,6 +163,8 @@ ___
 #### Q: How can I edit the article's date, author, and title once in Just Read?
 
 If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png) will appear. Click that to edit the text that you want. 
+
+These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
