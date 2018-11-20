@@ -1236,11 +1236,8 @@ function createSimplifiedOverlay() {
 
     // Fade in and move up the simple article
     setTimeout(function() {
-        // See if we should add the theme editor button
-        if(theme.indexOf("default-styles") !== -1
-        || theme.indexOf("dark-styles") !== -1) {
-            uiContainer.insertBefore(addGUI(), delModeBtn);
-        }
+        // Add the theme editor button
+        uiContainer.insertBefore(addGUI(), delModeBtn);
 
         simpleArticle.classList.remove("no-trans");
         simpleArticle.classList.remove("simple-fade-up");
