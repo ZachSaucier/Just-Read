@@ -195,7 +195,7 @@
     .jr-tooltip {
         display: none !important;
     }
-    * { overflow: auto !important; }
+    *:not(.simple-title *) { overflow: auto !important; }
     @page :first { margin-top: 0; }
 }
 

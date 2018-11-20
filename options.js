@@ -37,7 +37,8 @@ var changed = false,
     stylesheetObj = {},
     saveButton = document.getElementById("save"),
     defaultLiItem,
-    defaultStylesheet = "default-styles.css";
+    defaultStylesheet = "default-styles.css",
+    darkStylesheet = "dark-styles.css";
 
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
@@ -75,8 +76,10 @@ function getStylesFromStorage(storage) {
             alwaysAddAR.checked = storage[key];
         } else if(key === "fullscreen") {
             fullScrn.checked = storage[key];
-        } else if(key.substring(0, 3) === "jr-") // Get the user's stylesheets
+        } else if(key.substring(0, 3) === "jr-") { // Get the user's stylesheets 
+            console.log(key);
             stylesheetObj[key.substring(3)] = storage[key];
+        }
     }
 }
 
@@ -230,8 +233,24 @@ function styleListOnClick() {
 
 // The stuff to fire after the stylesheets have been loaded
 function continueLoading() {
+    if(typeof stylesheetObj[darkStylesheet] === "undefined") {
+        // If the dark theme isn't found, add it
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', chrome.extension.getURL(darkStylesheet), true);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                // Save the file's contents to our object
+                stylesheetObj[darkStylesheet] =  xhr.responseText;
+                 // Save it to Chrome storage
+                setStylesOfStorage();
+            }
+        }
+        xhr.send();
+    }
+
     // Get the currently used stylesheet
     chrome.storage.sync.get('currentTheme', function(result) {
+
         var currTheme = result.currentTheme || defaultStylesheet;
 
         // Based on that object, populate the list values
@@ -256,13 +275,14 @@ function continueLoading() {
             li.innerHTML += stylesheet;
 
             // Lock the default-styles.css file (prevent deletion)
-            if(stylesheet === defaultStylesheet) {
+            if(stylesheet === defaultStylesheet
+            || stylesheet === darkStylesheet) {
                 defaultLiItem = li;
                 liClassList.add("locked");
             }
 
-            // Make the first one active
-            if(count === 0) {
+            // Make the current one active
+            if(stylesheet === currTheme) {
                 liClassList.add("active");
                 var fileName = li.textContent;
                 editor.setValue(stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName], -1);

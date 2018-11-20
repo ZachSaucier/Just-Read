@@ -47,6 +47,10 @@ a[href]:hover {
     color: #4ECAFF;
 }
 
+.simple-container {
+    max-width: 600px;
+}
+
 .youtubeContainer {
     position: relative;
     width: 100%;
@@ -144,10 +148,6 @@ aside,
 .rtl .simple-author {
     padding-left: 0;
     padding-right: 10px;
-}
-
-.simple-container {
-    max-width: 600px;
 }
 
 
