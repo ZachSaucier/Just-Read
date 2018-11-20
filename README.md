@@ -126,11 +126,13 @@ ___
 
 #### Q: How can I customize the look of Just Read?
 
-You can make Just Read look exactly the way that you like by either using the built in GUI or by directly editing the CSS file.
+Just Read comes with two themes by default: a white theme and a dark theme. You can choose between them through the GUI or the Options page.
+
+You can also customize your theme to make Just Read look exactly the way that you like by either using the built in GUI or by directly editing the CSS file on the Options page. 
 
 To use the GUI, click [the paint brush icon](http://i.imgur.com/XW03mZW.png) and then change the settings to your liking. Make sure to click "Save and close" when you're done or the styles will not be updated in the actual stylesheet. 
 
-> **Note**: The theme editor GUI will only appear for the default theme or themes derived from the default (that share "default-stylesheet" as part of the file name).
+> **Note**: The theme editor GUI will only appear for the default theme, the default dark theme, or themes derived from the default (that share "default-styles" or "dark-styles" as part of the file name).
 
 You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via the Chrome extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
