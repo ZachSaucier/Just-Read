@@ -752,7 +752,7 @@ function addPrintButton() {
     return printButton;
 }
 
-// Add the delete mode button
+// Add the deletion mode button
 function addDelModeButton() {
     let delModeButton = document.createElement("button");
     delModeButton.className = "simple-control simple-delete";
@@ -1383,7 +1383,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.25; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.26; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
     // Detect past overlay - don't show another

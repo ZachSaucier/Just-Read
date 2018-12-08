@@ -14,6 +14,8 @@ ___
 - [Just Read](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
 - [Just Read Premium](https://chrome.google.com/webstore/detail/just-read-premium/dpamdgmnffodphoamchpmbclkpmccjga)
 
+> **Note** that if you have the Premium version installed, you don't need to have the free version installed and can uninstall it. 
+
 ___
 ### The story behind Just Read
 
