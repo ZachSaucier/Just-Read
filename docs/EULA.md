@@ -37,7 +37,7 @@ This EULA agreement is effective from the date you first use Just Read and shall
 It will also terminate immediately if you fail to comply with any term of this EULA agreement. Upon such termination, the licenses granted by this EULA agreement will immediately terminate and you agree to stop all access and use of Just Read. The provisions that by their nature continue and survive will survive any termination of this EULA agreement.
 
 ## No warranty
-The author of Just Read expressly disclaims any warranty for Just Read. Just Read and any related services are provided “as is” without warranty of any kind, either express or implied, including, without limitation, the implied warranties or merchantability, fitness for a particular purpose, or noninfringement. The entire risk arising out of use or performance of Just Read remains with you.
+The author of Just Read expressly disclaims any warranty for Just Read. Just Read and any related services are provided “as is” without warranty of any kind, either express or implied, including, without limitation, the implied warranties or merchantability, fitness for a particular purpose, or noninfringement. This means that there are no refunds. The entire risk arising out of use or performance of Just Read remains with you.
 
 ## Limitation of Liability
 Under no circumstances shall Just Read or its creators be liable for any indirect, incidental, consequential, special, or exemplary damages arising out of or in connection with your access or use of or inability to access of use the software and any third party content and services, whether or not the damages were foreseeable.
