@@ -5,7 +5,7 @@ Just Read makes it easy to view web articles in a more readable, attractive, and
 
 **Please note** that this extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect. 
 
-There is a premium and a free version of Just Read. For more information about the difference between the two, see [Just Read's homepage](https://justread.link/) or [the FAQ below](https://github.com/ZachSaucier/Just-Read/#faq).
+There is a premium and a free version of Just Read. For more information about the difference between the two, see [Just Read's homepage](https://justread.link/), [the explanation video](https://www.youtube.com/watch?v=t06dUD80MyM), or [the FAQ below](https://github.com/ZachSaucier/Just-Read/#faq).
 
 ___
 
