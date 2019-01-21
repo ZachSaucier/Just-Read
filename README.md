@@ -38,35 +38,43 @@ ___
 
 ## FAQ
 
+#### Using Just Read features
 - [How can I start Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-start-just-read)
 - [How can I auto-run Just Read on specific websites?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-run-just-read-on-specific-websites)
-- [How can I delete parts of the page once Just Read has started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-delete-parts-of-the-page-once-just-read-has-started)
-- [How can I customize the look of Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-customize-the-look-of-just-read)
-- [How can I add a custom Google Font to Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-a-custom-google-font-to-just-read)
 - [How can I get Just Read on all of my computers?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-on-all-of-my-computers)
-- [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
-- [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
-- [Just Read isn't selecting all of the content I want it to. What can I do to fix this?](https://github.com/ZachSaucier/Just-Read/#q-just-read-isnt-selecting-all-of-the-content-i-want-it-to-what-can-i-do-to-fix-this)
-- [How can I prevent Just Read from loading an old copy of the page I'm reading?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-prevent-just-read-from-loading-an-old-copy-of-the-page-im-reading)
-- [How do I prevent `<pre>` tags from being reformatted into paragraphs?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-prevent-pre-tags-from-being-reformatted-into-paragraphs)
-- [How can I auto-enable fullscreen when Just Read is started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-enable-fullscreen-when-just-read-is-started)
-- [How can I find other themes to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-find-other-themes-to-use)
-- [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?](https://github.com/ZachSaucier/Just-Read/#q-x-extension-doesnt-work-with-the-just-read-version-of-my-page-how-can-i-get-it-to-work)
-- [How do I report an error?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-report-an-error)
-- [How can I get rid of the ad for the premium version?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-rid-of-the-ad-for-the-premium-version)
 - [How can I share my Just Read version of a page with someone?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-share-my-just-read-version-of-a-page-with-someone)
-- [Why am I getting a "You have too many shared articles" error?](https://github.com/ZachSaucier/Just-Read#q-why-am-i-getting-a-you-have-too-many-shared-articles-error)
+- [How can I view and delete pages that I have shared previously?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-view-and-delete-pages-that-i-have-shared-previously)
+- [How can I link to a specific part of a shared article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-link-to-a-specific-part-of-a-shared-article)
 - [How can I send the article to my Kindle?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-my-kindle)
 - [How can I send the article to Google Drive?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-google-drive)
-- [How can I view and delete pages that I have shared previously?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-view-and-delete-pages-that-i-have-shared-previously)
-- [My theme from the original version breaks the page when I am using Premium. What's going on?](https://github.com/ZachSaucier/Just-Read/#q-my-theme-from-the-original-version-breaks-the-page-when-i-am-using-premium-whats-going-on)
-- [Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?](https://github.com/ZachSaucier/Just-Read/#q-can-i-customize-which-selectors-just-read-uses-for-selecting-the-date-author-title-header-image-and-content)
-- [How can I add annotations and comments?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-annotations-and-comments)
-- [How can I link to a specific part of a shared article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-link-to-a-specific-part-of-a-shared-article)
-- [How can I enable a custom scrollbar to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-enable-a-custom-scrollbar-to-use)
-- [What is Just Read's gradient functionality? And how can I turn it on?](https://github.com/ZachSaucier/Just-Read/#q-what-is-just-reads-gradient-functionality-and-how-can-i-turn-it-on)
+- [How can I auto-enable fullscreen when Just Read is started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-enable-fullscreen-when-just-read-is-started)
 - [How can I get Just Read to auto-scroll the article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-to-auto-scroll-the-article)
+- [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
+
+#### Editing Just Read's content
+- [How can I delete parts of the page once Just Read has started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-delete-parts-of-the-page-once-just-read-has-started)
+- [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
+- [How can I add annotations and comments?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-annotations-and-comments)
+- [Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?](https://github.com/ZachSaucier/Just-Read/#q-can-i-customize-which-selectors-just-read-uses-for-selecting-the-date-author-title-header-image-and-content)
+- [How can I get rid of the ad for the premium version?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-rid-of-the-ad-for-the-premium-version)
+
+#### Customizing how Just Read looks
+- [How can I customize the look of Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-customize-the-look-of-just-read)
+- [How can I add a custom Google Font to Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-a-custom-google-font-to-just-read)
+- [How can I find other themes to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-find-other-themes-to-use)
+- [What is Just Read's gradient functionality? And how can I turn it on?](https://github.com/ZachSaucier/Just-Read/#q-what-is-just-reads-gradient-functionality-and-how-can-i-turn-it-on)
+- [How can I enable a custom scrollbar to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-enable-a-custom-scrollbar-to-use)
+
+#### Fixing issues with Just Read
+- [Just Read isn't selecting all of the content I want it to. What can I do to fix this?](https://github.com/ZachSaucier/Just-Read/#q-just-read-isnt-selecting-all-of-the-content-i-want-it-to-what-can-i-do-to-fix-this)e
+- [How can I prevent Just Read from loading an old copy of the page I'm reading?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-prevent-just-read-from-loading-an-old-copy-of-the-page-im-reading)
+- [How do I prevent `<pre>` tags from being reformatted into paragraphs?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-prevent-pre-tags-from-being-reformatted-into-paragraphs)
+- [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?](https://github.com/ZachSaucier/Just-Read/#q-x-extension-doesnt-work-with-the-just-read-version-of-my-page-how-can-i-get-it-to-work)
+- [Why am I getting a "You have too many shared articles" error?](https://github.com/ZachSaucier/Just-Read#q-why-am-i-getting-a-you-have-too-many-shared-articles-error)
+- [My theme from the original version breaks the page when I am using Premium. What's going on?](https://github.com/ZachSaucier/Just-Read/#q-my-theme-from-the-original-version-breaks-the-page-when-i-am-using-premium-whats-going-on)
 - [I can't buy the Premium version on Chrome's webstore. What can I do?](https://github.com/ZachSaucier/Just-Read/#q-i-cant-buy-the-premium-version-on-chromes-webstore-what-can-i-do)
+- [How do I report an error?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-report-an-error)
+
 
 ___
 
@@ -115,6 +123,97 @@ You can also enable "Always add current site to Just Read's autorun list when Ju
 
 ___
 
+#### Q: How can I get Just Read on all of my computers?
+
+When you log into Chrome using a Google account (as the primary Chrome user), Chrome automatically installs all extensions that you've installed to your account from Chrome's web store. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices, so you don't need to do anything special to get it working the same way on all of your devices. Note that mobile devices currently do not support Chrome extensions, so Just Read cannot be installed on these devices. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I share my Just Read version of a page with someone?
+
+> **Note that this is a Premium-only feature.**
+
+You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Additional options" -> "Sharing preferences". 
+
+Note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address). 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I view and delete pages that I have shared previously?
+
+> **Note that this is a Premium-only feature.**
+
+You can view and delete pages that you shared previously by going to https://justread.link/dashboard, which is your user profile page. Note that you can click any column heading to sort the entries by that column's values. 
+
+Note that you can only view this page if you currently have Just Read Premium installed on the browser that you're using. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I link to a specific part of a shared article?
+
+> **Note that this is a Premium-only feature.**
+
+If you make any highlights, color change, or other edits to a text selection (a premium feature), Just Read will add a unique ID to that selection. You can thenshare that page and then look up that ID to get a link to that specific element on the shared page. For more information, [look at this post](https://stackoverflow.com/a/2835151/2065702). 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I send the article to my Kindle?
+
+> **Note that this is a Premium-only feature.**
+
+In order to send the article content from Just Read to your Kindle, you must first [install the free Send to Kindle extension](https://chrome.google.com/webstore/detail/send-to-kindle-for-google/cgdjpilhipecahhcilnafpblkieebhea). Then you can use it on any shared Just Read page (or any other web page). 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I send the article to Google Drive?
+
+Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so is to "print" the page (either using your browser's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I get Just Read to auto-scroll the article?
+
+> **Note that this is a Premium-only feature.**
+
+You can do this by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I remove Just Read's entries from the right-click context menu?
+
+Under "Options" -> "Additional options" -> "Context menu entries", you can enable or disable the context menu entries that Just Read creates.
+
+- "Don't reformat pre tags" makes it so that Just Read doesn't turn any `<pre>` tags into paragraphs but retains their original formatting.
+- "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
+- "Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
+- "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I auto-enable fullscreen when Just Read is started?
+
+Under "Options" -> "Additional options" -> "Additional preferences" there is an option to "Always auto-enable fullscreen when Just Read is started." Checking this box will make Just Read be fullscreen (like when you press <kbd>F11</kbd>) when you start Just Read on a page.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
 #### Q: How can I delete parts of the page once Just Read has started?
 
 Once the text has been selected and the article is open in the Just Read format, users can delete elements by going into deletion mode using the keyboard shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>;</kbd> or by clicking on [the deletion mode icon](https://i.imgur.com/QD5G2j4.png). 
@@ -122,6 +221,48 @@ Once the text has been selected and the article is open in the Just Read format,
 Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
 
 If you have the premium version of Just Read, you can also delete anything that you highlight using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>d</kbd> or clicking the trash can icon on the toolbar that shows up. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I edit the article's date, author, and title once in Just Read?
+
+If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png) will appear. Click that to edit the text that you want. 
+
+These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I add annotations and comments?
+
+> **Note that this is a Premium-only feature.**
+
+If you select any text in Just Read, a toolbar [like this](https://i.imgur.com/goBVron.png) will appear. This toolbar lets you change the styling of the selected text as per each button's instructions. 
+
+You can add comments by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?
+
+> **Note that this is a Premium-only feature.**
+
+Yes you can! Using the Premium version, you can go to "Options" -> "Additional options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need. 
+
+Note that the `domainPattern` is checked using the same regex technique [as the auto-run list](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector).
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I get rid of the ad for the premium version?
+
+Although this ad only shows occassionally and will eventually stop if you continue using Just Read, you can get rid of it by adding the following to your stylesheet: `.jr-notifier { display: none; }`
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -157,34 +298,35 @@ Since you only have access to the CSS
 
 ___
 
-#### Q: How can I get Just Read on all of my computers?
+#### Q: How can I find other themes to use?
 
-When you log into Chrome using a Google account (as the primary Chrome user), Chrome automatically installs all extensions that you've installed to your account from Chrome's web store. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices, so you don't need to do anything special to get it working the same way on all of your devices. Note that mobile devices currently do not support Chrome extensions, so Just Read cannot be installed on these devices. 
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I edit the article's date, author, and title once in Just Read?
-
-If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png) will appear. Click that to edit the text that you want. 
-
-These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
+If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
 ___
 
-#### Q: How can I remove Just Read's entries from the right-click context menu?
+#### Q: What is Just Read's gradient functionality? And how can I turn it on?
 
-Under "Options" -> "Additional options" -> "Context menu entries", you can enable or disable the context menu entries that Just Read creates.
+> **Note that this is a Premium-only feature.**
 
-- "Don't reformat pre tags" makes it so that Just Read doesn't turn any `<pre>` tags into paragraphs but retains their original formatting.
-- "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
-- "Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
-- "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
+Just Read's gradient functionality makes it so that each line of text starts and ends with a different color. By having the end-of-line color the same as the next start-of-line color, it makes following sentences easier and reading faster. Note that this feature overrides your other paragraph text color styles.
+
+You can turn it on by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors by a comma!
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I enable a custom scrollbar to use?
+
+> **Note that this is a Premium-only feature.**
+
+You can enable a custom scrollbar by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use a custom scrollbar instead of the browser's default" option. This will make Just Read use its built-in, custom scrollbar and Just Read will retain this custom scrollbar on pages you share as well. 
+
+If you want to customize the look of the scrollbar even further, you can modify your theme to edit `progress`, `progress::-webkit-progress-bar`, and `progress::-webkit-progress-value` as needed.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)* 
 
 ___
 
@@ -213,22 +355,6 @@ Under "Options" -> "Additional options" -> "Additional preferences" there is an 
 
 ___
 
-#### Q: How can I auto-enable fullscreen when Just Read is started?
-
-Under "Options" -> "Additional options" -> "Additional preferences" there is an option to "Always auto-enable fullscreen when Just Read is started." Checking this box will make Just Read be fullscreen (like when you press <kbd>F11</kbd>) when you start Just Read on a page.
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I find other themes to use?
-
-If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
 #### Q: *X extension* doesn't work with the Just Read version of my page. How can I get it to work?
 
 As covered [in this post](https://github.com/ZachSaucier/Just-Read/issues/29#issue-196499408), this is an issue with the other extension and not Just Read. They will need to modify their code to work with iframe content. 
@@ -239,67 +365,9 @@ However, most all extensions should work with a *shared* Just Read page, i.e. on
 
 ___
 
-#### Q: How do I report an error?
-
-Please [create a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) to report errors that you have. Also please [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I get rid of the ad for the premium version?
-
-Although this ad only shows occassionally and will eventually stop if you continue using Just Read, you can get rid of it by adding the following to your stylesheet: `.jr-notifier { display: none; }`
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I share my Just Read version of a page with someone?
-
-> **Note that this is a Premium-only feature.**
-
-You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Additional options" -> "Sharing preferences". 
-
-Note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address). 
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
 #### Q: Why am I getting a "You have too many shared articles" error?
 
 Currently Just Read Premium has a shared article limit of 100 articles. This is to prevent users from filling up the entire server with their pages (especially with malicious intent). To get rid of this error, you must go to https://justread.link/dashboard and delete some old articles that you're not using any longer.
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I send the article to my Kindle?
-
-> **Note that this is a Premium-only feature.**
-
-In order to send the article content from Just Read to your Kindle, you must first [install the free Send to Kindle extension](https://chrome.google.com/webstore/detail/send-to-kindle-for-google/cgdjpilhipecahhcilnafpblkieebhea). Then you can use it on any shared Just Read page (or any other web page). 
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I send the article to Google Drive?
-
-Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so is to "print" the page (either using your browser's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". 
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I view and delete pages that I have shared previously?
-
-> **Note that this is a Premium-only feature.**
-
-You can view and delete pages that you shared previously by going to https://justread.link/dashboard, which is your user profile page. Note that you can click any column heading to sort the entries by that column's values. 
-
-Note that you can only view this page if you currently have Just Read Premium installed on the browser that you're using. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -319,76 +387,16 @@ Just Read Premium uses a slightly modified structure and selectors. Check these 
 
 ___
 
-#### Q: Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?
-
-> **Note that this is a Premium-only feature.**
-
-Yes you can! Using the Premium version, you can go to "Options" -> "Additional options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need. 
-
-Note that the `domainPattern` is checked using the same regex technique [as the auto-run list](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector).
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I add annotations and comments?
-
-> **Note that this is a Premium-only feature.**
-
-If you select any text in Just Read, a toolbar [like this](https://i.imgur.com/goBVron.png) will appear. This toolbar lets you change the styling of the selected text as per each button's instructions. 
-
-You can add comments by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added. 
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I link to a specific part of a shared article?
-
-> **Note that this is a Premium-only feature.**
-
-If you make any highlights, color change, or other edits to a text selection as described [above](), Just Read will add a unique ID to that selection. You can then use that ID to get a link to a specific portion of an article as you would any ID. For more information, [look at this post](https://stackoverflow.com/a/2835151/2065702). 
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I enable a custom scrollbar to use?
-
-> **Note that this is a Premium-only feature.**
-
-You can enable a custom scrollbar by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use a custom scrollbar instead of the browser's default" option. This will make Just Read use its built-in, custom scrollbar and Just Read will retain this custom scrollbar on pages you share as well. 
-
-If you want to customize the look of the scrollbar even further, you can modify your theme to edit `progress`, `progress::-webkit-progress-bar`, and `progress::-webkit-progress-value` as needed.
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)* 
-
-___
-
-#### Q: What is Just Read's gradient functionality? And how can I turn it on?
-
-> **Note that this is a Premium-only feature.**
-
-Just Read's gradient functionality makes it so that each line of text starts and ends with a different color. By having the end-of-line color the same as the next start-of-line color, it makes following sentences easier and reading faster. Note that this feature overrides your other paragraph text color styles.
-
-You can turn it on by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors by a comma!
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
-#### Q: How can I get Just Read to auto-scroll the article?
-
-> **Note that this is a Premium-only feature.**
-
-You can do this by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
-
-*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
-
-___
-
 #### Q: I can't buy the Premium version on Chrome's webstore. What can I do?
 
 Chrome's webstore prevents Chrome extensions from being bought in some regions. As an alternative, you can contact me at support@justread.link to arrange an alternative way of payment. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How do I report an error?
+
+Please [create a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) to report errors that you have. Also please [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
