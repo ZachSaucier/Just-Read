@@ -253,6 +253,8 @@ function actionWithStack(actionName, elem, startText) {
         stack.push(actionObj);
         undoBtn.classList.add("shown");
     }
+
+    updateSavedVersion();
 }
 
 function popStack() {
@@ -264,13 +266,19 @@ function popStack() {
         actionObj.elem.innerText = actionObj.text;
     }
 
+    updateSavedVersion();
+
     // If empty, hide undo button
     if(stack.length === 0) {
         undoBtn.classList.remove("shown");
     }
 }
 
-
+function updateSavedVersion() {
+    if(backup) {
+        chrome.runtime.sendMessage({ savedVersion: simpleArticleIframe.querySelector('.content-container').innerHTML });
+    }
+}
 
 
 
@@ -280,7 +288,8 @@ function popStack() {
 // Chrome storage functions
 /////////////////////////////////////
 
-var leavePres = false;
+var backup = true,
+    leavePres = false;
 
 // Given a chrome storage object add them to our local stylsheet obj
 function getStylesFromStorage(storage) {
@@ -289,6 +298,8 @@ function getStylesFromStorage(storage) {
             stylesheetObj[key.substring(3)] = storage[key];
         } else if(key === "leave-pres") {
             leavePres = storage[key];
+        } else if(key === "backup") {
+            backup = storage[key];
         }
     }
 }
@@ -847,7 +858,6 @@ function addGUI() {
     }
 
     function openFullStyles() {
-        // Open the Options page
         chrome.runtime.sendMessage("Open options");
     }
 
@@ -1080,7 +1090,7 @@ function createSimplifiedOverlay() {
     container.className = "simple-container";
 
     // Try using the selected element's content
-    if(!pageSelectedContainer)
+    if(userSelected)
         pageSelectedContainer = userSelected;
 
     // Use the highlighted text if started from that
@@ -1307,6 +1317,38 @@ function createSimplifiedOverlay() {
     for(var i = 0; i < youtubeFrames.length; i++) {
         youtubeFrames[i].parentElement.classList.add("youtubeContainer");
     }
+
+    finishLoading();
+
+    updateSavedVersion();
+}
+
+function finishLoading() {
+    // Add our required stylesheet for the article
+    if(!simpleArticleIframe.head.querySelector(".required-styles"))
+        addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
+
+    // Add the segments hider if needed
+    chrome.storage.sync.get('hideSegments', function(hideSegmentsObj) {
+        if((!isEmpty(hideSegmentsObj)
+            && hideSegmentsObj["hideSegments"]
+            && !simpleArticleIframe.head.querySelector(".hide-segments"))
+        || isEmpty(hideSegmentsObj)) {
+            addStylesheet(simpleArticleIframe, "hide-segments.css", "hide-segments");
+        }
+    });
+    
+    // Change the top most page when regular links are clicked
+    var linkNum = simpleArticleIframe.links.length;
+    for(var i = 0; i < linkNum; i++)
+        simpleArticleIframe.links[i].onclick = linkListener;
+
+    // Navigate to the element specified by the URL # if it exists
+    if(top.window.location.hash != null)
+        simpleArticleIframe.location.hash = top.window.location.hash;
+
+    // Append our theme styles to the overlay
+    simpleArticleIframe.head.appendChild(styleElem);
 }
 
 
@@ -1344,33 +1386,21 @@ function continueLoading() {
         
         
         // Create our version of the article
-        createSimplifiedOverlay();
+        if(backup) {
+            chrome.runtime.sendMessage({ hasSavedVersion: "true" }, function(response) {
+                console.log(response);
+                if(response
+                && response.content) {
+                    let tempElem = document.createElement("div");
+                    tempElem.innerHTML = response.content;
+                    pageSelectedContainer = tempElem;
+                }
 
-        // Add our required stylesheet for the article
-        if(!simpleArticleIframe.head.querySelector(".required-styles"))
-            addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
-
-        // Add the segments hider if needed
-        chrome.storage.sync.get('hideSegments', function(hideSegmentsObj) {
-            if((!isEmpty(hideSegmentsObj)
-                && hideSegmentsObj["hideSegments"]
-                && !simpleArticleIframe.head.querySelector(".hide-segments"))
-            || isEmpty(hideSegmentsObj)) {
-                addStylesheet(simpleArticleIframe, "hide-segments.css", "hide-segments");
-            }
-        });
-        
-        // Change the top most page when regular links are clicked
-        var linkNum = simpleArticleIframe.links.length;
-        for(var i = 0; i < linkNum; i++)
-            simpleArticleIframe.links[i].onclick = linkListener;
-
-        // Navigate to the element specified by the URL # if it exists
-        if(top.window.location.hash != null)
-            simpleArticleIframe.location.hash = top.window.location.hash;
-
-        // Append our theme styles to the overlay
-        simpleArticleIframe.head.appendChild(styleElem);
+                createSimplifiedOverlay();
+            });
+        } else {
+            createSimplifiedOverlay();
+        }
     });
 }
 

@@ -47,6 +47,7 @@ ___
 - [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
 - [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
 - [Just Read isn't selecting all of the content I want it to. What can I do to fix this?](https://github.com/ZachSaucier/Just-Read/#q-just-read-isnt-selecting-all-of-the-content-i-want-it-to-what-can-i-do-to-fix-this)
+- [How can I prevent Just Read from loading an old copy of the page I'm reading?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-prevent-just-read-from-loading-an-old-copy-of-the-page-im-reading)
 - [How do I prevent `<pre>` tags from being reformatted into paragraphs?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-prevent-pre-tags-from-being-reformatted-into-paragraphs)
 - [How can I auto-enable fullscreen when Just Read is started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-enable-fullscreen-when-just-read-is-started)
 - [How can I find other themes to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-find-other-themes-to-use)
@@ -195,6 +196,13 @@ In order to see content within the selection that Just Read has automatically hi
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
+___
+
+#### Q: How can I prevent Just Read from loading an old copy of the page I'm reading?
+
+You can either use [user selection mode](https://github.com/ZachSaucier/Just-Read/#user-selection-mode) to select a specific element to read (not disabling this option for future cases) or you can go to "Options" -> "Additional options" -> "Additional preferences" and uncheck "Backup most recent Just Read page (in case of accidental closure).".
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 ___
 
 #### Q: How do I prevent `<pre>` tags from being reformatted into paragraphs?

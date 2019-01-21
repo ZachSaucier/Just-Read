@@ -203,13 +203,24 @@ chrome.commands.onCommand.addListener(function(command) {
         startSelectText();
 });
 
-// Listen for requests to open the options page
-chrome.runtime.onMessage.addListener(function(request, sender) {
+// Listen for messages
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request === "Open options") {
         chrome.runtime.openOptionsPage();
     } else if(request.updateCMs === "true") {
         updateCMs();
-    } 
+    } else if(request.savedVersion) { 
+        let tempObj = {};
+        tempObj.content = request.savedVersion;
+        tempObj.url = sender.url;
+        localStorage.setItem('JRSavedPage', JSON.stringify(tempObj));
+    } else if(request.hasSavedVersion === "true") {
+        let lastSavedPage = JSON.parse(localStorage.getItem('JRSavedPage'));
+        if(lastSavedPage
+        && sender.url === lastSavedPage.url) {
+            sendResponse({ content: lastSavedPage.content });
+        }
+    }
 });
 
 // Create an entry to allow user to select an element to read from

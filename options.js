@@ -70,6 +70,8 @@ function getStylesFromStorage(storage) {
             linkCM.checked = storage[key];
         } else if(key === "enable-autorunCM") {
             autorunCM.checked = storage[key];
+        } else if(key === "backup") {
+            backup.checked = storage[key];
         } else if(key === "leave-pres") {
             leavePres.checked = storage[key];
         } else if(key === "alwaysAddAR") {
@@ -587,8 +589,12 @@ addOptBtn.onclick = closeAddBtn.onclick = function() {
 }
 
 
-var leavePres = document.getElementById("leavePres");
+var backup = document.getElementById("backup"),
+    leavePres = document.getElementById("leavePres");
 
+backup.onchange = function() {
+    chrome.storage.sync.set({"backup": this.checked});
+}
 leavePres.onchange = function() {
     chrome.storage.sync.set({"leave-pres": this.checked});
 }
