@@ -66,7 +66,7 @@ ___
 - [How can I enable a custom scrollbar to use?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-enable-a-custom-scrollbar-to-use)
 
 #### Fixing issues with Just Read
-- [Just Read isn't selecting all of the content I want it to. What can I do to fix this?](https://github.com/ZachSaucier/Just-Read/#q-just-read-isnt-selecting-all-of-the-content-i-want-it-to-what-can-i-do-to-fix-this)e
+- [Just Read isn't selecting all of the content I want it to. What can I do to fix this?](https://github.com/ZachSaucier/Just-Read/#q-just-read-isnt-selecting-all-of-the-content-i-want-it-to-what-can-i-do-to-fix-this)
 - [How can I prevent Just Read from loading an old copy of the page I'm reading?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-prevent-just-read-from-loading-an-old-copy-of-the-page-im-reading)
 - [How do I prevent `<pre>` tags from being reformatted into paragraphs?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-prevent-pre-tags-from-being-reformatted-into-paragraphs)
 - [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?](https://github.com/ZachSaucier/Just-Read/#q-x-extension-doesnt-work-with-the-just-read-version-of-my-page-how-can-i-get-it-to-work)
