@@ -44,6 +44,7 @@ ___
 - [How can I get Just Read on all of my computers?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-on-all-of-my-computers)
 - [How can I share my Just Read version of a page with someone?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-share-my-just-read-version-of-a-page-with-someone)
 - [How can I view and delete pages that I have shared previously?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-view-and-delete-pages-that-i-have-shared-previously)
+- [How can I have Just Read auto-save my changes?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-have-just-read-auto-save-my-changes)
 - [How can I link to a specific part of a shared article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-link-to-a-specific-part-of-a-shared-article)
 - [How can I send the article to my Kindle?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-my-kindle)
 - [How can I send the article to Google Drive?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-send-the-article-to-google-drive)
@@ -150,6 +151,14 @@ ___
 You can view and delete pages that you shared previously by going to https://justread.link/dashboard, which is your user profile page. Note that you can click any column heading to sort the entries by that column's values. 
 
 Note that you can only view this page if you currently have Just Read Premium installed on the browser that you're using. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I have Just Read auto-save my changes?
+
+Just Read has an option under Options -> Additional options -> "Backup the most recent Just Read page (in case of accidental closure)." that does this. If you make any changes on a page, if you are on that same page it will load the old version if enabled. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
