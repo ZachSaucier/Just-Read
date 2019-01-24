@@ -288,7 +288,7 @@ function updateSavedVersion() {
 // Chrome storage functions
 /////////////////////////////////////
 
-var backup = true,
+var backup = false,
     leavePres = false;
 
 // Given a chrome storage object add them to our local stylsheet obj
@@ -1319,8 +1319,6 @@ function createSimplifiedOverlay() {
     }
 
     finishLoading();
-
-    updateSavedVersion();
 }
 
 function finishLoading() {
@@ -1388,7 +1386,6 @@ function continueLoading() {
         // Create our version of the article
         if(backup) {
             chrome.runtime.sendMessage({ hasSavedVersion: "true" }, function(response) {
-                console.log(response);
                 if(response
                 && response.content) {
                     let tempElem = document.createElement("div");
