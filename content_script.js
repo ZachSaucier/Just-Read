@@ -1172,6 +1172,17 @@ function createSimplifiedOverlay() {
                 plainText.innerText = elem.alt;
                 elem.parentNode.insertBefore(plainText, elem.nextSibling);
             }
+
+            if(elem.nodeName === "IMG") {
+                let img = elem;
+
+                // Load lazy loaded images
+                if(img.dataset.srcset) {
+                    img.srcset = img.dataset.srcset;
+                } else if(img.dataset.src) {
+                    img.src = img.dataset.src;
+                }
+            }
         }
     }
 
