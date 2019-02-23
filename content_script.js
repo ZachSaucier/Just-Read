@@ -359,7 +359,9 @@ function getArticleDate() {
         pageSelectedContainer = document.body;
 
     // Check to see if there's a date class
-    var date = false,
+    var date = false;
+    var toCheck = [];
+    if(!date) {
         toCheck = [
             [pageSelectedContainer.querySelector('[class^="date"]'), ["innerText"], true],
             [pageSelectedContainer.querySelector('[class*="-date"]'), ["innerText"], true],
@@ -371,7 +373,10 @@ function getArticleDate() {
             [document.head.querySelector('meta[name*="-date"]'), ["content"], false],
             [pageSelectedContainer.querySelector('time'), ["datetime", "innerText"], true],
             [document.body.querySelector('time'), ["datetime", "innerText"], false],
+            [pageSelectedContainer.querySelector('[class *= "time"]'), ["datetime", "innerText"], true],
+            [document.body.querySelector('[class *= "time"]'), ["datetime", "innerText"], false]
         ];
+    }
 
 
     for(var i = 0; i < toCheck.length; i++) {
@@ -403,7 +408,7 @@ function getArticleTitle() {
             return title.substr(0, title.indexOf(' – '));
         }
 
-        // Get the part before the first - if it exists
+        // Get the part before the first - if it exists DIFFERENT THAN ABOVE CHARACTER
         if(title.indexOf(' - ') > 0) {
             return title.substr(0, title.indexOf(' - '));
         }
