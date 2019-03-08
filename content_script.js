@@ -191,6 +191,8 @@ function startDeleteElement(doc) {
         doc.removeEventListener('click', clickFunc);
         doc.removeEventListener('keydown', escFunc);
 
+        [...iframes].forEach(elem => elem.style.pointerEvents = "auto");
+
         if(doc.querySelector(".jr-hovered") != null)
             doc.querySelector(".jr-hovered").classList.remove("jr-hovered");
 
@@ -217,6 +219,9 @@ function startDeleteElement(doc) {
     doc.addEventListener('mouseover', mouseFunc);
     doc.addEventListener('click', clickFunc);
     doc.addEventListener('keydown', escFunc);
+
+    var iframes = doc.querySelectorAll("iframe");
+    [...iframes].forEach(elem => elem.style.pointerEvents = "none");
 
     var sd = simpleArticleIframe.querySelector(".simple-delete");
 
