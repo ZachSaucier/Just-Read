@@ -38,6 +38,8 @@ ___
 
 ## FAQ
 
+> **Note:** Any time you change something in Just Read's options page, you must restart any Just Read instances for the change to work.  
+
 #### Using Just Read features
 - [How can I start Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-start-just-read)
 - [How can I auto-run Just Read on specific websites?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-run-just-read-on-specific-websites)
