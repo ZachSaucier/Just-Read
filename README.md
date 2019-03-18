@@ -57,6 +57,7 @@ ___
 #### Editing Just Read's content
 - [How can I delete parts of the page once Just Read has started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-delete-parts-of-the-page-once-just-read-has-started)
 - [How can I edit the article's date, author, and title once in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-edit-the-articles-date-author-and-title-once-in-just-read)
+- [How can I show the original page's URL in Just Read?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-show-the-original-pages-url-in-just-read)
 - [How can I add annotations and comments?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-add-annotations-and-comments)
 - [Can I customize which selectors Just Read uses for selecting the date, author, title, header image, and content?](https://github.com/ZachSaucier/Just-Read/#q-can-i-customize-which-selectors-just-read-uses-for-selecting-the-date-author-title-header-image-and-content)
 - [How can I get rid of the ad for the premium version?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-rid-of-the-ad-for-the-premium-version)
@@ -242,6 +243,14 @@ ___
 If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png) will appear. Click that to edit the text that you want. 
 
 These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I show the original page's URL in Just Read?
+
+To enable this option, go to Just Read's "Options" pages -> "Additional options" -> and enable "Always add the original URL."
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
