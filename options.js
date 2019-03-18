@@ -74,6 +74,8 @@ function getStylesFromStorage(storage) {
             backup.checked = storage[key];
         } else if(key === "leave-pres") {
             leavePres.checked = storage[key];
+        } else if(key === "addOrigURL") {
+            addOrigURL.checked = storage[key];
         } else if(key === "alwaysAddAR") {
             alwaysAddAR.checked = storage[key];
         } else if(key === "fullscreen") {
@@ -590,11 +592,15 @@ addOptBtn.onclick = closeAddBtn.onclick = function() {
 
 
 var backup = document.getElementById("backup"),
-    leavePres = document.getElementById("leavePres");
+    leavePres = document.getElementById("leavePres"),
+    addOrigURL = document.getElementById("addOrigURL");
 
 backup.onchange = function() {
     chrome.storage.sync.set({"backup": this.checked});
 }
 leavePres.onchange = function() {
     chrome.storage.sync.set({"leave-pres": this.checked});
+}
+addOrigURL.onchange = function() {
+    chrome.storage.sync.set({"addOrigURL": this.checked});
 }
