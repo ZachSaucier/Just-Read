@@ -275,7 +275,17 @@ ___
 
 Yes you can! Using the Premium version, you can go to "Options" -> "Additional options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need. 
 
-Note that the `domainPattern` is checked using the same regex technique [as the auto-run list](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector).
+The full list of options in the domain-specific selectors list is as follow:
+
+- `domainPattern` - A regex pattern to match the correct URL(s). 
+- `titleSelector` - A query selector to find the article's title.
+- `authorSelector` - A query selector to find the author's name. 
+- `dateSelector` - A query selector to find the article's date. 
+- `contentSelector` - A query selector to find the article's content.
+- `headerImageSelector` - A query selector to find the article's header image (if it's outside of the content).
+- `selectorsToDelete` - An array of query selectors (searched using `querySelectorAll`) to find elements inside of the article to delete. 
+
+Note that the `domainPattern` is checked using the same regex technique [as the auto-run list](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) or, in the case of `selectorsToDelete`, [`querySelectorAll`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll).
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
