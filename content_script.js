@@ -1381,7 +1381,7 @@ function finishLoading() {
 
     // Navigate to the element specified by the URL # if it exists
     if(top.window.location.hash != null)
-        simpleArticleIframe.location.hash = top.window.location.hash;
+        setTimeout(function () { simpleArticleIframe.location.hash = top.window.location.hash; }, 10);
 
     // Append our theme styles to the overlay
     simpleArticleIframe.head.appendChild(styleElem);

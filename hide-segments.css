@@ -46,10 +46,8 @@ nav,
 }
 
 form:not(.usertext),
-[class ^= "form-"],
 [class ^= "form"],
 [class *= "-form-"],
-[class $= "-form"],
 [class $= "form"],
 [class ~= "form"]{
     display: none;

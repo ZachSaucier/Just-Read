@@ -260,6 +260,7 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
                             }, function() {                   // instead of using Chrome messages
                                 startJustRead(tab);
                             });
+                            return;
                         }
                     }
                 }

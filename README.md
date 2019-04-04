@@ -78,6 +78,7 @@ ___
 - [My theme from the original version breaks the page when I am using Premium. What's going on?](https://github.com/ZachSaucier/Just-Read/#q-my-theme-from-the-original-version-breaks-the-page-when-i-am-using-premium-whats-going-on)
 - [I can't buy the Premium version on Chrome's webstore. What can I do?](https://github.com/ZachSaucier/Just-Read/#q-i-cant-buy-the-premium-version-on-chromes-webstore-what-can-i-do)
 - [How do I report an error?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-report-an-error)
+- [How can I run Just Read from a local copy on my computer?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-run-just-read-from-a-local-copy-on-my-computer)
 
 
 ___
@@ -418,5 +419,13 @@ ___
 #### Q: How do I report an error?
 
 Please [create a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) to report errors that you have. Also please [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I run Just Read from a local copy on my computer?
+
+To run it from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, and then go to chrome://extensions/ and click "Load Unpacked", and then select the unzipped folder. This is particularly useful if you are wanting to modify how Just Read works or debug issues. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
