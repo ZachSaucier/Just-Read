@@ -142,7 +142,9 @@ ___
 
 You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Additional options" -> "Sharing preferences". 
 
-Note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address). 
+**Note that for this feature to work, you must have user account syncing enabled.** To enable syncing for your Google account, go to Chrome's settings page (chrome://settings/) and under "People" click "Turn on syncing".
+
+Also note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address). 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
