@@ -334,7 +334,7 @@ function isRTL(s) {
 
 function checkElemForDate(elem, attrList, deleteMe) {
     var myDate = false;
-    if(elem) {
+    if(elem && checkAgainstBlacklist(elem, 3)) {
         for(var i = 0; i < attrList.length; i++) {
             if(elem[attrList[i]]
              && elem[attrList[i]] != "" //  Make sure it's not empty
@@ -445,7 +445,7 @@ function getArticleAuthor() {
 
     // Check to see if there's an author class
     elem = pageSelectedContainer.querySelector('[class*="author"]');
-    if(author === null && elem) {
+    if(author === null && elem && checkAgainstBlacklist(elem, 3)) {
         if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
             elem.dataset.simpleDelete = true; // Flag it for removal later
             author = elem.innerText;
@@ -466,7 +466,7 @@ function getArticleAuthor() {
     }
 
     elem = document.body.querySelector('[class*="author"]');
-    if(author === null && elem) {
+    if(author === null && elem && checkAgainstBlacklist(elem, 3)) {
         if(elem.innerText.split(/\s+/).length < 6 && elem.innerText.replace(/\s/g,'') !== "") {
             author = elem.innerText;
         }
@@ -531,8 +531,7 @@ function getContainer() {
     }
 
     for(var i = 0; i < ps.length; i++) {
-        if(checkAgainstBlacklist(ps[i]) // Make sure it's not in our blacklist
-        && checkAgainstBlacklist(ps[i].parentNode) // and its parent...
+        if(checkAgainstBlacklist(ps[i], 3) // Make sure it's not in our blacklist
         && ps[i].offsetHeight !== 0) { //  Make sure it's visible on the regular page
             var myInnerText = ps[i].innerText.match(/\S+/g);
             if(myInnerText) {
@@ -602,16 +601,20 @@ function linkListener(e) {
 
 // Check given item against blacklist, return null if in blacklist
 var blacklist = ["comment"];
-function checkAgainstBlacklist(elem) {
+function checkAgainstBlacklist(elem, level) {
     if(typeof elem != "undefined" && elem != null) {
         var className = elem.className,
             id = elem.id;
         for(var i = 0; i < blacklist.length; i++) {
-            if((typeof className != "undefined" && className.indexOf(blacklist[i]) >= 0) 
-            || (typeof id != "undefined" && id.indexOf(blacklist[i]) >= 0)
+            if((typeof className === "string" && className.indexOf(blacklist[i]) >= 0) 
+            || (typeof id === "string" && id.indexOf(blacklist[i]) >= 0)
             ) {
                 return null;
             }
+        }
+
+        if(level > 0) {
+            return checkAgainstBlacklist(elem.parentNode, --level);
         }
     }
     return elem;

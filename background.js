@@ -242,7 +242,7 @@ chrome.contextMenus.create({
 });
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-    if (changeInfo.status == 'loading') {
+    if (changeInfo.status === 'complete') {
         // Auto enable on sites specified
         chrome.storage.sync.get('auto-enable-site-list', function (siteListObj) {
             var siteList;   
@@ -250,7 +250,7 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
                 siteList = siteListObj['auto-enable-site-list'];
                 var url = tab.url;
                 
-                if(typeof siteList != "undefined") {
+                if(typeof siteList !== "undefined") {
                     for(var i = 0; i < siteList.length; i++) {
                         var regex = new RegExp(siteList[i], "i");
         
