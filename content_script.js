@@ -606,8 +606,8 @@ function checkAgainstBlacklist(elem, level) {
         var className = elem.className,
             id = elem.id;
         for(var i = 0; i < blacklist.length; i++) {
-            if((typeof className != "undefined" && className.indexOf(blacklist[i]) >= 0) 
-            || (typeof id != "undefined" && id.indexOf(blacklist[i]) >= 0)
+            if((typeof className === "string" && className.indexOf(blacklist[i]) >= 0) 
+            || (typeof id === "string" && id.indexOf(blacklist[i]) >= 0)
             ) {
                 return null;
             }
