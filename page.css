@@ -28,23 +28,18 @@
     overflow: auto;
     z-index: 9999999999;
 
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 
-    -webkit-transform: translateY(0);
     transform: translateY(0);
 
-    -webkit-transition: .5s;
     transition: .5s;
 
     opacity: 1;
 }
 
 #simple-article#simple-article.simple-fade-up {
-    -webkit-transform: translateY(100px);
     transform: translateY(100px);
 
-    -webkit-transition: .3s
     transition: .3s;
 
     opacity: 0;
