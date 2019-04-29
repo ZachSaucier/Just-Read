@@ -16,6 +16,8 @@ ___
 
 > **Note** that if you have the Premium version installed, you don't need to have the free version installed and can uninstall it. 
 
+You can even use Just Read on your smart phone through mobile browsers that support extensions such as [Dolphin](http://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). For more information, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
+
 ___
 ### The story behind Just Read
 
@@ -85,6 +87,8 @@ ___
 
 #### Q: How can I start Just Read?
 
+#### On a desktop or laptop
+
 Start Just Read by using Just Read's auto-selection, user-selection mode, or highlight mode.
 
 > **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` and you can add/change shortcuts there.
@@ -114,6 +118,14 @@ You can select exactly the text you want to read if the built in method doesn't 
 
 You can select specific text by highlighting it (by clicking and dragging over the content), then right click it and select "View this content in Just Read".
 
+#### On a mobile device
+
+You must first install a mobile browser that supports extensions such as [Dolphin](http://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). Then install Just Read to that browser by visiting Just Read's (or Just Read Premium's) store page. 
+
+Once you're on an article that you want to read with Just Read installed on that browser, you need to navigate to their extensions section to run Just Read. In most browsers you need to click the three dots to see this section. Once there, simply click on Just Read. 
+
+**Note that some of Just Read's features may not work on mobile devices.**
+
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
 ___
@@ -131,6 +143,8 @@ ___
 #### Q: How can I get Just Read on all of my computers?
 
 When you log into Chrome using a Google account (as the primary Chrome user), Chrome automatically installs all extensions that you've installed to your account from Chrome's web store. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices, so you don't need to do anything special to get it working the same way on all of your devices. Note that mobile devices currently do not support Chrome extensions, so Just Read cannot be installed on these devices. 
+
+You can also get Just Read to work on your mobile devices. For more information, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
