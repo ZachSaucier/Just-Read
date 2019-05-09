@@ -81,7 +81,6 @@ function getStylesFromStorage(storage) {
         } else if(key === "fullscreen") {
             fullScrn.checked = storage[key];
         } else if(key.substring(0, 3) === "jr-") { // Get the user's stylesheets 
-            console.log(key);
             stylesheetObj[key.substring(3)] = storage[key];
         }
     }
@@ -95,7 +94,7 @@ function setStylesOfStorage(nextFunc) {
         chrome.storage.sync.set(obj, function() {
             if(chrome.runtime.lastError 
             && chrome.runtime.lastError.message === "QUOTA_BYTES_PER_ITEM quota exceeded") {
-                alert("File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/");
+                chrome.extension.getBackgroundPage().alert("File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/");
             } else {
                 nextFunc();
             }
@@ -166,13 +165,7 @@ function rename() {
                 saveTheme();
             }, 10);
             
-            var radio = document.createElement("input");
-
-            radio.type = "radio";
-            radio.name = "activeStylesheetRadios";
-
             liItem.innerHTML = "";
-            liItem.appendChild(radio);
             liItem.innerHTML += fileNameInput.value;
         }
 
@@ -202,7 +195,7 @@ function rename() {
 // Make sure the user wants to change files before saving
 function confirmChange() {
     if(changed)
-        if (window.confirm("Do you really want to change files before saving?"))
+        if (chrome.extension.getBackgroundPage().confirm("Do you really want to change files before saving?"))
                 return false;
             else
                 return true;
@@ -262,20 +255,14 @@ function continueLoading() {
             count = 0;
         for (var stylesheet in stylesheetObj) {
             var li = document.createElement("li"),
-                liClassList = li.classList,
-                radio = document.createElement("input");
-
-            radio.type = "radio";
-            radio.name = "activeStylesheetRadios";
+                liClassList = li.classList;
 
             // If the sheet is the one currently applied, add a signifier class
             if(stylesheet === currTheme) {
                 liClassList.add("used");
-                radio.setAttribute("checked", true);
             }
 
             // Add them to the li element
-            li.appendChild(radio);
             li.innerHTML += stylesheet;
 
             // Lock the default-styles.css file (prevent deletion)
@@ -360,13 +347,8 @@ function continueSaving() {
 
         // Add a new list element
         var list = document.querySelector(".stylesheets"),
-            li = document.createElement("li"),
-            radio = document.createElement("input");
+            li = document.createElement("li");
 
-        radio.type = "radio";
-        radio.name = "activeStylesheetRadios";
-
-        li.appendChild(radio);
         li.innerHTML += fileName;
 
         // Make it active
@@ -415,9 +397,6 @@ function useTheme() {
 
     // Update the class to show it's applied
     themeToUse.classList.add("used");
-
-    // Make this radio button active
-    themeToUse.querySelector("input").checked = true;
 
     // Apply the current theme
     var sheet = themeToUse.innerText;
@@ -477,7 +456,7 @@ add.onclick = function() {
         // Add a new list element
         var list = document.querySelector(".stylesheets"),
             li = document.createElement("li");
-        li.innerHTML = '<input type="radio" name="activeStylesheetRadios">' + fileName;
+        li.innerText = fileName;
 
         // Make it active
         if(document.querySelector(".stylesheets .active"))
@@ -515,7 +494,7 @@ removeButton.onclick = function() {
     // Make sure they can't delete locked files
     if(!elem.classList.contains("locked")) {
         // Add confimation
-        if (window.confirm("Do you really want to remove this file?")) {
+        if (chrome.extension.getBackgroundPage().confirm("Do you really want to remove this file?")) {
             // Remove the file from our object
             delete stylesheetObj[document.querySelector(".stylesheets .active").innerText];
 
@@ -526,7 +505,6 @@ removeButton.onclick = function() {
             if(elem.classList.contains("used")) {
                 elem.classList.remove("active");
                 chrome.storage.sync.set({"currentTheme": defaultStylesheet}, function() {
-                    defaultLiItem.querySelector("input").checked = true;
                     styleListOnClick.call(defaultLiItem);
                     defaultLiItem.classList.add("used", "active");
                 });
@@ -538,7 +516,7 @@ removeButton.onclick = function() {
             editor.setValue("", -1);
         }
     } else
-        alert("This file is locked and cannot be deleted.");
+        chrome.extension.getBackgroundPage().alert("This file is locked and cannot be deleted.");
 
     // Otherwise we do nothing
 }
@@ -580,14 +558,6 @@ alwaysAddAR.onchange = function() {
 fullScrn.onchange = function() {
     chrome.storage.sync.set({"fullscreen": this.checked});
     chrome.runtime.sendMessage({fullscreen: "true"});
-}
-
-var addOptBtn = document.getElementById("additional"),
-    closeAddBtn = document.getElementById("closeAdditional"),
-    addOpt = document.querySelector(".additional-options");
-
-addOptBtn.onclick = closeAddBtn.onclick = function() {
-    addOpt.classList.toggle("hidden");
 }
 
 

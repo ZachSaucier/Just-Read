@@ -12,10 +12,16 @@
     <h1>Configure <i>Just Read</i></h1>
 
     <div class="flex-container">
-        <div class="left-column">
+        <div class="theme-section">
             <div class="stylesheet-list-container">
                 <input type="text" id="new-file" placeholder="New stylesheet..."/>
                 <button id="add">+</button>
+
+                <div class="controls-container">
+                    <button id="use">Use as current theme</button>
+                    <button id="remove">Remove theme</button>
+                </div>
+
                 <ul class="stylesheets">
                     <!-- This is populated by our JS -->
                 </ul>
@@ -30,20 +36,17 @@
         </div>
 
         <div class="editor-container">
-            <div class="controls-container">
-                <button id="save">Save</button>
-                <button id="use">Use as current theme</button>
-                <button id="remove">Remove</button>
-                <button id="additional">Additional options</button>
-            </div>
             <div class="editor">
                 <div id="css-editor"></div>
             </div>
-            <label><input id="hideSegments" type="checkbox" checked /> Use hide-segments.css</label>
+            <div class="controls-container">
+                <button id="save">Save style changes</button>
+            </div>
+            <label><input id="hideSegments" type="checkbox" checked /> Use hide-segments.css</label>            
         </div>
     </div>
 
-    <div class="additional-options hidden">
+    <div class="additional-options">
         <h3>Context menu entries</h3>
         <label><input id="pageCM" type="checkbox" checked /> Enable page context menu entry.</label>
         <label><input id="highlightCM" type="checkbox" checked /> Enable highlight context menu entry.</label>
@@ -57,9 +60,7 @@
         <label><input id="fullScrn" type="checkbox" /> Always auto-enable fullscreen when Just Read is started.</label>
         <label><input id="alwaysAddAR" type="checkbox" /> Always add current site to Just Read's autorun list when Just Read is started on a page.</label>
 
-        <p>For more additional features, check out <a href="https://justread.link">Just Read Premium</a>!</p>
-
-        <button id="closeAdditional">X</button>
+        <p><strong>For more additional features, check out <a href="https://justread.link">Just Read Premium</a>!</strong></p>
     </div>
     
     <script src="external-libraries/ace/ace.js"></script>

@@ -76,6 +76,7 @@ ___
 - [How can I prevent Just Read from loading an old copy of the page I'm reading?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-prevent-just-read-from-loading-an-old-copy-of-the-page-im-reading)
 - [How do I prevent `<pre>` tags from being reformatted into paragraphs?](https://github.com/ZachSaucier/Just-Read/#q-how-do-i-prevent-pre-tags-from-being-reformatted-into-paragraphs)
 - [*X extension* doesn't work with the Just Read version of my page. How can I get it to work?](https://github.com/ZachSaucier/Just-Read/#q-x-extension-doesnt-work-with-the-just-read-version-of-my-page-how-can-i-get-it-to-work)
+- [Sharing on Firefox doesn't work for me. How can I fix it?](https://github.com/ZachSaucier/Just-Read/#q-sharing-on-firefox-doesnt-work-for-me-how-can-i-fix-it)
 - [Why am I getting a "You have too many shared articles" error?](https://github.com/ZachSaucier/Just-Read#q-why-am-i-getting-a-you-have-too-many-shared-articles-error)
 - [My theme from the original version breaks the page when I am using Premium. What's going on?](https://github.com/ZachSaucier/Just-Read/#q-my-theme-from-the-original-version-breaks-the-page-when-i-am-using-premium-whats-going-on)
 - [I can't buy the Premium version on Chrome's webstore. What can I do?](https://github.com/ZachSaucier/Just-Read/#q-i-cant-buy-the-premium-version-on-chromes-webstore-what-can-i-do)

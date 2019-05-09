@@ -1248,6 +1248,7 @@ function createSimplifiedOverlay() {
     // Focus the article so our shortcuts work from the start
     document.getElementById("simple-article").focus();
 
+    setTimeout(function() {
     // Append our custom HTML to the iframe
     simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
     simpleArticleIframe.body.appendChild(container);
@@ -1359,6 +1360,7 @@ function createSimplifiedOverlay() {
     });
 
     finishLoading();
+    }, 10);
 }
 
 function finishLoading() {

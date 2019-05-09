@@ -1,22 +1,7 @@
-* {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-html, body, .flex-container, .editor {
-    height: 100%;
-}
-.hidden {
-    display: none;
-}
+* { box-sizing: border-box; }
 
 body {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding-top: 30px;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 20px;
+    padding: 0 50px 20px;
 }
 h1 {
     border-bottom: 1px solid #d8d8d8;
@@ -32,37 +17,23 @@ input[type="checkbox"] {
 label {
     margin-top: 3px;
 }
-.flex-container {
-    display: flex;
-    flex-direction: row;
-}
-body, .editor-container {
-    display: flex;
-    flex-direction: column;
-}
 
-.left-column {
-    display: flex;
-    flex-direction: column;
 
-    max-width: 250px;
-    margin-right: 50px;
+.theme-section {
     border: 1px solid;
     padding: 8px;
     white-space: nowrap;
+    margin-bottom: 10px;
 }
 .stylesheets {
-    padding-left: 0px;
-    margin-bottom: 0;
+    padding-left: 15px;
 }
 .stylesheets li {
     cursor: pointer;
-    list-style: none;
     padding-bottom: 3px;
 }
 .stylesheets li input {
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
+    display: none;
 }
 .stylesheets .active {
     background: lightblue;
@@ -75,28 +46,29 @@ body, .editor-container {
     color: grey;
 }
 
-.left-column h4 {
+.theme-section h4 {
     margin-top: 20px;
     margin-bottom: 5px;
 }
 #domainList {
-    width: 100%;
-    flex-grow: 1;
-    resize: none;
+    width: 515px;
 }
 
 .controls-container {
-    margin-bottom: 10px;
-}
-.editor-container, .editor {
-    flex-grow: 2;
+    margin: 10px 0;
 }
 
+
+.editor-container {
+    margin-bottom: 2em;
+}
 .editor {
+    height: 300px;
     position: relative;
     border: 1px solid;
     overflow: auto;
 }
+
 
 
 .view-other-stylesheets {
@@ -129,10 +101,10 @@ body, .editor-container {
     background-color: white;
     opacity: 0;
     height: 0;
+    pointer-events: none;
 }
 #save.saved::before,
 #use.used::before {
-    -webkit-animation: fadeInAndOut 2s forwards;
     animation: fadeInAndOut 2s forwards;
 }
 #use::before {
@@ -140,69 +112,18 @@ body, .editor-container {
 }
 
 .additional-options {
-    position: absolute;
-    right: 50px;
-    top: 108px;
     background-color: white;
     border: 1px solid;
     z-index: 6;
-    width: calc(100% - 100px);
-    height: calc(100% - 120px);
     padding: 8px;
     overflow: auto;
 }
 .additional-options label {
     display: block;
 }
-.additional-options .left-column {
+.additional-options .theme-section {
     border: none;
     padding: 0;
-}
-#additional {
-    position: absolute;
-    right: 50px;
-}
-#closeAdditional {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: none;
-    border: 1px solid black;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-@media (max-width: 740px) {
-    body {
-        padding-top: 0px;
-    }
-    
-    .flex-container {
-        flex-direction: column;
-    }
-
-    .left-column {
-        margin-bottom: 10px;
-    }
-
-    #css-editor {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-}
-
-@-webkit-keyframes fadeInAndOut {
-    0%, 100% {
-        height: auto;
-        opacity: 0;
-        -webkit-transform: translateY(30px);
-    }
-    
-    10%, 90% {
-        opacity: 1;
-        -webkit-transform: translateY(0px);
-    }
 }
 
 @keyframes fadeInAndOut {
