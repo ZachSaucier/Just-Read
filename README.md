@@ -436,7 +436,7 @@ ___
 
 #### Q: I can't buy the Premium version on Chrome's webstore. What can I do?
 
-Chrome's webstore prevents Chrome extensions from being bought in some regions. As an alternative, you can contact me at support@justread.link to arrange an alternative way of payment. 
+Chrome's webstore prevents Chrome extensions from being bought in some regions. You *could* use a VPN to circumvent these restrictions. As an alternative, you can contact me at support@justread.link to arrange an alternative way of payment. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 

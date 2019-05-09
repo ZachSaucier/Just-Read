@@ -237,6 +237,8 @@ function actionWithStack(actionName, elem, startText) {
 
     let actionObj;
     if(actionName === "delete") {
+        elem.classList.remove("jr-hovered");
+        
         let parent = elem.parentNode;
         
         actionObj = {
