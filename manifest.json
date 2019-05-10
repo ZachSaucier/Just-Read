@@ -1,13 +1,13 @@
 {
   "name": "Just Read",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "manifest_version": 2,
   "description": "A feature-packed, customizable reader extension.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
 
   "browser_action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "Just Read Premium"
+    "default_title": "Just Read"
   },
 
   "browser_specific_settings": {
@@ -27,13 +27,13 @@
       "suggested_key": {
         "default": "Ctrl+Shift+L"
       },
-      "description": "Open the Just Read Premium format for the current page"
+      "description": "Open the Just Read format for the current page"
     },
     "select-text": {
       "suggested_key": {
         "default": "Ctrl+Shift+K"
       },
-      "description": "Enable user text selection mode using Just Read Premium"
+      "description": "Enable user text selection mode using Just Read"
     }
   },
 

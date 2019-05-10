@@ -1094,7 +1094,7 @@ function editText(elem) {
 function addPremiumNofifier() {
     var notifier = document.createElement("div");
     notifier.className = "jr-tooltip jr-notifier";
-    notifier.innerHTML = '<p>Thanks for using Just Read! Did you know there was a premium version of Just Read? It has additional features like the ability to save and share Just Read versions of pages.</p><div class="right-align-buttons"><button class="jr-secondary" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)">I\'m not interested</button><a href="https://justread.link" target="_blank"><button class="jr-primary" onclick="this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode)">Learn more</button></a></div>';
+    notifier.innerHTML = '<p>Thanks for using Just Read! Did you know there is a premium version of Just Read? It has additional features like the ability to save and share Just Read versions of pages.</p><div class="right-align-buttons"><button class="jr-secondary" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)">I\'m not interested</button><a href="https://justread.link" target="_blank"><button class="jr-primary" onclick="this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode)">Learn more</button></a></div>';
     return notifier;
 }
 

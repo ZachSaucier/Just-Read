@@ -208,7 +208,7 @@ ___
 
 #### Q: How can I send the article to Google Drive?
 
-Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so is to "print" the page (either using your browser's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". 
+Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so in Chrome is to "print" the page (either using your browser's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". In Firefox, you need to save it to your computer as a PDF and then manually upload it to Google Drive. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -269,7 +269,7 @@ ___
 
 #### Q: How can I show the original page's URL in Just Read?
 
-To enable this option, go to Just Read's "Options" pages -> and enable "Always add the original URL."
+To enable this option, go to Just Read's "Options" pages and enable "Always add the original URL."
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
