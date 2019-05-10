@@ -28,7 +28,7 @@ ___
 
 ### Privacy statement
 
-Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal Google account on which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a unique but anonymous string based on your Google account is used to verify identity, not anything related to your personal information.
+Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal account with which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a random, unique, and anonymous string is used to verify identity, not anything related to your personal information.
 
 ___
 
