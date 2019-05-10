@@ -11,8 +11,9 @@ ___
 
 ### Installation:
 
-- [Just Read](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
-- [Just Read Premium](https://chrome.google.com/webstore/detail/just-read-premium/dpamdgmnffodphoamchpmbclkpmccjga)
+- [Just Read (Chrome)](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
+- [Just Read (Firefox)](https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/)
+- [Just Read Premium (Chrome)](https://chrome.google.com/webstore/detail/just-read-premium/dpamdgmnffodphoamchpmbclkpmccjga)
 
 > **Note** that if you have the Premium version installed, you don't need to have the free version installed and can uninstall it. 
 
@@ -92,7 +93,7 @@ ___
 
 Start Just Read by using Just Read's auto-selection, user-selection mode, or highlight mode.
 
-> **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` and you can add/change shortcuts there.
+> **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` (`about:addons`, the gear icon -> "Manage Extension Shortcuts" in Firefox) and you can add/change shortcuts there.
 
 ##### Auto-selection
 
@@ -135,7 +136,7 @@ ___
 
 You can opt to auto-run Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) or a [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) (regex) into the "Auto-run domain list" found on the extension's Options page (for more info as to what formats work, see [this post](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204)). Just Read will then check each new site's URL to see if it matches a string or expression in the user-inputted list. If it does, it will start Just Read when the page loads.
 
-You can also enable "Always add current site to Just Read's autorun list when Just Read is started on a page" under "Options" -> "Additional options" -> "Additional preferences" if you want *every* site that you start Just Read to be added to the auto-run list. For more information on how this works, see [this post](https://github.com/ZachSaucier/Just-Read/pull/166#issuecomment-404371640).
+You can also enable "Always add current site to Just Read's autorun list when Just Read is started on a page" under "Options" -> "Additional preferences" if you want *every* site that you start Just Read to be added to the auto-run list. For more information on how this works, see [this post](https://github.com/ZachSaucier/Just-Read/pull/166#issuecomment-404371640).
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -143,9 +144,9 @@ ___
 
 #### Q: How can I get Just Read on all of my computers?
 
-When you log into Chrome using a Google account (as the primary Chrome user), Chrome automatically installs all extensions that you've installed to your account from Chrome's web store. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices, so you don't need to do anything special to get it working the same way on all of your devices. Note that mobile devices currently do not support Chrome extensions, so Just Read cannot be installed on these devices. 
+When you log into Chrome using a Google account (as the primary Chrome user) or Firefox using one of their accounts, the browser automatically installs all extensions that you've installed to your account. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices using this functionality, so you don't need to do anything special to get it working the same way on all of your devices. Note that currently some mobile browsers do not support web extensions, so Just Read cannot be installed on these browsers. 
 
-You can also get Just Read to work on your mobile devices. For more information, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
+For more information on how to get Just Read to work on your mobile devices, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -155,9 +156,9 @@ ___
 
 > **Note that this is a Premium-only feature.**
 
-You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Additional options" -> "Sharing preferences". 
+You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Sharing preferences". 
 
-**Note that for this feature to work, you must have user account syncing enabled.** To enable syncing for your Google account, go to Chrome's settings page (`chrome://settings/`) and under "People" click "Turn on syncing".
+**Note that for this feature to work in Chrome, you must have user account syncing enabled.** To enable syncing for your Google account, go to Chrome's settings page (`chrome://settings/`) and under "People" click "Turn on syncing".
 
 Also note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address). 
 
@@ -179,7 +180,7 @@ ___
 
 #### Q: How can I have Just Read auto-save my changes?
 
-Just Read has an option under Options -> Additional options -> "Backup the most recent Just Read page (in case of accidental closure)." that does this. If you make any changes on a page, if you are on that same page it will load the old version if enabled. 
+Just Read has an option under Options -> "Backup the most recent Just Read page (in case of accidental closure)." that does this. If you make any changes on a page, if you are on that same page it will load the old version if enabled. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -217,7 +218,7 @@ ___
 
 > **Note that this is a Premium-only feature.**
 
-You can do this by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
+You can do this by going to "Options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -225,7 +226,7 @@ ___
 
 #### Q: How can I remove Just Read's entries from the right-click context menu?
 
-Under "Options" -> "Additional options" -> "Context menu entries", you can enable or disable the context menu entries that Just Read creates.
+Under "Options" -> "Context menu entries", you can enable or disable the context menu entries that Just Read creates.
 
 - "Don't reformat pre tags" makes it so that Just Read doesn't turn any `<pre>` tags into paragraphs but retains their original formatting.
 - "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
@@ -238,7 +239,7 @@ ___
 
 #### Q: How can I auto-enable fullscreen when Just Read is started?
 
-Under "Options" -> "Additional options" -> "Additional preferences" there is an option to "Always auto-enable fullscreen when Just Read is started." Checking this box will make Just Read be fullscreen (like when you press <kbd>F11</kbd>) when you start Just Read on a page.
+Under "Options" -> "Additional preferences" there is an option to "Always auto-enable fullscreen when Just Read is started." Checking this box will make Just Read be fullscreen (like when you press <kbd>F11</kbd>) when you start Just Read on a page.
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -268,7 +269,7 @@ ___
 
 #### Q: How can I show the original page's URL in Just Read?
 
-To enable this option, go to Just Read's "Options" pages -> "Additional options" -> and enable "Always add the original URL."
+To enable this option, go to Just Read's "Options" pages -> and enable "Always add the original URL."
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -290,7 +291,7 @@ ___
 
 > **Note that this is a Premium-only feature.**
 
-Yes you can! Using the Premium version, you can go to "Options" -> "Additional options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need. 
+Yes you can! Using the Premium version, you can go to "Options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need. 
 
 The full list of options in the domain-specific selectors list is as follow:
 
@@ -326,7 +327,7 @@ To use the GUI, click [the paint brush icon](http://i.imgur.com/XW03mZW.png) and
 
 > **Note**: The theme editor GUI will only appear for the default theme, the default dark theme, or themes derived from the default (that share "default-styles" or "dark-styles" as part of the file name).
 
-You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via the Chrome extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your Chrome tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
+You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via your browser's extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your browser tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
 You can also use themes that others have made. [Check them out here!](https://github.com/ZachSaucier/Just-Read/issues/4)
 
@@ -360,7 +361,7 @@ ___
 
 Just Read's gradient functionality makes it so that each line of text starts and ends with a different color. By having the end-of-line color the same as the next start-of-line color, it makes following sentences easier and reading faster. Note that this feature overrides your other paragraph text color styles.
 
-You can turn it on by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors by a comma!
+You can turn it on by going to "Options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors by a comma!
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -370,7 +371,7 @@ ___
 
 > **Note that this is a Premium-only feature.**
 
-You can enable a custom scrollbar by going to "Options" -> "Additional options" -> "Additional features" and clicking the "Use a custom scrollbar instead of the browser's default" option. This will make Just Read use its built-in, custom scrollbar and Just Read will retain this custom scrollbar on pages you share as well. 
+You can enable a custom scrollbar by going to "Options" -> "Additional features" and clicking the "Use a custom scrollbar instead of the browser's default" option. This will make Just Read use its built-in, custom scrollbar and Just Read will retain this custom scrollbar on pages you share as well. 
 
 If you want to customize the look of the scrollbar even further, you can modify your theme to edit `progress`, `progress::-webkit-progress-bar`, and `progress::-webkit-progress-value` as needed.
 
@@ -390,14 +391,14 @@ ___
 
 #### Q: How can I prevent Just Read from loading an old copy of the page I'm reading?
 
-You can either use [user selection mode](https://github.com/ZachSaucier/Just-Read/#user-selection-mode) to select a specific element to read (not disabling this option for future cases) or you can go to "Options" -> "Additional options" -> "Additional preferences" and uncheck "Backup most recent Just Read page (in case of accidental closure).".
+You can either use [user selection mode](https://github.com/ZachSaucier/Just-Read/#user-selection-mode) to select a specific element to read (not disabling this option for future cases) or you can go to "Options" -> "Additional preferences" and uncheck "Backup most recent Just Read page (in case of accidental closure).".
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 ___
 
 #### Q: How do I prevent `<pre>` tags from being reformatted into paragraphs?
 
-Under "Options" -> "Additional options" -> "Additional preferences" there is an option to "Never reformat pre tags" to do this. This is probably most useful if you're a developer and read a lot of code-related articles. 
+Under "Options" -> "Additional preferences" there is an option to "Never reformat pre tags" to do this. This is probably most useful if you're a developer and read a lot of code-related articles. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
@@ -453,6 +454,6 @@ ___
 
 #### Q: How can I run Just Read from a local copy on my computer?
 
-To run it from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, and then go to chrome://extensions/ and click "Load Unpacked", and then select the unzipped folder. This is particularly useful if you are wanting to modify how Just Read works or debug issues. 
+To run it from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, and then go to `chrome://extensions/` (or `about:debugging#addons` for Firefox) and click "Load Unpacked", and then select the unzipped folder. This is particularly useful if you are wanting to modify how Just Read works or debug issues. 
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
