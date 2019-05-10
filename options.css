@@ -32,9 +32,6 @@ label {
     cursor: pointer;
     padding-bottom: 3px;
 }
-.stylesheets li input {
-    display: none;
-}
 .stylesheets .active {
     background: lightblue;
 }
@@ -114,7 +111,6 @@ label {
 .additional-options {
     background-color: white;
     border: 1px solid;
-    z-index: 6;
     padding: 8px;
     overflow: auto;
 }

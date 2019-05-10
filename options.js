@@ -78,8 +78,6 @@ function getStylesFromStorage(storage) {
             addOrigURL.checked = storage[key];
         } else if(key === "alwaysAddAR") {
             alwaysAddAR.checked = storage[key];
-        } else if(key === "fullscreen") {
-            fullScrn.checked = storage[key];
         } else if(key.substring(0, 3) === "jr-") { // Get the user's stylesheets 
             stylesheetObj[key.substring(3)] = storage[key];
         }
@@ -96,7 +94,8 @@ function setStylesOfStorage(nextFunc) {
             && chrome.runtime.lastError.message === "QUOTA_BYTES_PER_ITEM quota exceeded") {
                 chrome.extension.getBackgroundPage().alert("File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/");
             } else {
-                nextFunc();
+                if(nextFunc)
+                    nextFunc();
             }
         });
     }
@@ -527,8 +526,7 @@ var hideSegments = document.getElementById("hideSegments"),
     highlightCM = document.getElementById("highlightCM"),
     linkCM = document.getElementById("linkCM"),
     autorunCM = document.getElementById("autorunCM"),
-    alwaysAddAR = document.getElementById("alwaysAddAR"),
-    fullScrn = document.getElementById("fullScrn");
+    alwaysAddAR = document.getElementById("alwaysAddAR");
 
 hideSegments.onchange = function() {
     chrome.storage.sync.set({"hideSegments": this.checked});
@@ -553,11 +551,6 @@ autorunCM.onchange = function() {
 
 alwaysAddAR.onchange = function() {
     chrome.storage.sync.set({"alwaysAddAR": this.checked});
-}
-
-fullScrn.onchange = function() {
-    chrome.storage.sync.set({"fullscreen": this.checked});
-    chrome.runtime.sendMessage({fullscreen: "true"});
 }
 
 
