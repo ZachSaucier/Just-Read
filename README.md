@@ -56,6 +56,7 @@ ___
 - [How can I auto-enable fullscreen when Just Read is started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-auto-enable-fullscreen-when-just-read-is-started)
 - [How can I get Just Read to auto-scroll the article?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-get-just-read-to-auto-scroll-the-article)
 - [How can I remove Just Read's entries from the right-click context menu?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-remove-just-reads-entries-from-the-right-click-context-menu)
+- [How can I unsubscribe from Just Read Premium?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-unsubscribe-from-just-read-premium)
 
 #### Editing Just Read's content
 - [How can I delete parts of the page once Just Read has started?](https://github.com/ZachSaucier/Just-Read/#q-how-can-i-delete-parts-of-the-page-once-just-read-has-started)
@@ -232,6 +233,14 @@ Under "Options" -> "Context menu entries", you can enable or disable the context
 - "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
 - "Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
 - "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
+
+*[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
+
+___
+
+#### Q: How can I unsubscribe from Just Read Premium?
+
+Since Google handles the payments completely through their webstore, you can cancel your subscription by following [these instructions](https://support.google.com/chrome_webstore/answer/1060830?hl=en).
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
 
