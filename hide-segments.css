@@ -183,3 +183,5 @@ svg[id *= "email"],
 [id *= "email"] svg {
     display: none;
 }
+
+pre * { display: initial !important; }
