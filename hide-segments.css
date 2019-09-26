@@ -1,6 +1,4 @@
-script {
-    display: none;
-}
+script ,
 
 [class = "ad"],
 [class *= "ads"],
@@ -9,63 +7,45 @@ script {
 [class *= "-ad-"],
 [class $= "-ad"],
 [class $= "_ad"],
-[class ~= "ad"] {
-    display: none;
-}
+[class ~= "ad"],
 
 [class *= "navigation"],
 [class *= "nav"],
 nav,
 [class *= "search"],
 [class *= "menu"],
-[class *= "print"]:not(.simple-print) {
-    display: none;
-}
+[class *= "print"]:not(.simple-print),
 
 [class *= "nocontent"],
-.hidden {
-    display: none;
-}
+.hidden,
 
-[class *= "popup"] {
-    display: none;
-}
+[class *= "popup"],
 
 [class *= "share"]:not([class ^= "simple-share"]),
 [class *= "sharing"],
 [class *= "social"],
 [class *= "follow"],
-[class *= "newsletter"] {
-    display: none;
-}
+[class *= "newsletter"],
 
 [class *= "meta"]:not(.simple-meta),
 [class *= "author"]:not(.simple-author),
-[id *= "author"] {
-    display: none;
-}
+[id *= "author"],
 
 form:not(.usertext),
 [class ^= "form"],
 [class *= "-form-"],
 [class $= "form"],
-[class ~= "form"]{
-    display: none;
-}
+[class ~= "form"],
 
 [class *= "related"],
 [class *= "recommended"],
 [class *= "see-also"],
 [class *= "popular"],
-[class *= "trail"] {
-    display: none;
-}
+[class *= "trail"],
 
 [class *= "comment"]:not([class *= "simple-"]),
 [class *= "disqus"],
-[id *= "disqus"] {
-    display: none;
-}
+[id *= "disqus"],
 
 [class ^= "tag"],
 [class *= "-tag-"],
@@ -79,16 +59,12 @@ form:not(.usertext),
 [id *= "-tags-"],
 [id $= "-tags"],
 [id $= "_tags"],
-[id ~= "tags"] {
-    display: none;
-}
+[id ~= "tags"],
 
 [class *= "subscribe"],
 [id *= "subscribe"],
 [class *= "subscription"],
-[id *= "subscription"] {
-    display: none;
-}
+[id *= "subscription"],
 
 [class ^= "fav"],
 [class *= "-fav-"],
@@ -101,24 +77,18 @@ form:not(.usertext),
 [id $= "_fav"],
 [id ~= "fav"],
 [class *= "favorites"],
-[id *= "favorites"] {
-    display: none;
-}
+[id *= "favorites"],
 
 [class *= "signup"],
 [id *= "signup"],
 [class *= "signin"],
 [id *= "signin"],
 [class *= "signIn"],
-[id *= "signIn"] {
-    display: none;
-}
+[id *= "signIn"],
 
 footer,
 [class *= "footer"],
-[id *= "footer"] {
-    display: none;
-}
+[id *= "footer"],
 
 
 svg[class *= "pinterest"],
@@ -184,4 +154,5 @@ svg[id *= "email"],
     display: none;
 }
 
+.entry-content.entry-content,
 pre * { display: initial !important; }

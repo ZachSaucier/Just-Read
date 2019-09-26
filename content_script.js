@@ -62,7 +62,7 @@ function getSelectionHtml() {
 
 // Use the highlighted text if started from that
 var pageSelectedContainer;
-if(typeof textToRead !== "undefined" && textToRead) {  
+if(typeof textToRead !== "undefined" && textToRead) {
     pageSelectedContainer = document.createElement("div");
     pageSelectedContainer.className = "highlighted-html";
     pageSelectedContainer.innerHTML = getSelectionHtml();
@@ -170,7 +170,7 @@ function startDeleteElement(doc) {
         && selected.tagName !== "rect"
         && selected.tagName !== "polygon")
             actionWithStack("delete", selected);
-        
+
         e.preventDefault();
     },
     escFunc = function(e) {
@@ -234,16 +234,16 @@ function actionWithStack(actionName, elem, startText) {
     let actionObj;
     if(actionName === "delete") {
         elem.classList.remove("jr-hovered");
-        
+
         let parent = elem.parentNode;
-        
+
         actionObj = {
             "type": "delete",
             "index": Array.from(parent.children).indexOf(elem),
             "parent": parent,
             "elem": parent.removeChild(elem)
         };
-        
+
     } else if(actionName === "edit") {
         actionObj = {
             "type": "edit",
@@ -296,7 +296,7 @@ function getStylesFromStorage(storage) {
     for(var key in storage) {
         if(key.substring(0, 3) === "jr-") { // Get stylesheets in the new format
             stylesheetObj[key.substring(3)] = storage[key];
-        } 
+        }
     }
 }
 
@@ -322,7 +322,7 @@ function removeStyleFromStorage(stylesheet) {
 /////////////////////////////////////
 
 // From https://stackoverflow.com/a/14824756/2065702
-function isRTL(s) {           
+function isRTL(s) {
     var ltrChars    = 'A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF'+'\u2C00-\uFB1C\uFDFE-\uFE6F\uFEFD-\uFFFF',
         rtlChars    = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC',
         rtlDirCheck = new RegExp('^[^'+ltrChars+']*['+rtlChars+']');
@@ -499,13 +499,13 @@ function closeOverlay() {
 
     // Fade out
     simpleArticle.classList.add("simple-fade-up");
-    
+
     // Reset our variables
     simpleArticleIframe = undefined;
     pageSelectedContainer = null;
     userSelected = null;
     textToRead = null;
-    
+
     setTimeout(function() {
         // Enable scroll
         document.documentElement.classList.remove("simple-no-scroll");
@@ -519,7 +519,7 @@ function closeOverlay() {
 function getContainer() {
     var numWordsOnPage = document.body.innerText.match(/\S+/g).length,
         ps = document.body.querySelectorAll("p");
-    
+
     // Find the paragraphs with the most words in it
     var pWithMostWords = document.body,
         highestWordCount = 0;
@@ -549,8 +549,8 @@ function getContainer() {
     // Keep selecting more generally until over 2/5th of the words on the page have been selected
     var selectedContainer = pWithMostWords,
         wordCountSelected = highestWordCount;
-    
-    while(wordCountSelected / numWordsOnPage < 0.4 
+
+    while(wordCountSelected / numWordsOnPage < 0.4
     && selectedContainer != document.body
     && selectedContainer.parentNode.innerText) {
         selectedContainer = selectedContainer.parentNode;
@@ -561,7 +561,7 @@ function getContainer() {
     if(selectedContainer.tagName === "P") {
         selectedContainer = selectedContainer.parentNode;
     }
-    
+
     return selectedContainer;
 }
 
@@ -581,7 +581,7 @@ function linkListener(e) {
 
         // Don't change the top most if it's referencing an anchor in the article
         var hrefArr = this.href.split("#");
-        
+
         if(hrefArr.length < 2 // No anchor
         || (hrefArr[0].replace(/\/$/, "") != top.window.location.origin + top.window.location.pathname.replace(/\/$/, "") // Anchored to an ID on another page
             && hrefArr[0] != "about:blank"
@@ -604,7 +604,7 @@ function checkAgainstBlacklist(elem, level) {
         var className = elem.className,
             id = elem.id;
         for(var i = 0; i < blacklist.length; i++) {
-            if((typeof className === "string" && className.indexOf(blacklist[i]) >= 0) 
+            if((typeof className === "string" && className.indexOf(blacklist[i]) >= 0)
             || (typeof id === "string" && id.indexOf(blacklist[i]) >= 0)
             ) {
                 return null;
@@ -857,7 +857,7 @@ function updateEditorStyles(editor) {
     editor.linkColor = getStylesheetValue(s, "a[href]", "color");
     editor.linkHoverColor = getStylesheetValue(s, "a[href]:hover", "color");
     editor.maxWidth = getStylesheetValue(s, ".simple-container", "max-width");
-    
+
     datGUI.__controllers.forEach(controller => controller.updateDisplay());
 }
 
@@ -869,14 +869,14 @@ function openFullStyles() {
 function checkFileName(fileName) {
     var tempName = fileName,
         count = 1;
-    
+
     while(stylesheetObj[tempName])
         tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css");
     return tempName;
 }
 
 function updatePrevStyles(theme) {
-    prevStyles.theme = theme; 
+    prevStyles.theme = theme;
     prevStyles.fontSize = getStylesheetValue(s, "body", "font-size");
     prevStyles.textColor = getStylesheetValue(s, "body", "color");
     prevStyles.backgroundColor = getStylesheetValue(s, "body", "background-color");
@@ -910,9 +910,9 @@ function saveStyles() {
     }
 
     updatePrevStyles(theme);
-    
+
     saved = true;
-    
+
     closeStyleEditor();
 }
 
@@ -929,7 +929,7 @@ function closeStyleEditor() {
     }
 
     datGUI.domElement.style.display = "none";
-    
+
     saved = false;
 }
 
@@ -945,7 +945,7 @@ function openStyleEditor() {
         let editor = new StyleEditor();
 
         datGUI = new dat.GUI();
-        
+
         let themeList = datGUI.add(editor, "theme", Object.keys(stylesheetObj));
         editor.theme = theme;
 
@@ -959,7 +959,7 @@ function openStyleEditor() {
             theme = value;
             chrome.storage.sync.set({'currentTheme': theme});
             updatePrevStyles(theme);
-        }); 
+        });
         let fontSize = datGUI.add(editor, "fontSize", 8, 25);
         fontSize.onChange((value) => {
             saved = false;
@@ -1053,7 +1053,7 @@ function changeStylesheetRule(stylesheet, selector, property, value) {
 function editText(elem) {
     if(!simpleArticleIframe.body.classList.contains("simple-deleting")) {
         let startText = elem.innerText;
-        
+
         // Hide the item
         elem.style.display = "none";
 
@@ -1130,7 +1130,7 @@ function createSimplifiedOverlay() {
     if(!pageSelectedContainer && typeof textToRead !== "undefined" && textToRead) {
         pageSelectedContainer = window.getSelection().toString();
     }
-    
+
     // If there is no text selected, auto-select the content
     if(!pageSelectedContainer) {
         pageSelectedContainer = getContainer();
@@ -1182,7 +1182,7 @@ function createSimplifiedOverlay() {
             }
 
             // Replace the depreciated font element and pres without code with ps
-            if(elem.nodeName === "FONT" 
+            if(elem.nodeName === "FONT"
             || !isPreNoCode) {
                 var p = document.createElement('p');
                 p.innerHTML = elem.innerHTML;
@@ -1196,7 +1196,7 @@ function createSimplifiedOverlay() {
             || elem.nodeName === "NOINDEX"
             || elem.nodeName === "LINK"
             || elem.getAttribute("encoding") == "application/x-tex"
-            || (elem.getAttribute("aria-hidden") == "true" 
+            || (elem.getAttribute("aria-hidden") == "true"
                && !elem.classList.contains("mwe-math-fallback-image-inline"))))
                 elem.setAttribute("data-simple-delete", true);
 
@@ -1316,7 +1316,7 @@ function createSimplifiedOverlay() {
 
     simpleArticleIframe.onkeydown = function(e) {
         // Listen for the "Esc" key and exit if so
-        if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting") && document.hasFocus()) 
+        if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting") && document.hasFocus())
             closeOverlay();
 
         // Listen for CTRL + SHIFT + ; and allow node deletion if so
@@ -1356,7 +1356,7 @@ function finishLoading() {
     || typeof chromeStorage['hideSegments'] === "undefined") {
         addStylesheet(simpleArticleIframe, "hide-segments.css", "hide-segments");
     }
-    
+
     // Change the top most page when regular links are clicked
     var linkNum = simpleArticleIframe.links.length;
     for(var i = 0; i < linkNum; i++)
@@ -1386,7 +1386,7 @@ function fadeIn() {
 
 
 // Loads the styles after the xhr request finishes
-var theme, 
+var theme,
     styleElem,
     jrCount;
 function continueLoading() {
@@ -1410,8 +1410,8 @@ function continueLoading() {
         jrCount = chromeStorage['jrCount'];
         chrome.storage.sync.set({'jrCount': jrCount + 1});
     }
-        
-        
+
+
     // Create our version of the article
     if(chromeStorage["backup"]) {
         chrome.runtime.sendMessage({ hasSavedVersion: "true" }, function(response) {
@@ -1438,7 +1438,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.26; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.27; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
     // Detect past overlay - don't show another
@@ -1462,7 +1462,7 @@ function launch() {
                 getStyles();
             }
         }
-        
+
     } else {
         if(document.querySelector(".simple-fade-up") == null) // Make sure it's been able to load
             closeOverlay();
