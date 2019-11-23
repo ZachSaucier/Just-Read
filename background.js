@@ -65,27 +65,27 @@ function createHighlightCM() {
         }
     });
 }
-function createLinkCM() {
-    // Create an entry to allow user to open a given link using Just read
-    linkCMId = chrome.contextMenus.create({
-        title: "View the linked page using Just Read",
-        id: "linkCM",
-        contexts:["link"],
-        onclick: function(info, tab) {
-            chrome.tabs.create(
-                { url: info.linkUrl, active: false },
-                function(newTab) {
-                    chrome.tabs.executeScript(newTab.id, {
-                        code: 'var runOnLoad = true'
-                    }, function() {
-                        startJustRead(newTab);
-                    });
-                }
-            );
-            
-        }
-    });
-}
+// function createLinkCM() {
+//     // Create an entry to allow user to open a given link using Just read
+//     linkCMId = chrome.contextMenus.create({
+//         title: "View the linked page using Just Read",
+//         id: "linkCM",
+//         contexts:["link"],
+//         onclick: function(info, tab) {
+//             chrome.tabs.create(
+//                 { url: info.linkUrl, active: false },
+//                 function(newTab) {
+//                     chrome.tabs.executeScript(newTab.id, {
+//                         code: 'var runOnLoad = true'
+//                     }, function() {
+//                         startJustRead(newTab);
+//                     });
+//                 }
+//             );
+//
+//         }
+//     });
+// }
 function createAutorunCM() {
     // Create an entry to allow user to open a given link using Just read
     autorunCMId = chrome.contextMenus.create({
@@ -131,12 +131,12 @@ function addSiteToAutorunList(info, tab) {
 
 var pageCMId = highlightCMId = linkCMId = undefined;
 function updateCMs() {
-    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM", "enable-linkCM"], function (result) {
+    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM"], //, "enable-linkCM"], function (result) {
         var size = 0;
-        
+
         for(var key in result) {
             size++;
-            
+
             if(key === "enable-pageCM") {
                 if(result[key]) {
                     if(typeof pageCMId == "undefined")
@@ -157,17 +157,19 @@ function updateCMs() {
                         highlightCMId = undefined;
                     }
                 }
-            } else if(key === "enable-linkCM") {
-                if(result[key]) {
-                    if(typeof linkCMId == "undefined")
-                        createLinkCM();
-                } else {
-                    if(typeof linkCMId != "undefined") {
-                        chrome.contextMenus.remove("linkCM");
-                        linkCMId = undefined;
-                    }
-                }
-            } else if(key === "enable-autorunCM") {
+            }
+            // else if(key === "enable-linkCM") {
+            //     if(result[key]) {
+            //         if(typeof linkCMId == "undefined")
+            //             createLinkCM();
+            //     } else {
+            //         if(typeof linkCMId != "undefined") {
+            //             chrome.contextMenus.remove("linkCM");
+            //             linkCMId = undefined;
+            //         }
+            //     }
+            // }
+            else if(key === "enable-autorunCM") {
                 if(result[key]) {
                     if(typeof autorunCMId == "undefined")
                         createAutorunCM();
@@ -177,9 +179,9 @@ function updateCMs() {
                         autorunCMId = undefined;
                     }
                 }
-            } 
+            }
         }
-        
+
         if(size === 0) {
             createPageCM();
             createHighlightCM();
@@ -209,7 +211,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         chrome.runtime.openOptionsPage();
     } else if(request.updateCMs === "true") {
         updateCMs();
-    } else if(request.savedVersion) { 
+    } else if(request.savedVersion) {
         let tempObj = {};
         tempObj.content = request.savedVersion;
         tempObj.url = sender.url;
@@ -245,15 +247,15 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
         // Auto enable on sites specified
         chrome.storage.sync.get('auto-enable-site-list', function (siteListObj) {
-            var siteList;   
+            var siteList;
             if(siteListObj) {
                 siteList = siteListObj['auto-enable-site-list'];
                 var url = tab.url;
-                
+
                 if(typeof siteList !== "undefined") {
                     for(var i = 0; i < siteList.length; i++) {
                         var regex = new RegExp(siteList[i], "i");
-        
+
                         if( url.match( regex ) ) {
                             chrome.tabs.executeScript(tabId, {
                                 code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load

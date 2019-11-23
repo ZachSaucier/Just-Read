@@ -98,7 +98,7 @@ Start Just Read by using Just Read's auto-selection, user-selection mode, or hig
 
 ##### Auto-selection
 
-You can start using Just Read's built in auto-selection selection in four ways:
+You can start using Just Read's built in auto-selection selection in three ways:
 
 1. Click the Just Read extension button.
 ![extension button](http://i.imgur.com/aCOIuVV.png)
@@ -107,7 +107,7 @@ You can start using Just Read's built in auto-selection selection in four ways:
 
 3. Right click the current page and choose the "View this page using Just Read" option.
 
-4. Right click a link and select "View the linked page using Just Read" (it will open it in a new tab). This is also called "link mode".
+<!-- 4. Right click a link and select "View the linked page using Just Read" (it will open it in a new tab). This is also called "link mode". -->
 
 ##### User selection mode
 
