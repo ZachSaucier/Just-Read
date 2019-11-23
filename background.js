@@ -131,7 +131,7 @@ function addSiteToAutorunList(info, tab) {
 
 var pageCMId = highlightCMId = linkCMId = undefined;
 function updateCMs() {
-    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM"], //, "enable-linkCM"], function (result) {
+    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM"], function (result) { //, "enable-linkCM"], 
         var size = 0;
 
         for(var key in result) {
@@ -250,6 +250,7 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
             var siteList;
             if(siteListObj) {
                 siteList = siteListObj['auto-enable-site-list'];
+                console.log(tab)
                 var url = tab.url;
 
                 if(typeof siteList !== "undefined") {
