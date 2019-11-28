@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "2.0.9",
+  "version": "2.1.0",
   "manifest_version": 2,
   "description": "A feature-packed, customizable reader extension.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
@@ -60,7 +60,7 @@
   ],
 
   "permissions": [
-    "activeTab",
+    "tabs",
     "*://*/*",
     "contextMenus",
     "storage"

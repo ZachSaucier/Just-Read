@@ -66,11 +66,9 @@ function getStylesFromStorage(storage) {
             pageCM.checked = storage[key];
         } else if(key === "enable-highlightCM") {
             highlightCM.checked = storage[key];
-        } else
-        // if(key === "enable-linkCM") {
-        //     linkCM.checked = storage[key];
-        // }
-        else if(key === "enable-autorunCM") {
+        } else if(key === "enable-linkCM") {
+            linkCM.checked = storage[key];
+        } else if(key === "enable-autorunCM") {
             autorunCM.checked = storage[key];
         } else if(key === "backup") {
             backup.checked = storage[key];
@@ -526,7 +524,7 @@ removeButton.onclick = function() {
 var hideSegments = document.getElementById("hideSegments"),
     pageCM = document.getElementById("pageCM"),
     highlightCM = document.getElementById("highlightCM"),
-    // linkCM = document.getElementById("linkCM"),
+    linkCM = document.getElementById("linkCM"),
     autorunCM = document.getElementById("autorunCM"),
     alwaysAddAR = document.getElementById("alwaysAddAR");
 
@@ -542,10 +540,10 @@ highlightCM.onchange = function() {
     chrome.storage.sync.set({"enable-highlightCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});
 }
-// linkCM.onchange = function() {
-//     chrome.storage.sync.set({"enable-linkCM": this.checked});
-//     chrome.runtime.sendMessage({updateCMs: "true"});
-// }
+linkCM.onchange = function() {
+    chrome.storage.sync.set({"enable-linkCM": this.checked});
+    chrome.runtime.sendMessage({updateCMs: "true"});
+}
 autorunCM.onchange = function() {
     chrome.storage.sync.set({"enable-autorunCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});

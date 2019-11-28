@@ -65,27 +65,27 @@ function createHighlightCM() {
         }
     });
 }
-// function createLinkCM() {
-//     // Create an entry to allow user to open a given link using Just read
-//     linkCMId = chrome.contextMenus.create({
-//         title: "View the linked page using Just Read",
-//         id: "linkCM",
-//         contexts:["link"],
-//         onclick: function(info, tab) {
-//             chrome.tabs.create(
-//                 { url: info.linkUrl, active: false },
-//                 function(newTab) {
-//                     chrome.tabs.executeScript(newTab.id, {
-//                         code: 'var runOnLoad = true'
-//                     }, function() {
-//                         startJustRead(newTab);
-//                     });
-//                 }
-//             );
-//
-//         }
-//     });
-// }
+function createLinkCM() {
+    // Create an entry to allow user to open a given link using Just read
+    linkCMId = chrome.contextMenus.create({
+        title: "View the linked page using Just Read",
+        id: "linkCM",
+        contexts:["link"],
+        onclick: function(info, tab) {
+            chrome.tabs.create(
+                { url: info.linkUrl, active: false },
+                function(newTab) {
+                    chrome.tabs.executeScript(newTab.id, {
+                        code: 'var runOnLoad = true'
+                    }, function() {
+                        startJustRead(newTab);
+                    });
+                }
+            );
+
+        }
+    });
+}
 function createAutorunCM() {
     // Create an entry to allow user to open a given link using Just read
     autorunCMId = chrome.contextMenus.create({
@@ -131,7 +131,7 @@ function addSiteToAutorunList(info, tab) {
 
 var pageCMId = highlightCMId = linkCMId = undefined;
 function updateCMs() {
-    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM"], function (result) { //, "enable-linkCM"], 
+    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM", "enable-linkCM"], function (result) {
         var size = 0;
 
         for(var key in result) {
@@ -158,17 +158,17 @@ function updateCMs() {
                     }
                 }
             }
-            // else if(key === "enable-linkCM") {
-            //     if(result[key]) {
-            //         if(typeof linkCMId == "undefined")
-            //             createLinkCM();
-            //     } else {
-            //         if(typeof linkCMId != "undefined") {
-            //             chrome.contextMenus.remove("linkCM");
-            //             linkCMId = undefined;
-            //         }
-            //     }
-            // }
+            else if(key === "enable-linkCM") {
+                if(result[key]) {
+                    if(typeof linkCMId == "undefined")
+                        createLinkCM();
+                } else {
+                    if(typeof linkCMId != "undefined") {
+                        chrome.contextMenus.remove("linkCM");
+                        linkCMId = undefined;
+                    }
+                }
+            }
             else if(key === "enable-autorunCM") {
                 if(result[key]) {
                     if(typeof autorunCMId == "undefined")
@@ -250,7 +250,6 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
             var siteList;
             if(siteListObj) {
                 siteList = siteListObj['auto-enable-site-list'];
-                console.log(tab)
                 var url = tab.url;
 
                 if(typeof siteList !== "undefined") {
