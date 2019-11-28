@@ -66,9 +66,11 @@ function getStylesFromStorage(storage) {
             pageCM.checked = storage[key];
         } else if(key === "enable-highlightCM") {
             highlightCM.checked = storage[key];
-        } else if(key === "enable-linkCM") {
-            linkCM.checked = storage[key];
-        } else if(key === "enable-autorunCM") {
+        } else
+        // if(key === "enable-linkCM") {
+        //     linkCM.checked = storage[key];
+        // }
+        else if(key === "enable-autorunCM") {
             autorunCM.checked = storage[key];
         } else if(key === "backup") {
             backup.checked = storage[key];
@@ -78,7 +80,7 @@ function getStylesFromStorage(storage) {
             addOrigURL.checked = storage[key];
         } else if(key === "alwaysAddAR") {
             alwaysAddAR.checked = storage[key];
-        } else if(key.substring(0, 3) === "jr-") { // Get the user's stylesheets 
+        } else if(key.substring(0, 3) === "jr-") { // Get the user's stylesheets
             stylesheetObj[key.substring(3)] = storage[key];
         }
     }
@@ -90,7 +92,7 @@ function setStylesOfStorage(nextFunc) {
         var obj = {};
         obj['jr-' + stylesheet] = stylesheetObj[stylesheet];
         chrome.storage.sync.set(obj, function() {
-            if(chrome.runtime.lastError 
+            if(chrome.runtime.lastError
             && chrome.runtime.lastError.message === "QUOTA_BYTES_PER_ITEM quota exceeded") {
                 chrome.extension.getBackgroundPage().alert("File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/");
             } else {
@@ -163,7 +165,7 @@ function rename() {
             setTimeout(function() {
                 saveTheme();
             }, 10);
-            
+
             liItem.innerHTML = "";
             liItem.innerHTML += fileNameInput.value;
         }
@@ -198,7 +200,7 @@ function confirmChange() {
                 return false;
             else
                 return true;
-    else 
+    else
         return false;
 }
 
@@ -206,7 +208,7 @@ function styleListOnClick() {
     // Don't do anything if it's already active
     if(!this.classList.contains("active")) {
         var cancel = confirmChange();
-        
+
         if(!cancel) {
             // Switch out current CSS for the selected one
             var fileName = this.textContent;
@@ -334,7 +336,7 @@ function getStylesheets() {
             return;
         } else {
             continueLoading();
-        }        
+        }
     });
 }
 
@@ -524,7 +526,7 @@ removeButton.onclick = function() {
 var hideSegments = document.getElementById("hideSegments"),
     pageCM = document.getElementById("pageCM"),
     highlightCM = document.getElementById("highlightCM"),
-    linkCM = document.getElementById("linkCM"),
+    // linkCM = document.getElementById("linkCM"),
     autorunCM = document.getElementById("autorunCM"),
     alwaysAddAR = document.getElementById("alwaysAddAR");
 
@@ -540,10 +542,10 @@ highlightCM.onchange = function() {
     chrome.storage.sync.set({"enable-highlightCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});
 }
-linkCM.onchange = function() {
-    chrome.storage.sync.set({"enable-linkCM": this.checked});
-    chrome.runtime.sendMessage({updateCMs: "true"});
-}
+// linkCM.onchange = function() {
+//     chrome.storage.sync.set({"enable-linkCM": this.checked});
+//     chrome.runtime.sendMessage({updateCMs: "true"});
+// }
 autorunCM.onchange = function() {
     chrome.storage.sync.set({"enable-autorunCM": this.checked});
     chrome.runtime.sendMessage({updateCMs: "true"});
