@@ -74,6 +74,8 @@ function getStylesFromStorage(storage) {
             backup.checked = storage[key];
         } else if(key === "leave-pres") {
             leavePres.checked = storage[key];
+        } else if(key === "addTimeEstimate") {
+            addTimeEstimate.checked = storage[key];
         } else if(key === "addOrigURL") {
             addOrigURL.checked = storage[key];
         } else if(key === "alwaysAddAR") {
@@ -556,7 +558,8 @@ alwaysAddAR.onchange = function() {
 
 var backup = document.getElementById("backup"),
     leavePres = document.getElementById("leavePres"),
-    addOrigURL = document.getElementById("addOrigURL");
+    addOrigURL = document.getElementById("addOrigURL"),
+    addTimeEstimate = document.getElementById("addTimeEstimate");
 
 backup.onchange = function() {
     chrome.storage.sync.set({"backup": this.checked});
@@ -566,4 +569,7 @@ leavePres.onchange = function() {
 }
 addOrigURL.onchange = function() {
     chrome.storage.sync.set({"addOrigURL": this.checked});
+}
+addTimeEstimate.onchange = function() {
+    chrome.storage.sync.set({"addTimeEstimate": this.checked});
 }

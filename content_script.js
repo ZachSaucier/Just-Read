@@ -736,6 +736,11 @@ function addArticleMeta() {
 
     metaContainer.appendChild(date);
     metaContainer.appendChild(author);
+    if(chromeStorage['addTimeEstimate']) {
+        let timeEstimate = document.createElement("div");
+        timeEstimate.className = "simple-time-estimate";
+        metaContainer.appendChild(timeEstimate);
+    }
     if(chromeStorage['addOrigURL']) { // Add the original URL if necessary
         let urlContainer = document.createElement("div");
         urlContainer.className = "simple-url";
@@ -1248,6 +1253,12 @@ function createSimplifiedOverlay() {
     // Append our custom HTML to the iframe
     simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
     simpleArticleIframe.body.appendChild(container);
+
+    // Update the word count if it exists
+    if(chromeStorage['addTimeEstimate']) {
+        let wordCount = simpleArticleIframe.querySelector(".content-container").innerHTML.split(/\s+/).length;
+        simpleArticleIframe.querySelector(".simple-time-estimate").innerText = Math.floor(wordCount / 200) + ' minute read';
+    }
 
     // Create a container for the UI buttons
     let uiContainer = document.createElement("div");
