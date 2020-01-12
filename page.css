@@ -4,9 +4,11 @@
     padding: 0;
     margin: 0;
 }
-.simple-no-scroll, 
-.simple-no-scroll * {
-    overflow: hidden !important;
+@media screen {
+  .simple-no-scroll,
+  .simple-no-scroll > *:not(#simple-article) {
+      overflow: hidden !important;
+  }
 }
 
 #simple-article#simple-article {
@@ -45,13 +47,25 @@
     opacity: 0;
 }
 
-.no-trans { -webkit-transition: none !important; transition: none !important; }
+@media print {
+  body > *:not(#simple-article) {
+    display: none !important;
+  }
+  #simple-article {
+    position: static !important;
+    height: auto !important;
+  }
+
+  @page :first { margin-top: 0; }
+}
+
+.no-trans { transition: none !important; }
 
 .dg { z-index: 99999999999 !important; height: auto !important; }
 .simple-no-scroll .dg { overflow: visible !important; }
 .dg .cr.string:not(.color) input { float: none; }
 .dg.main .close-button.close-button {
     bottom: -41px;
-    border-top: 1px solid grey; 
+    border-top: 1px solid grey;
 }
 .dg.main .close-button.saveAndClose { bottom: -20px; }

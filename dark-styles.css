@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-body {
+.jr-body {
     font-family: 'Roboto', BlinkMacSystemFont, sans-serif;
     background-color: #222233;
     line-height: 1.6;

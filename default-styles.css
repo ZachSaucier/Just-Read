@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather|Source+Sans+Pro:400,700');
 
-body {
+.jr-body {
     font-family: 'Merriweather', serif;
     background-color: #fff;
     line-height: 1.6;

@@ -1,5 +1,5 @@
 
-@media screen  {
+@media screen {
     body {
         height: 100vh;
         overflow: auto;
@@ -68,7 +68,7 @@
 .simple-undo {
     width: 40px;
     height: 40px;
-    
+
     border: 0;
     background: none;
     font-size: 0; /* Hide the print text */
@@ -103,7 +103,7 @@
     top: 10px;
     right: 100%;
     padding-right: 10px;
-    
+
     cursor: pointer;
 
     display: none;
@@ -195,10 +195,19 @@
     .simple-control,
     .simple-bug-reporter,
     .jr-tooltip {
-        display: none !important;
+      display: none !important;
     }
+
+    /* Show content on print screen - I'M LOOKING AT YOU, BLOOMBERG */
+    @media print {
+      * {
+        color: black !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+    }
+
     *:not(.simple-title *) { overflow: auto !important; }
-    @page :first { margin-top: 0; }
 }
 
 
