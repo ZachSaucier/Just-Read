@@ -32,8 +32,6 @@
 
     box-sizing: border-box;
 
-    transform: translateY(0);
-
     transition: .5s;
 
     opacity: 1;

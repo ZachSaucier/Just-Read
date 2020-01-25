@@ -1,8 +1,6 @@
-
 @media screen {
-    body {
-        height: 100vh;
-        overflow: auto;
+    .jr-body {
+        min-height: 100%;
     }
 }
 

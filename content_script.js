@@ -132,7 +132,7 @@ function startSelectElement(doc) {
 }
 
 // Similar to ^^ but for deletion once the article is open
-function startDeleteElement() { // FLAG FOR REVIEW
+function startDeleteElement() {
     var mouseFunc = function (e) {
         var elem = e.target;
 
@@ -502,14 +502,16 @@ function closeOverlay() {
     userSelected = null;
     textToRead = null;
 
-    setTimeout(function() {
-        // Enable scroll
-        document.documentElement.classList.remove("simple-no-scroll");
+    // Enable scroll
+    document.documentElement.classList.remove("simple-no-scroll");
 
+    jrHost.addEventListener("transitionend", function() {
+      if(jrHost) {
         // Remove our overlay
         jrHost.parentNode.removeChild(jrHost);
         jrHost = undefined;
-    }, 100); // Make sure we can animate it
+      }
+    }); // Make sure we can animate it
 }
 
 function getContainer() {
@@ -1114,6 +1116,24 @@ function createSimplifiedOverlay() {
     // Disable scroll on main page until closed
     document.documentElement.classList.add("simple-no-scroll");
 
+    // Try using the selected element's content
+    if(userSelected)
+        pageSelectedContainer = userSelected;
+
+    // Use the highlighted text if started from that
+    if(!pageSelectedContainer && typeof textToRead !== "undefined" && textToRead) {
+        pageSelectedContainer = window.getSelection().toString();
+    }
+
+    // If there is no text selected, auto-select the content
+    if(!pageSelectedContainer) {
+        pageSelectedContainer = getContainer();
+
+        var pattern =  new RegExp ("<br/?>[ \r\n\s]*<br/?>", "g"); pageSelectedContainer.innerHTML.replace(pattern, "</p><p>");
+    }
+
+    selected = pageSelectedContainer;
+
     // Create an custom element and shadow root so we don't use old styles
     jrHost = document.createElement("div");
     jrHost.id = "simple-article";
@@ -1132,25 +1152,6 @@ function createSimplifiedOverlay() {
     jrContentContainer.className = "simple-container";
     jrBody.appendChild(jrContentContainer);
 
-
-
-    // Try using the selected element's content
-    if(userSelected)
-        pageSelectedContainer = userSelected;
-
-    // Use the highlighted text if started from that
-    if(!pageSelectedContainer && typeof textToRead !== "undefined" && textToRead) {
-        pageSelectedContainer = window.getSelection().toString();
-    }
-
-    // If there is no text selected, auto-select the content
-    if(!pageSelectedContainer) {
-        pageSelectedContainer = getContainer();
-
-        var pattern =  new RegExp ("<br/?>[ \r\n\s]*<br/?>", "g"); pageSelectedContainer.innerHTML.replace(pattern, "</p><p>");
-    }
-
-    selected = pageSelectedContainer;
 
     // Get the title, author, etc.
     jrContentContainer.appendChild(addArticleMeta())
