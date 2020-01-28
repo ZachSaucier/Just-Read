@@ -28,7 +28,7 @@ nav,
 [class *= "newsletter"],
 
 [class *= "meta"]:not(.simple-meta),
-[class *= "author"]:not(.simple-author),
+[class *= "author"]:not(.simple-author):not(.unknown-author),
 [id *= "author"],
 
 form:not(.usertext),

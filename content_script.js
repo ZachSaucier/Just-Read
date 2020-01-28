@@ -723,11 +723,19 @@ function addArticleMeta() {
 
     // Check a couple places for the date, othewise say it's unknown
     date.innerHTML = editSVG;
-    dateContent.innerHTML = getArticleDate();
+    let dateText = getArticleDate();
+    if(dateText === "Unknown date") {
+      metaContainer.classList.add("unknown-date");
+    }
+    dateContent.innerHTML = dateText;
     date.appendChild(dateContent);
     // Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
     author.innerHTML = editSVG;
-    authorContent.innerHTML = getArticleAuthor();
+    let authorText = getArticleAuthor();
+    if(authorText === "Unknown author") {
+      metaContainer.classList.add("unknown-author");
+    }
+    authorContent.innerHTML = authorText;
     author.appendChild(authorContent);
     // Check h1s for the title, otherwise say it's unknown
     title.innerHTML = editSVG;
@@ -1254,6 +1262,8 @@ function createSimplifiedOverlay() {
     simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
     simpleArticleIframe.body.appendChild(container);
 
+    simpleArticleIframe.body.className = window.location.hostname.replace(/\./g, "-");
+
     // Update the word count if it exists
     if(chromeStorage['addTimeEstimate']) {
         let wordCount = simpleArticleIframe.querySelector(".content-container").innerHTML.split(/\s+/).length;
@@ -1449,7 +1459,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.28; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.29; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
     // Detect past overlay - don't show another
