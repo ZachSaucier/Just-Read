@@ -349,6 +349,15 @@ function checkElemForDate(elem, attrList, deleteMe) {
     return myDate;
 }
 
+function getJSONSchema(text) {
+  try {
+    return JSON.parse(text);
+  } catch(e) {
+    console.log("Invalid JSON schema");
+    return = null;
+  }
+}
+
 function getArticleDate() {
     // Make sure that the pageSelectedContainer isn't empty
     if(pageSelectedContainer == null)
@@ -357,11 +366,32 @@ function getArticleDate() {
     // Check to see if there's a date class
     var date = false;
     var toCheck = [];
+
+    // Check schema first
+    var jsonld;
+    if(pageSelectedContainer.querySelector('script[type="application/ld+json"]')) {
+      jsonld = getJSONSchema(pageSelectedContainer.querySelector('script[type="application/ld+json"]').innerText);
+    } else if(document.querySelector('script[type="application/ld+json"]')) {
+      jsonld = getJSONSchema(document.querySelector('script[type="application/ld+json"]').innerText);
+    }
+
+    if(jsonld) {
+      if(jsonld.dateModified) {
+        date = jsonld.dateModified;
+      } else if(jsonld.datePublished) {
+        date = jsonld.datePublished;
+      }
+    }
+
     if(!date) {
         toCheck = [
+            [pageSelectedContainer.querySelector('[itemprop="dateModified"]'), ['innerText'], true],
+            [pageSelectedContainer.querySelector('[itemprop="datePublished"]'), ['innerText'], true],
             [pageSelectedContainer.querySelector('[class^="date"]'), ["innerText"], true],
             [pageSelectedContainer.querySelector('[class*="-date"]'), ["innerText"], true],
             [pageSelectedContainer.querySelector('[class*="_date"]'), ["innerText"], true],
+            [document.body.querySelector('[itemprop="dateModified"]'), ['innerText'], false],
+            [document.body.querySelector('[itemprop="datePublished"]'), ['innerText'], false],
             [document.body.querySelector('[class^="date"]'), ["innerText"], false],
             [document.body.querySelector('[class*="-date"]'), ["innerText"], false],
             [document.body.querySelector('[class*="_date"]'), ["innerText"], false],
@@ -432,9 +462,44 @@ function getArticleAuthor() {
 
     var author = null;
 
+    // Check schema first
+    var jsonld;
+    if(pageSelectedContainer.querySelector('script[type="application/ld+json"]')) {
+      jsonld = getJSONSchema(pageSelectedContainer.querySelector('script[type="application/ld+json"]').innerText);
+    } else if(document.querySelector('script[type="application/ld+json"]')) {
+      jsonld = getJSONSchema(document.querySelector('script[type="application/ld+json"]').innerText);
+    }
+
+    if(jsonld) {
+      if(jsonld.author) {
+        if(typeof jsonld.author === "string") {
+          author = jsonld.author;
+        } else if(typeof jsonld.author.name === "string") {
+          author = jsonld.author.name;
+        }
+      }
+    }
+
+    // Check to see if there's an author itemprop in the article
+    var elem = pageSelectedContainer.querySelector('[itemprop="author"]');
+    if(elem) {
+        if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
+            elem.dataset.simpleDelete = true; // Flag it for removal later
+            author = elem.innerText;
+        }
+    }
+
+    // Check to see if there's an author itemprop in the page
+    var elem = document.body.querySelector('[itemprop="author"]');
+    if(author === null && elem) {
+        if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
+            author = elem.innerText;
+        }
+    }
+
     // Check to see if there's an author rel in the article
     var elem = pageSelectedContainer.querySelector('[rel*="author"]');
-    if(elem) {
+    if(author === null && elem) {
         if(elem.innerText.split(/\s+/).length < 5 && elem.innerText.replace(/\s/g,'') !== "") {
             elem.dataset.simpleDelete = true; // Flag it for removal later
             author = elem.innerText;
@@ -1340,18 +1405,18 @@ function createSimplifiedOverlay() {
         if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting") && document.hasFocus())
             closeOverlay();
 
-        // Listen for CTRL + SHIFT + ; and allow node deletion if so
-        if(e.keyCode === 186 && e.ctrlKey && e.shiftKey)
+        // Listen for CTRL/CMD + SHIFT + ; and allow node deletion if so
+        if(e.keyCode === 186 && (e.ctrlKey || e.metaKey) && e.shiftKey)
             startDeleteElement(simpleArticleIframe);
 
-        // Listen for CTRL+P and do our print function if so
-        if(e.ctrlKey && e.keyCode == 80) {
+        // Listen for CTRL/CMD + P and do our print function if so
+        if((e.ctrlKey || e.metaKey) && e.keyCode == 80) {
             simpleArticleIframe.defaultView.print();
             e.preventDefault();
         }
 
-        // Listen for Ctrl + z for our undo function
-        if(e.ctrlKey && e.keyCode === 90) {
+        // Listen for CTRL/CMD + Z for our undo function
+        if((e.ctrlKey || e.metaKey) && e.keyCode === 90) {
             popStack();
         }
     }
