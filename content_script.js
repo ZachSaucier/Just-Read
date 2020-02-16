@@ -354,7 +354,7 @@ function getJSONSchema(text) {
     return JSON.parse(text);
   } catch(e) {
     console.log("Invalid JSON schema");
-    return = null;
+    return null;
   }
 }
 
