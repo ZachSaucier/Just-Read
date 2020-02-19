@@ -474,6 +474,6 @@ ___
 
 #### Q: How can I run Just Read from a local copy on my computer?
 
-To run it from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, and then go to `chrome://extensions/` (or `about:debugging#addons` for Firefox) and click "Load Unpacked", and then select the unzipped folder. This is particularly useful if you are wanting to modify how Just Read works or debug issues.
+To run it from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, and then go to `chrome://extensions/` (or `about:debugging#addons` for Firefox), click enable "developer mode", and click "Load Unpacked", and then select the unzipped folder. This is particularly useful if you are wanting to modify how Just Read works or debug issues.
 
 *[Back to FAQ question list](https://github.com/ZachSaucier/Just-Read/#faq)*
