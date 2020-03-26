@@ -80,7 +80,10 @@ function getStylesFromStorage(storage) {
             addOrigURL.checked = storage[key];
         } else if(key === "alwaysAddAR") {
             alwaysAddAR.checked = storage[key];
-        } else if(key.substring(0, 3) === "jr-") { // Get the user's stylesheets
+        } else if(key === "disableLinks") {
+            disableLinks.checked = storage[key];
+        }
+        else if(key.substring(0, 3) === "jr-") { // Get the user's stylesheets
             stylesheetObj[key.substring(3)] = storage[key];
         }
     }
@@ -559,7 +562,8 @@ alwaysAddAR.onchange = function() {
 var backup = document.getElementById("backup"),
     leavePres = document.getElementById("leavePres"),
     addOrigURL = document.getElementById("addOrigURL"),
-    addTimeEstimate = document.getElementById("addTimeEstimate");
+    addTimeEstimate = document.getElementById("addTimeEstimate"),
+    disableLinks = document.getElementById("disableLinks");
 
 backup.onchange = function() {
     chrome.storage.sync.set({"backup": this.checked});
@@ -572,4 +576,7 @@ addOrigURL.onchange = function() {
 }
 addTimeEstimate.onchange = function() {
     chrome.storage.sync.set({"addTimeEstimate": this.checked});
+}
+disableLinks.onchange = function() {
+    chrome.storage.sync.set({"disableLinks": this.checked});
 }
