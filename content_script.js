@@ -1443,6 +1443,12 @@ function finishLoading() {
         addStylesheet(simpleArticleIframe, "hide-segments.css", "hide-segments");
     }
 
+    if(chromeStorage['disableLinks']) {
+      Array.from(simpleArticleIframe.links).forEach(link => link.removeAttribute('href'));
+    }
+
+
+
     // Change the top most page when regular links are clicked
     var linkNum = simpleArticleIframe.links.length;
     for(var i = 0; i < linkNum; i++)
