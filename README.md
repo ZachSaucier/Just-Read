@@ -38,15 +38,6 @@ By using Just Read, you are agreeing to [Just Read's EULA](https://github.com/Za
 
 ___
 
-<style>
-details[open] summary {
-  font-weight: bold;
-}
-.markdown-body details {
-  margin-bottom: 8px;
-}
-</style>
-
 ## FAQ
 
 > **Note:** Any time you change something in Just Read's options page, you must restart any Just Read instances for the change to work.  
