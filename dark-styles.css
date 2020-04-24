@@ -190,3 +190,4 @@ aside,
 /* Make emojis and icons a reasonable size */
 [class *= "emoji"],
 [class *= "icon"] { width: 1em; }
+[class *= "inline"] { display: inline-block; min-width: 2rem; }
