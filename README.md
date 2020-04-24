@@ -43,7 +43,7 @@ ___
 > **Note:** Any time you change something in Just Read's options page, you must restart any Just Read instances for the change to work.  
 
 ### Using Just Read features
-<details id="start_JR">
+<details id="start_JR" open>
   <summary>How can I start Just Read?</summary>
   
   ### On a desktop or laptop
