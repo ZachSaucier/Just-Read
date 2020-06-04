@@ -132,7 +132,7 @@
 .content-container svg[id *= "dribble"],
 .content-container [id *= "dribble"] svg,
 .content-container svg[class *= "soundcloud"],
-.content-container class *= "soundcloud"] svg,
+.content-container [class *= "soundcloud"] svg,
 .content-container svg[id *= "soundcloud"],
 .content-container [id *= "soundcloud"] svg,
 .content-container svg[class *= "rss"],

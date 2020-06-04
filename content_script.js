@@ -1524,7 +1524,7 @@ function continueLoading() {
 /////////////////////////////////////
 var isPaused = false,
     stylesheetObj = {},
-    stylesheetVersion = 1.31; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
+    stylesheetVersion = 1.32; // THIS NUMBER MUST BE CHANGED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
     // Detect past overlay - don't show another
