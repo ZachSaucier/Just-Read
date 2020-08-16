@@ -1299,6 +1299,29 @@ function createSimplifiedOverlay() {
         }
     }
 
+    // Add the next chapter button if there is one
+    const potentialOldMatches = [...contentContainer.querySelectorAll('a[href]')];
+    if(!potentialOldMatches.some(match => {
+        const text = match.innerText.replace(/\s/g,'').toUpperCase();
+        if(text === 'NEXTCHAPTER'
+        || text === 'NEXT') {
+            match.className = 'jrNextChapter';
+            return true;
+        }
+    })) {
+        const potentialNewMatches = [...document.querySelectorAll('a[href]')];
+
+        potentialNewMatches.some(match => {
+            const text = match.innerText.replace(/\s/g,'').toUpperCase();
+            if(text === 'NEXTCHAPTER'
+            || text === 'NEXT') {
+                match.className = 'jrNextChapter';
+                contentContainer.appendChild(match);
+                return true;
+            }
+        });
+    }
+
     // Handle RTL sites
     var direction = window.getComputedStyle(document.body).getPropertyValue("direction");
     if(direction === "rtl" || isRTL(contentContainer.firstChild.innerText)) {
