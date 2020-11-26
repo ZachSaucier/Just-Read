@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "2.2.8",
+  "version": "4.3.0",
   "manifest_version": 2,
   "description": "A feature-packed, customizable reader extension.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
@@ -8,12 +8,6 @@
   "browser_action": {
     "default_icon": "icons/icon19.png",
     "default_title": "Just Read"
-  },
-
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{cb2b337b-99d7-4b86-aa04-84a6f5c3e218}"
-    }
   },
 
   "icons": {
@@ -38,13 +32,12 @@
   },
 
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
 
   "options_ui": {
-    "page": "options.html"
+    "page": "options.html",
+    "open_in_tab": true
   },
 
   "web_accessible_resources": [
@@ -59,10 +52,23 @@
     "fonts/*"
   ],
 
+  "content_scripts": [{
+    "matches": ["https://justread.link/*"],
+    "js": ["messager.js"]
+  }],
+
   "permissions": [
     "tabs",
     "*://*/*",
     "contextMenus",
-    "storage"
-  ]
+    "storage",
+    "identity",
+    "identity.email"
+  ],
+
+  "applications": {
+    "gecko": {
+      "id": "support@justread.link"
+    }
+  }
 }

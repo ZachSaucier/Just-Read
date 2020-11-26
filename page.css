@@ -45,7 +45,7 @@
     opacity: 0;
 }
 
-.no-trans { -webkit-transition: none !important; transition: none !important; }
+.no-trans { transition: none !important; }
 
 .dg { z-index: 99999999999 !important; height: auto !important; }
 .simple-no-scroll .dg { overflow: visible !important; }

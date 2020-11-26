@@ -3,32 +3,29 @@ Just Read
 
 Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
 
-**Please note** that this extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect.
+Premium features can be enabled by [purchasing Just Read Premium](https://justread.link/#getJustRead).
 
-There is a premium and a free version of Just Read. For more information about the difference between the two, see [Just Read's homepage](https://justread.link/), [the explanation video](https://www.youtube.com/watch?v=t06dUD80MyM), or [the FAQ below](https://github.com/ZachSaucier/Just-Read/#faq).
+**Please note** that this extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect.
 
 ___
 
 ### Installation:
 
-- [Just Read (Chrome)](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
-- [Just Read (Firefox)](https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/)
-- [Just Read Premium (Chrome)](https://chrome.google.com/webstore/detail/just-read-premium/dpamdgmnffodphoamchpmbclkpmccjga)
+- [Chrome / Brave / Opera](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
+- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/)
 
-> **Note** that if you have the Premium version installed, you don't need to have the free version installed and can uninstall it.
-
-You can even use Just Read on your smart phone through mobile browsers that support extensions such as [Dolphin](http://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). For more information, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
+You can even use Just Read on your smart phone through mobile browsers that support extensions such as [Dolphin](https://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). For more information, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
 
 ___
 ### The story behind Just Read
 
-Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](http://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make an reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it ever since.
+Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](https://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make an reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it ever since.
 
 ___
 
 ### Privacy statement
 
-Just Read collects absolutely zero personal data from users and sends analytics to no one else. All data Just Read uses is connected to your personal account with which you have installed Just Read and the creators of Just Read never see any of it. For shared pages, a random, unique, and anonymous string is used to verify identity, not anything related to your personal information.
+Just Read collects zero data from users by default. If you sign up for an account with Just Read, only your email address is stored. Just Read sends analytics to no one else. Any data that Just Read stores is safely secured and private. 
 
 ___
 
@@ -57,13 +54,13 @@ Start Just Read by using Just Read's auto-selection, user-selection mode, or hig
 You can start using Just Read's built in auto-selection selection in three ways:
 
 1. Click the Just Read extension button.
-![extension button](http://i.imgur.com/aCOIuVV.png)
+![extension button](https://i.imgur.com/aCOIuVV.png)
 
 2. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>L</kbd>.
 
 3. Right click the current page and choose the "View this page using Just Read" option.
 
-<!-- 4. Right click a link and select "View the linked page using Just Read" (it will open it in a new tab). This is also called "link mode". -->
+4. Right click a link and select "View the linked page using Just Read" (it will open it in a new tab). This is also called "link mode".
 
 #### User selection mode
 
@@ -79,7 +76,7 @@ You can select specific text by highlighting it (by clicking and dragging over t
 
 ### On a mobile device
 
-You must first install a mobile browser that supports extensions such as [Firefox](https://www.mozilla.org/en-US/firefox/mobile/) (iOS or Android), [Dolphin](http://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). Then install Just Read to that browser by visiting Just Read's (or Just Read Premium's) store page.
+You must first install a mobile browser that supports extensions such as [Firefox](https://www.mozilla.org/en-US/firefox/mobile/) (iOS or Android), [Dolphin](https://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). Then install Just Read to that browser by visiting Just Read's store page.
 
 Once you're on an article that you want to read with Just Read installed on that browser, you need to navigate to their extensions section to run Just Read. In most browsers you need to click the three dots to see this section. Once there, simply click on Just Read.
 
@@ -87,6 +84,26 @@ Once you're on an article that you want to read with Just Read installed on that
 
 </details>
 
+
+<details id="options">
+  <summary>How can I enable Just Read's options?</summary>
+
+To enable the Just Read options page, create a free account on <a href="https://justread.link/#getJustRead">the Just Read website</a>. Once you're signed in, the options page will become available. 
+
+
+</details>
+
+<details id="share">
+  <summary>How can I share my Just Read version of a page with someone?</summary>
+
+> **Note that this is a Premium-only feature.**
+
+You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Sharing preferences".
+
+Note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address).
+
+
+</details>
 
 <details id="autorun">
   <summary>How can I auto-run Just Read on specific websites?</summary>
@@ -101,25 +118,19 @@ You can also enable "Always add current site to Just Read's autorun list when Ju
 <details id="all_computers">
   <summary>How can I get Just Read on all of my computers?</summary>
 
-When you log into Chrome using a Google account (as the primary Chrome user) or Firefox using one of their accounts, the browser automatically installs all extensions that you've installed to your account. This should include Just Read and/or Just Read Premium. Just Read automatically syncs your themes and preferences across all of your devices using this functionality, so you don't need to do anything special to get it working the same way on all of your devices. Note that currently some mobile browsers do not support web extensions, so Just Read cannot be installed on these browsers.
+When you log into a browser as the primary user <strong>and allow syncing</strong>, the browser automatically installs all extensions that you've installed to your account. This should include Just Read. Just Read automatically syncs your themes and preferences across all of your devices using this functionality, so you don't need to do anything special to get it working the same way on all of your devices. Note that currently some mobile browsers do not support web extensions, so Just Read cannot be installed on these browsers.
 
 For more information on how to get Just Read to work on your mobile devices, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
 
 
 </details>
 
-<details id="share">
-  <summary>How can I share my Just Read version of a page with someone?</summary>
+<details id="pin">
+  <summary>I don't see the Just Read icon. How can I make the icon always visible?</summary>
 
-> **Note that this is a Premium-only feature.**
+A recent Chrome update hides extension icons inside inside of a drop down. To open the drop down, click the puzzle piece icon in the top right of Chrome. To make Just Read's icon always show, click the pin icon next to Just Read.
 
-You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Sharing preferences".
-
-**Note that for this feature to work in Chrome, you must have user account syncing enabled.** To enable syncing for your Google account, go to Chrome's settings page (`chrome://settings/`) and under "People" click "Turn on syncing".
-
-Also note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address).
-
-Lastly, **if you are using Brave (or another browser other than Chrome) this feature may not work at all**. I am investigating the issue, but please reach out to support@justread.link so we can discuss a work around in the mean time.
+If you don't see Just Read in the drop down list, make sure that <a href="https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod/">it is installed</a>.
 
 
 </details>
@@ -129,9 +140,9 @@ Lastly, **if you are using Brave (or another browser other than Chrome) this fea
 
 > **Note that this is a Premium-only feature.**
 
-You can view and delete pages that you shared previously by going to https://justread.link/dashboard, which is your user profile page. Note that you can click any column heading to sort the entries by that column's values.
+You can view and delete pages that you shared previously by going to your Just Read dashboard: https://justread.link/dashboard. If you are signed into a Just Read account and that account has Premium, you will see a table of all of your entries. 
 
-Note that you can only view this page if you currently have Just Read Premium installed on the browser that you're using.
+Note that you can click any column heading to sort the entries by that column's values.
 
 
 </details>
@@ -149,7 +160,7 @@ Just Read has an option under Options -> "Backup the most recent Just Read page 
 
 > **Note that this is a Premium-only feature.**
 
-If you make any highlights, color change, or other edits to a text selection (a premium feature), Just Read will add a unique ID to that selection. You can thenshare that page and then look up that ID to get a link to that specific element on the shared page. For more information, [look at this post](https://stackoverflow.com/a/2835151/2065702).
+If you make any highlights, color change, or other edits to a text selection (a premium feature), Just Read will add a unique ID to that selection. You can then share that page and then look up that ID to get a link to that specific element on the shared page. For more information, [look at this post](https://stackoverflow.com/a/2835151/2065702).
 
 
 </details>
@@ -167,7 +178,7 @@ In order to send the article content from Just Read to your Kindle, you must fir
 <details id="drive">
   <summary>How can I send the article to Google Drive?</summary>
 
-Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so in Chrome is to "print" the page (either using your browser's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". In Firefox, you need to save it to your computer as a PDF and then manually upload it to Google Drive.
+Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so in Chrome is to "print" the page (either using Chrome's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". In Firefox, you need to save it to your computer as a PDF and then manually upload it to Google Drive.
 
 
 </details>
@@ -178,14 +189,6 @@ Currently it is only possible to send files to Google Drive in PDF form. The eas
 > **Note that this is a Premium-only feature.**
 
 You can do this by going to "Options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
-
-
-</details>
-
-<details id="fullscreen">
-  <summary>How can I auto-enable fullscreen when Just Read is started?</summary>
-
-Under "Options" -> "Additional preferences" there is an option to "Always auto-enable fullscreen when Just Read is started." Checking this box will make Just Read be fullscreen (like when you press <kbd>F11</kbd>) when you start Just Read on a page.
 
 
 </details>
@@ -206,7 +209,7 @@ Under "Options" -> "Context menu entries", you can enable or disable the context
 <details id="unsubscribe">
   <summary>How can I unsubscribe from Just Read Premium?</summary>
 
-Since Google handles the payments completely through their webstore, you can cancel your subscription by following [these instructions](https://support.google.com/chrome_webstore/answer/1060830?hl=en).
+Go to <a href="https://justread.link/dashboard">your Just Read dashboard</a>. If you're a Premium user, you should see a "go here" link at the top of the page. Click it to manage your purchase.
 
 
 </details>
@@ -221,7 +224,7 @@ Once the text has been selected and the article is open in the Just Read format,
 
 Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
 
-If you have the premium version of Just Read, you can also delete anything that you highlight using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>d</kbd> or clicking the trash can icon on the toolbar that shows up.
+If you have Premium, you can also delete anything that you highlight using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>d</kbd> or clicking the trash can icon on the toolbar that shows up.
 
 
 </details>
@@ -269,7 +272,7 @@ You can add comments by clicking the [add comment button](https://i.imgur.com/CH
 
 > **Note that this is a Premium-only feature.**
 
-Yes you can! Using the Premium version, you can go to "Options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need.
+Yes you can! With Premium you can go to "Options" -> "Domain-specific selectors" and customize it to select exactly the content the content you want automatically. The only required part is the `domainPattern` in order for Just Read to know when to use those selectors over the automatic ones. You should only include the others that you need.
 
 The full list of options in the domain-specific selectors list is as follow:
 
@@ -294,21 +297,31 @@ Although this ad only shows occassionally and will eventually stop if you contin
 
 </details>
 
+<details id="premium-features">
+  <summary>I have a free account. How can I hide the premium features that show?</summary>
+
+**This is not recommended** because if you do upgrade to Premium the features will remain hidden until the following is removed:
+
+To hide premium features, adding the following to your stylesheet: `.premium-feature { display: none; }`
+
+
+</details>
+
 ___
 
 ### Customizing how Just Read looks
 <details id="customize">
   <summary>How can I customize the look of Just Read?</summary>
 
-Just Read comes with two themes by default: a white theme and a dark theme. You can choose between them through the GUI or the Options page.
+Just Read comes with two themes by default: a light (white) theme and a dark theme. You can choose between them through the style panel or the Options page.
 
-You can also customize your theme to make Just Read look exactly the way that you like by either using the built in GUI or by directly editing the CSS file on the Options page.
+You can also customize your theme to make Just Read look exactly the way that you like by either using the built in style panel or by directly editing the CSS file on the Options page.
 
-To use the GUI, click [the paint brush icon](http://i.imgur.com/XW03mZW.png) and then change the settings to your liking. Make sure to click "Save and close" when you're done or the styles will not be updated in the actual stylesheet.
+To use the style panel, click [the paint brush icon](https://i.imgur.com/XW03mZW.png) and then change the settings to your liking. Make sure to click "Save and close" when you're done or the styles will not be updated in the actual stylesheet.
 
-> **Note**: The theme editor GUI will only appear for the default theme, the default dark theme, or themes derived from the default (that share "default-styles" or "dark-styles" as part of the file name).
+> **Note**: The theme editor style panel will only appear for the default theme, the default dark theme, or themes derived from the default (that share "default-styles" or "dark-styles" as part of the file name).
 
-You can directly edit your theme's CSS file by clicking "openFullStyles" in the GUI or by right clicking the extension button and opening the "Options" page (you can also get to this via your browser's extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your browser tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
+You can directly edit your theme's CSS file by clicking "openFullStyles" in the style panel or by right clicking the extension button and opening the "Options" page (you can also get to this via your browser's extensions page). Once on the Options page, you can then select the file you want to edit or enter a new file name, edit the file, and then save or apply it. It will then apply to all of your browser tabs on any computer when you start the extension. You can rename files by double clicking the name of the file.
 
 You can also use themes that others have made. [Check them out here!](https://github.com/ZachSaucier/Just-Read/issues/4)
 
@@ -321,8 +334,6 @@ You can also use themes that others have made. [Check them out here!](https://gi
 You can add a custom Google Font (or any other web-hosted font) by customizing the CSS for your theme. Go to Options then click on the theme that is currently in use (it should have a filled in circle next to the file name).
 
 Once there, you can follow [these instructions](https://graphicdesign.stackexchange.com/a/76551/23061) to get the necessary CSS code to use the font in your theme. The only change you'll have to make is replacing the `Font Name` with whatever font you want, and replacing `.someSelector` with whatever selector you want. The selectors you most likely want to change are `body, h3` and `h1, h2` because this is what Just Read changes by default.
-
-Since you only have access to the CSS
 
 
 </details>
@@ -342,7 +353,7 @@ If you're looking to use other themes that people have built and use, you can ch
 
 Just Read's gradient functionality makes it so that each line of text starts and ends with a different color. By having the end-of-line color the same as the next start-of-line color, it makes following sentences easier and reading faster. Note that this feature overrides your other paragraph text color styles.
 
-You can turn it on by going to "Options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors by a comma!
+You can turn it on by going to "Options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors with a comma!
 
 
 </details>
@@ -362,10 +373,23 @@ If you want to customize the look of the scrollbar even further, you can modify 
 ___
 
 ### Fixing issues with Just Read
+<details id="premium_features">
+  <summary>I purchased Just Read Premium but don't have access to the Premium features. What's wrong?</summary>
+
+> **Note that this is a Premium-only feature.**
+
+Don't panic! Most likely all you need to do is go to <a href="https://justread.link/" target="_blank">the Just Read website</a> and make sure you're logged into your account. Signing in will tell the Just Read extension that you have Premium and if you start your reader view again the Premium features should work. 
+
+If they still don't work, please <a href="mailto:support@justread.link">contact support</a> and we'll help you as soon as we're able to.
+
+
+</details>
+
+
 <details id="incorrect_selection">
   <summary>Just Read isn't selecting all of the content I want it to. What can I do to fix this?</summary>
 
-Usually you can fix this by using [user selection mode](https://github.com/ZachSaucier/Just-Read#user-selection-mode) to select the content that you want to view. Usually this means selecting more generally than Just Read's more conservative auto-selection. You can then delete unwanted elements from the selection after Just Read has started.
+Usually you can fix this by using [user selection mode](https://github.com/ZachSaucier/Just-Read#user-selection-mode) to select the content that you want to view. Usually this means selecting more generally than Just Read's auto-selection. You can then delete unwanted elements from the selection after Just Read has started.
 
 In order to see content within the selection that Just Read has automatically hidden because it thought it was irrelevant, you may have to disable `hide-segments.css`, which can be doing by going to Options then unchecking "Use hide-segments.css".
 
@@ -393,7 +417,7 @@ Under "Options" -> "Additional preferences" there is an option to "Never reforma
 
 As covered [in this post](https://github.com/ZachSaucier/Just-Read/issues/29#issue-196499408), this is an issue with the other extension and not Just Read. They will need to modify their code to work with iframe content.
 
-However, most all extensions should work with a *shared* Just Read page, i.e. one on [justread.link](https://justread.link), but this is a [Premium-only feature](https://github.com/ZachSaucier/Just-Read/#share).
+However, most all extensions should work with a *shared* Just Read page, i.e. one on [justread.link](https://justread.link), but this is a [Premium-only feature](https://justread.link/#getJustRead).
 
 </details>
 
@@ -405,32 +429,12 @@ Currently Just Read Premium has a shared article limit of 100 articles. This is 
 
 </details>
 
-<details id="premium_theme">
-  <summary>My theme from the original version breaks the page when I am using Premium. What's going on?</summary>
-
-Just Read Premium uses a slightly modified structure and selectors. Check these common errors to help ease the translation process:
-
-- Local fonts built into Just Read have been removed. Please load from an external link (like Google Fonts) if you wish to have custom fonts.
-- `hide-segments.css` is now loaded separately from the default stylesheet. If you don't want it enabled, please uncheck the box that says 'Use hide-segments.css' on the Options page. If you include an old version of the segment hider CSS in your theme, please remove it for premium because some of Just Read's premiums features use class names that may be hidden using the old version.
-- Most selectors previously affecting `.simple-container` should now affect `.simple-article-container` instead.
-- When you're adding comments, the comments section is a default 300px in width. This works fine with the default 600px article width inside of the 1000px width parent container, but if you have edited the widths they may have to be changed to accommodate comments if desired.
-- There are new elements that may need styling if your theme varies much from the default, such as `.simple-comments` and all of its children for adding comments, `.simple-share` (the share button), `.pause-scroll` for auto-scrolling, and `.simple-find` for the search functionality.
-
-
-</details>
-
-<details id="cant_buy">
-  <summary>I can't buy the Premium version on Chrome's webstore. What can I do?</summary>
-
-Chrome's webstore prevents Chrome extensions from being bought in some regions. You *could* use a VPN to circumvent these restrictions. As an alternative, you can contact me at support@justread.link to arrange an alternative way of payment.
-
-
-</details>
-
 <details id="error">
   <summary>How do I report an error?</summary>
 
-Please [create a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) to report errors that you have. Also please [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted.
+For most issues [creating a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) is best. Please make sure to [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
+
+For *account related issues*, contact <a href="mailto:support@justread.link">.
 
 
 </details>
@@ -438,6 +442,6 @@ Please [create a new issue on the GitHub repo](https://github.com/ZachSaucier/Ju
 <details id="local">
   <summary>How can I run Just Read from a local copy on my computer?</summary>
 
-To run it from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, and then go to `chrome://extensions/` (or `about:debugging#addons` for Firefox), click enable "developer mode", and click "Load Unpacked", and then select the unzipped folder. This is particularly useful if you are wanting to modify how Just Read works or debug issues.
+To run Just Read from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, open up the extension page of your browser (like `chrome://extensions/` in Chrome or `about:debugging#/runtime/this-firefox` in Firefox), enable developer mode, and load the extension. Some browsers may require that you load the packed (zipped) files while others may require the unpacked version. This is particularly useful if you are wanting to modify how Just Read works or debug issues.
 
 </details>

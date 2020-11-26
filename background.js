@@ -1,3 +1,5 @@
+const jrDomain = "https://justread.link/";
+
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
@@ -11,7 +13,7 @@ function checkArrayForString(arr, string) {
 }
 
 function startJustRead(tab) {
-    var tabId = tab ? tab.id : null; // Defaults to the current tab
+    const tabId = tab ? tab.id : null; // Defaults to the current tab
     chrome.tabs.executeScript(tabId, {
         file: "content_script.js", // Script to inject into page and run in sandbox
         allFrames: false // This injects script into iframes in the page and doesn't work before 4.0.266.0.
@@ -89,7 +91,7 @@ function createLinkCM() {
 function createAutorunCM() {
     // Create an entry to allow user to open a given link using Just read
     autorunCMId = chrome.contextMenus.create({
-        title: "Add this site to Just Read' auto-run list",
+        title: "Add this site to Just Read's auto-run list",
         id: "autorunCM",
         contexts:["page"],
         onclick: addSiteToAutorunList
@@ -114,13 +116,13 @@ function addSiteToAutorunList(info, tab) {
                     'auto-enable-site-list': [...currentDomains, entry],
                 }, function() {
                     if(checkArrayForString(currentDomains, url.hostname)) {
-                        console.log("Auto-run entry added.\n\nWarning: An auto-run entry with the same hostname has already been added. Be careful to not add two duplicates.");
+                        console.log("Just Read auto-run entry added.\n\nWarning: An auto-run entry with the same hostname has already been added. Be careful to not add two duplicates.");
                     } else {
-                        console.log('Auto-run entry added.');
+                        console.log('Just Read auto-run entry added.');
                     }
                 });
             } else {
-                console.log("Entry already exists inside of Just Read's auto-run list. Not adding new entry.")
+                console.error("Entry already exists inside of Just Read's auto-run list. Not adding new entry.")
             }
         } else {
             chrome.storage.sync.set({ 'auto-enable-site-list': [entry] });
@@ -129,12 +131,12 @@ function addSiteToAutorunList(info, tab) {
 }
 
 
-var pageCMId = highlightCMId = linkCMId = undefined;
+let pageCMId = highlightCMId = linkCMId = autorunCMId = undefined;
 function updateCMs() {
-    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM", "enable-linkCM"], function (result) {
-        var size = 0;
+    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM", "enable-linkCM", "enable-autorunCM"], function (result) {
+        let size = 0;
 
-        for(var key in result) {
+        for(let key in result) {
             size++;
 
             if(key === "enable-pageCM") {
@@ -211,18 +213,61 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         chrome.runtime.openOptionsPage();
     } else if(request.updateCMs === "true") {
         updateCMs();
+    } else if(request.closeTab === "true") {
+        chrome.tabs.getSelected(function(tab) {
+            setTimeout(function() { chrome.tabs.remove(tab.id) }, 100);
+        });
+    } else if(request.getUID === "true") {
+        if(typeof chrome.identity.getAuthToken === "function") { // Chrome
+            chrome.identity.getProfileUserInfo(function(info) {
+                sendResponse({ uid: info.id });
+            });
+        } else { // FF
+            chrome.storage.sync.get('guid', function(result) {
+                if(result['guid']) {
+                    sendResponse({ uid: result['guid'] });
+                }
+            });
+        }
+        return true;
     } else if(request.savedVersion) {
-        let tempObj = {};
-        tempObj.content = request.savedVersion;
-        tempObj.url = sender.url;
+        const tempObj = {
+            content: request.savedVersion,
+            url: sender.url
+        };
         localStorage.setItem('JRSavedPage', JSON.stringify(tempObj));
-    } else if(request.hasSavedVersion === "true") {
-        let lastSavedPage = JSON.parse(localStorage.getItem('JRSavedPage'));
+    } else if(request.hasSavedVersion) {
+        const lastSavedPage = JSON.parse(localStorage.getItem('JRSavedPage'));
         if(lastSavedPage
         && sender.url === lastSavedPage.url) {
             sendResponse({ content: lastSavedPage.content });
         }
     }
+    // For JRP
+    else if(request.jrSecret) {
+        chrome.storage.sync.set({'jrSecret': request.jrSecret});
+    }
+    else if (request.resetJRLastChecked) {
+        chrome.storage.sync.set({'jrLastChecked': ''});
+    }
+});
+
+chrome.runtime.onMessageExternal.addListener(function(request, sender, sendResponse) {
+    // For dev purposes
+    if(request.getUID === "true") {
+        if(typeof chrome.identity.getAuthToken === "function") { // Chrome
+            chrome.identity.getProfileUserInfo(function(info) {
+                sendResponse({ uid: info.id });
+            });
+        } else { // FF
+            chrome.storage.sync.get('guid', function(result) {
+                if(result['guid']) {
+                    sendResponse({ uid: result['guid'] });
+                }
+            });
+        }
+        return true;
+    } 
 });
 
 // Create an entry to allow user to select an element to read from
@@ -234,27 +279,22 @@ chrome.contextMenus.create({
     }
 });
 
-// Create an entry to give information about the premium version
-chrome.contextMenus.create({
-    title: "Get Just Read Premium",
-    contexts: ["browser_action"],
-    onclick: function() {
-        window.open('https://justread.link', '_blank');
-    }
-});
-
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
         // Auto enable on sites specified
         chrome.storage.sync.get('auto-enable-site-list', function (siteListObj) {
-            var siteList;
+            let siteList;
             if(siteListObj) {
                 siteList = siteListObj['auto-enable-site-list'];
-                var url = tab.url;
+                const url = tab.url;
+
+                let inAutorunList = false;
 
                 if(typeof siteList !== "undefined") {
-                    for(var i = 0; i < siteList.length; i++) {
-                        var regex = new RegExp(siteList[i], "i");
+                    for(let i = 0; i < siteList.length; i++) {
+                        inAutorunList = true;
+
+                        const regex = new RegExp(siteList[i], "i");
 
                         if( url.match( regex ) ) {
                             chrome.tabs.executeScript(tabId, {

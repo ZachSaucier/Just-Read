@@ -48,7 +48,7 @@ a[href]:hover {
 }
 
 .simple-container {
-    max-width: 600px;
+    -webkit-print-color-adjust: exact;
 }
 
 .youtubeContainer {
@@ -58,6 +58,10 @@ a[href]:hover {
     padding-bottom: 56.25%;
     padding-top: 25px;
 }
+iframe {
+    width: 100%;
+    height: 300px;
+}
 iframe[src *= "youtube.com/embed/"] {
     width: 100%;
     height: 100%;
@@ -66,12 +70,14 @@ iframe[src *= "youtube.com/embed/"] {
     left: 0;
 }
 
+video,
 img {
     max-width: 100%;
 }
 
 li {
     line-height: 1.5em;
+    margin-bottom: 5px;
 }
 
 td {
@@ -80,9 +86,12 @@ td {
 }
 
 pre {
-    background-color: #E0E0E0;
     padding: 10px;
     overflow: auto;
+}
+pre,
+code {
+    background-color: #E0E0E0;
 }
 
 blockquote {
@@ -148,6 +157,10 @@ aside,
 .rtl .simple-author {
     padding-left: 0;
     padding-right: 10px;
+}
+
+.simple-article-container {
+    max-width: 600px;
 }
 
 

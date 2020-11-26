@@ -19,11 +19,10 @@ You are permitted to load the Just Read software on any device (for example on a
 
 ### You are not permitted to:
 
-- Edit, alter, modify, adapt, translate or otherwise change the whole or any part of Just Read nor permit the whole or any part of Just Read to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer Just Read or attempt to do any such things.
-- Abuse any of Just Read's services in a way that is not intended by the creators.
 - Reproduce, copy, distribute, resell or otherwise use Just Read for any commercial purpose.
 - Allow any third party to use Just Read on behalf of or for the benefit of any third party.
 - Use Just Read in any way which breaches any applicable local, national or international law, including the licenses and agreements of website that Just Read is used on.
+- Abuse any of Just Read's services in a way that is not intended by the creators.
 - Use Just Read for any purpose that the creators of Just Read considers is a breach of this EULA agreement.
 
 ## Intellectual Property and Ownership
@@ -37,7 +36,7 @@ This EULA agreement is effective from the date you first use Just Read and shall
 It will also terminate immediately if you fail to comply with any term of this EULA agreement. Upon such termination, the licenses granted by this EULA agreement will immediately terminate and you agree to stop all access and use of Just Read. The provisions that by their nature continue and survive will survive any termination of this EULA agreement.
 
 ## No warranty
-The author of Just Read expressly disclaims any warranty for Just Read. Just Read and any related services are provided “as is” without warranty of any kind, either express or implied, including, without limitation, the implied warranties or merchantability, fitness for a particular purpose, or noninfringement. This means that there are no refunds. The entire risk arising out of use or performance of Just Read remains with you.
+The author of Just Read expressly disclaims any warranty for Just Read. Just Read and any related services are provided “as is” without warranty of any kind, either express or implied, including, without limitation, the implied warranties or merchantability, fitness for a particular purpose, or noninfringement. The entire risk arising out of use or performance of Just Read remains with you.
 
 ## Limitation of Liability
 Under no circumstances shall Just Read or its creators be liable for any indirect, incidental, consequential, special, or exemplary damages arising out of or in connection with your access or use of or inability to access of use the software and any third party content and services, whether or not the damages were foreseeable.

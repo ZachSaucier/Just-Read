@@ -51,7 +51,6 @@ a[href]:hover {
 
 .simple-container {
     -webkit-print-color-adjust: exact;
-    max-width: 600px;
 }
 
 .simple-control,
@@ -61,6 +60,9 @@ a[href]:hover {
     color: #D1D1D1;
     border-color: #D1D1D1;
 }
+.simple-share-dropdown {
+    background-color: transparent;
+}
 
 .youtubeContainer {
     position: relative;
@@ -68,6 +70,10 @@ a[href]:hover {
     height: 0;
     padding-bottom: 56.25%;
     padding-top: 25px;
+}
+iframe {
+    width: 100%;
+    height: 300px;
 }
 iframe[src *= "youtube.com/embed/"] {
     width: 100%;
@@ -77,12 +83,14 @@ iframe[src *= "youtube.com/embed/"] {
     left: 0;
 }
 
+video,
 img {
     max-width: 100%;
 }
 
 li {
     line-height: 1.5em;
+    margin-bottom: 5px;
 }
 
 td {
@@ -91,10 +99,14 @@ td {
 }
 
 pre {
-    background-color: #E0E0E0;
     color: #1f1f1f;
     padding: 10px;
     overflow: auto;
+}
+pre,
+code {
+    color: #1f1f1f;
+    background-color: #E0E0E0;
 }
 
 blockquote {
@@ -179,11 +191,34 @@ aside,
     padding-right: 10px;
 }
 
+.simple-article-container {
+    max-width: 600px;
+}
+
+.simple-ext-info {
+    border-top-color: #767676;
+}
 .simple-bug-reporter a[href] {
     color: #e9e9e9;
 }
 .simple-bug-reporter a[href]:hover {
     color: #fff;
+}
+
+.pause-scroll {
+    color: #D1D1D1;
+}
+
+.simple-progress::-webkit-progress-value {
+    background-color: #767676;
+}
+
+.simple-found,
+.jr-highlight-yellow,
+.jr-highlight-green,
+.jr-highlight-blue,
+.jr-highlight-orange {
+    color: #1d1d1d;
 }
 
 
