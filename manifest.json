@@ -1,6 +1,6 @@
 {
   "name": "Just Read",
-  "version": "4.3.0",
+  "version": "5.0.4",
   "manifest_version": 2,
   "description": "A feature-packed, customizable reader extension.",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
@@ -61,14 +61,6 @@
     "tabs",
     "*://*/*",
     "contextMenus",
-    "storage",
-    "identity",
-    "identity.email"
-  ],
-
-  "applications": {
-    "gecko": {
-      "id": "support@justread.link"
-    }
-  }
+    "storage"
+  ]
 }

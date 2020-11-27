@@ -1,7 +1,7 @@
 Just Read
 =========
 
-Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content.
+Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content. Learn more about it by [watching this video](https://www.youtube.com/watch?v=mKMUXEg873Q).
 
 Premium features can be enabled by [purchasing Just Read Premium](https://justread.link/#getJustRead).
 

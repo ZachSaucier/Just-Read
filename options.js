@@ -280,7 +280,8 @@ function continueLoading() {
     }
 
     if(jrSecret
-    && (typeof jrLastChecked === "undefined" || Date.now() - jrLastChecked > 86400000)) {
+    && (typeof jrLastChecked === "undefined" || Date.now() - jrLastChecked > 86400000)
+    ) {
         chrome.storage.sync.set({'jrLastChecked': Date.now()});
 
         fetch(jrDomain + "checkPremium", {

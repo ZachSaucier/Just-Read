@@ -1,5 +1,3 @@
-const jrDomain = "https://justread.link/";
-
 function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
@@ -217,19 +215,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         chrome.tabs.getSelected(function(tab) {
             setTimeout(function() { chrome.tabs.remove(tab.id) }, 100);
         });
-    } else if(request.getUID === "true") {
-        if(typeof chrome.identity.getAuthToken === "function") { // Chrome
-            chrome.identity.getProfileUserInfo(function(info) {
-                sendResponse({ uid: info.id });
-            });
-        } else { // FF
-            chrome.storage.sync.get('guid', function(result) {
-                if(result['guid']) {
-                    sendResponse({ uid: result['guid'] });
-                }
-            });
-        }
-        return true;
     } else if(request.savedVersion) {
         const tempObj = {
             content: request.savedVersion,
@@ -250,24 +235,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     else if (request.resetJRLastChecked) {
         chrome.storage.sync.set({'jrLastChecked': ''});
     }
-});
-
-chrome.runtime.onMessageExternal.addListener(function(request, sender, sendResponse) {
-    // For dev purposes
-    if(request.getUID === "true") {
-        if(typeof chrome.identity.getAuthToken === "function") { // Chrome
-            chrome.identity.getProfileUserInfo(function(info) {
-                sendResponse({ uid: info.id });
-            });
-        } else { // FF
-            chrome.storage.sync.get('guid', function(result) {
-                if(result['guid']) {
-                    sendResponse({ uid: result['guid'] });
-                }
-            });
-        }
-        return true;
-    } 
+    console.log(request);
 });
 
 // Create an entry to allow user to select an element to read from

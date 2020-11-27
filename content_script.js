@@ -798,7 +798,8 @@ function getStyles() {
         // Check if premium
         if(chromeStorage.jrSecret
         // Limit API calls on open to just 1 per day
-        && (typeof chromeStorage.jrLastChecked === "undefined" || chromeStorage.jrLastChecked === "" || Date.now() - chromeStorage.jrLastChecked > 86400000)) {
+        && (typeof chromeStorage.jrLastChecked === "undefined" || chromeStorage.jrLastChecked === "" || Date.now() - chromeStorage.jrLastChecked > 86400000)
+        ) {
             chrome.storage.sync.set({'jrLastChecked': Date.now()});
 
             jrSecret = chromeStorage.jrSecret;

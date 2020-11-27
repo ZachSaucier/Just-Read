@@ -1,12 +1,7 @@
-const url = "https://justread.link/";
+const url = "https://justread.link";
 
-// Send the user's UID to the JR website
-chrome.runtime.sendMessage({ getUID: "true" }, function(response) {
-    if(response
-    && response.uid) {
-    	window.postMessage({ uid: response.uid }, url);
-    }
-});
+// Tell the JR website that the extension is installed
+window.postMessage({ hasJR: true }, url);
 
 // Listen for events from the JR website
 window.addEventListener("message", (event) => {
