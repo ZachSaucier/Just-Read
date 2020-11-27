@@ -360,14 +360,11 @@ function finishLoading() {
             changed = true;
     });
 
-    if(hasAccount) {
-        if(isPremium) {
-            allowPremiumStuff();
-        }
-
-        document.body.classList.remove("withOverlay");
-        addEventListeners();
+    if(isPremium) {
+        allowPremiumStuff();
     }
+
+    addEventListeners();
 }
 
 function allowPremiumStuff() {
