@@ -343,6 +343,13 @@ Once there, you can follow [these instructions](https://graphicdesign.stackexcha
 
 If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
 
+To install and use one of these themes, 
+
+1. Go to the Just Read options page. In Chrome you can simply right click the Just Read icon and then click "Options". 
+2. Once on the options page, click in the input box that says "New theme" and enter a name for the theme. Then click the "+" button. 
+3. Click the "Use as current theme" button to make it your active theme.
+4. Copy and paste the CSS from your chosen theme into the CSS (code) section and then click "Save style changes". 
+
 
 </details>
 
