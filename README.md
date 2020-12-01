@@ -20,7 +20,7 @@ You can even use Just Read on your smart phone through mobile browsers that supp
 ___
 ### The story behind Just Read
 
-Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](https://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make an reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it ever since.
+Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](https://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make a reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it in my free time ever since.
 
 ___
 
@@ -82,15 +82,6 @@ You must first install a mobile browser that supports extensions such as [Firefo
 Once you're on an article that you want to read with Just Read installed on that browser, you need to navigate to their extensions section to run Just Read. In most browsers you need to click the three dots to see this section. Once there, simply click on Just Read.
 
 **Note that some of Just Read's features are likely to not work properly on mobile devices due to a lack of features on those mobile browsers.**
-
-</details>
-
-
-<details id="options">
-  <summary>How can I enable Just Read's options?</summary>
-
-To enable the Just Read options page, create a free account on <a href="https://justread.link/#getJustRead">the Just Read website</a>. Once you're signed in, the options page will become available. 
-
 
 </details>
 
@@ -442,7 +433,7 @@ Currently Just Read Premium has a shared article limit of 100 articles. This is 
 
 For most issues [creating a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) is best. Please make sure to [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
 
-For *account related issues*, contact <a href="mailto:support@justread.link">.
+For *account related issues*, contact <a href="mailto:support@justread.link">support@justread.link</a>.
 
 
 </details>
