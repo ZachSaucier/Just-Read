@@ -11,8 +11,9 @@ ___
 
 ### Installation:
 
-- [Chrome / Brave / Opera](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
+- [Chrome / Brave / Opera / Edge](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod)
 - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/)
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/just-read/knjifalgaonnogbohfflloocfcebopgn)
 
 You can even use Just Read on your smart phone through mobile browsers that support extensions such as [Dolphin](https://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). For more information, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
 
