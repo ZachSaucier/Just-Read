@@ -757,13 +757,17 @@ function checkAgainstBlacklist(elem, level) {
         const className = elem.className,
               id = elem.id;
 
-        blacklist.forEach(item => {
+        const isBlackListed = blacklist.map(item => {
             if((typeof className === "string" && className.indexOf(item) >= 0)
             || (typeof id === "string" && id.indexOf(item) >= 0)
             ) {
-                return null;
+                return true;
             }
-        });
+        }).filter(item => item)[0];
+
+        if(isBlackListed) {
+            return null;
+        }
 
         const parent = elem.parentElement;
         if(level > 0 && !parent.isSameNode(document.body)) {
