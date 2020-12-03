@@ -822,68 +822,72 @@ function getStyles() {
             .then(response => {
                 isPremium = response === "true";
                 chrome.storage.sync.set({'isPremium': isPremium});
+                afterPremium();
             })
             .catch((err) => console.error(`Fetch Error =\n`, err));
         } else {
             isPremium = chromeStorage.isPremium ? chromeStorage.isPremium : false;
             jrSecret = chromeStorage.jrSecret ? chromeStorage.jrSecret : false;
+            afterPremium();
         }
-
-        // Collect all of our stylesheets in our object
-        getStylesFromStorage(chromeStorage);
-
-        // Check to see if the default stylesheet needs to be updated
-        let needsUpdate = false;
-        let versionResult = chromeStorage['stylesheet-version'];
-
-        // If the user has a version of the stylesheets and it is less than the current one, update it
-        if(typeof versionResult === "undefined"
-        || versionResult < stylesheetVersion) {
-            chrome.storage.sync.set({'stylesheet-version': stylesheetVersion});
-
-            needsUpdate = true;
-        }
-
-        if(isEmpty(stylesheetObj) // Not found, so we add our default
-        || needsUpdate) { // Update the default stylesheet if it's on a previous version
-
-            // Open the default CSS file and save it to our object
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
-            xhr.onreadystatechange = function() {
-                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                    // Save the file's contents to our object
-                    stylesheetObj["default-styles.css"] = xhr.responseText;
-
-                    // Save it to Chrome storage
-                    setStylesOfStorage();
-
-                    // Continue on loading the page
-                    continueLoading();
-                }
-            }
-            xhr.send();
-
-            let xhr2 = new XMLHttpRequest();
-            xhr2.open('GET', chrome.extension.getURL('dark-styles.css'), true);
-            xhr2.onreadystatechange = function() {
-                if(xhr2.readyState == XMLHttpRequest.DONE && xhr2.status == 200) {
-                    // Save the file's contents to our object
-                    stylesheetObj["dark-styles.css"] =  xhr2.responseText;
-
-                    // Save it to Chrome storage
-                    setStylesOfStorage();
-                }
-            }
-            xhr2.send();
-
-            needsUpdate = false;
-
-            return;
-        }
-
-        continueLoading();
     });
+}
+
+function afterPremium() {
+    // Collect all of our stylesheets in our object
+    getStylesFromStorage(chromeStorage);
+
+    // Check to see if the default stylesheet needs to be updated
+    let needsUpdate = false;
+    let versionResult = chromeStorage['stylesheet-version'];
+
+    // If the user has a version of the stylesheets and it is less than the current one, update it
+    if(typeof versionResult === "undefined"
+    || versionResult < stylesheetVersion) {
+        chrome.storage.sync.set({'stylesheet-version': stylesheetVersion});
+
+        needsUpdate = true;
+    }
+
+    if(isEmpty(stylesheetObj) // Not found, so we add our default
+    || needsUpdate) { // Update the default stylesheet if it's on a previous version
+
+        // Open the default CSS file and save it to our object
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                // Save the file's contents to our object
+                stylesheetObj["default-styles.css"] = xhr.responseText;
+
+                // Save it to Chrome storage
+                setStylesOfStorage();
+
+                // Continue on loading the page
+                continueLoading();
+            }
+        }
+        xhr.send();
+
+        let xhr2 = new XMLHttpRequest();
+        xhr2.open('GET', chrome.extension.getURL('dark-styles.css'), true);
+        xhr2.onreadystatechange = function() {
+            if(xhr2.readyState == XMLHttpRequest.DONE && xhr2.status == 200) {
+                // Save the file's contents to our object
+                stylesheetObj["dark-styles.css"] =  xhr2.responseText;
+
+                // Save it to Chrome storage
+                setStylesOfStorage();
+            }
+        }
+        xhr2.send();
+
+        needsUpdate = false;
+
+        return;
+    }
+
+    continueLoading();
 }
 
 // Add our styles to the page
@@ -2559,7 +2563,7 @@ function createSimplifiedOverlay() {
         // Add a notification of premium if necessary
         if(!isPremium
         && (jrOpenCount === 5
-        || jrOpenCount % 15 === 0)
+           || jrOpenCount % 15 === 0)
         && jrOpenCount < 151) {
             addPremiumNofifier();
         }
