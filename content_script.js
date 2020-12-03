@@ -770,7 +770,7 @@ function checkAgainstBlacklist(elem, level) {
         }
 
         const parent = elem.parentElement;
-        if(level > 0 && !parent.isSameNode(document.body)) {
+        if(level > 0 && parent && !parent.isSameNode(document.body)) {
             return checkAgainstBlacklist(parent, --level);
         }
     }
