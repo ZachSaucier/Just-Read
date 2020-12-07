@@ -1030,7 +1030,7 @@ function addExtInfo() {
 
     const extAnchor = document.createElement("a");
     extAnchor.href = "https://justread.link/";
-    extAnchor.innerText = "Just Read Premium";
+    extAnchor.innerText = "Just Read";
     extAnchor.target = "_blank";
     viewedUsing.appendChild(extAnchor);
 
@@ -2007,6 +2007,7 @@ function doSearch() {
 let scrollSpeed = 0.5,
     nextMove = 0,
     pauseScrollBtn,
+    scrollSpeedInput,
     lastTime;
 function scrollPage() {
     if(simpleArticleIframe
@@ -2044,6 +2045,28 @@ function getPauseScrollBtn() {
     pauseScrollBtn.onclick = toggleScroll;
 
     return pauseScrollBtn;
+}
+
+function handleScrollSpeedInput(e) {
+    const speed = parseFloat(scrollSpeedInput.value);
+    if(speed) {
+        scrollSpeed = speed;
+        chrome.storage.sync.set({'scroll-speed': speed});
+    }
+}
+
+function getScrollSpeedInput() {
+    scrollSpeedInput = document.createElement("input");
+    scrollSpeedInput.type = "number";
+    scrollSpeedInput.className = "scroll-input";
+    scrollSpeedInput.value = scrollSpeed;
+    scrollSpeedInput.step = "0.1";
+    scrollSpeedInput.pattern = "^\d*(\.\d{0,2})?$";
+    scrollSpeedInput.min = "0";
+    scrollSpeedInput.onchange = handleScrollSpeedInput;
+    scrollSpeedInput.onkeyup = handleScrollSpeedInput;
+
+    return scrollSpeedInput;
 }
 
 // Progress bar functionality
@@ -2825,6 +2848,7 @@ function finishLoading() {
         if(chromeStorage['scroll-speed'])
             scrollSpeed = chromeStorage["scroll-speed"];
 
+        simpleArticleIframe.body.appendChild(getScrollSpeedInput());
         simpleArticleIframe.body.appendChild(getPauseScrollBtn());
 
         lastTime = Date.now();

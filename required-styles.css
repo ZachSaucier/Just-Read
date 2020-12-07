@@ -751,6 +751,22 @@
     left: 15px;
     right: auto;
 }
+.scroll-input {
+    position: fixed;
+    right: 20px;
+    bottom: 35px;
+    width: 50px;
+    opacity: 0.3;
+    transition: 0.2s;
+}
+.scroll-input:focus,
+.scroll-input:hover {
+    opacity: 1;
+}
+.rtl .scroll-input {
+    left: 20px;
+    right: auto;
+}
 
 /* Custom scrollbar functionality */
 .hideScrollbar::-webkit-scrollbar { 
