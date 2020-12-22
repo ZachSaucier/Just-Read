@@ -658,8 +658,8 @@ function getContainer() {
     if(contentSelector && document.querySelector(contentSelector)) {
         selectedContainer = document.querySelector(contentSelector);
     } else {
-        const numWordsOnPage = document.body.innerText.match(/\S+/g).length,
-              ps = document.body.querySelectorAll("p");
+        const numWordsOnPage = document.body.innerText.match(/\S+/g).length;
+        let ps = document.body.querySelectorAll("p");
 
         // Find the paragraphs with the most words in it
         let pWithMostWords = document.body,
