@@ -619,6 +619,11 @@ function getArticleAuthor() {
 
 // Remove what we added (besides styles)
 function closeOverlay() {
+    // Refresh the page if the content has been removed
+    if(removeOrigContent) {
+        location.reload();
+    }
+
     // Remove the GUI if it is open
     if(datGUI) {
         datGUI.destroy();
@@ -2798,10 +2803,18 @@ function continueLoading() {
     getDomainSelectors();
 }
 
+let removeOrigContent = false;
 function fadeIn() {
     if(simpleArticleIframe.styleSheets.length > 2) {
         simpleArticle.classList.remove("no-trans");
         simpleArticle.classList.remove("simple-fade-up");
+        
+        // Remove contents of original page to make page more performant
+        if(removeOrigContent) {
+            simpleArticle.addEventListener("transitionend", e => {
+                [...document.body.children].forEach(child => child !== simpleArticle ? document.body.removeChild(child) : null);
+            }, { once: true });
+        }
     } else {
         setTimeout(fadeIn, 10);
     }
@@ -2867,6 +2880,11 @@ function finishLoading() {
     if(typeof chromeStorage['findbar'] === "undefined"
     || chromeStorage['findbar']) {
         initFindBar();
+    }
+
+    // Allow content to be removed if enabled
+    if(chromeStorage['remove-orig-content']) {
+        removeOrigContent = true;
     }
 }
 
