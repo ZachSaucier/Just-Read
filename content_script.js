@@ -651,6 +651,9 @@ function closeOverlay() {
         // Enable scroll
         document.documentElement.classList.remove("simple-no-scroll");
 
+        // Update our background script
+        chrome.runtime.sendMessage({lastClosed: Date.now()});
+
         // Remove our overlay
         simpleArticle.parentElement.removeChild(simpleArticle);
         simpleArticle = undefined;

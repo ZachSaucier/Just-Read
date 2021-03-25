@@ -1,5 +1,6 @@
 function isEmpty(obj) {
-    return Object.keys(obj).length === 0;
+    if(obj) return Object.keys(obj).length === 0;
+    return true;
 }
 function checkArrayForString(arr, string) {
     for(let i = 0; i < arr.length; i++) {
@@ -206,6 +207,7 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 // Listen for messages
+let lastClosed = Date.now();
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request === "Open options") {
         chrome.runtime.openOptionsPage();
@@ -228,6 +230,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             sendResponse({ content: lastSavedPage.content });
         }
     }
+    else if(request.lastClosed) {
+        lastClosed = request.lastClosed;
+    }
     // For JRP
     else if(request.jrSecret) {
         chrome.storage.sync.set({'jrSecret': request.jrSecret});
@@ -235,7 +240,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     else if (request.resetJRLastChecked) {
         chrome.storage.sync.set({'jrLastChecked': ''});
     }
-    console.log(request);
 });
 
 // Create an entry to allow user to select an element to read from
@@ -248,7 +252,8 @@ chrome.contextMenus.create({
 });
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-    if (changeInfo.status === 'complete') {
+    const change = Date.now() - lastClosed;
+    if (changeInfo.status === 'complete' && change > 300) {
         // Auto enable on sites specified
         chrome.storage.sync.get('auto-enable-site-list', function (siteListObj) {
             let siteList;
@@ -256,12 +261,8 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
                 siteList = siteListObj['auto-enable-site-list'];
                 const url = tab.url;
 
-                let inAutorunList = false;
-
                 if(typeof siteList !== "undefined") {
                     for(let i = 0; i < siteList.length; i++) {
-                        inAutorunList = true;
-
                         const regex = new RegExp(siteList[i], "i");
 
                         if( url.match( regex ) ) {

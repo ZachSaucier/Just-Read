@@ -155,6 +155,7 @@
     padding-left: 0;
 }
 
+.simple-title div { overflow: hidden; }
 .simple-meta > * {
     position: relative;
 }

@@ -12,7 +12,7 @@
 .content-container [class *= "navigation"],
 .content-container [class *= "nav"],
 .content-container nav,
-.content-container [class *= "search"],
+.content-container [class *= "search"]:not([class *= "research"]),
 .content-container [class *= "menu"],
 .content-container [class *= "print"],
 
