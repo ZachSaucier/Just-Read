@@ -94,7 +94,6 @@ if(typeof textToRead !== "undefined" && textToRead) {
 
 // User-selected text functionality
 let last,
-    bgc,
     userSelected;
 function startSelectElement(doc) {
     const mouseFunc = function (e) {
@@ -318,7 +317,15 @@ function popStack() {
 
 function updateSavedVersion() {
     if(chromeStorage["backup"]) {
-        chrome.runtime.sendMessage({ savedVersion: simpleArticleIframe.querySelector('.content-container').innerHTML });
+        const data = {
+            savedVersion: simpleArticleIframe.querySelector('.content-container').innerHTML
+        };
+
+        if(simpleArticleIframe.querySelector(".simple-comments").innerHTML !== "") {
+            data.savedComments = simpleArticleIframe.querySelector(".simple-comments").innerHTML;
+            data.savedCompactComments = simpleArticleIframe.querySelector(".simple-compact-comments").innerHTML;
+        }
+        chrome.runtime.sendMessage(data);
     }
 }
 
@@ -1397,7 +1404,7 @@ function initHighlighter() {
         elem.id = 'jr-' + Date.now();
         hasSavedLink = false;
         shareDropdown.classList.remove("active");
-        updateSavedVersion();
+        setTimeout(() => updateSavedVersion(), 10);
     } };
 
     highlighter.addClassApplier(rangy.createClassApplier("jr-highlight-yellow", rangeOptions));
@@ -1776,6 +1783,8 @@ function placeComment() {
     parent.appendChild(comment);
     parent.appendChild(deleteBtn);
     parent.appendChild(backBtn);
+
+    updateSavedVersion();
 }
 
 function cancelComment(e, el) {
@@ -2307,6 +2316,8 @@ let titleSelector,
     headerImageSelector,
     selectorsToDelete;
 
+let savedComments, savedCompactComments;
+
 function getDomainSelectors() {
     // Get custom domain selectors if applicable
     if(chromeStorage['domainSelectors']) {
@@ -2343,6 +2354,11 @@ function getDomainSelectors() {
                 let tempElem = document.createElement("div");
                 tempElem.innerHTML = response.content;
                 pageSelectedContainer = tempElem;
+
+                if(response.savedComments) {
+                    savedComments = response.savedComments;
+                    savedCompactComments = response.savedCompactComments;
+                }
             }
 
             createSimplifiedOverlay();
@@ -2579,6 +2595,22 @@ function createSimplifiedOverlay() {
     container.appendChild(addCommentContainer);
     container.appendChild(comments);
 
+    // Add saved comments if applicable
+    if(savedComments) {
+        comments.innerHTML = savedComments;
+        comments.querySelectorAll(".delete-button").forEach(btn => {
+            btn.onclick = function() {
+                hasSavedLink = false;
+                shareDropdown.classList.remove("active");
+                const compactRef = simpleArticleIframe.querySelector("[href *= " + this.parentElement.parentElement.id + ']');
+                compactRef.parentElement.removeChild(compactRef);
+                cancelComment(null, this.parentElement);
+            }
+        });
+
+        compactComments.innerHTML = savedCompactComments;
+    }
+
     function doStuff() { 
         simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
         simpleArticleIframe.body.appendChild(container);
@@ -2762,7 +2794,7 @@ function createSimplifiedOverlay() {
         simpleArticleIframe.addEventListener("touchend", handleEnd);
         simpleArticleIframe.addEventListener("mousemove", handleMouseMove);
 
-        checkBreakpoints();
+        setTimeout(() => checkBreakpoints(), 10);
 
         finishLoading();
     }

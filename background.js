@@ -218,16 +218,28 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             setTimeout(function() { chrome.tabs.remove(tab.id) }, 100);
         });
     } else if(request.savedVersion) {
-        const tempObj = {
+        const data = {
             content: request.savedVersion,
-            url: sender.url
+            url: sender.url,
         };
-        localStorage.setItem('JRSavedPage', JSON.stringify(tempObj));
+        if(request.savedComments) {
+            data.savedComments = request.savedComments;
+            data.savedCompactComments = request.savedCompactComments;
+        }
+        localStorage.setItem('JRSavedPage', JSON.stringify(data));
     } else if(request.hasSavedVersion) {
         const lastSavedPage = JSON.parse(localStorage.getItem('JRSavedPage'));
         if(lastSavedPage
         && sender.url === lastSavedPage.url) {
-            sendResponse({ content: lastSavedPage.content });
+            if(lastSavedPage.savedComments) {
+                sendResponse({ 
+                    content: lastSavedPage.content,
+                    savedComments: lastSavedPage.savedComments,
+                    savedCompactComments: lastSavedPage.savedCompactComments
+                });
+            } else {
+                sendResponse({ content: lastSavedPage.content });
+            }
         }
     }
     else if(request.lastClosed) {
