@@ -2694,19 +2694,21 @@ function createSimplifiedOverlay() {
             const imgId = uuidv4();
             const wrapper = document.createElement("a");
             wrapper.href = "#" + imgId;
-            elem.parentElement.insertBefore(wrapper, elem);
-            wrapper.appendChild(elem);
+            if(elem.parentElement) {
+                elem.parentElement.insertBefore(wrapper, elem);
+                wrapper.appendChild(elem);
 
-            // Create the lightbox version of our image
-            const lightbox = document.createElement("a");
-            lightbox.href = "#_";
-            lightbox.className = "jr-lightbox";
-            lightbox.id = imgId;
+                // Create the lightbox version of our image
+                const lightbox = document.createElement("a");
+                lightbox.href = "#_";
+                lightbox.className = "jr-lightbox";
+                lightbox.id = imgId;
 
-            const lightboxImg = document.createElement("img");
-            lightboxImg.src = elem.src;
-            lightbox.appendChild(lightboxImg);
-            simpleArticleIframe.querySelector(".simple-container").appendChild(lightbox);
+                const lightboxImg = document.createElement("img");
+                lightboxImg.src = elem.src;
+                lightbox.appendChild(lightboxImg);
+                simpleArticleIframe.querySelector(".simple-container").appendChild(lightbox);
+            }
         });
 
         simpleArticleIframe.onkeydown = function(e) {
@@ -2886,7 +2888,7 @@ function finishLoading() {
     // Apply the gradient text if the user has the option enabled
     if(chromeStorage["gradient-text"]) {
         if(chromeStorage["gradient-colors"])
-            gradientText(grdTxtObj["gradient-colors"]);
+            gradientText(chromeStorage["gradient-colors"]);
         else
             gradientText(["black", "blue", "black", "red"]);
     }
