@@ -2638,7 +2638,7 @@ function createSimplifiedOverlay() {
             mathjax.src = mj.src;
             simpleArticleIframe.head.appendChild(mathjax);
 
-            const scripts = document.getElementsByTagName("script");
+            const scripts = document.querySelectorAll("script");
             scripts.forEach(script => {
                 if(script.innerText.indexOf("MathJax.Hub.Config") >= 0) {
                     const clone = scripts[i].cloneNode(true);
