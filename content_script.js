@@ -2439,8 +2439,9 @@ function createSimplifiedOverlay() {
             }
 
             // Replace the depreciated font element and pres without code with ps
-            if(elem.nodeName === "FONT"
-            || !isPreNoCode) {
+            if((elem.nodeName === "FONT"
+            || !isPreNoCode)
+            && elem.parentElement) {
                 const p = document.createElement('p');
                 p.innerHTML = elem.innerHTML;
 
