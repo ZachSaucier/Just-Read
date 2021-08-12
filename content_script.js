@@ -1797,7 +1797,7 @@ function cancelComment(e, el) {
 
     parent.parentElement.removeChild(parent);
 
-    if(simpleArticleIframe.querySelector(".simple-comment-container") == null) {
+    if(simpleArticleIframe.querySelectorAll(".simple-comment-container").length === 0) {
         simpleArticleIframe.body.classList.remove("simple-with-comments");
     }
     simpleArticleIframe.body.classList.remove("simple-commenting");
