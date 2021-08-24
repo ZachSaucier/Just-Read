@@ -96,6 +96,8 @@ function getDataFromStorage(storage) {
             addTimeEstimate.checked = storage[key];
         } else if(key === "alwaysAddAR") {
             alwaysAddAR.checked = storage[key];
+        } else if(key === "disableEditBar") {
+            disableEditBar.checked = storage[key];
         } else if(key === "gradient-text") {
             grdTxt.checked = storage[key];
         } else if(key === "gradient-colors") {
@@ -633,6 +635,9 @@ function addEventListeners() {
     alwaysAddAR.onchange = function() {
         chrome.storage.sync.set({"alwaysAddAR": this.checked});
     }
+    disableEditBar.onchange = function() {
+        chrome.storage.sync.set({"disableEditBar": this.checked});
+    }
     
     grdTxt.onchange = function() {
         if(isPremium) {
@@ -730,6 +735,7 @@ const hideSegments = document.getElementById("hideSegments"),
       linkCM = document.getElementById("linkCM"),
       autorunCM = document.getElementById("autorunCM"),
       alwaysAddAR = document.getElementById("alwaysAddAR"),
+      disableEditBar = document.getElementById("disableEditBar"),
       grdTxt = document.getElementById("grdTxt"),
       grdColors = document.querySelector("[name='gradientColors']"),
       autoscroll = document.getElementById("autoscroll"),

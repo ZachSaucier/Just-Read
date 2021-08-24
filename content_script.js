@@ -1435,6 +1435,9 @@ function initHighlighter() {
 let lastMessage;
 let editorShortcutsEnabled = false;
 function handleEnd(e) {
+    if (chromeStorage["disableEditBar"]) {
+        return;
+    }
     let isTouch = e.type === "touchend";
 
     if(typeof editBar === "undefined") {
