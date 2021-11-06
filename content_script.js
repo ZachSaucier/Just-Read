@@ -672,6 +672,9 @@ function getContainer() {
 
     if(contentSelector && document.querySelector(contentSelector)) {
         selectedContainer = document.querySelector(contentSelector);
+    } else if(document.head.querySelector("meta[name='articleBody'")) {
+        selectedContainer = document.createElement("div");
+        selectedContainer.innerHTML = document.head.querySelector("meta[name='articleBody'").getAttribute("content");
     } else {
         const numWordsOnPage = document.body.innerText.match(/\S+/g).length;
         let ps = document.body.querySelectorAll("p");
