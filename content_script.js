@@ -5,6 +5,13 @@ let isPremium = false;
 let jrSecret;
 let jrOpenCount;
 
+let chromeStorage, pageSelectedContainer;
+chrome.storage.sync.get(null, function (result) {
+    chromeStorage = result;
+
+    launch();
+});
+
 
 /////////////////////////////////////
 // Generic helper functions
@@ -66,6 +73,7 @@ function stylesheetToString(s) {
 }
 
 // Select text from highlight functionality
+const selection = getSelectionHtml();
 function getSelectionHtml() {
     let html = "";
     const sel = window.getSelection();
@@ -74,17 +82,9 @@ function getSelectionHtml() {
         for (let i = 0, len = sel.rangeCount; i < len; ++i) {
             container.appendChild(sel.getRangeAt(i).cloneContents());
         }
-        html = container.innerHTML;
+        html = DOMPurify.sanitize(container.innerHTML);
     }
     return html;
-}
-
-// Use the highlighted text if started from that
-let pageSelectedContainer;
-if(typeof textToRead !== "undefined" && textToRead) {
-    pageSelectedContainer = document.createElement("div");
-    pageSelectedContainer.className = "highlighted-html";
-    pageSelectedContainer.innerHTML = getSelectionHtml();
 }
 
 
@@ -115,7 +115,7 @@ function startSelectElement(doc) {
     },
     escFunc = function(e) {
         // Listen for the "Esc" key and exit if so
-        if(e.keyCode === 27)
+        if(e.key === "Escape")
             exitFunc();
     },
     exitFunc = function() {
@@ -144,9 +144,6 @@ function startSelectElement(doc) {
     tempStyle.innerText = ".jr-hovered, .jr-hovered * { cursor: pointer !important; color: black !important; background-color: #2095f2 !important; }";
 
     doc.head.appendChild(tempStyle);
-
-    // Make the next part wait until a user has selected an element to use
-    useText = false;
 }
 
 // Similar to ^^ but for deletion once the article is open
@@ -209,7 +206,7 @@ function startDeleteElement(doc) {
     },
     escFunc = function(e) {
         // Listen for the "Esc" key and exit if so
-        if(e.keyCode === 27)
+        if(e.key === "Escape")
             exitFunc();
     },
     exitFunc = function() {
@@ -318,12 +315,12 @@ function popStack() {
 function updateSavedVersion() {
     if(chromeStorage["backup"]) {
         const data = {
-            savedVersion: simpleArticleIframe.querySelector('.content-container').innerHTML
+            savedVersion: DOMPurify.sanitize(simpleArticleIframe.querySelector('.content-container').innerHTML)
         };
 
         if(simpleArticleIframe.querySelector(".simple-comments").innerHTML !== "") {
-            data.savedComments = simpleArticleIframe.querySelector(".simple-comments").innerHTML;
-            data.savedCompactComments = simpleArticleIframe.querySelector(".simple-compact-comments").innerHTML;
+            data.savedComments = DOMPurify.sanitize(simpleArticleIframe.querySelector(".simple-comments").innerHTML);
+            data.savedCompactComments = DOMPurify.sanitize(simpleArticleIframe.querySelector(".simple-compact-comments").innerHTML);
         }
         chrome.runtime.sendMessage(data);
     }
@@ -650,9 +647,9 @@ function closeOverlay() {
     // Reset our variables
     pageSelectedContainer = null;
     userSelected = null;
-    textToRead = null;
     simpleArticleIframe = undefined;
     editBar = undefined;
+    chromeStorage = undefined;
 
     setTimeout(function() {
         // Enable scroll
@@ -672,6 +669,9 @@ function getContainer() {
 
     if(contentSelector && document.querySelector(contentSelector)) {
         selectedContainer = document.querySelector(contentSelector);
+    } else if(document.head.querySelector("meta[name='articleBody'")) {
+        selectedContainer = document.createElement("div");
+        selectedContainer.innerHTML = DOMPurify.sanitize(document.head.querySelector("meta[name='articleBody'").getAttribute("content"));
     } else {
         const numWordsOnPage = document.body.innerText.match(/\S+/g).length;
         let ps = document.body.querySelectorAll("p");
@@ -807,45 +807,38 @@ function isContentElem(elem) {
 // Extension-related adder functions
 /////////////////////////////////////
 
-// Get theme's CSS sheets from storage
-let chromeStorage;
-function getStyles() {
-    // Check to see if the stylesheets are already in Chrome storage
-    chrome.storage.sync.get(null, function (result) {
-        chromeStorage = result;
+function checkPremium() {
+    // Check if premium
+    if(chromeStorage.jrSecret
+    // Limit API calls on open to just 1 per day
+    && (typeof chromeStorage.jrLastChecked === "undefined" || chromeStorage.jrLastChecked === "" || Date.now() - chromeStorage.jrLastChecked > 86400000)
+    ) {
+        chrome.storage.sync.set({'jrLastChecked': Date.now()});
 
-        // Check if premium
-        if(chromeStorage.jrSecret
-        // Limit API calls on open to just 1 per day
-        && (typeof chromeStorage.jrLastChecked === "undefined" || chromeStorage.jrLastChecked === "" || Date.now() - chromeStorage.jrLastChecked > 86400000)
-        ) {
-            chrome.storage.sync.set({'jrLastChecked': Date.now()});
-
-            jrSecret = chromeStorage.jrSecret;
-            fetch(jrDomain + "checkPremium", {
-                mode: 'cors',
-                method: 'POST',
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-                body: JSON.stringify({
-                    'jrSecret': jrSecret
-                })
+        jrSecret = chromeStorage.jrSecret;
+        fetch(jrDomain + "checkPremium", {
+            mode: 'cors',
+            method: 'POST',
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            body: JSON.stringify({
+                'jrSecret': jrSecret
             })
-            .then(function(response) {
-                if (!response.ok) throw response;
-                else return response.text();
-            })
-            .then(response => {
-                isPremium = response === "true";
-                chrome.storage.sync.set({'isPremium': isPremium});
-                afterPremium();
-            })
-            .catch((err) => console.error(`Fetch Error =\n`, err));
-        } else {
-            isPremium = chromeStorage.isPremium ? chromeStorage.isPremium : false;
-            jrSecret = chromeStorage.jrSecret ? chromeStorage.jrSecret : false;
+        })
+        .then(function(response) {
+            if (!response.ok) throw response;
+            else return response.text();
+        })
+        .then(response => {
+            isPremium = response === "true";
+            chrome.storage.sync.set({'isPremium': isPremium});
             afterPremium();
-        }
-    });
+        })
+        .catch((err) => console.error(`Fetch Error =\n`, err));
+    } else {
+        isPremium = chromeStorage.isPremium ? chromeStorage.isPremium : false;
+        jrSecret = chromeStorage.jrSecret ? chromeStorage.jrSecret : false;
+        afterPremium();
+    }
 }
 
 function afterPremium() {
@@ -869,7 +862,7 @@ function afterPremium() {
 
         // Open the default CSS file and save it to our object
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', chrome.extension.getURL('default-styles.css'), true);
+        xhr.open('GET', chrome.runtime.getURL('default-styles.css'), true);
         xhr.onreadystatechange = function() {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 // Save the file's contents to our object
@@ -885,7 +878,7 @@ function afterPremium() {
         xhr.send();
 
         let xhr2 = new XMLHttpRequest();
-        xhr2.open('GET', chrome.extension.getURL('dark-styles.css'), true);
+        xhr2.open('GET', chrome.runtime.getURL('dark-styles.css'), true);
         xhr2.onreadystatechange = function() {
             if(xhr2.readyState == XMLHttpRequest.DONE && xhr2.status == 200) {
                 // Save the file's contents to our object
@@ -907,7 +900,7 @@ function afterPremium() {
 
 // Add our styles to the page
 function addStylesheet(doc, link, classN) {
-    const path = chrome.extension.getURL(link),
+    const path = chrome.runtime.getURL(link),
           styleLink = document.createElement("link");
 
     styleLink.setAttribute("rel", "stylesheet");
@@ -922,7 +915,20 @@ function addStylesheet(doc, link, classN) {
 
 // Add the article author and date
 function addArticleMeta() {
-    const editSVG = '<svg class="simple-edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="M422.953,176.019c0.549-0.48,1.09-0.975,1.612-1.498l21.772-21.772c12.883-12.883,12.883-33.771,0-46.654   l-40.434-40.434c-12.883-12.883-33.771-12.883-46.653,0l-21.772,21.772c-0.523,0.523-1.018,1.064-1.498,1.613L422.953,176.019z"></path><polygon fill="#020202" points="114.317,397.684 157.317,440.684 106.658,448.342 56,456 63.658,405.341 71.316,354.683  "></polygon><polygon fill="#020202" points="349.143,125.535 118.982,355.694 106.541,343.253 336.701,113.094 324.26,100.653 81.659,343.253    168.747,430.341 411.348,187.74  "></polygon></g></svg>';
+    const editSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    editSVG.setAttribute("class", "simple-edit");
+    editSVG.setAttribute("viewBox", "0 0 512 512");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M422.953,176.019c0.549-0.48,1.09-0.975,1.612-1.498l21.772-21.772c12.883-12.883,12.883-33.771,0-46.654 l-40.434-40.434c-12.883-12.883-33.771-12.883-46.653,0l-21.772,21.772c-0.523,0.523-1.018,1.064-1.498,1.613L422.953,176.019z");
+    const polygon1 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    polygon1.setAttribute("fill", "#020202");
+    polygon1.setAttribute("points", "114.317,397.684 157.317,440.684 106.658,448.342 56,456 63.658,405.341 71.316,354.683");
+    const polygon2 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    polygon2.setAttribute("fill", "#020202");
+    polygon2.setAttribute("points", "349.143,125.535 118.982,355.694 106.541,343.253 336.701,113.094 324.26,100.653 81.659,343.253 168.747,430.341 411.348,187.74");
+    editSVG.appendChild(path);
+    editSVG.appendChild(polygon1);
+    editSVG.appendChild(polygon2);
 
     const metaContainer = document.createElement("div");
     metaContainer.className = "simple-meta";
@@ -939,23 +945,23 @@ function addArticleMeta() {
     title.className = "simple-title";
 
     // Check a couple places for the date, othewise say it's unknown
-    date.innerHTML = editSVG;
+    date.appendChild(editSVG);
     let dateText = getArticleDate();
     if(dateText === "Unknown date") {
       metaContainer.classList.add("unknown-date");
     }
-    dateContent.innerHTML = dateText;
+    dateContent.innerHTML = DOMPurify.sanitize(dateText);
     date.appendChild(dateContent);
     // Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
-    author.innerHTML = editSVG;
+    author.appendChild(editSVG.cloneNode(true));
     let authorText = getArticleAuthor();
     if(authorText === "Unknown author") {
       metaContainer.classList.add("unknown-author");
     }
-    authorContent.innerHTML = authorText;
+    authorContent.innerHTML = DOMPurify.sanitize(authorText);
     author.appendChild(authorContent);
     // Check h1s for the title, otherwise say it's unknown
-    title.innerHTML = editSVG;
+    title.appendChild(editSVG.cloneNode(true));
     titleContent.innerText = getArticleTitle();
     title.appendChild(titleContent);
 
@@ -1000,7 +1006,39 @@ function addPrintButton() {
     let printButton = document.createElement("button");
     printButton.className = "simple-print simple-control";
     printButton.title = "Print article";
-    printButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M49,0H15v19H0v34h15v11h34V53h15V19H49V0z M17,2h30v17H17V2z M47,62H17V40h30V62z M62,21v30H49V38H15v13H2V21h13h34H62z"/><rect x="6" y="26" width="4" height="2"/><rect x="12" y="26" width="4" height="2"/><rect x="22" y="46" width="20" height="2"/><rect x="22" y="54" width="20" height="2"/></svg>Print';
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 64 64");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M49,0H15v19H0v34h15v11h34V53h15V19H49V0z M17,2h30v17H17V2z M47,62H17V40h30V62z M62,21v30H49V38H15v13H2V21h13h34H62z");
+    const rect1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect1.setAttribute("x", "6");
+    rect1.setAttribute("y", "26");
+    rect1.setAttribute("width", "4");
+    rect1.setAttribute("height", "2");
+    const rect2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect2.setAttribute("x", "12");
+    rect2.setAttribute("y", "26");
+    rect2.setAttribute("width", "4");
+    rect2.setAttribute("height", "2");
+    const rect3 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect3.setAttribute("x", "22");
+    rect3.setAttribute("y", "46");
+    rect3.setAttribute("width", "20");
+    rect3.setAttribute("height", "2");
+    const rect4 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect4.setAttribute("x", "22");
+    rect4.setAttribute("y", "54");
+    rect4.setAttribute("width", "20");
+    rect4.setAttribute("height", "2");
+    svg.appendChild(path);
+    svg.appendChild(rect1);
+    svg.appendChild(rect2);
+    svg.appendChild(rect3);
+    svg.appendChild(rect4);
+    printButton.appendChild(svg);
+
+    // printButton.innerText += "Print"; // TODO fix
 
     return printButton;
 }
@@ -1010,7 +1048,16 @@ function addDelModeButton() {
     let delModeButton = document.createElement("button");
     delModeButton.className = "simple-delete simple-control";
     delModeButton.title = "Start/end deletion mode";
-    delModeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-255.5 -411.5 1648 1676"><path d="M1044.6,215.65v481.3c0,7.8-2.5,14.2-7.5,19.2s-11.399,7.5-19.199,7.5h-53.5c-7.801,0-14.2-2.5-19.2-7.5s-7.5-11.4-7.5-19.2v-481.3c0-7.8,2.5-14.2,7.5-19.2s11.399-7.5,19.2-7.5h53.5c7.8,0,14.199,2.5,19.199,7.5S1044.6,207.85,1044.6,215.65z M823.2,196.45c-5-5-11.4-7.5-19.2-7.5h-53.5c-7.8,0-14.2,2.5-19.2,7.5s-7.5,11.4-7.5,19.2v481.3c0,7.8,2.5,14.2,7.5,19.2s11.4,7.5,19.2,7.5H804c7.8,0,14.2-2.5,19.2-7.5s7.5-11.4,7.5-19.2v-481.3C830.7,207.85,828.2,201.45,823.2,196.45z M609.3,196.45c-5-5-11.399-7.5-19.2-7.5h-53.5c-7.8,0-14.199,2.5-19.199,7.5s-7.5,11.4-7.5,19.2v199.07c12.06,5.96,20.399,18.59,20.399,33.23v171.7c0,20.899,16.9,37.8,37.8,37.8c20.9,0,37.801-16.9,37.801-37.8v-109.9c0-10.31,4.18-19.66,10.899-26.37V215.65C616.8,207.85,614.3,201.45,609.3,196.45z M1365.4-51.65v53.5c0,7.8-2.5,14.2-7.5,19.2s-11.4,7.5-19.2,7.5h-80.2V820.65c0,46.199-13.1,86.199-39.3,119.899s-57.601,50.5-94.4,50.5H631.02c9.82-34.97,19.681-72.2,27.82-106.899h465.86c1.7,0,4.6-2.4,8.8-7.101s8.2-12.3,12.1-22.6c4-10.3,5.9-21.601,5.9-33.9v-792H402.9v575.37c-12.13-6.28-20.4-18.95-20.4-33.57v-171.6c0-20.3-16.2-36.9-36.1-36.9s-36.1,16.6-36.1,36.9v122.4c0,12.06-5.63,22.79-14.4,29.699V28.55h-80.2c-7.8,0-14.2-2.5-19.2-7.5S189,9.65,189,1.85v-53.5c0-7.8,2.5-14.2,7.5-19.2s11.4-7.5,19.2-7.5h258.2l58.5-139.5c8.399-20.6,23.399-38.2,45.1-52.6c21.7-14.5,43.7-21.7,66-21.7h267.4c22.3,0,44.3,7.2,66,21.7c21.699,14.5,36.8,32,45.1,52.6l58.5,139.5h258.2c7.8,0,14.2,2.5,19.2,7.5C1362.9-65.95,1365.4-59.45,1365.4-51.65z M964.4-78.45l-40.101-97.8c-3.899-5-8.6-8.1-14.2-9.2H645.2c-5.601,1.1-10.3,4.2-14.2,9.2l-40.9,97.8H964.4z"/><path d="M723.8,433.45c-20.41-22.19-49.569-36.1-81.899-36.1c-8.62,0-17.021,0.98-25.101,2.85c-6.54,1.51-12.859,3.61-18.899,6.25c-14.54-36.8-47.87-64.08-88-69.79c-5.131-0.73-10.371-1.11-15.7-1.11c-17.4,0-34,4.1-48.7,11.3c-9.75-18.77-24.56-34.45-42.6-45.14c-16.55-9.83-35.82-15.46-56.4-15.46c-12.6,0-24.8,2.2-36.1,6.1v-123.7c0-20.13-5.27-39.03-14.5-55.39c-19.19-34.02-55.5-57.01-97.1-57.01c-61.5,0-111.6,50.4-111.6,112.4v445.3l-80.4-92c-0.5-0.601-1.1-1.2-1.7-1.8c-21.1-21.101-49.2-32.9-79.1-33h-0.6c-29.8,0-57.8,11.5-78.7,32.5c-36.9,36.899-39,91.699-5.6,150.399c43.2,75.9,90.2,147.5,131.6,210.601c30.3,46.199,58.9,89.8,79.8,125.8c18.1,31.3,66.2,132.7,66.7,133.7c6.2,13.199,19.5,21.6,34.1,21.6h477.4c16.399,0,30.899-10.6,35.899-26.2c4.17-12.979,23.54-73.78,42.94-144.5c9.53-34.74,19.08-71.87,26.83-106.899C746.52,838.32,753.6,796.1,753.6,767.55v-257.7C753.6,480.39,742.29,453.52,723.8,433.45z M678.1,767.45c0,25.58-7.979,68.72-19.26,116.7c-8.14,34.699-18,71.93-27.82,106.899c-10.029,35.771-20,69.181-28.02,95.101H177.1c-15.6-32.601-45-93-59.3-117.7c-22-37.8-51.1-82.3-82-129.3c-40.8-62.2-87.1-132.7-129.1-206.5c-10.9-19.301-21-45.301-6.6-59.7c6.7-6.7,15.7-10.2,25.5-10.3c9.5,0,18.4,3.6,25.3,10.1l145.4,166.5c10.4,11.8,27,16,41.7,10.5s24.5-19.6,24.5-35.3v-545.8c0-20.3,16.2-36.9,36.1-36.9s36.1,16.6,36.1,36.9v352.5c0,20.899,16.9,37.8,37.8,37.8c8.84,0,16.96-3.03,23.4-8.101c8.77-6.909,14.4-17.64,14.4-29.699v-122.4c0-20.3,16.2-36.9,36.1-36.9s36.1,16.6,36.1,36.9v171.6c0,14.62,8.27,27.29,20.4,33.57c5.21,2.7,11.12,4.23,17.4,4.23c20.9,0,37.8-16.9,37.8-37.801V447.95c0-20.3,16.2-36.9,36.1-36.9c5.62,0,10.95,1.32,15.7,3.67c12.06,5.96,20.399,18.59,20.399,33.23v171.7c0,20.899,16.9,37.8,37.8,37.8c20.9,0,37.801-16.9,37.801-37.8v-109.9c0-10.31,4.18-19.66,10.899-26.37c6.5-6.51,15.41-10.53,25.2-10.53c19.9,0,36.1,16.5,36.1,36.9V767.45z"/></svg>';
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "-255.5 -411.5 1648 1676");
+    const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path1.setAttribute("d", "M1044.6,215.65v481.3c0,7.8-2.5,14.2-7.5,19.2s-11.399,7.5-19.199,7.5h-53.5c-7.801,0-14.2-2.5-19.2-7.5s-7.5-11.4-7.5-19.2v-481.3c0-7.8,2.5-14.2,7.5-19.2s11.399-7.5,19.2-7.5h53.5c7.8,0,14.199,2.5,19.199,7.5S1044.6,207.85,1044.6,215.65z M823.2,196.45c-5-5-11.4-7.5-19.2-7.5h-53.5c-7.8,0-14.2,2.5-19.2,7.5s-7.5,11.4-7.5,19.2v481.3c0,7.8,2.5,14.2,7.5,19.2s11.4,7.5,19.2,7.5H804c7.8,0,14.2-2.5,19.2-7.5s7.5-11.4,7.5-19.2v-481.3C830.7,207.85,828.2,201.45,823.2,196.45z M609.3,196.45c-5-5-11.399-7.5-19.2-7.5h-53.5c-7.8,0-14.199,2.5-19.199,7.5s-7.5,11.4-7.5,19.2v199.07c12.06,5.96,20.399,18.59,20.399,33.23v171.7c0,20.899,16.9,37.8,37.8,37.8c20.9,0,37.801-16.9,37.801-37.8v-109.9c0-10.31,4.18-19.66,10.899-26.37V215.65C616.8,207.85,614.3,201.45,609.3,196.45z M1365.4-51.65v53.5c0,7.8-2.5,14.2-7.5,19.2s-11.4,7.5-19.2,7.5h-80.2V820.65c0,46.199-13.1,86.199-39.3,119.899s-57.601,50.5-94.4,50.5H631.02c9.82-34.97,19.681-72.2,27.82-106.899h465.86c1.7,0,4.6-2.4,8.8-7.101s8.2-12.3,12.1-22.6c4-10.3,5.9-21.601,5.9-33.9v-792H402.9v575.37c-12.13-6.28-20.4-18.95-20.4-33.57v-171.6c0-20.3-16.2-36.9-36.1-36.9s-36.1,16.6-36.1,36.9v122.4c0,12.06-5.63,22.79-14.4,29.699V28.55h-80.2c-7.8,0-14.2-2.5-19.2-7.5S189,9.65,189,1.85v-53.5c0-7.8,2.5-14.2,7.5-19.2s11.4-7.5,19.2-7.5h258.2l58.5-139.5c8.399-20.6,23.399-38.2,45.1-52.6c21.7-14.5,43.7-21.7,66-21.7h267.4c22.3,0,44.3,7.2,66,21.7c21.699,14.5,36.8,32,45.1,52.6l58.5,139.5h258.2c7.8,0,14.2,2.5,19.2,7.5C1362.9-65.95,1365.4-59.45,1365.4-51.65z M964.4-78.45l-40.101-97.8c-3.899-5-8.6-8.1-14.2-9.2H645.2c-5.601,1.1-10.3,4.2-14.2,9.2l-40.9,97.8H964.4z");
+    const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path2.setAttribute("d", "M723.8,433.45c-20.41-22.19-49.569-36.1-81.899-36.1c-8.62,0-17.021,0.98-25.101,2.85c-6.54,1.51-12.859,3.61-18.899,6.25c-14.54-36.8-47.87-64.08-88-69.79c-5.131-0.73-10.371-1.11-15.7-1.11c-17.4,0-34,4.1-48.7,11.3c-9.75-18.77-24.56-34.45-42.6-45.14c-16.55-9.83-35.82-15.46-56.4-15.46c-12.6,0-24.8,2.2-36.1,6.1v-123.7c0-20.13-5.27-39.03-14.5-55.39c-19.19-34.02-55.5-57.01-97.1-57.01c-61.5,0-111.6,50.4-111.6,112.4v445.3l-80.4-92c-0.5-0.601-1.1-1.2-1.7-1.8c-21.1-21.101-49.2-32.9-79.1-33h-0.6c-29.8,0-57.8,11.5-78.7,32.5c-36.9,36.899-39,91.699-5.6,150.399c43.2,75.9,90.2,147.5,131.6,210.601c30.3,46.199,58.9,89.8,79.8,125.8c18.1,31.3,66.2,132.7,66.7,133.7c6.2,13.199,19.5,21.6,34.1,21.6h477.4c16.399,0,30.899-10.6,35.899-26.2c4.17-12.979,23.54-73.78,42.94-144.5c9.53-34.74,19.08-71.87,26.83-106.899C746.52,838.32,753.6,796.1,753.6,767.55v-257.7C753.6,480.39,742.29,453.52,723.8,433.45z M678.1,767.45c0,25.58-7.979,68.72-19.26,116.7c-8.14,34.699-18,71.93-27.82,106.899c-10.029,35.771-20,69.181-28.02,95.101H177.1c-15.6-32.601-45-93-59.3-117.7c-22-37.8-51.1-82.3-82-129.3c-40.8-62.2-87.1-132.7-129.1-206.5c-10.9-19.301-21-45.301-6.6-59.7c6.7-6.7,15.7-10.2,25.5-10.3c9.5,0,18.4,3.6,25.3,10.1l145.4,166.5c10.4,11.8,27,16,41.7,10.5s24.5-19.6,24.5-35.3v-545.8c0-20.3,16.2-36.9,36.1-36.9s36.1,16.6,36.1,36.9v352.5c0,20.899,16.9,37.8,37.8,37.8c8.84,0,16.96-3.03,23.4-8.101c8.77-6.909,14.4-17.64,14.4-29.699v-122.4c0-20.3,16.2-36.9,36.1-36.9s36.1,16.6,36.1,36.9v171.6c0,14.62,8.27,27.29,20.4,33.57c5.21,2.7,11.12,4.23,17.4,4.23c20.9,0,37.8-16.9,37.8-37.801V447.95c0-20.3,16.2-36.9,36.1-36.9c5.62,0,10.95,1.32,15.7,3.67c12.06,5.96,20.399,18.59,20.399,33.23v171.7c0,20.899,16.9,37.8,37.8,37.8c20.9,0,37.801-16.9,37.801-37.8v-109.9c0-10.31,4.18-19.66,10.899-26.37c6.5-6.51,15.41-10.53,25.2-10.53c19.9,0,36.1,16.5,36.1,36.9V767.45z");
+    svg.appendChild(path1);
+    svg.appendChild(path2);
+    delModeButton.appendChild(svg);
 
     return delModeButton;
 }
@@ -1020,7 +1067,42 @@ function addShareButton() {
     let shareButton = document.createElement("a");
     shareButton.className = "premium-feature simple-share simple-control";
     shareButton.title = "Share article";
-    shareButton.innerHTML = '<div class="simple-share-dropdown" onclick="window.getSelection().selectAllChildren(this);"></div><div class="simple-share-alert">You have too many shared articles - the limit is 100. Please remove some from <a href=\'https://justread.link/dashboard\'>your user page</a> before adding more.</div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.421 90.213"><path d="M6.301,90.211C2.818,90.209,0.002,87.394,0,83.913l0,0V18.394c0.002-3.481,2.818-6.297,6.301-6.299l0,0h33.782l-9.003,9H9  v60.117l57.469,0.002V69.125l9.002-9l-0.002,23.788c-0.003,3.479-2.818,6.296-6.3,6.3l0,0L6.301,90.211L6.301,90.211z"></path><path d="M66.171,11.301V0l29.25,29.25L66.046,58.625v-11.75c0,0-14.586-2.894-29.583,6.458  c-8.209,5.084-13.752,11.773-17.167,17.042c0,0,1.11-18.25,11.61-34.875C44.033,14.716,66.171,11.301,66.171,11.301z"></path><path fill="#000000" d="M225.3,90.211c-3.482-0.002-6.299-2.817-6.301-6.298l0,0V18.394c0.002-3.481,2.818-6.297,6.301-6.299l0,0  h33.783l-9.004,9H228v60.117l57.47,0.002V69.125l9.002-9l-0.002,23.788c-0.003,3.479-2.818,6.296-6.3,6.3l0,0L225.3,90.211  L225.3,90.211z"></path><path fill="#000000" d="M285.171,11.301V0l29.25,29.25l-29.375,29.375v-11.75c0,0-17.23-1.192-29.584,6.458  c-8.209,5.084-13.104,10.167-17.166,17.042c0,0,1.109-18.25,11.609-34.875C263.033,14.716,285.171,11.301,285.171,11.301z"></path></svg>';
+
+    const dropDown = document.createElement("div");
+    dropDown.className = "simple-share-dropdown";
+    dropDown.onclick = function() { window.getSelection().selectAllChildren(this) };
+
+    const shareAlert = document.createElement("div");
+    shareAlert.className = "simple-share-alert";
+    shareAlert.innerText = "You have too many shared articles - the limit is 100. Please remove some from ";
+    const shareLink = document.createElement("a");
+    shareLink.setAttribute("href", "https://justread.link/dashboard");
+    shareLink.innerText = "your user page";
+    shareAlert.appendChild(shareLink);
+    shareAlert.innerText += " before adding more.";
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 95.421 90.213");
+    const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path1.setAttribute("d", "M6.301,90.211C2.818,90.209,0.002,87.394,0,83.913l0,0V18.394c0.002-3.481,2.818-6.297,6.301-6.299l0,0h33.782l-9.003,9H9 v60.117l57.469,0.002V69.125l9.002-9l-0.002,23.788c-0.003,3.479-2.818,6.296-6.3,6.3l0,0L6.301,90.211L6.301,90.211z");
+
+    const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path2.setAttribute("d", "M66.171,11.301V0l29.25,29.25L66.046,58.625v-11.75c0,0-14.586-2.894-29.583,6.458  c-8.209,5.084-13.752,11.773-17.167,17.042c0,0,1.11-18.25,11.61-34.875C44.033,14.716,66.171,11.301,66.171,11.301z");
+
+    const path3 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path3.setAttribute("d", "M225.3,90.211c-3.482-0.002-6.299-2.817-6.301-6.298l0,0V18.394c0.002-3.481,2.818-6.297,6.301-6.299l0,0 h33.783l-9.004,9H228v60.117l57.47,0.002V69.125l9.002-9l-0.002,23.788c-0.003,3.479-2.818,6.296-6.3,6.3l0,0L225.3,90.211  L225.3,90.211z");
+
+    const path4 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path4.setAttribute("d", "M285.171,11.301V0l29.25,29.25l-29.375,29.375v-11.75c0,0-17.23-1.192-29.584,6.458  c-8.209,5.084-13.104,10.167-17.166,17.042c0,0,1.109-18.25,11.609-34.875C263.033,14.716,285.171,11.301,285.171,11.301z");
+
+    svg.appendChild(path1);
+    svg.appendChild(path2);
+    svg.appendChild(path3);
+    svg.appendChild(path4);
+
+    shareButton.appendChild(dropDown);
+    shareButton.appendChild(shareAlert);
+    shareButton.appendChild(svg);
 
     return shareButton;
 }
@@ -1030,7 +1112,14 @@ function addUndoButton() {
     undoBtn = document.createElement("button");
     undoBtn.className = "simple-undo simple-control";
     undoBtn.title = "Undo last action";
-    undoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 438.536 438.536"><path d="m421.12 134.19c-11.608-27.03-27.217-50.347-46.819-69.949-19.606-19.603-42.922-35.209-69.953-46.822-27.028-11.613-55.384-17.415-85.078-17.415-27.978 0-55.052 5.277-81.227 15.843-26.169 10.564-49.438 25.457-69.805 44.683l-37.12-36.835c-5.711-5.901-12.275-7.232-19.701-3.999-7.615 3.24-11.422 8.857-11.422 16.85v127.91c0 4.948 1.809 9.231 5.426 12.847 3.619 3.617 7.902 5.426 12.85 5.426h127.91c7.996 0 13.61-3.807 16.846-11.421 3.234-7.423 1.903-13.988-3.999-19.701l-39.115-39.398c13.328-12.563 28.553-22.222 45.683-28.98 17.131-6.757 35.021-10.138 53.675-10.138 19.793 0 38.687 3.858 56.674 11.563 17.99 7.71 33.544 18.131 46.679 31.265 13.134 13.131 23.555 28.69 31.265 46.679 7.703 17.987 11.56 36.875 11.56 56.674 0 19.798-3.856 38.686-11.56 56.672-7.71 17.987-18.131 33.544-31.265 46.679-13.135 13.134-28.695 23.558-46.679 31.265-17.987 7.707-36.881 11.561-56.674 11.561-22.651 0-44.064-4.949-64.241-14.843-20.174-9.894-37.209-23.883-51.104-41.973-1.331-1.902-3.521-3.046-6.567-3.429-2.856 0-5.236 0.855-7.139 2.566l-39.114 39.402c-1.521 1.53-2.33 3.478-2.426 5.853-0.094 2.385 0.527 4.524 1.858 6.427 20.749 25.125 45.871 44.587 75.373 58.382 29.502 13.798 60.625 20.701 93.362 20.701 29.694 0 58.05-5.808 85.078-17.416 27.031-11.607 50.34-27.22 69.949-46.821 19.605-19.609 35.211-42.921 46.822-69.949s17.411-55.392 17.411-85.08c1e-3 -29.698-5.803-58.047-17.41-85.076z"/></svg>';
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 438.536 438.536");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "m421.12 134.19c-11.608-27.03-27.217-50.347-46.819-69.949-19.606-19.603-42.922-35.209-69.953-46.822-27.028-11.613-55.384-17.415-85.078-17.415-27.978 0-55.052 5.277-81.227 15.843-26.169 10.564-49.438 25.457-69.805 44.683l-37.12-36.835c-5.711-5.901-12.275-7.232-19.701-3.999-7.615 3.24-11.422 8.857-11.422 16.85v127.91c0 4.948 1.809 9.231 5.426 12.847 3.619 3.617 7.902 5.426 12.85 5.426h127.91c7.996 0 13.61-3.807 16.846-11.421 3.234-7.423 1.903-13.988-3.999-19.701l-39.115-39.398c13.328-12.563 28.553-22.222 45.683-28.98 17.131-6.757 35.021-10.138 53.675-10.138 19.793 0 38.687 3.858 56.674 11.563 17.99 7.71 33.544 18.131 46.679 31.265 13.134 13.131 23.555 28.69 31.265 46.679 7.703 17.987 11.56 36.875 11.56 56.674 0 19.798-3.856 38.686-11.56 56.672-7.71 17.987-18.131 33.544-31.265 46.679-13.135 13.134-28.695 23.558-46.679 31.265-17.987 7.707-36.881 11.561-56.674 11.561-22.651 0-44.064-4.949-64.241-14.843-20.174-9.894-37.209-23.883-51.104-41.973-1.331-1.902-3.521-3.046-6.567-3.429-2.856 0-5.236 0.855-7.139 2.566l-39.114 39.402c-1.521 1.53-2.33 3.478-2.426 5.853-0.094 2.385 0.527 4.524 1.858 6.427 20.749 25.125 45.871 44.587 75.373 58.382 29.502 13.798 60.625 20.701 93.362 20.701 29.694 0 58.05-5.808 85.078-17.416 27.031-11.607 50.34-27.22 69.949-46.821 19.605-19.609 35.211-42.921 46.822-69.949s17.411-55.392 17.411-85.08c1e-3 -29.698-5.803-58.047-17.41-85.076z");
+
+    svg.appendChild(path);
+    undoBtn.appendChild(svg);
 
     return undoBtn;
 }
@@ -1095,7 +1184,7 @@ function editText(elem) {
 
         // Allow enter to be used to save the edit
         textInput.onkeydown = function(e) {
-            if(e.keyCode === 13)
+            if(e.key === "Enter")
                 textInput.blur();
         }
 
@@ -1123,7 +1212,7 @@ function createNotification(options) {
     notifier.className = "jr-tooltip jr-notifier";
 
     const notificationText = document.createElement("p");
-    notificationText.innerHTML = options.textContent;
+    notificationText.innerHTML = DOMPurify.sanitize(options.textContent);
 
     const btnContainer = document.createElement("div");
     btnContainer.className = "right-align-buttons";
@@ -1164,7 +1253,25 @@ function addGUI() {
 
     button.className = "simple-control simple-edit-theme";
     button.title = "Edit your theme";
-    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 626 626"><g transform="translate(0,626) scale(0.1,-0.1)" stroke="none"><path d="M6155 5867 c-116 -63 -356 -224 -645 -433 -85 -62 -168 -122 -185 -134 -53 -38 -255 -190 -458 -344 -109 -83 -208 -158 -220 -166 -12 -8 -90 -69 -173 -135 -83 -66 -222 -176 -309 -245 -87 -69 -191 -151 -229 -183 -39 -32 -89 -73 -110 -90 -22 -18 -53 -44 -70 -58 -17 -15 -99 -82 -182 -150 -480 -394 -983 -857 -1140 -1049 -29 -36 -100 -145 -158 -243 -88 -149 -103 -179 -91 -189 8 -7 50 -44 93 -83 98 -88 192 -200 259 -310 28 -47 53 -91 55 -97 5 -15 411 189 488 245 183 134 659 610 1080 1082 78 88 159 178 179 200 112 122 633 729 757 881 27 33 148 182 269 330 122 148 250 306 285 352 36 46 110 140 165 210 224 283 445 602 445 642 0 18 -24 10 -105 -33z"/><path d="M1600 2230 c-216 -57 -398 -199 -572 -447 -40 -57 -135 -228 -158 -283 -36 -90 -113 -248 -165 -335 -103 -175 -295 -391 -446 -502 -73 -54 -187 -113 -217 -113 -49 0 -6 -21 131 -64 484 -151 904 -174 1250 -66 435 135 734 469 901 1005 46 149 58 214 45 254 -54 167 -231 392 -408 519 l-64 46 -111 3 c-86 2 -128 -2 -186 -17z"/></g></svg>Edit styles';
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 626 626");
+
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("transform", "translate(0,626) scale(0.1,-0.1)");
+
+    const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path1.setAttribute("d", "M6155 5867 c-116 -63 -356 -224 -645 -433 -85 -62 -168 -122 -185 -134 -53 -38 -255 -190 -458 -344 -109 -83 -208 -158 -220 -166 -12 -8 -90 -69 -173 -135 -83 -66 -222 -176 -309 -245 -87 -69 -191 -151 -229 -183 -39 -32 -89 -73 -110 -90 -22 -18 -53 -44 -70 -58 -17 -15 -99 -82 -182 -150 -480 -394 -983 -857 -1140 -1049 -29 -36 -100 -145 -158 -243 -88 -149 -103 -179 -91 -189 8 -7 50 -44 93 -83 98 -88 192 -200 259 -310 28 -47 53 -91 55 -97 5 -15 411 189 488 245 183 134 659 610 1080 1082 78 88 159 178 179 200 112 122 633 729 757 881 27 33 148 182 269 330 122 148 250 306 285 352 36 46 110 140 165 210 224 283 445 602 445 642 0 18 -24 10 -105 -33z");
+
+    const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path2.setAttribute("d", "M1600 2230 c-216 -57 -398 -199 -572 -447 -40 -57 -135 -228 -158 -283 -36 -90 -113 -248 -165 -335 -103 -175 -295 -391 -446 -502 -73 -54 -187 -113 -217 -113 -49 0 -6 -21 131 -64 484 -151 904 -174 1250 -66 435 135 734 469 901 1005 46 149 58 214 45 254 -54 167 -231 392 -408 519 l-64 46 -111 3 c-86 2 -128 -2 -186 -17z");
+
+    g.appendChild(path1);
+    g.appendChild(path2);
+    svg.appendChild(g);
+    button.appendChild(svg);
+
+    // button.innerText = "Edit styles"; // TODO fix
     button.onclick = openStyleEditor;
 
     return button;
@@ -1243,7 +1350,7 @@ function saveStyles() {
     setStylesOfStorage();
     if(newTheme) {
         let selectElem = document.querySelector(".dg select");
-        selectElem.innerHTML += "<option value='" + theme + "'>" + theme + "</option>";
+        selectElem.innerHTML = DOMPurify.sanitize(selectElem.innerHTML + "<option value='" + theme + "'>" + theme + "</option>");
         selectElem.selectedIndex = selectElem.length - 1;
     }
 
@@ -1263,7 +1370,7 @@ function closeStyleEditor() {
         changeStylesheetRule(s, ".simple-author", "color", prevStyles.linkColor);
         changeStylesheetRule(s, "a[href]", "color", prevStyles.linkColor);
         changeStylesheetRule(s, "a[href]:hover", "color", prevStyles.linkHoverColor);
-        styleElem.innerHTML = prevStyles.originalThemeCSS;
+        styleElem.innerHTML = DOMPurify.sanitize(prevStyles.originalThemeCSS);
     }
 
     datGUI.domElement.style.display = "none";
@@ -1290,7 +1397,7 @@ function openStyleEditor() {
         prevStyles.originalThemeCSS = stylesheetObj[theme];
         themeList.onChange((value) => {
             saved = true;
-            styleElem.innerHTML = stylesheetObj[value];
+            styleElem.innerHTML = DOMPurify.sanitize(stylesheetObj[value]);
             s = simpleArticleIframe.styleSheets[2];
             updateEditorStyles(editor);
 
@@ -1621,36 +1728,147 @@ function createEditBar() {
 
     editBar = document.createElement("div");
     editBar.className = "premium-feature jr-edit-bar jr-dark";
-    editBar.innerHTML = '\
-        <button class="jr-bold" title="Bold (Ctrl+b)"><svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg"><path d="M9,3.5 C9,1.57 7.43,0 5.5,0 L1.77635684e-15,0 L1.77635684e-15,12 L6.25,12 C8.04,12 9.5,10.54 9.5,8.75 C9.5,7.45 8.73,6.34 7.63,5.82 C8.46,5.24 9,4.38 9,3.5 Z M5,2 C5.82999992,2 6.5,2.67 6.5,3.5 C6.5,4.33 5.82999992,5 5,5 L3,5 L3,2 L5,2 Z M3,10 L3,7 L5.5,7 C6.32999992,7 7,7.67 7,8.5 C7,9.33 6.32999992,10 5.5,10 L3,10 Z" transform="translate(4 3)"/></svg></button>\
-        <button class="jr-italics" title="Italicize (Ctrl+i)"><svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg"><polygon points="4 0 4 2 6.58 2 2.92 10 0 10 0 12 8 12 8 10 5.42 10 9.08 2 12 2 12 0" transform="translate(3 3)"/></svg></button>\
-        <button class="jr-underl" title="Underline (Ctrl+u)"><svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M6,12 C8.76,12 11,9.76 11,7 L11,0 L9,0 L9,7 C9,8.75029916 7.49912807,10 6,10 C4.50087193,10 3,8.75837486 3,7 L3,0 L1,0 L1,7 C1,9.76 3.24,12 6,12 Z M0,13 L0,15 L12,15 L12,13 L0,13 Z" transform="translate(3 3)"/></svg></button>\
-        <button class="jr-strike" title="Strike-through (Ctrl+Shift+s)"><svg viewBox="0 0 533.333 533.333" xmlns="http://www.w3.org/2000/svg"><path d="M533.333,266.667V300H411.195c14.325,20.058,22.139,43.068,22.139,66.667c0,36.916-19.094,72.409-52.386,97.377   C350.033,487.23,309.446,500,266.667,500c-42.78,0-83.366-12.77-114.281-35.956C119.094,439.076,100,403.583,100,366.667h66.667   c0,36.137,45.795,66.666,100,66.666s100-30.529,100-66.666c0-36.138-45.795-66.667-100-66.667H0v-33.333h155.999   c-1.218-0.862-2.425-1.731-3.613-2.623C119.094,239.075,100,203.582,100,166.667s19.094-72.408,52.385-97.377   c30.916-23.187,71.501-35.956,114.281-35.956c42.779,0,83.366,12.77,114.281,35.956c33.292,24.969,52.386,60.461,52.386,97.377   h-66.667c0-36.136-45.795-66.667-100-66.667s-100,30.53-100,66.667c0,36.137,45.795,66.667,100,66.667   c41.135,0,80.236,11.811,110.668,33.333H533.333z"/></svg></button>\
-        <button class="jr-text-color" title="Text color (Ctrl+Shift+c)"><svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg"><path d="M7,0 L5,0 L0.5,12 L2.5,12 L3.62,9 L8.37,9 L9.49,12 L11.49,12 L7,0 L7,0 Z M4.38,7 L6,2.67 L7.62,7 L4.38,7 L4.38,7 Z" transform="translate(3 1)"/></svg></button>\
-        <button class="jr-highlight-color" title="Highlight color (Ctrl+Shift+h)"><svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg"><path d="M6,5 L2,9 L3,10 L0,13 L4,13 L5,12 L5,12 L6,13 L10,9 L6,5 L6,5 Z M10.2937851,0.706214905 C10.6838168,0.316183183 11.3138733,0.313873291 11.7059121,0.705912054 L14.2940879,3.29408795 C14.6839524,3.68395241 14.6796852,4.32031476 14.2937851,4.7062149 L11,8 L7,4 L10.2937851,0.706214905 Z"/></svg></button>\
-        <button class="jr-remove-styles" title="Clear formatting (Ctrl+\\)"><svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg"><path d="M0.27,1.55 L5.43,6.7 L3,12 L5.5,12 L7.14,8.42 L11.73,13 L13,11.73 L1.55,0.27 L0.27,1.55 L0.27,1.55 Z M3.82,0 L5.82,2 L7.58,2 L7.03,3.21 L8.74,4.92 L10.08,2 L14,2 L14,0 L3.82,0 L3.82,0 Z" transform="translate(2 3)"/></svg></button>\
-        <button class="jr-deleteSel" title="Delete highlighted text (Ctrl+Shift+d)"><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="m702.89 734.91v579.46c0 9.3908-3.0099 17.096-9.0296 23.116-6.0197 6.0198-13.725 9.0296-23.116 9.0296h-64.411c-9.3908 0-17.096-3.0098-23.116-9.0296-6.0197-6.0197-9.0296-13.725-9.0296-23.116v-579.46c0-9.3908 3.0099-17.096 9.0296-23.116s13.725-9.0296 23.116-9.0296h64.411c9.3908 0 17.096 3.0099 23.116 9.0296s9.0296 13.725 9.0296 23.116zm257.52 0v579.46c0 9.3908-3.0099 17.096-9.0296 23.116-6.0197 6.0198-13.725 9.0296-23.116 9.0296h-64.411c-9.3908 0-17.096-3.0098-23.116-9.0296-6.0197-6.0197-9.0296-13.725-9.0296-23.116v-579.46c0-9.3908 3.0099-17.096 9.0296-23.116s13.725-9.0296 23.116-9.0296h64.411c9.3908 0 17.096 3.0099 23.116 9.0296s9.0296 13.725 9.0296 23.116zm257.52 0v579.46c0 9.3908-3.0098 17.096-9.0296 23.116-6.0197 6.0198-13.725 9.0296-23.116 9.0296h-64.411c-9.3908 0-17.096-3.0098-23.116-9.0296-6.0197-6.0197-9.0295-13.725-9.0295-23.116v-579.46c0-9.3908 3.0098-17.096 9.0295-23.116 6.0198-6.0197 13.725-9.0296 23.116-9.0296h64.411c9.3908 0 17.096 3.0099 23.116 9.0296 6.0198 6.0197 9.0296 13.725 9.0296 23.116zm128.7 728.27v-953.52h-901.27v953.65c0 14.809 2.2875 28.293 6.9829 40.693 4.6954 12.401 9.5112 21.43 14.568 27.209 5.0566 5.6585 8.548 8.548 10.595 8.548h836.86c2.0467 0 5.5381-2.8895 10.595-8.548 5.0566-5.6586 9.8724-14.809 14.568-27.209 4.8158-12.401 7.1033-26.005 7.1033-40.814zm-675.9-1082.3h450.64l-48.278-117.75c-4.6954-6.0197-10.354-9.752-17.096-11.076h-318.93c-6.7421 1.3243-12.401 5.0566-17.096 11.076zm933.42 32.266v64.411c0 9.3908-3.0099 17.096-9.0296 23.116-6.0197 6.0197-13.725 9.0296-23.116 9.0296h-96.556v953.65c0 55.622-15.772 103.78-47.315 144.35-31.543 40.573-69.347 60.799-113.65 60.799h-836.98c-44.305 0-82.109-19.624-113.65-58.873-31.543-39.249-47.315-86.684-47.315-142.31v-957.62h-96.556c-9.3908 0-17.096-3.0099-23.116-9.0296-6.0197-6.0197-9.0296-13.725-9.0296-23.116v-64.411c0-9.3908 3.0099-17.096 9.0296-23.116s13.725-9.0296 23.116-9.0296h310.86l70.431-167.95c10.113-24.801 28.172-45.991 54.298-63.328 26.126-17.457 52.612-26.126 79.46-26.126h321.94c26.848 0 53.335 8.6684 79.46 26.126s44.305 38.526 54.298 63.328l70.431 167.95h310.86c9.3908 0 17.096 3.0099 23.116 9.0296 6.0197 5.8993 9.0296 13.725 9.0296 23.116z" stroke-width="1.2039"/></svg></button>\
-        <div class="jr-color-picker jr-text-picker">\
-            <div class="jr-color-swatch jr-highlight-white" data-color="white"></div>\
-            <div class="jr-color-swatch jr-highlight-black" data-color="black"></div>\
-            <div class="jr-color-swatch jr-highlight-yellow" data-color="yellow"></div>\
-            <div class="jr-color-swatch jr-highlight-green" data-color="green"></div>\
-            <div class="jr-color-swatch jr-highlight-blue" data-color="blue"></div>\
-            <div class="jr-color-swatch jr-highlight-purple" data-color="purple"></div>\
-            <div class="jr-color-swatch jr-highlight-pink" data-color="pink"></div>\
-            <div class="jr-color-swatch jr-highlight-red" data-color="red"></div>\
-            <div class="jr-color-swatch jr-highlight-orange" data-color="orange"></div>\
-        </div>\
-        <div class="jr-color-picker jr-highlight-picker">\
-            <div class="jr-color-swatch jr-highlight-yellow" data-color="yellow"></div>\
-            <div class="jr-color-swatch jr-highlight-green" data-color="green"></div>\
-            <div class="jr-color-swatch jr-highlight-blue" data-color="blue"></div>\
-            <div class="jr-color-swatch jr-highlight-purple" data-color="purple"></div>\
-            <div class="jr-color-swatch jr-highlight-pink" data-color="pink"></div>\
-            <div class="jr-color-swatch jr-highlight-red" data-color="red"></div>\
-            <div class="jr-color-swatch jr-highlight-orange" data-color="orange"></div>\
-            <!-- Fix some gimp alignment issue --><div class="jr-color-swatch" style="visibility: hidden;"></div>\
-        </div>';
+
+    const bold = document.createElement("button");
+    bold.className = "jr-bold";
+    bold.setAttribute("title", "Bold (Ctrl+b)");
+    const boldSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    boldSVG.setAttribute("viewBox", "0 0 15 15");
+    const boldPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    boldPath.setAttribute("d", "M9,3.5 C9,1.57 7.43,0 5.5,0 L1.77635684e-15,0 L1.77635684e-15,12 L6.25,12 C8.04,12 9.5,10.54 9.5,8.75 C9.5,7.45 8.73,6.34 7.63,5.82 C8.46,5.24 9,4.38 9,3.5 Z M5,2 C5.82999992,2 6.5,2.67 6.5,3.5 C6.5,4.33 5.82999992,5 5,5 L3,5 L3,2 L5,2 Z M3,10 L3,7 L5.5,7 C6.32999992,7 7,7.67 7,8.5 C7,9.33 6.32999992,10 5.5,10 L3,10 Z");
+    boldPath.setAttribute("transform", "translate(4 3)");
+    boldSVG.appendChild(boldPath);
+    bold.appendChild(boldSVG);
+    editBar.appendChild(bold);
+
+    const italics = document.createElement("button");
+    italics.className = "jr-italics";
+    italics.setAttribute("title", "Italicize (Ctrl+i)");
+    const italicsSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    italicsSVG.setAttribute("viewBox", "0 0 15 15");
+    const italicsPoly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    italicsPoly.setAttribute("points", "4 0 4 2 6.58 2 2.92 10 0 10 0 12 8 12 8 10 5.42 10 9.08 2 12 2 12 0");
+    italicsPoly.setAttribute("transform", "translate(3 3)");
+    italicsSVG.appendChild(italicsPoly);
+    italics.appendChild(italicsSVG);
+    editBar.appendChild(italics);
+
+    const underline = document.createElement("button");
+    underline.className = "jr-underl";
+    underline.setAttribute("title", "Underline (Ctrl+u)");
+    const underlineSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    underlineSVG.setAttribute("viewBox", "0 0 18 18");
+    const underlinePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    underlinePath.setAttribute("d", "M6,12 C8.76,12 11,9.76 11,7 L11,0 L9,0 L9,7 C9,8.75029916 7.49912807,10 6,10 C4.50087193,10 3,8.75837486 3,7 L3,0 L1,0 L1,7 C1,9.76 3.24,12 6,12 Z M0,13 L0,15 L12,15 L12,13 L0,13 Z");
+    underlinePath.setAttribute("transform", "translate(3 3)");
+    underlineSVG.appendChild(underlinePath);
+    underline.appendChild(underlineSVG);
+    editBar.appendChild(underline);
+
+    const strike = document.createElement("button");
+    strike.className = "jr-strike";
+    strike.setAttribute("title", "Strike-through (Ctrl+Shift+s)");
+    const strikeSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    strikeSVG.setAttribute("viewBox", "0 0 533.333 533.333");
+    const strikePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    strikePath.setAttribute("d", "M533.333,266.667V300H411.195c14.325,20.058,22.139,43.068,22.139,66.667c0,36.916-19.094,72.409-52.386,97.377 C350.033,487.23,309.446,500,266.667,500c-42.78,0-83.366-12.77-114.281-35.956C119.094,439.076,100,403.583,100,366.667h66.667 c0,36.137,45.795,66.666,100,66.666s100-30.529,100-66.666c0-36.138-45.795-66.667-100-66.667H0v-33.333h155.999 c-1.218-0.862-2.425-1.731-3.613-2.623C119.094,239.075,100,203.582,100,166.667s19.094-72.408,52.385-97.377 c30.916-23.187,71.501-35.956,114.281-35.956c42.779,0,83.366,12.77,114.281,35.956c33.292,24.969,52.386,60.461,52.386,97.377 h-66.667c0-36.136-45.795-66.667-100-66.667s-100,30.53-100,66.667c0,36.137,45.795,66.667,100,66.667 c41.135,0,80.236,11.811,110.668,33.333H533.333z");
+    strikePath.setAttribute("transform", "translate(3 3)");
+    strikeSVG.appendChild(strikePath);
+    strike.appendChild(strikeSVG);
+    editBar.appendChild(strike);
+
+    const textColor = document.createElement("button");
+    textColor.className = "jr-text-color";
+    textColor.setAttribute("title", "Text color (Ctrl+Shift+c)");
+    const textColorSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    textColorSVG.setAttribute("viewBox", "0 0 15 15");
+    const textColorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    textColorPath.setAttribute("d", "M7,0 L5,0 L0.5,12 L2.5,12 L3.62,9 L8.37,9 L9.49,12 L11.49,12 L7,0 L7,0 Z M4.38,7 L6,2.67 L7.62,7 L4.38,7 L4.38,7 Z");
+    textColorPath.setAttribute("transform", "translate(3 1)");
+    textColorSVG.appendChild(textColorPath);
+    textColor.appendChild(textColorSVG);
+    editBar.appendChild(textColor);
+
+    const highlightColor = document.createElement("button");
+    highlightColor.className = "jr-highlight-color";
+    highlightColor.setAttribute("title", "Highlight color (Ctrl+Shift+h)");
+    const highlightColorSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    highlightColorSVG.setAttribute("viewBox", "0 0 15 15");
+    const highlightColorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    highlightColorPath.setAttribute("d", "M6,5 L2,9 L3,10 L0,13 L4,13 L5,12 L5,12 L6,13 L10,9 L6,5 L6,5 Z M10.2937851,0.706214905 C10.6838168,0.316183183 11.3138733,0.313873291 11.7059121,0.705912054 L14.2940879,3.29408795 C14.6839524,3.68395241 14.6796852,4.32031476 14.2937851,4.7062149 L11,8 L7,4 L10.2937851,0.706214905 Z");
+    highlightColorPath.setAttribute("transform", "translate(3 1)");
+    highlightColorSVG.appendChild(highlightColorPath);
+    highlightColor.appendChild(highlightColorSVG);
+    editBar.appendChild(highlightColor);
+
+    const removeStyles = document.createElement("button");
+    removeStyles.className = "jr-remove-styles";
+    removeStyles.setAttribute("title", "Clear formatting (Ctrl+\\)");
+    const removeStylesSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    removeStylesSVG.setAttribute("viewBox", "0 0 15 15");
+    const removeStylesPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    removeStylesPath.setAttribute("d", "M0.27,1.55 L5.43,6.7 L3,12 L5.5,12 L7.14,8.42 L11.73,13 L13,11.73 L1.55,0.27 L0.27,1.55 L0.27,1.55 Z M3.82,0 L5.82,2 L7.58,2 L7.03,3.21 L8.74,4.92 L10.08,2 L14,2 L14,0 L3.82,0 L3.82,0 Z");
+    removeStylesPath.setAttribute("transform", "translate(2 3)");
+    removeStylesSVG.appendChild(removeStylesPath);
+    removeStyles.appendChild(removeStylesSVG);
+    editBar.appendChild(removeStyles);
+
+    const deleteSel = document.createElement("button");
+    deleteSel.className = "jr-deleteSel";
+    deleteSel.setAttribute("title", "Delete highlighted text (Ctrl+Shift+d)");
+    const deleteSelSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    deleteSelSVG.setAttribute("viewBox", "0 0 1792 1792");
+    const deleteSelPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    deleteSelPath.setAttribute("d", "m702.89 734.91v579.46c0 9.3908-3.0099 17.096-9.0296 23.116-6.0197 6.0198-13.725 9.0296-23.116 9.0296h-64.411c-9.3908 0-17.096-3.0098-23.116-9.0296-6.0197-6.0197-9.0296-13.725-9.0296-23.116v-579.46c0-9.3908 3.0099-17.096 9.0296-23.116s13.725-9.0296 23.116-9.0296h64.411c9.3908 0 17.096 3.0099 23.116 9.0296s9.0296 13.725 9.0296 23.116zm257.52 0v579.46c0 9.3908-3.0099 17.096-9.0296 23.116-6.0197 6.0198-13.725 9.0296-23.116 9.0296h-64.411c-9.3908 0-17.096-3.0098-23.116-9.0296-6.0197-6.0197-9.0296-13.725-9.0296-23.116v-579.46c0-9.3908 3.0099-17.096 9.0296-23.116s13.725-9.0296 23.116-9.0296h64.411c9.3908 0 17.096 3.0099 23.116 9.0296s9.0296 13.725 9.0296 23.116zm257.52 0v579.46c0 9.3908-3.0098 17.096-9.0296 23.116-6.0197 6.0198-13.725 9.0296-23.116 9.0296h-64.411c-9.3908 0-17.096-3.0098-23.116-9.0296-6.0197-6.0197-9.0295-13.725-9.0295-23.116v-579.46c0-9.3908 3.0098-17.096 9.0295-23.116 6.0198-6.0197 13.725-9.0296 23.116-9.0296h64.411c9.3908 0 17.096 3.0099 23.116 9.0296 6.0198 6.0197 9.0296 13.725 9.0296 23.116zm128.7 728.27v-953.52h-901.27v953.65c0 14.809 2.2875 28.293 6.9829 40.693 4.6954 12.401 9.5112 21.43 14.568 27.209 5.0566 5.6585 8.548 8.548 10.595 8.548h836.86c2.0467 0 5.5381-2.8895 10.595-8.548 5.0566-5.6586 9.8724-14.809 14.568-27.209 4.8158-12.401 7.1033-26.005 7.1033-40.814zm-675.9-1082.3h450.64l-48.278-117.75c-4.6954-6.0197-10.354-9.752-17.096-11.076h-318.93c-6.7421 1.3243-12.401 5.0566-17.096 11.076zm933.42 32.266v64.411c0 9.3908-3.0099 17.096-9.0296 23.116-6.0197 6.0197-13.725 9.0296-23.116 9.0296h-96.556v953.65c0 55.622-15.772 103.78-47.315 144.35-31.543 40.573-69.347 60.799-113.65 60.799h-836.98c-44.305 0-82.109-19.624-113.65-58.873-31.543-39.249-47.315-86.684-47.315-142.31v-957.62h-96.556c-9.3908 0-17.096-3.0099-23.116-9.0296-6.0197-6.0197-9.0296-13.725-9.0296-23.116v-64.411c0-9.3908 3.0099-17.096 9.0296-23.116s13.725-9.0296 23.116-9.0296h310.86l70.431-167.95c10.113-24.801 28.172-45.991 54.298-63.328 26.126-17.457 52.612-26.126 79.46-26.126h321.94c26.848 0 53.335 8.6684 79.46 26.126s44.305 38.526 54.298 63.328l70.431 167.95h310.86c9.3908 0 17.096 3.0099 23.116 9.0296 6.0197 5.8993 9.0296 13.725 9.0296 23.116z");
+    deleteSelPath.setAttribute("stroke-width", "1.2039");
+    deleteSelSVG.appendChild(deleteSelPath);
+    deleteSel.appendChild(deleteSelSVG);
+    editBar.appendChild(deleteSel);
+
+    const colorPicker = document.createElement("div");
+    colorPicker.className = "jr-color-picker jr-text-picker";
+    const colors = [
+        "white",
+        "black",
+        "yellow",
+        "green",
+        "blue",
+        "purple",
+        "pink",
+        "red",
+        "orange"
+    ];
+    colors.forEach(color => {
+        const swatch = document.createElement("div");
+        swatch.className = "jr-color-swatch jr-highlight-" + color;
+        swatch.dataset.color = color;
+        colorPicker.appendChild(swatch);
+    });
+    editBar.appendChild(colorPicker);
+
+    const highlightPicker = document.createElement("div");
+    highlightPicker.className = "jr-color-picker jr-highlight-picker";
+    const highlightColors = [
+        "yellow",
+        "green",
+        "blue",
+        "purple",
+        "pink",
+        "red",
+        "orange"
+    ];
+    highlightColors.forEach(color => {
+        const swatch = document.createElement("div");
+        swatch.className = "jr-color-swatch jr-highlight-" + color;
+        swatch.dataset.color = color;
+        highlightPicker.appendChild(swatch);
+    });
+    // Fix some gimp alignment issue
+    const swatch = document.createElement("div");
+    swatch.className = "jr-color-swatch";
+    swatch.style.visibility = "hidden";
+    highlightPicker.appendChild(swatch);
+    editBar.appendChild(highlightPicker);
 
     window.addEventListener("resize", hideToolbar);
 
@@ -1904,7 +2122,25 @@ function gradientText(colors) {
 function createFindBar() {
     const simpleFind = document.createElement("div");
     simpleFind.className = "simple-find";
-    simpleFind.innerHTML = '<input class="simple-find-input" type="text"><span class="simple-find-count">0</span><button title="Close find bar" class="simple-close-find" tabindex="0">X</button>';
+
+    const findInput = document.createElement("input");
+    findInput.className = "simple-find-input";
+    findInput.setAttribute("type", "text");
+
+    const findCount = document.createElement("span");
+    findCount.className = "simple-find-count";
+    findCount.innerText = 0;
+
+    const findClose = document.createElement("button");
+    findClose.className = "simple-close-find";
+    findClose.setAttribute("title", "Close find bar");
+    findClose.setAttribute("tabindex", "0");
+    findClose.innerText = "X";
+
+    simpleFind.appendChild(findInput);
+    simpleFind.appendChild(findCount);
+    simpleFind.appendChild(findClose);
+
     return simpleFind;
 }
 
@@ -1926,7 +2162,7 @@ function initFindBar() {
 
     findInput.addEventListener("keydown", function(e) {
         // Esc
-        if(e.keyCode === 27) {
+        if(e.key === "Escape") {
             closeFindBar();
             e.stopPropagation();
         }
@@ -2212,7 +2448,13 @@ function getSavableLink() {
             const comments = copy.querySelectorAll(".simple-comment-container");
             comments.forEach(comment => {
                 const timestamp = comment.querySelector(".jr-timestamp");
-                timestamp.innerHTML = 'Left on <a href="#' + comment.id + '">' + timestamp.innerText.split('Left on ').pop() + '</a>';
+
+                const timestampLink = document.createElement("a");
+                timestampLink.setAttribute("href", "#" + comment.id);
+                timestampLink.innerText = timestamp.innerText.split('Left on ').pop();
+
+                timestamp.innerText = "Left on ";
+                timestamp.appendChild(timestampLink);
             });
             // Hack to add hide segments to the actual content
             if(hideSegments) {
@@ -2340,7 +2582,7 @@ function getDomainSelectors() {
             if(response
             && response.content) {
                 let tempElem = document.createElement("div");
-                tempElem.innerHTML = response.content;
+                tempElem.innerHTML = DOMPurify.sanitize(response.content);
                 pageSelectedContainer = tempElem;
 
                 if(response.savedComments) {
@@ -2381,7 +2623,7 @@ function createSimplifiedOverlay() {
         pageSelectedContainer = getContainer();
 
         const pattern = new RegExp ("<br/?>[ \r\n\s]*<br/?>", "g");
-        pageSelectedContainer.innerHTML = pageSelectedContainer.innerHTML.replace(pattern, "</p><p>");
+        pageSelectedContainer.innerHTML = DOMPurify.sanitize(pageSelectedContainer.innerHTML.replace(pattern, "</p><p>"));
     }
 
     selected = pageSelectedContainer;
@@ -2392,7 +2634,7 @@ function createSimplifiedOverlay() {
     // Set the text as our text
     const contentContainer = document.createElement("div");
     contentContainer.className = "content-container";
-    contentContainer.innerHTML = pageSelectedContainer.innerHTML;
+    contentContainer.innerHTML = DOMPurify.sanitize(pageSelectedContainer.innerHTML);
 
     const lightboxes = [];
 
@@ -2422,7 +2664,7 @@ function createSimplifiedOverlay() {
 
                 // If there's no code, format it
                 if(!isPreNoCode) {
-                    elem.innerHTML = elem.innerHTML.replace(/\n/g, '<br/>')
+                    elem.innerHTML = DOMPurify.sanitize(elem.innerHTML.replace(/\n/g, '<br/>'));
                 }
             }
 
@@ -2431,7 +2673,7 @@ function createSimplifiedOverlay() {
             || !isPreNoCode)
             && elem.parentElement) {
                 const p = document.createElement('p');
-                p.innerHTML = elem.innerHTML;
+                p.innerHTML = DOMPurify.sanitize(elem.innerHTML);
 
                 elem.parentElement.insertBefore(p, elem);
                 elem.parentElement.removeChild(elem);
@@ -2491,7 +2733,21 @@ function createSimplifiedOverlay() {
 
     addCommentBtn = document.createElement("button");
     addCommentBtn.className = "premium-feature simple-add-comment";
-    addCommentBtn.innerHTML = '<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M676,368.3H520.1V212.4c0-11.1-9-20.1-20.1-20.1c-11.1,0-20.1,9-20.1,20.1v155.9H324c-11.1,0-20.1,9-20.1,20.1c0,11.1,9,20.1,20.1,20.1h155.9v155.9c0,11.1,9,20.1,20.1,20.1c11.1,0,20.1-9,20.1-20.1V408.5H676c11.1,0,20.1-9,20.1-20.1C696.1,377.3,687.1,368.3,676,368.3z"/><path transform="scale(-1, 1) translate(-1000, 0)" d="M657.9,19.3H342.1C159,19.3,10,181.4,10,380.6C10,549.8,117.2,695,267.1,732.5v228.1c0,7.9,4.6,15.1,11.8,18.3c2.7,1.2,5.5,1.8,8.3,1.8c4.8,0,9.6-1.7,13.3-5L566,741.8h91.9C841,741.8,990,579.7,990,380.6S841,19.3,657.9,19.3z M657.9,701.6h-99.5c-4.9,0-9.6,1.8-13.3,5L307.4,916V716.3c0-9.6-6.8-17.9-16.3-19.8c-139.5-27.1-240.8-160-240.8-316c0-177,130.9-321,291.9-321h315.8c160.9,0,291.9,144,291.9,321C949.8,557.6,818.8,701.6,657.9,701.6z"/></svg>';
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 1000 1000");
+
+    const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path1.setAttribute("d", "M676,368.3H520.1V212.4c0-11.1-9-20.1-20.1-20.1c-11.1,0-20.1,9-20.1,20.1v155.9H324c-11.1,0-20.1,9-20.1,20.1c0,11.1,9,20.1,20.1,20.1h155.9v155.9c0,11.1,9,20.1,20.1,20.1c11.1,0,20.1-9,20.1-20.1V408.5H676c11.1,0,20.1-9,20.1-20.1C696.1,377.3,687.1,368.3,676,368.3z");
+
+    const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path2.setAttribute("d", "M657.9,19.3H342.1C159,19.3,10,181.4,10,380.6C10,549.8,117.2,695,267.1,732.5v228.1c0,7.9,4.6,15.1,11.8,18.3c2.7,1.2,5.5,1.8,8.3,1.8c4.8,0,9.6-1.7,13.3-5L566,741.8h91.9C841,741.8,990,579.7,990,380.6S841,19.3,657.9,19.3z M657.9,701.6h-99.5c-4.9,0-9.6,1.8-13.3,5L307.4,916V716.3c0-9.6-6.8-17.9-16.3-19.8c-139.5-27.1-240.8-160-240.8-316c0-177,130.9-321,291.9-321h315.8c160.9,0,291.9,144,291.9,321C949.8,557.6,818.8,701.6,657.9,701.6z");
+    path2.setAttribute("transform", "scale(-1, 1) translate(-1000, 0)");
+
+    svg.appendChild(path1);
+    svg.appendChild(path2);
+    addCommentBtn.appendChild(svg);
+
     addCommentBtn.title = "Add a comment";
     addCommentBtn.onclick = function() {
         if(isPremium) {
@@ -2586,7 +2842,7 @@ function createSimplifiedOverlay() {
 
     // Add saved comments if applicable
     if(savedComments) {
-        comments.innerHTML = savedComments;
+        comments.innerHTML = DOMPurify.sanitize(savedComments);
         comments.querySelectorAll(".delete-button").forEach(btn => {
             btn.onclick = function() {
                 hasSavedLink = false;
@@ -2597,7 +2853,7 @@ function createSimplifiedOverlay() {
             }
         });
 
-        compactComments.innerHTML = savedCompactComments;
+        compactComments.innerHTML = DOMPurify.sanitize(savedCompactComments);
     }
 
     function doStuff() {
@@ -2621,20 +2877,22 @@ function createSimplifiedOverlay() {
         }
 
         // Add MathJax support
-        const mj = document.querySelector("script[src *= 'mathjax']");
-        if(mj) {
-            const mathjax = document.createElement("script");
-            mathjax.src = mj.src;
-            simpleArticleIframe.head.appendChild(mathjax);
+        // TODO add for Chrome??
+        // Commented out because Firefox says "Add-ons must be self-contained and not load remote code for execution"
+        // const mj = document.querySelector("script[src *= 'mathjax']");
+        // if(mj) {
+        //     const mathjax = document.createElement("script");
+        //     mathjax.src = mj.src;
+        //     simpleArticleIframe.head.appendChild(mathjax);
 
-            const scripts = document.querySelectorAll("script");
-            scripts.forEach(script => {
-                if(script.innerText.indexOf("MathJax.Hub.Config") >= 0) {
-                    const clone = scripts[i].cloneNode(true);
-                    articleContainer.appendChild(clone);
-                }
-            });
-        }
+        //     const scripts = document.querySelectorAll("script");
+        //     scripts.forEach(script => {
+        //         if(script.innerText.indexOf("MathJax.Hub.Config") >= 0) {
+        //             const clone = scripts[i].cloneNode(true);
+        //             articleContainer.appendChild(clone);
+        //         }
+        //     });
+        // }
 
         // Flag any elements in the selectorsToDelete list for removal
         if(selectorsToDelete) {
@@ -2702,26 +2960,26 @@ function createSimplifiedOverlay() {
 
         simpleArticleIframe.onkeydown = function(e) {
             // Listen for the "Esc" key and exit if so
-            if(e.keyCode === 27 && !simpleArticleIframe.body.classList.contains("simple-deleting") && document.hasFocus())
+            if(e.key === "Escape" && !simpleArticleIframe.body.classList.contains("simple-deleting") && document.hasFocus())
                 closeOverlay();
 
             // Listen for CTRL/CMD + SHIFT + ; and allow node deletion if so
-            if(e.keyCode === 186 && (e.ctrlKey || e.metaKey) && e.shiftKey)
+            if(e.key === ";" && (e.ctrlKey || e.metaKey) && e.shiftKey)
                 startDeleteElement(simpleArticleIframe);
 
             // Listen for CTRL/CMD + P and do our print function if so
-            if((e.ctrlKey || e.metaKey) && e.keyCode === 80) {
+            if((e.ctrlKey || e.metaKey) && e.key === "p") {
                 simpleArticleIframe.defaultView.print();
                 e.preventDefault();
             }
 
             // Listen for CTRL/CMD + Z for our undo function
-            if((e.ctrlKey || e.metaKey) && e.keyCode === 90) {
+            if((e.ctrlKey || e.metaKey) && e.key === "z") {
                 popStack();
             }
 
             // Listen for CTRL/CMD + F or F3
-            if(e.keyCode === 114 || ((e.ctrlKey || e.metaKey) && e.keyCode === 70)) {
+            if(e.key === "F3" || ((e.ctrlKey || e.metaKey) && e.key === "f")) {
                 find.classList.add("active");
                 findInput.focus();
                 e.preventDefault();
@@ -2730,47 +2988,47 @@ function createSimplifiedOverlay() {
             // Listen for editor shortcuts
             if(editorShortcutsEnabled) {
                 // CTRL/CMD + B
-                if((e.ctrlKey || e.metaKey) && e.keyCode === 66) {
+                if((e.ctrlKey || e.metaKey) && e.key === "b") {
                     bolden();
                 }
 
                 // CTRL/CMD + I
-                if((e.ctrlKey || e.metaKey) && e.keyCode === 73) {
+                if((e.ctrlKey || e.metaKey) && e.key === "i") {
                     italicize();
                 }
 
                 // CTRL + U
-                if((e.ctrlKey || e.metaKey) && e.keyCode === 85) {
+                if((e.ctrlKey || e.metaKey) && e.key === "u") {
                     underline();
                     e.preventDefault();
                 }
 
                 // CTRL/CMD + SHIFT + S
-                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode === 83) {
+                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "s") {
                     strikeThrough();
                     e.preventDefault();
                 }
 
                 // CTRL/CMD + SHIFT + D
-                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode === 68) {
+                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "d") {
                     deleteSelection();
                     e.preventDefault();
                 }
 
                 // CTRL/CMD + SHIFT + C
-                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode === 67) {
+                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "c") {
                     colorSelectedText(lastFontColor);
                     e.preventDefault();
                 }
 
                 // CTRL/CMD + SHIFT + H
-                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode === 72) {
+                if((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "h") {
                     highlightSelectedText(lastHighlightColor);
                     e.preventDefault();
                 }
 
                 // CTRL/CMD + \
-                if((e.ctrlKey || e.metaKey) && e.keyCode === 220) {
+                if((e.ctrlKey || e.metaKey) && e.key === "\\") {
                     removeHighlightFromSelectedText();
                     e.preventDefault();
                 }
@@ -2925,11 +3183,18 @@ const stylesheetObj = {},
       stylesheetVersion = 4.0; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
+    // Use the highlighted text if started from that
+    if(chromeStorage.textToRead) {
+        pageSelectedContainer = document.createElement("div");
+        pageSelectedContainer.className = "highlighted-html";
+        pageSelectedContainer.innerHTML = DOMPurify.sanitize(selection);
+    }
+
     // Detect past overlay - don't show another
     if(document.getElementById("simple-article") == null) {
 
         // Check to see if the user wants to select the text
-        if(typeof useText !== "undefined" && useText) {
+        if(chromeStorage.useText) {
             // Start the process of the user selecting text to read
             startSelectElement(document);
         } else {
@@ -2938,20 +3203,17 @@ function launch() {
                 addStylesheet(document, "page.css", "page-styles");
 
             // Check to see if the user wants to hide the content while loading
-            if(typeof runOnLoad !== "undefined" && runOnLoad) {
-                window.onload = getStyles();
+            if(chromeStorage.runOnLoad) {
+                window.onload = checkPremium();
             } else {
-                getStyles();
+                checkPremium();
             }
         }
-
     } else {
         if(document.querySelector(".simple-fade-up") == null) // Make sure it's been able to load
             closeOverlay();
     }
 }
-// Assure our libraries have time to load before launching
-setTimeout(launch, 10);
 
 
 
