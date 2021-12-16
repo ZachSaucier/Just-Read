@@ -13,10 +13,15 @@ function checkArrayForString(arr, string) {
 
 function startJustRead(tab) {
     const tabId = tab ? tab.id : null; // Defaults to the current tab
-    chrome.tabs.executeScript(tabId, {
-        file: "content_script.js", // Script to inject into page and run in sandbox
-        allFrames: false // This injects script into iframes in the page and doesn't work before 4.0.266.0.
-    });
+
+    // Load our external scripts, then our content script
+    chrome.tabs.executeScript(tabId, { file: "/external-libraries/datGUI/dat.gui.min.js", allFrames: false});
+    chrome.tabs.executeScript(tabId, { file: "/external-libraries/DOMPurify/purify.min.js", allFrames: false});
+    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy.min.js", allFrames: false});
+    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-classapplier.min.js", allFrames: false});
+    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-highlighter.min.js", allFrames: false});
+    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-textrange.min.js", allFrames: false});
+    chrome.tabs.executeScript(tabId, { file: "content_script.js", allFrames: false});
 
     // Add a badge to signify the extension is in use
     chrome.browserAction.setBadgeBackgroundColor({color:[242, 38, 19, 230]});
@@ -232,7 +237,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if(lastSavedPage
         && sender.url === lastSavedPage.url) {
             if(lastSavedPage.savedComments) {
-                sendResponse({ 
+                sendResponse({
                     content: lastSavedPage.content,
                     savedComments: lastSavedPage.savedComments,
                     savedCompactComments: lastSavedPage.savedCompactComments
