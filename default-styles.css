@@ -97,9 +97,9 @@ code {
 blockquote {
     border-left: 4px solid;
     margin-left: 0;
-    padding: 15px 10% 15px 8%;
-    margin: 1em 0;
-    font-size: 1.2em;
+    padding: 1px 7% 1px 7%;
+    margin: 0em 0;
+    font-size: 1em;
     line-height: 1.4;
 }
 blockquote > *:first-child {

@@ -2,17 +2,14 @@ function isEmpty(obj) {
     if(obj) return Object.keys(obj).length === 0;
     return true;
 }
-function checkArrayForString(arr, string) {
-    for(let i = 0; i < arr.length; i++) {
-        if(arr[i].indexOf(string) > -1) {
-            return true;
-        }
-    };
-    return false;
-}
+
+let preventInstance = {};
 
 function startJustRead(tab) {
     const tabId = tab ? tab.id : null; // Defaults to the current tab
+
+    preventInstance[tabId] = true;
+    setTimeout(() => delete preventInstance[tabId], 500);
 
     // Load our external scripts, then our content script
     chrome.tabs.executeScript(tabId, { file: "/external-libraries/datGUI/dat.gui.min.js", allFrames: false});
@@ -102,6 +99,8 @@ function createAutorunCM() {
     });
 }
 function addSiteToAutorunList(info, tab) {
+    // TODO strip jr=on from query params
+
     chrome.storage.sync.get('auto-enable-site-list', function(result) {
         let url = new URL((info != null && info.pageUrl) || tab.url);
         let entry;
@@ -119,7 +118,7 @@ function addSiteToAutorunList(info, tab) {
                 chrome.storage.sync.set({
                     'auto-enable-site-list': [...currentDomains, entry],
                 }, function() {
-                    if(checkArrayForString(currentDomains, url.hostname)) {
+                    if(currentDomains.indexOf(url.hostname)) {
                         console.log("Just Read auto-run entry added.\n\nWarning: An auto-run entry with the same hostname has already been added. Be careful to not add two duplicates.");
                     } else {
                         console.log('Just Read auto-run entry added.');
@@ -269,6 +268,8 @@ chrome.contextMenus.create({
 });
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+    if(preventInstance[tabId]) return;
+
     const change = Date.now() - lastClosed;
     if (changeInfo.status === 'complete' && change > 300) {
         // Auto enable on sites specified
@@ -280,17 +281,27 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
 
                 if(typeof siteList !== "undefined") {
                     for(let i = 0; i < siteList.length; i++) {
-                        const regex = new RegExp(siteList[i], "i");
+                        // Allows the format `text.npr.org>5000` to autorun JR after 5 seconds on text.npr.org
+                        const entry = siteList[i];
+                        const splitEntry = entry.split('>');
+                        const entryRegex = splitEntry[0];
+                        const urlRegex = new RegExp(entryRegex, "i");
+                        const entryDelay = splitEntry.length > 1 ? splitEntry[1] : 0;
 
-                        if( url.match( regex ) ) {
+                        if( url.match( urlRegex ) ) {
                             chrome.tabs.executeScript(tabId, {
                                 code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load
                             }, function() {                   // instead of using Chrome messages
-                                startJustRead(tab);
+                                setTimeout(() => startJustRead(tab), entryDelay);
                             });
                             return;
                         }
                     }
+                }
+
+                // Check if jr=on is set, autorun if so
+                if(new URL(url).searchParams.get('jr') === 'on') {
+                    startJustRead(tab);
                 }
             }
         });

@@ -7,7 +7,7 @@ let jrOpenCount;
 
 let chromeStorage, pageSelectedContainer;
 chrome.storage.sync.get(null, function (result) {
-    chromeStorage = result;
+    chromeStorage = result || {};
 
     launch();
 });
@@ -352,11 +352,6 @@ function setStylesOfStorage() {
     }
 }
 
-// Remove a given element from chrome storage
-function removeStyleFromStorage(stylesheet) {
-    chrome.storage.sync.remove(stylesheet);
-}
-
 
 
 
@@ -625,7 +620,9 @@ function getArticleAuthor() {
 function closeOverlay() {
     // Refresh the page if the content has been removed
     if(removeOrigContent) {
-        location.reload();
+        const url = new URL(window.location);
+        url.searchParams.delete('jr');
+        window.location.replace(url);
     }
 
     // Remove the GUI if it is open
@@ -1712,10 +1709,6 @@ function deleteSelection() {
     }
 }
 
-function noteSelectedText() {
-    highlighter.highlightSelection("note");
-}
-
 function removeHighlightFromSelectedText() {
     highlighter.unhighlightSelection();
     lastMessage = "";
@@ -1920,7 +1913,6 @@ function addComment(loc) {
         commentContainer.appendChild(styling);
 
         commentContainer.style.top = loc.y + "px";
-        // commentContainer.style.left = loc.x;
 
         comments.appendChild(commentContainer);
 
@@ -2100,8 +2092,6 @@ function gradientText(colors) {
                 grads += `linear-gradient(to right, ${colors[colorIndex]} 0%, ${colors[colorIndex]} 10%, ${colors[nextIndex]} 90%, ${colors[nextIndex]} 100%)`;
                 sizes += `100% ${lineHeight}px`;
                 poses += `0 ${lineHeight * i + parseInt(computedStyle.paddingTop)}px`;
-                // Alternatively remove $poses and use
-                // sizes += ", 100% ${lineHeight * i}";
 
                 colorIndex = nextIndex;
             }
@@ -2147,7 +2137,6 @@ function createFindBar() {
 let find,
     findInput,
     findCount,
-    findBtn,
     closeFind;
 
 let searchResultApplier;
@@ -2155,7 +2144,6 @@ function initFindBar() {
     find = simpleArticleIframe.querySelector(".simple-find");
     findInput = find.querySelector(".simple-find-input");
     findCount = find.querySelector(".simple-find-count");
-    findBtn = find.querySelector(".simple-find-btn");
     closeFind = find.querySelector(".simple-close-find");
 
     searchResultApplier = rangy.createClassApplier("simple-found");
@@ -2859,6 +2847,7 @@ function createSimplifiedOverlay() {
     function doStuff() {
         simpleArticleIframe = document.getElementById("simple-article").contentWindow.document;
         simpleArticleIframe.body.appendChild(container);
+        simpleArticleIframe.documentElement.setAttribute('lang', document.documentElement.getAttribute('lang'));
 
         simpleArticleIframe.body.className = window.location.hostname.replace(/\./g, "-");
 
@@ -3105,7 +3094,16 @@ function fadeIn() {
 }
 
 function finishLoading() {
-    // Add our required stylesheet for the article
+    const url = new URL(window.location);
+    if(url.searchParams.get('jr') !== 'on') {
+        url.searchParams.set('jr', 'on');
+        window.history.pushState({}, '', url);
+
+        // Listen for if back button is clicked
+        window.onpopstate = closeOverlay;
+    }
+
+    // Add our required stylesheet for the articlž
     if(!simpleArticleIframe.head.querySelector(".required-styles"))
         addStylesheet(simpleArticleIframe, "required-styles.css", "required-styles");
 
@@ -3180,7 +3178,7 @@ function finishLoading() {
 // Handle the stylesheet syncing
 /////////////////////////////////////
 const stylesheetObj = {},
-      stylesheetVersion = 4.0; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
+      stylesheetVersion = 4.1; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
     // Use the highlighted text if started from that
@@ -3203,6 +3201,7 @@ function launch() {
                 addStylesheet(document, "page.css", "page-styles");
 
             // Check to see if the user wants to hide the content while loading
+            console.log('launch')
             if(chromeStorage.runOnLoad) {
                 window.onload = checkPremium();
             } else {

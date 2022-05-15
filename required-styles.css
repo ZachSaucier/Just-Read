@@ -27,9 +27,6 @@
 .article-container {
     max-width: 600px;
 }
-.content-container > *:not(script):not(style):not([class *= "jr-"]) {
-    display: block !important;
-}
 
 .simple-ui-container {
     z-index: 5;
