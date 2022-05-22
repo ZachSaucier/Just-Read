@@ -3128,7 +3128,10 @@ function finishLoading() {
     // Append our theme styles to the overlay
     simpleArticleIframe.head.appendChild(styleElem);
 
-    fadeIn();
+    simpleArticleIframe.defaultView.addEventListener("load", () => {
+        chrome.runtime.sendMessage({tabOpenedJR: window.location});
+        fadeIn();
+    });
 
     // Apply the gradient text if the user has the option enabled
     if(chromeStorage["gradient-text"]) {
@@ -3201,7 +3204,6 @@ function launch() {
                 addStylesheet(document, "page.css", "page-styles");
 
             // Check to see if the user wants to hide the content while loading
-            console.log('launch')
             if(chromeStorage.runOnLoad) {
                 window.onload = checkPremium();
             } else {
