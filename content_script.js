@@ -620,11 +620,9 @@ function getArticleAuthor() {
 function closeOverlay() {
     // Refresh the page if the content has been removed
     if(removeOrigContent) {
-        // const url = new URL(window.location);
-        // url.searchParams.delete('jr');
-        // window.location.replace(url);
-
-        location.reload();
+        const url = new URL(window.location);
+        url.searchParams.delete('jr');
+        window.location.replace(url);
     }
 
     // Remove the GUI if it is open
@@ -655,7 +653,7 @@ function closeOverlay() {
         document.documentElement.classList.remove("simple-no-scroll");
 
         // Update our background script
-        // chrome.runtime.sendMessage({lastClosed: Date.now()});
+        chrome.runtime.sendMessage({lastClosed: Date.now()});
 
         // Remove our overlay
         simpleArticle.parentElement.removeChild(simpleArticle);
@@ -3095,15 +3093,24 @@ function fadeIn() {
     }
 }
 
-function finishLoading() {
-    // const url = new URL(window.location);
-    // if(url.searchParams.get('jr') !== 'on') {
-    //     url.searchParams.set('jr', 'on');
-    //     window.history.pushState({}, '', url);
+function onSimpleArticleIframeLoaded(cb) {
+    if (simpleArticleIframe.readyState === 'complete') {
+        cb();
+        return;
+    }
 
-    //     // Listen for if back button is clicked
-    //     window.onpopstate = closeOverlay;
-    // }
+    simpleArticleIframe.defaultView.addEventListener("load", cb);
+}
+
+function finishLoading() {
+    const url = new URL(window.location);
+    if(url.searchParams.get('jr') !== 'on') {
+        url.searchParams.set('jr', 'on');
+        window.history.pushState({}, '', url);
+
+        // Listen for if back button is clicked
+        window.onpopstate = closeOverlay;
+    }
 
     // Add our required stylesheet for the articlž
     if(!simpleArticleIframe.head.querySelector(".required-styles"))
@@ -3130,7 +3137,7 @@ function finishLoading() {
     // Append our theme styles to the overlay
     simpleArticleIframe.head.appendChild(styleElem);
 
-    simpleArticleIframe.defaultView.addEventListener("load", () => {
+    onSimpleArticleIframeLoaded(() => {
         chrome.runtime.sendMessage({tabOpenedJR: window.location});
         fadeIn();
     });

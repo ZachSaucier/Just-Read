@@ -3,15 +3,15 @@ function isEmpty(obj) {
     return true;
 }
 
-// let preventInstance = {};
+let preventInstance = {};
 
 function startJustRead(tab) {
     const tabId = tab ? tab.id : null; // Defaults to the current tab
 
-    // if(preventInstance[tabId]) return;
+    if(preventInstance[tabId]) return;
 
-    // preventInstance[tabId] = true;
-    // setTimeout(() => delete preventInstance[tabId], 10000);
+    preventInstance[tabId] = true;
+    setTimeout(() => delete preventInstance[tabId], 10000);
 
     // Load our external scripts, then our content script
     chrome.tabs.executeScript(tabId, { file: "/external-libraries/datGUI/dat.gui.min.js", allFrames: false});
@@ -258,16 +258,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     else if (request.resetJRLastChecked) {
         chrome.storage.sync.set({'jrLastChecked': ''});
     }
-    // else if (request.tabOpenedJR) {
-    //     const tabURL = request.tabOpenedJR.href.split('?')[0];
-    //     for (const tabId in preventInstance) {
-    //         chrome.tabs.get(parseInt(tabId), (tab) => {
-    //             if (tab.url.split('?')[0] === tabURL) {
-    //                 setTimeout(() => delete preventInstance[tabId], 1000);
-    //             }
-    //         });
-    //     }
-    // }
+    else if (request.tabOpenedJR) {
+        const tabURL = request.tabOpenedJR.href.split('?')[0];
+        for (const tabId in preventInstance) {
+            chrome.tabs.get(parseInt(tabId), (tab) => {
+                if (tab.url.split('?')[0] === tabURL) {
+                    setTimeout(() => delete preventInstance[tabId], 1000);
+                }
+            });
+        }
+    }
 });
 
 // Create an entry to allow user to select an element to read from
@@ -280,7 +280,7 @@ chrome.contextMenus.create({
 });
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-    // if(preventInstance[tabId]) return;
+    if(preventInstance[tabId]) return;
 
     const change = Date.now() - lastClosed;
     if (changeInfo.status === 'complete' && change > 300) {
