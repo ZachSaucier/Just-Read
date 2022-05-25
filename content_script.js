@@ -3095,6 +3095,17 @@ function fadeIn() {
     }
 }
 
+function onSimpleArticleIframeLoaded(cb) {
+    if (simpleArticleIframe.readyState === 'complete') {
+        cb();
+        return;
+    }
+
+    simpleArticleIframe.defaultView.addEventListener("load", () => {
+        cb();
+    });
+}
+
 function finishLoading() {
     // const url = new URL(window.location);
     // if(url.searchParams.get('jr') !== 'on') {
@@ -3130,7 +3141,7 @@ function finishLoading() {
     // Append our theme styles to the overlay
     simpleArticleIframe.head.appendChild(styleElem);
 
-    simpleArticleIframe.defaultView.addEventListener("load", () => {
+    onSimpleArticleIframeLoaded(() => {
         chrome.runtime.sendMessage({tabOpenedJR: window.location});
         fadeIn();
     });
