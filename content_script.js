@@ -72,21 +72,6 @@ function stylesheetToString(s) {
     return text;
 }
 
-// Select text from highlight functionality
-const selection = getSelectionHtml();
-function getSelectionHtml() {
-    let html = "";
-    const sel = window.getSelection();
-    if (sel.rangeCount) {
-        const container = document.createElement("div");
-        for (let i = 0, len = sel.rangeCount; i < len; ++i) {
-            container.appendChild(sel.getRangeAt(i).cloneContents());
-        }
-        html = DOMPurify.sanitize(container.innerHTML);
-    }
-    return html;
-}
-
 
 /////////////////////////////////////
 // State functions
@@ -129,6 +114,7 @@ function startSelectElement(doc) {
         if(doc.getElementById("tempStyle") != null)
             doc.getElementById("tempStyle").parentElement.removeChild(doc.getElementById("tempStyle"));
 
+        useText = false;
         launch();
     };
 
@@ -2777,7 +2763,7 @@ function createSimplifiedOverlay() {
 
     // Handle RTL sites
     const direction = window.getComputedStyle(document.body).getPropertyValue("direction");
-    if(direction === "rtl" || isRTL(contentContainer.firstChild.innerText)) {
+    if(direction === "rtl" || (contentContainer.firstChild && isRTL(contentContainer.firstChild.innerText))) {
         container.classList.add("rtl");
     }
 
@@ -3193,18 +3179,11 @@ const stylesheetObj = {},
       stylesheetVersion = 4.1; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
-    // Use the highlighted text if started from that
-    if(chromeStorage.textToRead) {
-        pageSelectedContainer = document.createElement("div");
-        pageSelectedContainer.className = "highlighted-html";
-        pageSelectedContainer.innerHTML = DOMPurify.sanitize(selection);
-    }
-
     // Detect past overlay - don't show another
     if(document.getElementById("simple-article") == null) {
 
         // Check to see if the user wants to select the text
-        if(chromeStorage.useText) {
+        if(typeof useText !== "undefined" && useText) {
             // Start the process of the user selecting text to read
             startSelectElement(document);
         } else {
@@ -3213,7 +3192,7 @@ function launch() {
                 addStylesheet(document, "page.css", "page-styles");
 
             // Check to see if the user wants to hide the content while loading
-            if(chromeStorage.runOnLoad) {
+            if(typeof runOnLoad !== "undefined" && runOnLoad) {
                 window.onload = checkPremium();
             } else {
                 checkPremium();

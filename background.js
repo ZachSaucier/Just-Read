@@ -6,9 +6,18 @@ function isEmpty(obj) {
 let preventInstance = {};
 
 function startJustRead(tab) {
-    const tabId = tab ? tab.id : null; // Defaults to the current tab
+    if (tab) {
+        executeScripts(tab.id);
+    } else {
+        chrome.tabs.query(
+            { currentWindow: true, active: true },
+            (tabArray) => executeScripts(tabArray[0].id)
+        );
+    }
+}
 
-    if(preventInstance[tabId]) return;
+function executeScripts(tabId) {
+    if (preventInstance[tabId]) return;
 
     preventInstance[tabId] = true;
     setTimeout(() => delete preventInstance[tabId], 10000);
@@ -40,7 +49,7 @@ function startJustRead(tab) {
 
 function startSelectText() {
     chrome.tabs.executeScript(null, {
-        code: 'var useText = true;' // Ghetto way of signaling to select text instead of
+        code: 'let useText = true;' // Ghetto way of signaling to select text instead of
     }, function() {                 // using Chrome messages
         startJustRead();
     });
@@ -55,21 +64,6 @@ function createPageCM() {
          onclick: startJustRead
     });
 }
-function createHighlightCM() {
-    // Create an entry to allow user to use currently selected text
-    highlightCMId = chrome.contextMenus.create({
-        title: "View this selection in Just Read",
-        id: "highlightCM",
-        contexts:["selection"],
-        onclick: function(info, tab) {
-            chrome.tabs.executeScript(null, {
-                code: 'var textToRead = true'
-            }, function() {
-                startJustRead();
-            });
-        }
-    });
-}
 function createLinkCM() {
     // Create an entry to allow user to open a given link using Just read
     linkCMId = chrome.contextMenus.create({
@@ -81,7 +75,7 @@ function createLinkCM() {
                 { url: info.linkUrl, active: false },
                 function(newTab) {
                     chrome.tabs.executeScript(newTab.id, {
-                        code: 'var runOnLoad = true'
+                        code: 'let runOnLoad = true'
                     }, function() {
                         startJustRead(newTab);
                     });
@@ -302,7 +296,7 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
 
                         if( url.match( urlRegex ) ) {
                             chrome.tabs.executeScript(tabId, {
-                                code: 'var runOnLoad = true;' // Ghetto way of signaling to run on load
+                                code: 'let runOnLoad = true;' // Ghetto way of signaling to run on load
                             }, function() {                   // instead of using Chrome messages
                                 setTimeout(() => startJustRead(tab), entryDelay);
                             });

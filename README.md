@@ -46,7 +46,7 @@ ___
   
   ### On a desktop or laptop
 
-Start Just Read by using Just Read's auto-selection, user-selection mode, or highlight mode.
+Start Just Read by using Just Read's auto-selection or user-selection mode.
 
 > **Note**: Keyboard shortcuts may have to be enabled for them to work correctly. To do this, go to `chrome://extensions/shortcuts` (`about:addons`, the gear icon -> "Manage Extension Shortcuts" in Firefox) and you can add/change shortcuts there.
 
@@ -70,10 +70,6 @@ You can select exactly the text you want to read if the built in method doesn't 
 5. Right click the Just Read extension button, click "Select content to read", and then click the part of the page highlighted that you want to read.
 
 6. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>K</kbd> then click the part of the page highlighted that you want to read.
-
-#### Highlight mode
-
-You can select specific text by highlighting it (by clicking and dragging over the content), then right click it and select "View this content in Just Read".
 
 ### On a mobile device
 
@@ -192,7 +188,6 @@ Under "Options" -> "Context menu entries", you can enable or disable the context
 
 - "Don't reformat pre tags" makes it so that Just Read doesn't turn any `<pre>` tags into paragraphs but retains their original formatting.
 - "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
-- "Enable highlight context menu entry" allows Just Read to show a menu entry when you right click highlighted text.
 - "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
 
 
