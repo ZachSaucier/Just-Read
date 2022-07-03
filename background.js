@@ -130,9 +130,9 @@ function addSiteToAutorunList(info, tab) {
 }
 
 
-let pageCMId = highlightCMId = linkCMId = autorunCMId = undefined;
+let pageCMId = linkCMId = autorunCMId = undefined;
 function updateCMs() {
-    chrome.storage.sync.get(["enable-pageCM", "enable-highlightCM", "enable-linkCM", "enable-autorunCM"], function (result) {
+    chrome.storage.sync.get(["enable-pageCM", "enable-linkCM", "enable-autorunCM"], function (result) {
         let size = 0;
 
         for(let key in result) {
@@ -146,16 +146,6 @@ function updateCMs() {
                     if(typeof pageCMId != "undefined") {
                         chrome.contextMenus.remove("pageCM");
                         pageCMId = undefined;
-                    }
-                }
-            } else if(key === "enable-highlightCM") {
-                if(result[key]) {
-                    if(typeof highlightCMId == "undefined")
-                        createHighlightCM();
-                } else {
-                    if(typeof highlightCMId != "undefined") {
-                        chrome.contextMenus.remove("highlightCM");
-                        highlightCMId = undefined;
                     }
                 }
             }
@@ -185,7 +175,6 @@ function updateCMs() {
 
         if(size === 0) {
             createPageCM();
-            createHighlightCM();
             createLinkCM();
             createAutorunCM();
         }

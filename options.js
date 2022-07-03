@@ -74,8 +74,6 @@ function getDataFromStorage(storage) {
             closeOldPage.checked = storage[key];
         } else if(key === "enable-pageCM") {
             pageCM.checked = storage[key];
-        } else if(key === "enable-highlightCM") {
-            highlightCM.checked = storage[key];
         } else if(key === "enable-linkCM") {
             linkCM.checked = storage[key];
         } else if(key === "enable-autorunCM") {
@@ -615,10 +613,6 @@ function addEventListeners() {
     
     pageCM.onchange = function() {
         chrome.storage.sync.set({"enable-pageCM": this.checked});
-        chrome.runtime.sendMessage({updateCMs: "true"});
-    }
-    highlightCM.onchange = function() {
-        chrome.storage.sync.set({"enable-highlightCM": this.checked});
         chrome.runtime.sendMessage({updateCMs: "true"});
     }
     linkCM.onchange = function() {
