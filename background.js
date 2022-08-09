@@ -22,15 +22,6 @@ function executeScripts(tabId) {
     preventInstance[tabId] = true;
     setTimeout(() => delete preventInstance[tabId], 10000);
 
-    // Load our external scripts, then our content script
-    chrome.tabs.executeScript(tabId, { file: "/external-libraries/datGUI/dat.gui.min.js", allFrames: false});
-    chrome.tabs.executeScript(tabId, { file: "/external-libraries/DOMPurify/purify.min.js", allFrames: false});
-    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy.min.js", allFrames: false});
-    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-classapplier.min.js", allFrames: false});
-    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-highlighter.min.js", allFrames: false});
-    chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-textrange.min.js", allFrames: false});
-    chrome.tabs.executeScript(tabId, { file: "content_script.js", allFrames: false});
-
     // Add a badge to signify the extension is in use
     chrome.browserAction.setBadgeBackgroundColor({color:[242, 38, 19, 230]});
     chrome.browserAction.setBadgeText({text:"on"});
@@ -42,9 +33,21 @@ function executeScripts(tabId) {
         }
     });
 
-    setTimeout(function() {
-        chrome.browserAction.setBadgeText({text:""});
-    }, 2000);
+    // Load our external scripts, then our content script
+    Promise.all([
+        chrome.tabs.executeScript(tabId, { file: "/external-libraries/datGUI/dat.gui.min.js", allFrames: false}),
+        chrome.tabs.executeScript(tabId, { file: "/external-libraries/DOMPurify/purify.min.js", allFrames: false}),
+        chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy.min.js", allFrames: false}),
+        chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-classapplier.min.js", allFrames: false}),
+        chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-highlighter.min.js", allFrames: false}),
+        chrome.tabs.executeScript(tabId, { file: "/external-libraries/Rangy/rangy-textrange.min.js", allFrames: false}),
+    ]).then(() => {
+        chrome.tabs.executeScript(tabId, { file: "content_script.js", allFrames: false})
+
+        setTimeout(function() {
+            chrome.browserAction.setBadgeText({text:""});
+        }, 1000);
+    });
 }
 
 function startSelectText() {

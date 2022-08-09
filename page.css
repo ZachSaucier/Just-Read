@@ -1,16 +1,18 @@
 .simple-no-scroll,
 .simple-no-scroll body {
+    pointer-events: auto !important;
+    user-select: auto !important;
     transform: none !important;
     padding: 0;
     margin: 0;
 }
-.simple-no-scroll, 
+.simple-no-scroll,
 .simple-no-scroll * {
     overflow: hidden !important;
 }
 
 #simple-article#simple-article {
-    display: block;
+    display: block !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -45,6 +47,10 @@
     opacity: 0;
 }
 
+.simple-no-scroll body > *:not(#simple-article) {
+    pointer-events: none !important;
+}
+
 .no-trans { transition: none !important; }
 
 .dg { z-index: 99999999999 !important; height: auto !important; }
@@ -52,6 +58,6 @@
 .dg .cr.string:not(.color) input { float: none; }
 .dg.main .close-button.close-button {
     bottom: -41px;
-    border-top: 1px solid grey; 
+    border-top: 1px solid grey;
 }
 .dg.main .close-button.saveAndClose { bottom: -20px; }
