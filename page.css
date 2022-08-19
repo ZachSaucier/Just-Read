@@ -1,8 +1,5 @@
 .simple-no-scroll,
 .simple-no-scroll body {
-    pointer-events: auto !important;
-    user-select: auto !important;
-    transform: none !important;
     padding: 0;
     margin: 0;
 }
@@ -47,7 +44,7 @@
     opacity: 0;
 }
 
-.simple-no-scroll body > *:not(#simple-article) {
+.simple-no-scroll body > *:not(#simple-article):not(.dg) {
     pointer-events: none !important;
 }
 
