@@ -4,6 +4,8 @@ const jrDomain = "https://justread.link/";
 let isPremium = false;
 let jrSecret;
 let jrOpenCount;
+let hasBeenAskedForReview100 = false;
+let hasBeenAskedForReview1000 = false;
 
 let chromeStorage, pageSelectedContainer;
 chrome.storage.sync.get(null, function (result) {
@@ -1184,6 +1186,26 @@ function addPremiumNofifier() {
         primaryText: "Learn more",
         secondaryText: "Maybe later",
     };
+    simpleArticleIframe.body.appendChild(createNotification(notification));
+}
+
+function addReviewNotifier(roundedNumViews, advertisePremium) {
+    const reviewURL = navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ? 'https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/reviews/' : 'https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod/reviews';
+
+    const notification = {
+        url: reviewURL,
+        primaryText: "Leave a review",
+        secondaryText: "Maybe later",
+    };
+
+    if(advertisePremium) {
+        notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='${reviewURL}' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
+        notification.url = "https://justread.link/#get-Just-Read";
+        notification.primaryText = "Learn more";
+    } else {
+        notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='${reviewURL}' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
+    }
+
     simpleArticleIframe.body.appendChild(createNotification(notification));
 }
 
@@ -2846,9 +2868,32 @@ function createSimplifiedOverlay() {
         // Add a notification of premium if necessary
         if(!isPremium
         && (jrOpenCount === 5
-           || jrOpenCount % 15 === 0)
-        && jrOpenCount < 151) {
+           || jrOpenCount % 33 === 0)
+        && jrOpenCount < 67) {
             addPremiumNofifier();
+        }
+
+        // Ask for a review and such]
+        if(!hasBeenAskedForReview100
+        && jrOpenCount > 100) {
+            const roundedNumViews = 100 * Math.floor( jrOpenCount / 100);
+            chrome.storage.sync.set({'jrHasBeenAskedForReview100': true});
+            if(!isPremium) {
+                addReviewNotifier(roundedNumViews, true);
+            } else {
+                addReviewNotifier(roundedNumViews);
+            }
+        }
+
+        if((!hasBeenAskedForReview1000 && hasBeenAskedForReview100)
+        && jrOpenCount > 1000) {
+            const roundedNumViews = 100 * Math.floor( jrOpenCount / 100);
+            chrome.storage.sync.set({'jrHasBeenAskedForReview1000': true});
+            if(!isPremium) {
+                addReviewNotifier(roundedNumViews, true);
+            } else {
+                addReviewNotifier(roundedNumViews);
+            }
         }
 
         // Add MathJax support
@@ -3047,6 +3092,13 @@ function continueLoading() {
     } else {
         jrOpenCount = chromeStorage['jrOpenCount'];
         chrome.storage.sync.set({'jrOpenCount': jrOpenCount + 1});
+    }
+
+    if(typeof chromeStorage['jrHasBeenAskedForReview100'] !== "undefined") {
+        hasBeenAskedForReview100 = true;
+    }
+    if(typeof chromeStorage['jrHasBeenAskedForReview1000'] !== "undefined") {
+        hasBeenAskedForReview1000 = true;
     }
 
     // Get current theme
