@@ -6,6 +6,7 @@ let jrSecret;
 let jrOpenCount;
 let hasBeenAskedForReview100 = false;
 let hasBeenAskedForReview1000 = false;
+let hasBeenAskedForReview10000 = false;
 
 let chromeStorage, pageSelectedContainer;
 chrome.storage.sync.get(null, function (result) {
@@ -1189,7 +1190,7 @@ function addPremiumNofifier() {
     simpleArticleIframe.body.appendChild(createNotification(notification));
 }
 
-function addReviewNotifier(roundedNumViews, advertisePremium) {
+function addReviewNotifier(roundedNumViews, advertisePremium, tenK) {
     const reviewURL = navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ? 'https://addons.mozilla.org/en-US/firefox/addon/just-read-ext/reviews/' : 'https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod/reviews';
 
     const notification = {
@@ -1198,12 +1199,19 @@ function addReviewNotifier(roundedNumViews, advertisePremium) {
         secondaryText: "Maybe later",
     };
 
-    if(advertisePremium) {
-        notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='${reviewURL}' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
-        notification.url = "https://justread.link/#get-Just-Read";
-        notification.primaryText = "Learn more";
+    if(!tenK) {
+        if(advertisePremium) {
+            notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='${reviewURL}' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
+            notification.url = "https://justread.link/#get-Just-Read";
+            notification.primaryText = "Learn more";
+        } else {
+            notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='${reviewURL}' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
+        }
     } else {
-        notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='${reviewURL}' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
+        const mailtoUrl = "mailto:hello@zachsaucier.com?subject=10k%20Just%20Read%20opens";
+        notification.textContent = `You've just started Just read for the 10,000th time! I'd love to hear from you about how you use Just Read via email if you're open to it. Please reach out to <a href='${mailtoUrl}'>hello@zachsaucier.com</a>`;
+        notification.primaryText = "Open email";
+        notification.url = mailtoUrl;
     }
 
     simpleArticleIframe.body.appendChild(createNotification(notification));
@@ -2896,6 +2904,13 @@ function createSimplifiedOverlay() {
             }
         }
 
+        if((!hasBeenAskedForReview10000 && hasBeenAskedForReview1000)
+        && jrOpenCount > 10000) {
+            const roundedNumViews = 100 * Math.floor( jrOpenCount / 100);
+            chrome.storage.sync.set({'jrHasBeenAskedForReview10000': true});
+            addReviewNotifier(roundedNumViews, null, true);
+        }
+
         // Add MathJax support
         // TODO add for Chrome??
         // Commented out because Firefox says "Add-ons must be self-contained and not load remote code for execution"
@@ -3099,6 +3114,9 @@ function continueLoading() {
     }
     if(typeof chromeStorage['jrHasBeenAskedForReview1000'] !== "undefined") {
         hasBeenAskedForReview1000 = true;
+    }
+    if(typeof chromeStorage['jrHasBeenAskedForReview10000'] !== "undefined") {
+        hasBeenAskedForReview10000 = true;
     }
 
     // Get current theme
