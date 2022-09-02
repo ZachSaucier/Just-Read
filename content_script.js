@@ -2781,7 +2781,7 @@ function createSimplifiedOverlay() {
         const potentialNewMatches = [...document.querySelectorAll('a[href]')];
 
         potentialNewMatches.some(match => {
-            const text = match.innerText.replace(/\s/g,'').toUpperCase();
+            const text = match.innerText?.replace(/\s/g,'').toUpperCase();
             if(text === 'NEXTCHAPTER'
             || text === 'NEXT') {
                 match.className = 'jrNextChapter';
