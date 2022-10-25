@@ -265,6 +265,20 @@ chrome.contextMenus.create({
     }
 });
 
+// Create an entry to allow user to force-disable Just Read on current page
+chrome.contextMenus.create({
+    title: "Force-disable Just Read on this page",
+    contexts:["page"],
+    onclick: forceDisableJustRead
+})
+function forceDisableJustRead(info, tab)
+{
+    url = new URL(info.pageUrl);
+    url.searchParams.delete("jr");
+    chrome.tabs.update(tab.id, {"url": url.toString()});
+    //chrome.tabs.reload(tab.id);  // looks like update reloads page
+}
+
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
     if(preventInstance[tabId]) return;
 
