@@ -8,9 +8,15 @@ let hasBeenAskedForReview100 = false;
 let hasBeenAskedForReview1000 = false;
 let hasBeenAskedForReview10000 = false;
 
+let removeOrigContent;
 let chromeStorage, pageSelectedContainer;
 chrome.storage.sync.get(null, function (result) {
     chromeStorage = result || {};
+
+    // Allow content to be removed if enabled
+    if(chromeStorage['remove-orig-content']) {
+        removeOrigContent = true;
+    }
 
     launch();
 });
@@ -3132,7 +3138,6 @@ function continueLoading() {
     getDomainSelectors();
 }
 
-let removeOrigContent = false;
 function fadeIn() {
     if(simpleArticleIframe.styleSheets.length > 2) {
         simpleArticle.classList.remove("no-trans");
@@ -3230,11 +3235,6 @@ function finishLoading() {
     if(typeof chromeStorage['findbar'] === "undefined"
     || chromeStorage['findbar']) {
         initFindBar();
-    }
-
-    // Allow content to be removed if enabled
-    if(chromeStorage['remove-orig-content']) {
-        removeOrigContent = true;
     }
 }
 
