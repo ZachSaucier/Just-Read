@@ -1,3 +1,4 @@
+// prettier-ignore
 (function () {
 
 const jrDomain = "https://justread.link/";
@@ -14,7 +15,7 @@ chrome.storage.sync.get(null, function (result) {
     chromeStorage = result || {};
 
     // Allow content to be removed if enabled
-    if(chromeStorage['remove-orig-content']) {
+    if(chromeStorage['remove-orig-content'] !== false) {
         removeOrigContent = true;
     }
 
@@ -3246,7 +3247,7 @@ function finishLoading() {
 // Handle the stylesheet syncing
 /////////////////////////////////////
 const stylesheetObj = {},
-      stylesheetVersion = 4.3; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
+      stylesheetVersion = 4.4; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
     // Detect past overlay - don't show another

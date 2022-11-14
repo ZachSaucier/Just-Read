@@ -82,7 +82,7 @@
 .simple-undo {
     width: 40px;
     height: 40px;
-    
+
     border: 0;
     background: none;
     font-size: 0; /* Hide the print text */
@@ -121,7 +121,7 @@
     top: 10px;
     right: 100%;
     padding-right: 10px;
-    
+
     cursor: pointer;
 
     display: none;
@@ -216,33 +216,15 @@
     }
 }
 
-@media print {
-    .simple-control,
-    .simple-bug-reporter,
-    .simple-progress,
-    .simple-find,
-    .pause-scroll,
-    .jr-lightbox,
-    .jr-notifier {
-        display: none !important;
-    }
-
-    .simple-article-container {
-        display: block;
-    }
-
-    *:not(.simple-title *) { overflow: auto !important; }
-
-    @page :first { margin-top: 0; }
-}
-
 
 /* For the element deletion feature */
-.jr-hovered,
-.jr-hovered *:not(.simple-close):not(.simple-print) {
-    cursor: pointer !important;
-    color: black !important;
-    background-color: #ff5050 !important;
+@media screen {
+    .jr-hovered,
+    .jr-hovered *:not(.simple-close):not(.simple-print) {
+        cursor: pointer !important;
+        color: black !important;
+        background-color: #ff5050 !important;
+    }
 }
 
 /* For the GUI theme editor */
@@ -391,7 +373,7 @@
 .jr-strike svg,
 .jr-underline svg,
 .jr-highlight-color svg {
-  margin-bottom: 3px; 
+  margin-bottom: 3px;
 }
 
 .jr-color-picker {
@@ -680,7 +662,7 @@
     -moz-user-select: none;
     user-select: none;
     outline: none;
-    
+
     transform: translateY(-120%);
     transition: transform 0.1s;
 }
@@ -767,8 +749,8 @@
 }
 
 /* Custom scrollbar functionality */
-.hideScrollbar::-webkit-scrollbar { 
-    display: none; 
+.hideScrollbar::-webkit-scrollbar {
+    display: none;
 }
 
 .simple-progress {
@@ -779,7 +761,7 @@
     height: 5px;
     border: none;
     background-color: transparent;
-    
+
     /* Reset the default appearance */
     -webkit-appearance: none;
     appearance: none;
@@ -898,4 +880,24 @@
 }
 .jr-secondary:hover {
     opacity: 1;
+}
+
+@media print {
+    .simple-control,
+    .simple-bug-reporter,
+    .simple-progress,
+    .simple-find,
+    .pause-scroll,
+    .jr-lightbox,
+    .jr-notifier {
+        display: none !important;
+    }
+
+    .simple-article-container {
+        display: block;
+    }
+
+    *:not(.simple-title *) { overflow: auto !important; }
+
+    @page :first { margin-top: 0; }
 }
