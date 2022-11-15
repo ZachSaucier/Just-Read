@@ -3165,14 +3165,10 @@ function onSimpleArticleIframeLoaded(cb) {
 }
 
 function finishLoading() {
+    // Add functionality for back button to close JR
     const url = new URL(window.location);
-    if(url.searchParams.get('jr') !== 'on') {
-        url.searchParams.set('jr', 'on');
-        window.history.pushState({}, '', url);
-
-        // Listen for if back button is clicked
-        window.onpopstate = closeOverlay;
-    }
+    window.history.pushState({}, '', url);
+    window.addEventListener("popstate", closeOverlay);
 
     // Add our required stylesheet for the articlž
     if(!simpleArticleIframe.head.querySelector(".required-styles"))
