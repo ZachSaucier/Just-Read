@@ -3166,8 +3166,10 @@ function onSimpleArticleIframeLoaded(cb) {
 
 function finishLoading() {
     // Add functionality for back button to close JR
-    const url = new URL(window.location);
-    window.history.pushState({}, '', url);
+    if(document.referrer !== window.location.href) {
+        const url = new URL(window.location);
+        window.history.pushState({}, '', url);
+    }
     window.addEventListener("popstate", closeOverlay);
 
     // Add our required stylesheet for the articlž
