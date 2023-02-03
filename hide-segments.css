@@ -8,6 +8,7 @@
 .content-container [class $= "-ad"],
 .content-container [class $= "_ad"],
 .content-container [class ~= "ad"],
+.content-container [class *= "advertisement"],
 
 .content-container [class *= "navigation"],
 .content-container [class *= "nav"],
@@ -20,6 +21,7 @@
 .content-container .hidden,
 
 .content-container [class *= "popup"],
+.content-container [class *= "overlay"],
 
 .content-container [class *= "share"],
 .content-container [class *= "sharing"],
@@ -150,6 +152,7 @@
 .content-container svg[class *= "email"],
 .content-container [class *= "email"] svg,
 .content-container svg[id *= "email"],
+.content-container svg[class *= "maximize"],
 .content-container [id *= "email"] svg {
     display: none;
 }
