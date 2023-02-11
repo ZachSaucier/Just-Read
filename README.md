@@ -73,7 +73,7 @@ You can select exactly the text you want to read if the built in method doesn't 
 
 ### On a mobile device
 
-You must first install a mobile browser that supports extensions such as [Firefox](https://www.mozilla.org/en-US/firefox/mobile/) (iOS or Android), [Dolphin](https://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). Then install Just Read to that browser by visiting Just Read's store page.
+You must first install a mobile browser that supports extensions such as [Firefox](https://www.mozilla.org/en-US/firefox/mobile/) (iOS or Android), [Dolphin](https://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). Then install Just Read to that browser by visiting Just Read's [Chrome store page](https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod/) (since currently most major mobile browsers are webkit based).
 
 Once you're on an article that you want to read with Just Read installed on that browser, you need to navigate to their extensions section to run Just Read. In most browsers you need to click the three dots to see this section. Once there, simply click on Just Read.
 
