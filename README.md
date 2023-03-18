@@ -289,7 +289,7 @@ Although this ad only shows occassionally and will eventually stop if you contin
 
 **This is not recommended** because if you do upgrade to Premium the features will remain hidden until the following is removed:
 
-To hide premium features, adding the following to your stylesheet: `.premium-feature { display: none !important; }`
+To hide premium features, adding the following to your stylesheet on the Just Read options page: `.premium-feature { display: none !important; }`
 
 
 </details>
