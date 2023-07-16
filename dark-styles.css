@@ -232,12 +232,3 @@ svg,
   display: inline-block;
   min-width: 2rem;
 }
-
-/* Allow GitHub gists to show */
-.js-code-nav-container.js-code-nav-container.js-code-nav-container {
-  display: block;
-  background: transparent;
-}
-.js-code-nav-container.js-code-nav-container.js-code-nav-container td {
-  border: none;
-}
