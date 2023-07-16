@@ -1,216 +1,217 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
 body {
-    font-family: 'Roboto', BlinkMacSystemFont, sans-serif;
-    background-color: #222233;
-    line-height: 1.6;
-    font-size: 17px;
-    color: #D1D1D1;
-    text-rendering: optimizeLegibility;
+  font-family: "Roboto", BlinkMacSystemFont, sans-serif;
+  background-color: #222233;
+  line-height: 1.6;
+  font-size: 17px;
+  color: #d1d1d1;
+  text-rendering: optimizeLegibility;
 }
 
 @media print {
-    body { color: #333; }
+  body {
+    color: #333;
+  }
 }
 
 h1,
 h2 {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 h1 {
-    font-size: 1.875em;
-    line-height: 1.125;
+  font-size: 1.875em;
+  line-height: 1.125;
 }
 
 h2 {
-    font-size: 1.45em;
-    line-height: 1.2625em;
+  font-size: 1.45em;
+  line-height: 1.2625em;
 }
 
 h3 {
-    font-size: 1.25em;
-    line-height: 1.5;
+  font-size: 1.25em;
+  line-height: 1.5;
 }
 
 hr {
-    height: 1px;
-    background-color: inherit;
-    border: none;
-    width: 100%;
-    margin: 0px;
+  height: 1px;
+  background-color: inherit;
+  border: none;
+  width: 100%;
+  margin: 0px;
 }
 
 a[href] {
-    color: #64BEFA;
+  color: #64befa;
 }
 
 a[href]:hover {
-    color: #2089d0;
+  color: #2089d0;
 }
 
 .simple-container {
-    -webkit-print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
 
 .simple-control,
 .simple-control *,
 .simple-edit * {
-    fill: #D1D1D1;
-    color: #D1D1D1;
-    border-color: #D1D1D1;
+  fill: #d1d1d1;
+  color: #d1d1d1;
+  border-color: #d1d1d1;
 }
 .simple-share-dropdown {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .youtubeContainer {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%;
-    padding-top: 25px;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
 }
 iframe {
-    width: 100%;
-    height: 300px;
+  width: 100%;
+  height: 300px;
 }
-iframe[src *= "youtube.com/embed/"] {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+iframe[src*="youtube.com/embed/"] {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 video,
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 li {
-    line-height: 1.5em;
-    margin-bottom: 5px;
+  line-height: 1.5em;
+  margin-bottom: 5px;
 }
 
 td {
-    border: 1px solid black;
-    padding: 3px 7px;
+  border: 1px solid black;
+  padding: 3px 7px;
 }
 
 pre {
-    color: #1f1f1f;
-    padding: 10px;
-    overflow: auto;
+  color: #1f1f1f;
+  padding: 10px;
+  overflow: auto;
 }
 pre,
 code {
-    color: #1f1f1f;
-    background-color: #E0E0E0;
+  color: #1f1f1f;
+  background-color: #e0e0e0;
 }
 
 blockquote {
-    border-left: 4px solid;
-    margin-left: 0;
-    padding: 1px 7% 1px 7%;
-    margin: 0em 0;
-    font-size: 1em;
-    line-height: 1.4;
+  border-left: 4px solid;
+  margin-left: 0;
+  padding: 1px 7% 1px 7%;
+  margin: 0em 0;
+  font-size: 1em;
+  line-height: 1.4;
 }
 blockquote > *:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 blockquote > *:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 figure {
-    margin: 0 0 10px;
+  margin: 0 0 10px;
 }
- figcaption {
-    font-size: 0.9em;
-    opacity: 0.7;
-    border: 1px solid #eee;
-    padding: 17px 17px 12px;
+figcaption {
+  font-size: 0.9em;
+  opacity: 0.7;
+  border: 1px solid #eee;
+  padding: 17px 17px 12px;
 }
 
 table {
-    background: #004b7a;
-    margin: 10px auto;
-    border: none;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, .75);
-    border-spacing: 0;
-    font: inherit;
-    text-align: center;
+  background: #004b7a;
+  margin: 10px auto;
+  border: none;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
+  border-spacing: 0;
+  font: inherit;
 }
 table tr td,
 table tr th,
 table thead th {
-    margin: 3px;
-    padding: 5px;
-    color: #ccc;
-    border: 1px solid rgba(255, 255, 255, .25);
-    background: rgba(0, 0, 0, .1);
+  margin: 3px;
+  padding: 5px;
+  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 aside,
-[class *= "sidebar"],
-[id *= "sidebar"] {
-    max-width: 90%;
-    margin: 0 auto;
-    border: 1px solid lightgrey;
-    padding: 5px 15px;
+[class*="sidebar"],
+[id*="sidebar"] {
+  max-width: 90%;
+  margin: 0 auto;
+  border: 1px solid lightgrey;
+  padding: 5px 15px;
 }
 
 .simple-date {
-    display: inline-block;
-    font-size: 18px;
-    padding-right: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-right: 1px solid #d8d8d8;
+  display: inline-block;
+  font-size: 18px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-right: 1px solid #d8d8d8;
 }
 .rtl .simple-date {
-    border-left: 1px solid #d8d8d8;
-    border-right: none;
-    padding-right: 0;
-    padding-left: 15px;
+  border-left: 1px solid #d8d8d8;
+  border-right: none;
+  padding-right: 0;
+  padding-left: 15px;
 }
 
 .simple-author {
-    display: inline-block;
-    font-size: 18px;
-    color: #27AAE1;
-    line-height: 22px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  display: inline-block;
+  font-size: 18px;
+  color: #27aae1;
+  line-height: 22px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .rtl .simple-author {
-    padding-left: 0;
-    padding-right: 10px;
+  padding-left: 0;
+  padding-right: 10px;
 }
 
 .simple-article-container {
-    max-width: 600px;
+  max-width: 600px;
 }
 
 .simple-ext-info {
-    border-top-color: #767676;
+  border-top-color: #767676;
 }
 .simple-bug-reporter a[href] {
-    color: #e9e9e9;
+  color: #e9e9e9;
 }
 .simple-bug-reporter a[href]:hover {
-    color: #fff;
+  color: #fff;
 }
 
 .pause-scroll {
-    color: #D1D1D1;
+  color: #d1d1d1;
 }
 
 .simple-progress::-webkit-progress-value {
-    background-color: #767676;
+  background-color: #767676;
 }
 
 .simple-found,
@@ -218,11 +219,25 @@ aside,
 .jr-highlight-green,
 .jr-highlight-blue,
 .jr-highlight-orange {
-    color: #1d1d1d;
+  color: #1d1d1d;
 }
 
-
 /* Make emojis and icons a reasonable size */
-[class *= "emoji"],
-[class *= "icon"]:not([class *= "no-icon"]) { width: 1em; }
-[class *= "inline"] { display: inline-block; min-width: 2rem; }
+svg,
+[class*="emoji"],
+[class*="icon"]:not([class*="no-icon"]) {
+  width: 1em;
+}
+[class*="inline"] {
+  display: inline-block;
+  min-width: 2rem;
+}
+
+/* Allow GitHub gists to show */
+.js-code-nav-container.js-code-nav-container.js-code-nav-container {
+  display: block;
+  background: transparent;
+}
+.js-code-nav-container.js-code-nav-container.js-code-nav-container td {
+  border: none;
+}
