@@ -284,6 +284,7 @@ function continueLoading() {
   if (typeof stylesheetObj[darkStylesheet] === "undefined") {
     // If the dark theme isn't found, add it
     const xhr = new XMLHttpRequest();
+    xhr.overrideMimeType('text/css');
     xhr.open("GET", chrome.runtime.getURL(darkStylesheet), true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
@@ -368,7 +369,7 @@ function finishLoading() {
 
   stylesheetListItems = document.querySelectorAll(".stylesheets li");
 
-  [].forEach.call(stylesheetListItems, function (item, i) {
+  stylesheetListItems.forEach(function (item, i) {
     if (!item.classList.contains("locked"))
       item.onclick = makeDoubleClick(rename, styleListOnClick);
     // Prevent the locked items from being changed in name
@@ -405,6 +406,7 @@ function getStylesheets() {
       // Not found, so we add our default
       // Open the default CSS file and save it to our object
       const xhr = new XMLHttpRequest();
+      xhr.overrideMimeType('text/css');
       xhr.open("GET", chrome.runtime.getURL(defaultStylesheet), true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {

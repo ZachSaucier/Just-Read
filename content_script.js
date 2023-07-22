@@ -1269,37 +1269,7 @@ function addShareButton() {
   return shareButton;
 }
 
-// Add the summarize button
-function addSummarizeButton() {
-  summarizeBtn = document.createElement("button");
-  summarizeBtn.className = "simple-summarize simple-control";
-  summarizeBtn.title = "Summarize article";
-
-  // Add the icon
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", "0 0 46 36");
-  const lines = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  lines.setAttribute("stroke", "currentColor");
-  lines.setAttribute("stroke-linecap", "round");
-  lines.setAttribute("stroke-width", "4");
-  lines.setAttribute("d", "M11 23h33M11 13h33M11 3h33M11 33h33");
-  svg.appendChild(lines);
-  const rectBase = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "rect"
-  );
-  rectBase.setAttribute("width", "6");
-  rectBase.setAttribute("height", "6");
-  rectBase.setAttribute("y", "0");
-  rectBase.setAttribute("rx", "1");
-  for (let i = 0; i < 4; i++) {
-    const rect = rectBase.cloneNode();
-    rect.setAttribute("y", i * 10);
-    svg.appendChild(rect);
-  }
-  summarizeBtn.appendChild(svg);
-
-  summarizeBtn.addEventListener("click", () => {
+function handleSummarizeClick(modelToTryWith) {
     if (summarizeBtn.disabled) return;
     summarizeBtn.disabled = true;
 
@@ -1332,6 +1302,10 @@ function addSummarizeButton() {
     let { key, model, prompt, temperature, ...rest } = options;
     const content = contentContainer.innerText;
 
+    if (typeof modelToTryWith === "string") {
+        model = modelToTryWith;
+    }
+
     if (typeof key !== "string" || key === "") {
       return console.error("No OpenAI API key was provided");
     }
@@ -1356,6 +1330,14 @@ function addSummarizeButton() {
     ) {
       temperature = 0;
     }
+
+    // Upgrade models if the content is too large
+    if (model === "gpt-3.5-turbo") {
+        model = "gpt-3.5-turbo-16k";
+    } else if (model === "gpt-4") {
+        model = "gpt-4-32k";
+    }
+    window.gptModel = model;
 
     const summary = document.createElement("div");
     summary.className = "simple-summary";
@@ -1396,6 +1378,7 @@ function addSummarizeButton() {
 
         if (chromeStorage["summaryReplace"]) {
           contentContainer.innerHTML = DOMPurify.sanitize(summary);
+          console.log(`Tokens used to create summary: ${tokensUsed}`);
         } else {
           const simpleSummaryContainer =
             contentContainer.querySelector(".simple-summary");
@@ -1406,13 +1389,61 @@ function addSummarizeButton() {
         }
       })
       .catch(function (err) {
-        console.error(`Fetching summary error`, err.message);
+        let message = err.message;
+        if (err.code === "context_length_exceeded") {
+            const numbers = err.message.match(/\d+/g);
+            if (gptModel === "gpt-3.5-turbo") {
+                if (Number(numbers[0]) < 16384) {
+                    return handleSummarizeClick("gpt-3.5-turbo-16k");
+                } else if (Number(numbers[0]) < 32768) {
+                    return handleSummarizeClick("gpt-4-32k");
+                } else {
+                    message = `Sorry, this article is too large for OpenAI to summarize. The request required ${numbers[1]} tokens but the max number of tokens is ${numbers[0]}.`;
+                }
+            }
+        }
+        console.error(`Fetching summary error`, err);
         const simpleSummaryContainer =
           contentContainer.querySelector(".simple-summary");
-        simpleSummaryContainer.innerHTML = `<h3>Error getting summary. See console for details.</h3>`;
+        simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
+            <h3>Error getting summary</h3>
+            <p>${message}</p>
+        `);
         summarizeBtn.disabled = false;
       });
-  });
+}
+
+// Add the summarize button
+function addSummarizeButton() {
+  summarizeBtn = document.createElement("button");
+  summarizeBtn.className = "simple-summarize simple-control";
+  summarizeBtn.title = "Summarize article";
+
+  // Add the icon
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 46 36");
+  const lines = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  lines.setAttribute("stroke", "currentColor");
+  lines.setAttribute("stroke-linecap", "round");
+  lines.setAttribute("stroke-width", "4");
+  lines.setAttribute("d", "M11 23h33M11 13h33M11 3h33M11 33h33");
+  svg.appendChild(lines);
+  const rectBase = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "rect"
+  );
+  rectBase.setAttribute("width", "6");
+  rectBase.setAttribute("height", "6");
+  rectBase.setAttribute("y", "0");
+  rectBase.setAttribute("rx", "1");
+  for (let i = 0; i < 4; i++) {
+    const rect = rectBase.cloneNode();
+    rect.setAttribute("y", i * 10);
+    svg.appendChild(rect);
+  }
+  summarizeBtn.appendChild(svg);
+
+  summarizeBtn.addEventListener("click", handleSummarizeClick);
 
   return summarizeBtn;
 }
