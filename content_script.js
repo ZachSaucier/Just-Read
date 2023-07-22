@@ -1328,31 +1328,33 @@ function addSummarizeButton() {
         contentContainer.querySelector(".simple-summary")
       );
     }
-    options.content = contentContainer.innerText;
 
-    if (typeof options.key !== "string" || options.key === "") {
+    let { model, prompt, temperature, ...rest } = options;
+    const content = contentContainer.innerText;
+
+    if (typeof key !== "string" || key === "") {
       return console.error("No OpenAI API key was provided");
     }
-    if (options.key === "YOUR_OPENAI_API_KEY_GOES_HERE") {
+    if (key === "YOUR_OPENAI_API_KEY_GOES_HERE") {
       return console.error(
         "Default OpenAI API key was provided. Please replace it with your own OpenAI API key from https://platform.openai.com/account/api-keys"
       );
     }
-    if (options.content === "") {
+    if (content === "") {
       return console.error("Missing content to summarize");
     }
-    if (typeof options.model === "undefined" || options.model === "") {
-      options.model = "gpt-3.5-turbo";
+    if (typeof model === "undefined" || model === "") {
+      model = "gpt-3.5-turbo";
     }
-    if (typeof options.prompt === "undefined" || options.prompt === "") {
-      options.prompt =
+    if (typeof prompt === "undefined" || prompt === "") {
+      prompt =
         "Summarize the content you are provided as concisely as possible while retaining the key points.";
     }
     if (
-      typeof options.temperature === "undefined" ||
-      options.temperature === ""
+      typeof temperature === "undefined" ||
+      temperature === ""
     ) {
-      options.temperature = 0;
+      temperature = 0;
     }
 
     const summary = document.createElement("div");
@@ -1363,25 +1365,26 @@ function addSummarizeButton() {
     contentContainer.prepend(summary);
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${options.key}`);
+    myHeaders.append("Authorization", `Bearer ${key}`);
     myHeaders.append("Content-Type", "application/json");
 
     fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: myHeaders,
       body: JSON.stringify({
-        model: options.model,
+        model: model,
         messages: [
           {
             role: "system",
-            content: options.prompt,
+            content: prompt,
           },
           {
             role: "user",
-            content: options.content,
+            content: content,
           },
         ],
-        temperature: options.temperature,
+        temperature: temperature,
+        ...rest,
       }),
     })
       .then((response) => response.json())
