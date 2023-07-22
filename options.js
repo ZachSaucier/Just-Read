@@ -106,6 +106,8 @@ function getDataFromStorage(storage) {
       scrollSpeed.value = storage[key];
     } else if (key === "domainSelectors") {
       domainSelectors.value = JSON.stringify(storage[key], null, 4);
+    } else if (key === "summarizer-options") {
+      summarizerOptions.value = storage[key];
     } else if (key === "currentTheme") {
       currTheme = storage[key];
     } else if (key === "jrSecret") {
@@ -505,6 +507,11 @@ function addEventListeners() {
     chrome.storage.sync.set({ "auto-enable-site-list": domainLine });
   };
 
+  // Update the OpenAI params
+  summarizerOptions.onkeyup = function (e) {
+    chrome.storage.sync.set({ "summarizer-options": summarizerOptions.value });
+  }
+
   // Update the domain-specific selectors list
   domainSelectors.onkeyup = function (e) {
     if (isPremium) {
@@ -742,7 +749,8 @@ const newFileInput = document.getElementById("new-file"),
   useButton = document.getElementById("use"),
   removeButton = document.getElementById("remove"),
   domainList = document.getElementById("domainList"),
-  domainSelectors = document.querySelector(".domainSelectors");
+  domainSelectors = document.querySelector(".domainSelectors"),
+  summarizerOptions = document.getElementById("summarizerOptions");
 
 let stylesheetListItems;
 

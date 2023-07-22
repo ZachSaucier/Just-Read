@@ -58,9 +58,8 @@ a[href]:hover {
 .simple-control,
 .simple-control *,
 .simple-edit * {
-  fill: #d1d1d1;
   color: #d1d1d1;
-  border-color: #d1d1d1;
+  border-color: currentColor;
 }
 .simple-share-dropdown {
   background-color: transparent;
@@ -223,7 +222,7 @@ aside,
 }
 
 /* Make emojis and icons a reasonable size */
-svg,
+.content-container svg,
 [class*="emoji"],
 [class*="icon"]:not([class*="no-icon"]) {
   width: 1em;

@@ -38,7 +38,6 @@
 }
 .simple-ui-container > *:not(.simple-share),
 .simple-share > *:not(.simple-share-dropdown) {
-    -moz-user-select: none;
     user-select: none;
 }
 .rtl .simple-ui-container {
@@ -53,7 +52,7 @@
     padding: 1px 6px;
 
     color: black;
-    fill: black;
+    fill: currentColor;
     opacity: 0.3;
 }
 .simple-control:hover,
@@ -75,11 +74,7 @@
     margin-right: 8px;
 }
 
-.simple-print,
-.simple-edit-theme,
-.simple-delete,
-.simple-share,
-.simple-undo {
+.simple-control:not(.simple-close) {
     width: 40px;
     height: 40px;
 
@@ -92,6 +87,10 @@
 .simple-delete svg {
     width: 100%;
     height: 100%;
+}
+
+.simple-summarize svg {
+    width: 110%;
 }
 
 .simple-share {
@@ -183,6 +182,22 @@
 .simple-bug-reporter a[href]:hover {
     color: #282828;
     opacity: 1;
+}
+
+/* For the summarization feature */
+button:disabled .simple-summary {
+    cursor: not-allowed;
+}
+.simple-summary {
+    border: 1px solid;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+}
+.simple-summary h3 span {
+    display: none;
+}
+.simple-summary h3:hover span {
+    display: inline;
 }
 
 /* LaTeX plain text show on hover */

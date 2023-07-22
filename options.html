@@ -31,11 +31,6 @@
                 </div>
 
                 <a class= "view-other-stylesheets" target="blank" href="https://github.com/ZachSaucier/Just-Read/issues/4">View more themes</a>
-
-                <h4>Auto-run domain list:</h4>
-                <textarea name="domainList" id="domainList"></textarea>
-
-                <div>This list is checked using regex. For more info, see <a href="https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204">this post</a>.</div>
             </div>
 
             <div class="editor-container">
@@ -54,6 +49,21 @@
         <h2 class="upgrade">To access all of Just Read's features, upgrade to Just Read Premium! <a href="https://justread.link/#get-Just-Read" target="_blank">Learn more here</a>.</h2>
 
         <div class="additional-options">
+            <h3>Auto-run domain list</h3>
+            <textarea name="domainList" id="domainList"></textarea>
+            <div>This list is checked using regex. For more info, see <a href="https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204">this post</a>.</div>
+
+            <h3>Summarization info</h3>
+            <div>Just Read can summarize articles for you! For more info, see <a href="https://justread.link/summarizer">this post</a>.</div>
+            <textarea name="summarizerOptions" id="summarizerOptions" style="height: 140px">
+{
+    "key": "YOUR_OPENAI_API_KEY_GOES_HERE",
+    "model": "gpt-3.5-turbo",
+    "prompt": "Summarize the content you are provided as concisely as possible while retaining the key points.",
+    "temperature": 0
+}
+            </textarea>
+
             <h3>Sharing preferences</h3>
             <label class="disabled"><input id="openSharedPage" type="checkbox" checked/> Always automatically open the shared page in a new tab.</label>
             <label class="disabled"><input id="closeOldPage" type="checkbox" /> Always close the original page that Just Read was started on when a shared page is open (Note that this can only be checked if the above option is checked).</label>

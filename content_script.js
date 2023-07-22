@@ -1100,6 +1100,99 @@ function addShareButton() {
     return shareButton;
 }
 
+// Add the summarize button
+function addSummarizeButton() {
+    summarizeBtn = document.createElement("button");
+    summarizeBtn.className = "simple-summarize simple-control";
+    summarizeBtn.title = "Summarize article";
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 48 36");
+    svg.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="46" height="36" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-width="4" d="M11 23h33M11 13h33M11 3h33M11 33h33"/><path stroke="currentColor" d="M0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1Z"/><rect width="6" height="6" y="10" rx="1"/><rect width="6" height="6" y="20" rx="1"/><rect width="6" height="6" y="30" rx="1"/></svg>';
+    summarizeBtn.appendChild(svg);
+
+    summarizeBtn.addEventListener('click', () => {
+        if (summarizeBtn.disabled) return;
+        summarizeBtn.disabled = true;
+
+        const options = JSON.parse(chromeStorage["summarizer-options"]);
+
+        if (typeof options !== "object") {
+            return console.error("Summarizer options are invalid");
+        }
+
+        const contentContainer = simpleArticleIframe.querySelector('.content-container');
+        if (contentContainer.querySelector(".simple-summary")) {
+            contentContainer.removeChild(contentContainer.querySelector(".simple-summary"));
+        }
+        options.content = contentContainer.innerText;
+
+        if (typeof options.key !== "string" || options.key === "") {
+            return console.error("No OpenAI API key was provided");
+        }
+        if (options.key === "YOUR_OPENAI_API_KEY_GOES_HERE") {
+            return console.error("Default OpenAI API key was provided. Please replace it with your own OpenAI API key from https://platform.openai.com/account/api-keys");
+        }
+        if (options.content === "") {
+            return console.error("Missing content to summarize");
+        }
+        if (typeof options.model === "undefined" || options.model === "") {
+            options.model = "gpt-3.5-turbo";
+        }
+        if (typeof options.prompt === "undefined" || options.prompt === "") {
+            options.prompt = "Summarize the content you are provided as concisely as possible while retaining the key points.";
+        }
+        if (typeof options.temperature === "undefined" || options.temperature === "") {
+            options.temperature = 0;
+        }
+
+        contentContainer.innerHTML = `<div class="simple-summary"><h3>Summary loading</h3></div>` + contentContainer.innerHTML;
+
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${options.key}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: myHeaders,
+            body: JSON.stringify({
+                "model": options.model,
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": options.prompt
+                    },
+                    {
+                        "role": "user",
+                        "content": options.content
+                    }
+                ],
+                "temperature": options.temperature,
+            })
+        })
+        .then((response) => response.json())
+        .then(function(json) {
+            if (json.error) throw json.error;
+
+            const summary = json.choices[0].message.content;
+            const tokensUsed = json.usage.total_tokens;
+            const simpleSummaryContainer = contentContainer.querySelector(".simple-summary");
+            simpleSummaryContainer.innerHTML = `
+                <h3>Summary<span>: ${tokensUsed} tokens used</span></h3>
+                <p>${summary}</p>
+            `;
+        })
+        .catch(function(err) {
+            console.error(`Fetching summary error`, err.message);
+            const simpleSummaryContainer = contentContainer.querySelector(".simple-summary");
+            simpleSummaryContainer.innerHTML = `<h3>Error getting summary. See console for details.</h3>`;
+            summarizeBtn.disabled = false;
+        });
+    });
+
+    return summarizeBtn;
+}
+
 // Add the undo button
 function addUndoButton() {
     undoBtn = document.createElement("button");
@@ -2548,7 +2641,8 @@ let compactComments,
     comments,
     addCommentBtn,
     shareDropdown,
-    undoBtn;
+    undoBtn,
+    summarizeBtn;
 
 let titleSelector,
     authorSelector,
@@ -2826,6 +2920,9 @@ function createSimplifiedOverlay() {
 
     // Add the share button
     uiContainer.appendChild(addShareButton());
+
+    // Add the summarize button
+    uiContainer.appendChild(addSummarizeButton());
 
     // Add the deletion mode button
     let delModeBtn = addDelModeButton();

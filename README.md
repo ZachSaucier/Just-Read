@@ -1,7 +1,9 @@
 Just Read
 =========
 
-Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content. Learn more about it by [watching this video](https://www.youtube.com/watch?v=mKMUXEg873Q).
+Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content. You can also get it to summarize the article by connecting an OpenAI API key (for more detail, [see here](https://justread.link/summarizer)).
+
+Learn more about Just Read by [watching this video](https://www.youtube.com/watch?v=mKMUXEg873Q).
 
 Premium features can be enabled by [purchasing Just Read Premium](https://justread.link/#getJustRead).
 
@@ -26,7 +28,7 @@ ___
 
 ### Privacy statement
 
-Just Read collects zero data from users by default. If you sign up for an account with Just Read, only your email address is stored. Just Read sends analytics to no one else. Any data that Just Read stores is safely secured and private. 
+Just Read collects zero data from users by default. If you sign up for an account with Just Read, only your email address is stored. Just Read sends analytics to no one else. Any data that Just Read stores is safely secured and private.
 
 ___
 
@@ -38,12 +40,12 @@ ___
 
 ## FAQ
 
-> **Note:** Any time you change something in Just Read's options page, you must restart any Just Read instances for the change to work.  
+> **Note:** Any time you change something in Just Read's options page, you must restart any Just Read instances for the change to work.
 
 ### Using Just Read features
 <details id="start_JR" open>
   <summary>How can I start Just Read?</summary>
-  
+
   ### On a desktop or laptop
 
 Start Just Read by using Just Read's auto-selection or user-selection mode.
@@ -93,6 +95,13 @@ Note that the [justread.link](https://justread.link) version of a page *cannot b
 
 </details>
 
+<details id="share">
+  <summary>How can I get the summary button working?</summary>
+
+Please see [this post](https://justread.link/summarizer) for more info.
+
+</details>
+
 <details id="autorun">
   <summary>How can I auto-run Just Read on specific websites?</summary>
 
@@ -128,7 +137,7 @@ If you don't see Just Read in the drop down list, make sure that <a href="https:
 
 > **Note that this is a Premium-only feature.**
 
-You can view and delete pages that you shared previously by going to your Just Read dashboard: https://justread.link/dashboard. If you are signed into a Just Read account and that account has Premium, you will see a table of all of your entries. 
+You can view and delete pages that you shared previously by going to your Just Read dashboard: https://justread.link/dashboard. If you are signed into a Just Read account and that account has Premium, you will see a table of all of your entries.
 
 Note that you can click any column heading to sort the entries by that column's values.
 
@@ -176,7 +185,7 @@ Currently it is only possible to send files to Google Drive in PDF form. The eas
 
 > **Note that this is a Premium-only feature.**
 
-You can do this by going to "Options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.  
+You can do this by going to "Options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.
 
 
 </details>
@@ -330,12 +339,12 @@ Once there, you can follow [these instructions](https://graphicdesign.stackexcha
 
 If you're looking to use other themes that people have built and use, you can check out [this page](https://github.com/ZachSaucier/Just-Read/issues/4). You can also share your own and "vote" using "Add your reaction"!
 
-To install and use one of these themes, 
+To install and use one of these themes,
 
-1. Go to the Just Read options page. In Chrome you can simply right click the Just Read icon and then click "Options". 
-2. Once on the options page, click in the input box that says "New theme" and enter a name for the theme. Then click the "+" button. 
+1. Go to the Just Read options page. In Chrome you can simply right click the Just Read icon and then click "Options".
+2. Once on the options page, click in the input box that says "New theme" and enter a name for the theme. Then click the "+" button.
 3. Click the "Use as current theme" button to make it your active theme.
-4. Copy and paste the CSS from your chosen theme into the CSS (code) section and then click "Save style changes". 
+4. Copy and paste the CSS from your chosen theme into the CSS (code) section and then click "Save style changes".
 
 
 </details>
@@ -372,7 +381,7 @@ ___
 
 > **Note that this is a Premium-only feature.**
 
-Don't panic! Most likely all you need to do is go to <a href="https://justread.link/" target="_blank">the Just Read website</a> and make sure you're logged into your account. Signing in will tell the Just Read extension that you have Premium and if you start your reader view again the Premium features should work. 
+Don't panic! Most likely all you need to do is go to <a href="https://justread.link/" target="_blank">the Just Read website</a> and make sure you're logged into your account. Signing in will tell the Just Read extension that you have Premium and if you start your reader view again the Premium features should work.
 
 If they still don't work, please <a href="mailto:support@justread.link">contact support</a> and we'll help you as soon as we're able to.
 
@@ -426,7 +435,7 @@ Currently Just Read Premium has a shared article limit of 100 articles. This is 
 <details id="error">
   <summary>How do I report an error?</summary>
 
-For most issues [creating a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) is best. Please make sure to [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted. 
+For most issues [creating a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) is best. Please make sure to [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted.
 
 For *account related issues*, contact <a href="mailto:support@justread.link">support@justread.link</a>.
 
