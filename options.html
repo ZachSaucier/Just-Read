@@ -1,96 +1,184 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Options - Just Read</title>
-    <meta name="author" content="Zach Saucier">
-    <link href="/icons/icon16.png" rel="icon">
-    <link href="options.css" rel="stylesheet"/>
-</head>
-<body>
+    <meta name="author" content="Zach Saucier" />
+    <link href="/icons/icon16.png" rel="icon" />
+    <link href="options.css" rel="stylesheet" />
+  </head>
+  <body>
     <h1>Configure <i>Just Read</i></h1>
 
-    <p class="options-subtitle">Or go to <a href="https://justread.link/dashboard">your dashboard</a> to view your saved pages. Thanks for supporting Just Read!</p>
+    <p class="options-subtitle">
+      Or go to <a href="https://justread.link/dashboard">your dashboard</a> to
+      view your saved pages. Thanks for supporting Just Read!
+    </p>
 
     <div class="content-section">
-        <div>
-            <div class="theme-section">
-                <div class="stylesheet-list-container">
-                    <input type="text" id="new-file" placeholder="New theme..."/>
-                    <button id="add">+</button>
+      <div>
+        <div class="theme-section">
+          <div class="stylesheet-list-container">
+            <input type="text" id="new-file" placeholder="New theme name..." />
+            <button id="add">+</button>
 
-                    <div class="controls-container">
-                        <button id="use">Use as current theme</button>
-                        <button id="remove">Remove theme</button>
-                    </div>
-
-                    <ul class="stylesheets">
-                        <!-- This is populated by our JS -->
-                    </ul>
-                </div>
-
-                <a class= "view-other-stylesheets" target="blank" href="https://github.com/ZachSaucier/Just-Read/issues/4">View more themes</a>
+            <div class="controls-container">
+              <button id="use">Use as current theme</button>
+              <button id="remove">Remove theme</button>
             </div>
 
-            <div class="editor-container">
-                <div class="editor">
-                    <div id="css-editor"></div>
-                </div>
+            <ul class="stylesheets">
+              <!-- This is populated by our JS -->
+            </ul>
+          </div>
 
-                <div class="controls-container">
-                    <button id="save">Save style changes</button>
-                </div>
-
-                <label>Use hide-segments.css <input id="hideSegments" type="checkbox" checked /></label>
-            </div>
+          <a
+            class="view-other-stylesheets"
+            target="blank"
+            href="https://github.com/ZachSaucier/Just-Read/issues/4"
+            >View more themes</a
+          >
         </div>
 
-        <h2 class="upgrade">To access all of Just Read's features, upgrade to Just Read Premium! <a href="https://justread.link/#get-Just-Read" target="_blank">Learn more here</a>.</h2>
+        <div class="editor-container">
+          <div class="editor">
+            <div id="css-editor"></div>
+          </div>
 
-        <div class="additional-options">
-            <h3>Auto-run domain list</h3>
-            <textarea name="domainList" id="domainList"></textarea>
-            <div>This list is checked using regex. For more info, see <a href="https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204">this post</a>.</div>
+          <div class="controls-container">
+            <button id="save">Save style changes</button>
+          </div>
 
-            <h3>Summarization info</h3>
-            <div>Just Read can summarize articles for you! For more info, see <a href="https://justread.link/summarizer">this post</a>.</div>
-            <textarea name="summarizerOptions" id="summarizerOptions" style="height: 140px">
+          <label
+            >Use hide-segments.css
+            <input id="hideSegments" type="checkbox" checked
+          /></label>
+        </div>
+      </div>
+
+      <h2 class="upgrade">
+        To access all of Just Read's features, upgrade to Just Read Premium!
+        <a href="https://justread.link/#get-Just-Read" target="_blank"
+          >Learn more here</a
+        >.
+      </h2>
+
+      <div class="additional-options">
+        <h3>Auto-run domain list</h3>
+        <textarea name="domainList" id="domainList"></textarea>
+        <div>
+          This list is checked using regex. For more info, see
+          <a
+            href="https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204"
+            >this post</a
+          >.
+        </div>
+
+        <h3>Summarization options</h3>
+        <div>
+          Just Read can summarize articles for you! For more info, see
+          <a href="https://justread.link/summarizer">this post</a>.
+        </div>
+        <textarea
+          name="summarizerOptions"
+          id="summarizerOptions"
+          style="height: 140px"
+        >
 {
     "key": "YOUR_OPENAI_API_KEY_GOES_HERE",
     "model": "gpt-3.5-turbo",
     "prompt": "Summarize the content you are provided as concisely as possible while retaining the key points.",
     "temperature": 0
 }
-            </textarea>
+            </textarea
+        >
 
-            <h3>Sharing preferences</h3>
-            <label class="disabled"><input id="openSharedPage" type="checkbox" checked/> Always automatically open the shared page in a new tab.</label>
-            <label class="disabled"><input id="closeOldPage" type="checkbox" /> Always close the original page that Just Read was started on when a shared page is open (Note that this can only be checked if the above option is checked).</label>
+        <h3>Sharing preferences</h3>
+        <label class="disabled"
+          ><input id="openSharedPage" type="checkbox" checked /> Always
+          automatically open the shared page in a new tab.</label
+        >
+        <label class="disabled"
+          ><input id="closeOldPage" type="checkbox" /> Always close the original
+          page that Just Read was started on when a shared page is open (Note
+          that this can only be checked if the above option is checked).</label
+        >
 
-            <h3>Context menu entries</h3>
-            <label><input id="pageCM" type="checkbox" checked /> Enable page context menu entry.</label>
-            <label><input id="linkCM" type="checkbox" checked /> Enable link context menu entry.</label>
-            <label><input id="autorunCM" type="checkbox" checked /> Enable auto-run context menu entry.</label>
+        <h3>Context menu entries</h3>
+        <label
+          ><input id="pageCM" type="checkbox" checked /> Enable page context
+          menu entry.</label
+        >
+        <label
+          ><input id="linkCM" type="checkbox" checked /> Enable link context
+          menu entry.</label
+        >
+        <label
+          ><input id="autorunCM" type="checkbox" checked /> Enable auto-run
+          context menu entry.</label
+        >
 
-            <h3>Additional preferences</h3>
-            <label><input id="removeOrig" type="checkbox" /> Remove the original page's content once the Just Read view has opened (better performance but loses original page load if JR view closed).</label>
-            <label><input id="backup" type="checkbox" /> Backup the most recent Just Read page (in case of accidental closure).</label>
-            <label><input id="leavePres" type="checkbox" /> Never reformat pre tags.</label>
-            <label><input id="addTimeEstimate" type="checkbox" /> Always add the estimated time to read the article.</label>
-            <label><input id="addOrigURL" type="checkbox" /> Always add the original URL to the Just Read view.</label>
-            <label><input id="alwaysAddAR" type="checkbox" /> Always add current site to Just Read's auto-run list when Just Read is started on a page.</label>
+        <h3>Additional preferences</h3>
+        <label
+          ><input id="removeOrig" type="checkbox" /> Remove the original page's
+          content once the Just Read view has opened (better performance but
+          loses original page load if JR view closed).</label
+        >
+        <label
+          ><input id="backup" type="checkbox" /> Backup the most recent Just
+          Read page (in case of accidental closure).</label
+        >
+        <label
+          ><input id="leavePres" type="checkbox" /> Never reformat pre
+          tags.</label
+        >
+        <label
+          ><input id="addTimeEstimate" type="checkbox" /> Always add the
+          estimated time to read the article.</label
+        >
+        <label
+          ><input id="addOrigURL" type="checkbox" /> Always add the original URL
+          to the Just Read view.</label
+        >
+        <label
+          ><input id="alwaysAddAR" type="checkbox" /> Always add current site to
+          Just Read's auto-run list when Just Read is started on a page.</label
+        >
 
-            <h3>Additional features</h3>
-            <label><input id="findbar" type="checkbox" checked/> Use Just Read's search functionality instead of the browser's default.</label>
-            <label class="disabled"><input id="scrollbar" type="checkbox"/> Use a custom scrollbar instead of the browser's default.</label>
-            <label class="disabled"><input id="grdTxt" type="checkbox" /> Use JR's gradient text functionality to increase readability (will be forced over theme's colors).</label>
-            <div class="sub-entry disabled">Gradient text colors to use: <input type="text" name="gradientColors" value="black, blue, black, red"></div>
-            <label class="disabled"><input id="autoscroll" type="checkbox" /> Use JR's auto-scroll functionality.</label>
-            <div class="sub-entry disabled">Auto-scroll speed (closer to 0 = slower): <input type="number" step="0.1" name="scrollSpeed" value="0.5"></div>
+        <h3>Additional features</h3>
+        <label
+          ><input id="findbar" type="checkbox" checked /> Use Just Read's search
+          functionality instead of the browser's default.</label
+        >
+        <label class="disabled"
+          ><input id="scrollbar" type="checkbox" /> Use a custom scrollbar
+          instead of the browser's default.</label
+        >
+        <label class="disabled"
+          ><input id="grdTxt" type="checkbox" /> Use JR's gradient text
+          functionality to increase readability (will be forced over theme's
+          colors).</label
+        >
+        <div class="sub-entry disabled">
+          Gradient text colors to use:
+          <input
+            type="text"
+            name="gradientColors"
+            value="black, blue, black, red"
+          />
+        </div>
+        <label class="disabled"
+          ><input id="autoscroll" type="checkbox" /> Use JR's auto-scroll
+          functionality.</label
+        >
+        <div class="sub-entry disabled">
+          Auto-scroll speed (closer to 0 = slower):
+          <input type="number" step="0.1" name="scrollSpeed" value="0.5" />
+        </div>
 
-            <h3>Domain-specific selectors</h3>
-            <textarea class="domainSelectors disabled">
+        <h3>Domain-specific selectors</h3>
+        <textarea class="domainSelectors disabled">
 [
     {
         "domainPattern": "example.com/.+",
@@ -101,11 +189,12 @@
         "headerImageSelector": "img#headerSelector",
         "selectorsToDelete": [".deleteSel", ".anotherDeleteSel"]
     }
-]</textarea>
-        </div>
+]</textarea
+        >
+      </div>
     </div>
 
     <script src="external-libraries/ace/ace.js"></script>
     <script src="options.js"></script>
-</body>
+  </body>
 </html>
