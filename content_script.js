@@ -1329,7 +1329,7 @@ function addSummarizeButton() {
       );
     }
 
-    let { model, prompt, temperature, ...rest } = options;
+    let { key, model, prompt, temperature, ...rest } = options;
     const content = contentContainer.innerText;
 
     if (typeof key !== "string" || key === "") {
@@ -1393,12 +1393,17 @@ function addSummarizeButton() {
 
         const summary = json.choices[0].message.content;
         const tokensUsed = json.usage.total_tokens;
-        const simpleSummaryContainer =
-          contentContainer.querySelector(".simple-summary");
-        simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
-                <h3>Summary<span>: ${tokensUsed} tokens used</span></h3>
-                <p>${summary}</p>
-            `);
+
+        if (chromeStorage["summaryReplace"]) {
+          contentContainer.innerHTML = DOMPurify.sanitize(summary);
+        } else {
+          const simpleSummaryContainer =
+            contentContainer.querySelector(".simple-summary");
+          simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
+              <h3>Summary<span>: ${tokensUsed} tokens used</span></h3>
+              <p>${summary}</p>
+          `);
+        }
       })
       .catch(function (err) {
         console.error(`Fetching summary error`, err.message);

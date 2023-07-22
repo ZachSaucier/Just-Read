@@ -73,6 +73,8 @@ function getDataFromStorage(storage) {
       setDomains(storage[key]);
     } else if (key === "hideSegments") {
       hideSegments.checked = storage[key];
+    } else if (key === "summaryReplace") {
+      summaryReplace.checked = storage[key];
     } else if (key === "openSharedPage") {
       openSharedPage.checked = storage[key];
     } else if (key === "closeOldPage") {
@@ -628,6 +630,10 @@ function addEventListeners() {
     chrome.storage.sync.set({ hideSegments: this.checked });
   };
 
+  summaryReplace.onchange = function () {
+    chrome.storage.sync.set({ summaryReplace: this.checked });
+  };
+
   openSharedPage.onchange = function () {
     if (isPremium) {
       chrome.storage.sync.set({ openSharedPage: this.checked });
@@ -753,6 +759,7 @@ const newFileInput = document.getElementById("new-file"),
 let stylesheetListItems;
 
 const hideSegments = document.getElementById("hideSegments"),
+  summaryReplace = document.getElementById("summaryReplace"),
   openSharedPage = document.getElementById("openSharedPage"),
   closeOldPage = document.getElementById("closeOldPage"),
   pageCM = document.getElementById("pageCM"),
