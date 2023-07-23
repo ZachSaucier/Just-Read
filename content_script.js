@@ -1392,14 +1392,21 @@ function handleSummarizeClick(modelToTryWith) {
         let message = err.message;
         if (err.code === "context_length_exceeded") {
             const numbers = err.message.match(/\d+/g);
+            const tooLargeMessage = `Sorry, this article is too large for OpenAI to summarize. The request required ${numbers[1]} tokens but the max number of tokens is ${numbers[0]}.`;
             if (gptModel === "gpt-3.5-turbo") {
                 if (Number(numbers[0]) < 16384) {
                     return handleSummarizeClick("gpt-3.5-turbo-16k");
                 } else if (Number(numbers[0]) < 32768) {
                     return handleSummarizeClick("gpt-4-32k");
                 } else {
-                    message = `Sorry, this article is too large for OpenAI to summarize. The request required ${numbers[1]} tokens but the max number of tokens is ${numbers[0]}.`;
+                    message = tooLargeMessage;
                 }
+            } else if (gptModel === "gpt-4" || gptModel === "gpt-3.5-turbo-16k") {
+              if (Number(numbers[0]) < 32768) {
+                return handleSummarizeClick("gpt-4-32k");
+              } else {
+                  message = tooLargeMessage;
+              }
             }
         }
         console.error(`Fetching summary error`, err);
