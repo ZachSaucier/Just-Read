@@ -32,8 +32,8 @@
   },
 
   "background": {
-    // "service_worker": "background.js"
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
+    // "scripts": ["background.js"]
   },
 
   "options_ui": {
@@ -74,5 +74,4 @@
       "id": "{80594c36-2567-49d2-8eb8-fde2e9f50f84}"
     }
   }
-
 }
