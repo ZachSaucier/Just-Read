@@ -8,6 +8,7 @@ let jrOpenCount;
 let hasBeenAskedForReview100 = false;
 let hasBeenAskedForReview1000 = false;
 let hasBeenAskedForReview10000 = false;
+let hasBeenNotifiedOfSummarizer = false;
 
 let removeOrigContent;
 let chromeStorage, pageSelectedContainer;
@@ -322,7 +323,8 @@ function popStack() {
 function updateSavedVersion() {
   if (chromeStorage["backup"]) {
     const data = {
-      savedVersion: DOMPurify.sanitize(
+      url: window.location.href,
+      content: DOMPurify.sanitize(
         simpleArticleIframe.querySelector(".content-container").innerHTML
       ),
     };
@@ -337,7 +339,8 @@ function updateSavedVersion() {
         simpleArticleIframe.querySelector(".simple-compact-comments").innerHTML
       );
     }
-    chrome.runtime.sendMessage(data);
+
+    chrome.storage.local.set({JRSavedPage: JSON.stringify(data)});
   }
 }
 
@@ -1545,7 +1548,17 @@ function editText(elem) {
   }
 }
 
-function addPremiumNofifier() {
+function addSummaryNotifier() {
+  const notification = {
+    textContent: "Did you know that Just Read can summarize articles for you?",
+    url: "https://justread.link/summarizer",
+    primaryText: "Learn more",
+    secondaryText: "Not interested",
+  };
+  simpleArticleIframe.body.appendChild(createNotification(notification));
+}
+
+function addPremiumNotifier() {
   const notification = {
     textContent:
       "Have you considered <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? With Premium you can annotate your articles, share them with others, and more!",
@@ -3259,7 +3272,22 @@ function getDomainSelectors() {
   }
 
   if (chromeStorage["backup"]) {
-    chrome.runtime.sendMessage({ hasSavedVersion: true }, function (response) {
+    chrome.storage.local.get("JRSavedPage", (data) => {
+      const lastSavedPage = JSON.parse(data.JRSavedPage);
+      let response;
+
+      if (lastSavedPage && window.location.href === lastSavedPage.url) {
+        if (lastSavedPage.savedComments) {
+          response = {
+            content: lastSavedPage.content,
+            savedComments: lastSavedPage.savedComments,
+            savedCompactComments: lastSavedPage.savedCompactComments,
+          };
+        } else {
+          response = { content: lastSavedPage.content };
+        }
+      }
+
       if (response && response.content) {
         let tempElem = document.createElement("div");
         tempElem.innerHTML = DOMPurify.sanitize(response.content);
@@ -3583,13 +3611,22 @@ function createSimplifiedOverlay() {
         Math.floor(wordCount / 200) + " minute read";
     }
 
+    // Add a notification of the summarizer if necessary
+    if (
+      jrOpenCount > 15 &&
+      !hasBeenNotifiedOfSummarizer
+    ) {
+      addSummaryNotifier();
+      chrome.storage.sync.set({ jrHasBeenNotifiedOfSummarizer: true });
+    }
+
     // Add a notification of premium if necessary
     if (
       !isPremium &&
       (jrOpenCount === 5 || jrOpenCount % 33 === 0) &&
       jrOpenCount < 67
     ) {
-      addPremiumNofifier();
+      addPremiumNotifier();
     }
 
     // Ask for a review and such]
@@ -3830,6 +3867,10 @@ let theme, styleElem;
 function continueLoading() {
   // Create a style tag and place our styles in there from localStorage
   styleElem = document.createElement("style");
+
+  if (typeof chromeStorage["jrHasBeenNotifiedOfSummarizer"] !== "undefined") {
+    hasBeenNotifiedOfSummarizer = true;
+  }
 
   // Get how many times the user has opened Just Read
   if (typeof chromeStorage["jrOpenCount"] === "undefined") {

@@ -219,29 +219,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }, 100);
       }
     );
-  } else if (request.savedVersion) {
-    const data = {
-      content: request.savedVersion,
-      url: sender.url,
-    };
-    if (request.savedComments) {
-      data.savedComments = request.savedComments;
-      data.savedCompactComments = request.savedCompactComments;
-    }
-    localStorage.setItem("JRSavedPage", JSON.stringify(data));
-  } else if (request.hasSavedVersion) {
-    const lastSavedPage = JSON.parse(localStorage.getItem("JRSavedPage"));
-    if (lastSavedPage && sender.url === lastSavedPage.url) {
-      if (lastSavedPage.savedComments) {
-        sendResponse({
-          content: lastSavedPage.content,
-          savedComments: lastSavedPage.savedComments,
-          savedCompactComments: lastSavedPage.savedCompactComments,
-        });
-      } else {
-        sendResponse({ content: lastSavedPage.content });
-      }
-    }
   } else if (request.lastClosed) {
     lastClosed = request.lastClosed;
   }
