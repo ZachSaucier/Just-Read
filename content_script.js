@@ -3273,6 +3273,7 @@ function getDomainSelectors() {
 
   if (chromeStorage["backup"]) {
     chrome.storage.local.get("JRSavedPage", (data) => {
+      if (typeof data.JRSavedPage === "undefined") return;
       const lastSavedPage = JSON.parse(data.JRSavedPage);
       let response;
 
