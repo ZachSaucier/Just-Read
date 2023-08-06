@@ -19,6 +19,7 @@ chrome.storage.sync.get(null, function (result) {
   if (chromeStorage["remove-orig-content"] !== false) {
     removeOrigContent = true;
   }
+  useText = chromeStorage["useText"];
 
   launch();
 });
@@ -93,6 +94,7 @@ function stylesheetToString(s) {
 // User-selected text functionality
 let last, userSelected;
 function startSelectElement(doc) {
+
   const mouseFunc = function (e) {
       const elem = e.target;
 
@@ -112,9 +114,9 @@ function startSelectElement(doc) {
     },
     escFunc = function (e) {
       // Listen for the "Esc" key and exit if so
-      if (e.key === "Escape") exitFunc();
+      if (e.key === "Escape") exitFunc(true);
     },
-    exitFunc = function () {
+    exitFunc = function (avoidLaunch) {
       doc.removeEventListener("mouseover", mouseFunc);
       doc.removeEventListener("click", clickFunc);
       doc.removeEventListener("keydown", escFunc);
@@ -128,6 +130,8 @@ function startSelectElement(doc) {
           .parentElement.removeChild(doc.getElementById("tempStyle"));
 
       useText = false;
+
+      if (avoidLaunch) return;
       launch();
     };
 

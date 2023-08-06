@@ -9,9 +9,9 @@ function startJustRead(tab) {
   if (tab) {
     executeScripts(tab.id);
   } else {
-    chrome.tabs.query({ currentWindow: true, active: true }, (tabArray) =>
-      executeScripts(tabArray[0].id)
-    );
+    chrome.tabs.query({ currentWindow: true, active: true }, (tabArray) => {
+      if (tabArray.length) executeScripts(tabArray[0].id);
+  });
   }
 }
 
@@ -55,7 +55,6 @@ function executeScripts(tabId) {
         chrome.action.setBadgeText({ text: "" });
         chrome.storage.sync.set({ useText: false });
         chrome.storage.sync.set({ runOnLoad: false });
-        chrome.storage.sync.set({ textToRead: false });
       }, 1000);
     });
 }
@@ -72,9 +71,8 @@ function createPageCM() {
       title: "View this page using Just Read",
       id: "pageCM",
       contexts: ["page"],
-      onclick: startJustRead,
     },
-    () => chrome.runtime.lastError
+    chrome.runtime.lastError
   );
 }
 function createLinkCM() {
@@ -85,7 +83,7 @@ function createLinkCM() {
       id: "linkCM",
       contexts: ["link"],
     },
-    () => chrome.runtime.lastError
+    chrome.runtime.lastError
   );
 }
 function createAutorunCM() {
@@ -96,7 +94,7 @@ function createAutorunCM() {
       id: "autorunCM",
       contexts: ["page"],
     },
-    () => chrome.runtime.lastError
+    chrome.runtime.lastError
   );
 }
 function addSiteToAutorunList(info, tab) {
@@ -138,7 +136,7 @@ function addSiteToAutorunList(info, tab) {
   });
 }
 
-let pageCMId = (linkCMId = autorunCMId = undefined);
+let pageCMId = linkCMId = autorunCMId = undefined;
 function updateCMs() {
   chrome.storage.sync.get(
     ["enable-pageCM", "enable-linkCM", "enable-autorunCM"],
@@ -153,7 +151,6 @@ function updateCMs() {
             if (typeof pageCMId == "undefined") createPageCM();
           } else {
             if (typeof pageCMId != "undefined") {
-              chrome.contextMenus.remove("pageCM");
               pageCMId = undefined;
             }
           }
@@ -162,7 +159,6 @@ function updateCMs() {
             if (typeof linkCMId == "undefined") createLinkCM();
           } else {
             if (typeof linkCMId != "undefined") {
-              chrome.contextMenus.remove("linkCM");
               linkCMId = undefined;
             }
           }
@@ -171,7 +167,6 @@ function updateCMs() {
             if (typeof autorunCMId == "undefined") createAutorunCM();
           } else {
             if (typeof autorunCMId != "undefined") {
-              chrome.contextMenus.remove("autorunCM");
               autorunCMId = undefined;
             }
           }
@@ -189,9 +184,6 @@ function updateCMs() {
 
 // Listen for the extension's click
 chrome.action.onClicked.addListener(startJustRead);
-
-// Add our context menus
-updateCMs();
 
 // Listen for the keyboard shortcut
 chrome.commands.onCommand.addListener(function (command) {
@@ -239,23 +231,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-// Create an entry to allow user to select an element to read from
-chrome.contextMenus.create(
-  {
-    title: "Select content to read",
-    contexts: ["browser_action"],
-    id: "selectContentCM",
-  },
-  () => chrome.runtime.lastError
-);
-
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (info.menuItemId === "selectContentCM") {
     startSelectText();
   } else if (info.menuItemId === "pageCM") {
-    startJustRead();
-  } else if (info.menuItemId === "highlightCM") {
-    chrome.storage.sync.set({ textToRead: true });
     startJustRead();
   } else if (info.menuItemId === "linkCM") {
     chrome.tabs.create({ url: info.linkUrl, active: false }, function (newTab) {
@@ -304,3 +283,18 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     });
   }
 });
+
+// Add our context menus
+chrome.contextMenus.remove("selectContentCM");
+chrome.contextMenus.remove("pageCM");
+chrome.contextMenus.remove("linkCM");
+chrome.contextMenus.remove("autorunCM");
+chrome.contextMenus.create(
+  {
+    title: "Select content to read",
+    contexts: ["action"],
+    id: "selectContentCM",
+  },
+  chrome.runtime.lastError
+);
+updateCMs();
