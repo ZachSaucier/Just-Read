@@ -285,16 +285,14 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 // Add our context menus
-chrome.contextMenus.remove("selectContentCM");
-chrome.contextMenus.remove("pageCM");
-chrome.contextMenus.remove("linkCM");
-chrome.contextMenus.remove("autorunCM");
-chrome.contextMenus.create(
-  {
-    title: "Select content to read",
-    contexts: ["action"],
-    id: "selectContentCM",
-  },
-  chrome.runtime.lastError
-);
-updateCMs();
+chrome.contextMenus.removeAll(function() {
+  chrome.contextMenus.create(
+    {
+      title: "Select content to read",
+      contexts: ["action"],
+      id: "selectContentCM",
+    },
+    chrome.runtime.lastError
+  );
+  updateCMs();
+});
