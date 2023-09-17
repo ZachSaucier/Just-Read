@@ -51,6 +51,11 @@ a[href]:hover {
   color: #2089d0;
 }
 
+a[href]::selection {
+  background-color: #64befa;
+  color: #0c0e1f;
+}
+
 .simple-container {
   -webkit-print-color-adjust: exact;
 }
