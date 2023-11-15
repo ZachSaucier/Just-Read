@@ -1,5 +1,4 @@
-Just Read
-=========
+# Just Read
 
 Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content. You can also get it to summarize the article by connecting an OpenAI API key (for more detail, [see here](https://justread.link/summarizer)).
 
@@ -9,7 +8,7 @@ Premium features can be enabled by [purchasing Just Read Premium](https://justre
 
 **Please note** that this extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect.
 
-___
+---
 
 ### Installation:
 
@@ -19,34 +18,36 @@ ___
 
 You can even use Just Read on your smart phone through mobile browsers that support extensions such as [Dolphin](https://dolphin.com/) (iOS or Android), [Kiwi](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US) (Android), or [Yandex](https://browser.yandex.com/) (iOS or Android). For more information, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
 
-___
+---
+
 ### The story behind Just Read
 
 Hi, I'm Zach. I made Just Read because I was tired of terribly hard to read web articles, especially news sites. Before I made JR, I would manually use Chrome's developer tools to make a page more readable. Then at the [UGA Hacks](https://ugahacks.herokuapp.com/) Fall 2015 hackathon, I decided to make a reader mode for Chrome and ended up with the first version of Just Read after 16 hours of work. After sharing it on Chrome's web store, others seemed to like it as well, and I've been working on it in my free time ever since.
 
-___
+---
 
 ### Privacy statement
 
 Just Read collects zero data from users by default. If you sign up for an account with Just Read, only your email address is stored. Just Read sends analytics to no one else. Any data that Just Read stores is safely secured and private.
 
-___
+---
 
 ### End-user license agreement (EULA)
 
 By using Just Read, you are agreeing to [Just Read's EULA](https://github.com/ZachSaucier/Just-Read/blob/master/docs/EULA.md).
 
-___
+---
 
 ## FAQ
 
 > **Note:** Any time you change something in Just Read's options page, you must restart any Just Read instances for the change to work.
 
 ### Using Just Read features
+
 <details id="start_JR" open>
   <summary>How can I start Just Read?</summary>
 
-  ### On a desktop or laptop
+### On a desktop or laptop
 
 Start Just Read by using Just Read's auto-selection or user-selection mode.
 
@@ -57,7 +58,7 @@ Start Just Read by using Just Read's auto-selection or user-selection mode.
 You can start using Just Read's built in auto-selection selection in three ways:
 
 1. Click the Just Read extension button.
-![extension button](https://i.imgur.com/aCOIuVV.png)
+   ![extension button](https://i.imgur.com/aCOIuVV.png)
 
 2. Use the shortcut <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>L</kbd>.
 
@@ -90,8 +91,7 @@ Once you're on an article that you want to read with Just Read installed on that
 
 You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Sharing preferences".
 
-Note that the [justread.link](https://justread.link) version of a page *cannot be edited*. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address).
-
+Note that the [justread.link](https://justread.link) version of a page _cannot be edited_. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address).
 
 </details>
 
@@ -107,8 +107,7 @@ Please see [this post](https://justread.link/summarizer) for more info.
 
 You can opt to auto-run Just Read on certain websites by entering a part of the URL (usually the domain is a good choice) or a [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) (regex) into the "Auto-run domain list" found on the extension's Options page (for more info as to what formats work, see [this post](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204)). Just Read will then check each new site's URL to see if it matches a string or expression in the user-inputted list. If it does, it will start Just Read when the page loads.
 
-You can also enable "Always add current site to Just Read's autorun list when Just Read is started on a page" under "Options" -> "Additional preferences" if you want *every* site that you start Just Read to be added to the auto-run list. For more information on how this works, see [this post](https://github.com/ZachSaucier/Just-Read/pull/166#issuecomment-404371640).
-
+You can also enable "Always add current site to Just Read's autorun list when Just Read is started on a page" under "Options" -> "Additional preferences" if you want _every_ site that you start Just Read to be added to the auto-run list. For more information on how this works, see [this post](https://github.com/ZachSaucier/Just-Read/pull/166#issuecomment-404371640).
 
 </details>
 
@@ -119,7 +118,6 @@ When you log into a browser as the primary user <strong>and allow syncing</stron
 
 For more information on how to get Just Read to work on your mobile devices, see [the mobile installation instructions](https://github.com/ZachSaucier/Just-Read/#on-a-mobile-device). **Note that some of Just Read's features may not work on mobile devices.**
 
-
 </details>
 
 <details id="pin">
@@ -128,7 +126,6 @@ For more information on how to get Just Read to work on your mobile devices, see
 A recent Chrome update hides extension icons inside inside of a drop down. To open the drop down, click the puzzle piece icon in the top right of Chrome. To make Just Read's icon always show, click the pin icon next to Just Read.
 
 If you don't see Just Read in the drop down list, make sure that <a href="https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod/">it is installed</a>.
-
 
 </details>
 
@@ -141,14 +138,12 @@ You can view and delete pages that you shared previously by going to your Just R
 
 Note that you can click any column heading to sort the entries by that column's values.
 
-
 </details>
 
 <details id="autosave">
   <summary>How can I have Just Read auto-save my changes?</summary>
 
 Just Read has an option under Options -> "Backup the most recent Just Read page (in case of accidental closure)." that does this. If you make any changes on a page, if you are on that same page it will load the old version if enabled.
-
 
 </details>
 
@@ -159,7 +154,6 @@ Just Read has an option under Options -> "Backup the most recent Just Read page 
 
 If you make any highlights, color change, or other edits to a text selection (a premium feature), Just Read will add a unique ID to that selection. You can then share that page and then look up that ID to get a link to that specific element on the shared page. For more information, [look at this post](https://stackoverflow.com/a/2835151/2065702).
 
-
 </details>
 
 <details id="kindle">
@@ -169,14 +163,12 @@ If you make any highlights, color change, or other edits to a text selection (a 
 
 In order to send the article content from Just Read to your Kindle, you must first [install the free Send to Kindle extension](https://chrome.google.com/webstore/detail/send-to-kindle-for-google/cgdjpilhipecahhcilnafpblkieebhea). Then you can use it on any shared Just Read page (or any other web page).
 
-
 </details>
 
 <details id="drive">
   <summary>How can I send the article to Google Drive?</summary>
 
 Currently it is only possible to send files to Google Drive in PDF form. The easiest way to do so in Chrome is to "print" the page (either using Chrome's built-in print ability or by clicking Just Read's print icon) and then change the "Destination" to "Save to Google Drive". In Firefox, you need to save it to your computer as a PDF and then manually upload it to Google Drive.
-
 
 </details>
 
@@ -186,7 +178,6 @@ Currently it is only possible to send files to Google Drive in PDF form. The eas
 > **Note that this is a Premium-only feature.**
 
 You can do this by going to "Options" -> "Additional features" and clicking the "Use JR's auto-scroll functionality" option. This will automatically scroll the article once you open it in Just Read. It also creates a "Pause scroll" button at the bottom right of Just Read. You can customize the speed of the auto-scroll by editing the box below this option.
-
 
 </details>
 
@@ -199,7 +190,6 @@ Under "Options" -> "Context menu entries", you can enable or disable the context
 - "Enable page context menu entry" allows Just Read to show a menu entry when you right click a page.
 - "Enable link context menu entry" allows Just Read to show a menu entry when you right click a link.
 
-
 </details>
 
 <details id="unsubscribe">
@@ -207,12 +197,12 @@ Under "Options" -> "Context menu entries", you can enable or disable the context
 
 Go to <a href="https://justread.link/dashboard">your Just Read dashboard</a>. If you're a Premium user, you should see a "go here" link at the top of the page. Click it to manage your purchase.
 
-
 </details>
 
-___
+---
 
 ### Editing Just Read's content
+
 <details id="deletion_mode">
   <summary>How can I delete parts of the page once Just Read has started?</summary>
 
@@ -221,7 +211,6 @@ Once the text has been selected and the article is open in the Just Read format,
 Once in deletion mode, users can click on elements that they don't want to be included in their page and they will be deleted. To exit this mode, users need to press <kbd>ESC</kbd> or click the deletion mode icon. These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
 
 If you have Premium, you can also delete anything that you highlight using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>d</kbd> or clicking the trash can icon on the toolbar that shows up.
-
 
 </details>
 
@@ -232,7 +221,6 @@ If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png
 
 These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
 
-
 </details>
 
 <details id="orig_url">
@@ -240,14 +228,12 @@ These actions can be undone by clicking the undo icon that appears or by using t
 
 To enable this option, go to Just Read's "Options" pages and enable "Always add the original URL."
 
-
 </details>
 
 <details id="time_estimate">
   <summary>How can I show the article's estimated time to read?</summary>
 
 To enable this option, go to Just Read's "Options" pages and enable "Always add the estimated time to read the article."
-
 
 </details>
 
@@ -259,7 +245,6 @@ To enable this option, go to Just Read's "Options" pages and enable "Always add 
 If you select any text in Just Read, a toolbar [like this](https://i.imgur.com/goBVron.png) will appear. This toolbar lets you change the styling of the selected text as per each button's instructions.
 
 You can add comments by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added.
-
 
 </details>
 
@@ -282,14 +267,12 @@ The full list of options in the domain-specific selectors list is as follow:
 
 Note that the `domainPattern` is checked using the same regex technique [as the auto-run list](https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204). Also note that the other selectors are checked using JavaScript's [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) or, in the case of `selectorsToDelete`, [`querySelectorAll`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll).
 
-
 </details>
 
 <details id="ad">
   <summary>How can I get rid of the ad for the premium version?</summary>
 
 Although this ad only shows occassionally and will eventually stop if you continue using Just Read, you can get rid of it by adding the following to your stylesheet: `.jr-notifier { display: none; }`
-
 
 </details>
 
@@ -300,12 +283,12 @@ Although this ad only shows occassionally and will eventually stop if you contin
 
 To hide premium features, adding the following to your stylesheet on the Just Read options page: `.premium-feature { display: none !important; }`
 
-
 </details>
 
-___
+---
 
 ### Customizing how Just Read looks
+
 <details id="customize">
   <summary>How can I customize the look of Just Read?</summary>
 
@@ -321,7 +304,6 @@ You can directly edit your theme's CSS file by clicking "openFullStyles" in the 
 
 You can also use themes that others have made. [Check them out here!](https://github.com/ZachSaucier/Just-Read/issues/4)
 
-
 </details>
 
 <details id="font">
@@ -330,7 +312,6 @@ You can also use themes that others have made. [Check them out here!](https://gi
 You can add a custom Google Font (or any other web-hosted font) by customizing the CSS for your theme. Go to Options then click on the theme that is currently in use (it should have a filled in circle next to the file name).
 
 Once there, you can follow [these instructions](https://graphicdesign.stackexchange.com/a/76551/23061) to get the necessary CSS code to use the font in your theme. The only change you'll have to make is replacing the `Font Name` with whatever font you want, and replacing `.someSelector` with whatever selector you want. The selectors you most likely want to change are `body, h3` and `h1, h2` because this is what Just Read changes by default.
-
 
 </details>
 
@@ -346,19 +327,6 @@ To install and use one of these themes,
 3. Click the "Use as current theme" button to make it your active theme.
 4. Copy and paste the CSS from your chosen theme into the CSS (code) section and then click "Save style changes".
 
-
-</details>
-
-<details id="gradient">
-  <summary>What is Just Read's gradient functionality? And how can I turn it on?</summary>
-
-> **Note that this is a Premium-only feature.**
-
-Just Read's gradient functionality makes it so that each line of text starts and ends with a different color. By having the end-of-line color the same as the next start-of-line color, it makes following sentences easier and reading faster. Note that this feature overrides your other paragraph text color styles.
-
-You can turn it on by going to "Options" -> "Additional features" and clicking the "Use JR's gradient text functionality to increase readability (will be forced over theme's colors)" option. You can also customize which colors you want to use by editing the values in the box below that option. Make sure to separate colors with a comma!
-
-
 </details>
 
 <details id="scrollbar">
@@ -370,12 +338,12 @@ You can enable a custom scrollbar by going to "Options" -> "Additional features"
 
 If you want to customize the look of the scrollbar even further, you can modify your theme to edit `progress`, `progress::-webkit-progress-bar`, and `progress::-webkit-progress-value` as needed.
 
-
 </details>
 
-___
+---
 
 ### Fixing issues with Just Read
+
 <details id="premium_features">
   <summary>I purchased Just Read Premium but don't have access to the Premium features. What's wrong?</summary>
 
@@ -385,9 +353,7 @@ Don't panic! Most likely all you need to do is go to <a href="https://justread.l
 
 If they still don't work, please <a href="mailto:support@justread.link">contact support</a> and we'll help you as soon as we're able to.
 
-
 </details>
-
 
 <details id="incorrect_selection">
   <summary>Just Read isn't selecting all of the content I want it to. What can I do to fix this?</summary>
@@ -396,14 +362,12 @@ Usually you can fix this by using [user selection mode](https://github.com/ZachS
 
 In order to see content within the selection that Just Read has automatically hidden because it thought it was irrelevant, you may have to disable `hide-segments.css`, which can be doing by going to Options then unchecking "Use hide-segments.css".
 
-
 </details>
 
 <details id="old_copy">
   <summary>How can I prevent Just Read from loading an old copy of the page I'm reading?</summary>
 
 You can either use [user selection mode](https://github.com/ZachSaucier/Just-Read/#user-selection-mode) to select a specific element to read (not disabling this option for future cases) or you can go to "Options" -> "Additional preferences" and uncheck "Backup most recent Just Read page (in case of accidental closure).".
-
 
 </details>
 
@@ -412,7 +376,6 @@ You can either use [user selection mode](https://github.com/ZachSaucier/Just-Rea
 
 Under "Options" -> "Additional preferences" there is an option to "Never reformat pre tags" to do this. This is probably most useful if you're a developer and read a lot of code-related articles.
 
-
 </details>
 
 <details id="other_extensions">
@@ -420,7 +383,7 @@ Under "Options" -> "Additional preferences" there is an option to "Never reforma
 
 As covered [in this post](https://github.com/ZachSaucier/Just-Read/issues/29#issue-196499408), this is an issue with the other extension and not Just Read. They will need to modify their code to work with iframe content.
 
-However, most all extensions should work with a *shared* Just Read page, i.e. one on [justread.link](https://justread.link), but this is a [Premium-only feature](https://justread.link/#getJustRead).
+However, most all extensions should work with a _shared_ Just Read page, i.e. one on [justread.link](https://justread.link), but this is a [Premium-only feature](https://justread.link/#getJustRead).
 
 </details>
 
@@ -429,7 +392,6 @@ However, most all extensions should work with a *shared* Just Read page, i.e. on
 
 Currently Just Read Premium has a shared article limit of 100 articles. This is to prevent users from filling up the entire server with their pages (especially with malicious intent). To get rid of this error, you must go to https://justread.link/dashboard and delete some old articles that you're not using any longer.
 
-
 </details>
 
 <details id="error">
@@ -437,8 +399,7 @@ Currently Just Read Premium has a shared article limit of 100 articles. This is 
 
 For most issues [creating a new issue on the GitHub repo](https://github.com/ZachSaucier/Just-Read/issues/new) is best. Please make sure to [search through existing issues](https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue+) before posting to make sure your issue has not already been posted.
 
-For *account related issues*, contact <a href="mailto:support@justread.link">support@justread.link</a>.
-
+For _account related issues_, contact <a href="mailto:support@justread.link">support@justread.link</a>.
 
 </details>
 

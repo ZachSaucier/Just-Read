@@ -2675,98 +2675,6 @@ function handleMouseMove(e) {
   }
 }
 
-// Gradient text functionality from https://codepen.io/Zeaklous/pen/GGXVwd?editors=0010
-// Line counter is a cleaned up, ES6 version of https://github.com/xdamman/js-line-wrap-detector
-// A cleaned up, ES6 version of https://stackoverflow.com/a/37623987/2065702
-function getLineInfo(target, computedStyle) {
-  let height = parseInt(computedStyle.getPropertyValue("height"));
-  const fontSize = parseInt(computedStyle.getPropertyValue("font-size"));
-  const lineHeight = parseInt(computedStyle.getPropertyValue("line-height"));
-  const boxSizing = computedStyle.getPropertyValue("box-sizing");
-
-  if (isNaN(lineHeight)) lineHeight = fontSize * 1.2;
-
-  if (boxSizing === "border-box") {
-    const paddingTop = parseInt(computedStyle.getPropertyValue("padding-top"));
-    const paddingBottom = parseInt(
-      computedStyle.getPropertyValue("padding-bottom")
-    );
-    const borderTop = parseInt(
-      computedStyle.getPropertyValue("border-top-width")
-    );
-    const borderBottom = parseInt(
-      computedStyle.getPropertyValue("border-bottom-width")
-    );
-    height = height - paddingTop - paddingBottom - borderTop - borderBottom;
-  }
-  const lines = Math.ceil(height / lineHeight);
-  return { lines, lineHeight };
-}
-
-// JS functionality to allow more precision/dynamic results for above SCSS
-function gradientText(colors) {
-  const ps = simpleArticleIframe.querySelectorAll(".content-container p");
-
-  ps.forEach((p) => {
-    if (
-      !(
-        p.childElementCount === 1 &&
-        (p.firstElementChild.tagName === "IMG" ||
-          p.firstElementChild.tagName === "A") &&
-        p.querySelector("img")
-      )
-    ) {
-      p.classList.add("gradient-text");
-
-      let colorIndex = 0;
-      const computedStyle = getComputedStyle(p);
-
-      const lineInfo = getLineInfo(p, computedStyle);
-      const numLines = lineInfo.lines;
-      const lineHeight = lineInfo.lineHeight;
-
-      p.classList.add("jsGrad");
-      let colorOverlay;
-      if (p.querySelector(".colorOverlay") == null) {
-        colorOverlay = document.createElement("span");
-        colorOverlay.className = "colorOverlay";
-        p.appendChild(colorOverlay);
-      } else {
-        colorOverlay = p.querySelector(".colorOverlay");
-      }
-
-      let grads = ``;
-      let sizes = ``;
-      let poses = ``;
-
-      for (let i = 0; i < numLines; i++) {
-        let nextIndex = colors[colorIndex + 1] ? colorIndex + 1 : 0;
-
-        if (i !== 0) {
-          grads += `, `;
-          sizes += `, `;
-          poses += `, `;
-        }
-
-        grads += `linear-gradient(to right, ${colors[colorIndex]} 0%, ${colors[colorIndex]} 10%, ${colors[nextIndex]} 90%, ${colors[nextIndex]} 100%)`;
-        sizes += `100% ${lineHeight}px`;
-        poses += `0 ${lineHeight * i + parseInt(computedStyle.paddingTop)}px`;
-
-        colorIndex = nextIndex;
-      }
-
-      // Make any lines over the max black-ish
-      grads += `, linear-gradient(to right, black 0%, black 100%)`;
-      sizes += `, 100% 100%`;
-      poses += `, 0% 0%`;
-
-      colorOverlay.style.backgroundImage = grads;
-      colorOverlay.style.backgroundSize = sizes;
-      colorOverlay.style.backgroundPosition = poses;
-    }
-  });
-}
-
 // Custom search/find functionality
 function createFindBar() {
   const simpleFind = document.createElement("div");
@@ -3989,13 +3897,6 @@ function finishLoading() {
     chrome.runtime.sendMessage({ tabOpenedJR: window.location });
     fadeIn();
   });
-
-  // Apply the gradient text if the user has the option enabled
-  if (chromeStorage["gradient-text"]) {
-    if (chromeStorage["gradient-colors"])
-      gradientText(chromeStorage["gradient-colors"]);
-    else gradientText(["black", "blue", "black", "red"]);
-  }
 
   // Apply the auto-scroll if necessary
   if (chromeStorage["autoscroll"]) {

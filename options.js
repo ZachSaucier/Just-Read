@@ -101,10 +101,6 @@ function getDataFromStorage(storage) {
       addTimeEstimate.checked = storage[key];
     } else if (key === "alwaysAddAR") {
       alwaysAddAR.checked = storage[key];
-    } else if (key === "gradient-text") {
-      grdTxt.checked = storage[key];
-    } else if (key === "gradient-colors") {
-      grdColors.value = storage[key].join(", ");
     } else if (key === "autoscroll") {
       autoscroll.checked = storage[key];
     } else if (key === "scroll-speed") {
@@ -284,7 +280,7 @@ function continueLoading() {
   if (typeof stylesheetObj[darkStylesheet] === "undefined") {
     // If the dark theme isn't found, add it
     const xhr = new XMLHttpRequest();
-    xhr.overrideMimeType('text/css');
+    xhr.overrideMimeType("text/css");
     xhr.open("GET", chrome.runtime.getURL(darkStylesheet), true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
@@ -406,7 +402,7 @@ function getStylesheets() {
       // Not found, so we add our default
       // Open the default CSS file and save it to our object
       const xhr = new XMLHttpRequest();
-      xhr.overrideMimeType('text/css');
+      xhr.overrideMimeType("text/css");
       xhr.open("GET", chrome.runtime.getURL(defaultStylesheet), true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
@@ -673,24 +669,6 @@ function addEventListeners() {
     chrome.storage.sync.set({ alwaysAddAR: this.checked });
   };
 
-  grdTxt.onchange = function () {
-    if (isPremium) {
-      chrome.storage.sync.set({ "gradient-text": this.checked });
-    } else {
-      showPremiumNotification();
-    }
-  };
-  grdColors.onkeyup = grdColors.onkeydown = function () {
-    if (isPremium) {
-      let colors = this.value.trim().split(/\s*,\s*/);
-      if (colors.length < 2) {
-        colors = ["black", "blue", "black", "red"];
-      }
-      chrome.storage.sync.set({ "gradient-colors": colors });
-    } else {
-      showPremiumNotification();
-    }
-  };
   autoscroll.onchange = function () {
     if (isPremium) {
       chrome.storage.sync.set({ autoscroll: this.checked });
@@ -768,8 +746,6 @@ const hideSegments = document.getElementById("hideSegments"),
   linkCM = document.getElementById("linkCM"),
   autorunCM = document.getElementById("autorunCM"),
   alwaysAddAR = document.getElementById("alwaysAddAR"),
-  grdTxt = document.getElementById("grdTxt"),
-  grdColors = document.querySelector("[name='gradientColors']"),
   autoscroll = document.getElementById("autoscroll"),
   scrollSpeed = document.querySelector("[name='scrollSpeed']");
 

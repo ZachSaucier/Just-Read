@@ -265,7 +265,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             const splitEntry = entry.split(">");
             const entryRegex = splitEntry[0];
             const urlRegex = new RegExp(entryRegex, "i");
-            const entryDelay = splitEntry.length > 1 ? splitEntry[1] : 0;
 
             if (url.match(urlRegex)) {
               chrome.storage.sync.set({ runOnLoad: true });

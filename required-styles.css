@@ -623,42 +623,6 @@ button:disabled .simple-summary {
   left: 27px;
 }
 
-/* Text gradient functionality from https://codepen.io/Zeaklous/pen/GGXVwd */
-@supports (mix-blend-mode: lighten) {
-  .gradient-text {
-    position: relative;
-    mix-blend-mode: multiply;
-    color: #000 !important;
-    background: #fff !important;
-  }
-  .gradient-text a {
-    color: #000 !important;
-  }
-  .gradient-text.jsGrad::after {
-    content: none;
-  }
-  .gradient-text .colorOverlay,
-  .gradient-text::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    pointer-events: none;
-    mix-blend-mode: screen;
-
-    background-repeat: no-repeat;
-  }
-  .gradient-text img ~ .colorOverlay {
-    display: none;
-  }
-}
-
 /* Find bar styling */
 .simple-find {
   font-family: sans-serif;
