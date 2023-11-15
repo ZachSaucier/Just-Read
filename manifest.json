@@ -33,6 +33,7 @@
 
   "background": {
     "service_worker": "background.js"
+    // "scripts": ["background.js"]
   },
 
   "options_ui": {
@@ -66,5 +67,11 @@
 
   "permissions": ["tabs", "contextMenus", "storage", "scripting"],
 
-  "host_permissions": ["*://*/*"]
+  "host_permissions": ["*://*/*"],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{cb2b337b-99d7-4b86-aa04-84a6f5c3e218}"
+    }
+  }
 }
