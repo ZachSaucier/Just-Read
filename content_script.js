@@ -3267,6 +3267,8 @@ function createSimplifiedOverlay() {
 
   const lightboxes = [];
 
+  const title = articleContainer.querySelector(".simple-title")?.textContent;
+
   // Strip inline styles
   const allElems = contentContainer.querySelectorAll("*");
   allElems.forEach((elem) => {
@@ -3278,6 +3280,11 @@ function createSimplifiedOverlay() {
       elem.removeAttribute("background");
       elem.removeAttribute("bgcolor");
       elem.removeAttribute("border");
+
+      // Delete the title if we find it in the article
+      if (elem.textContent.trim() === title) {
+        elem.parentElement.removeChild(elem);
+      }
 
       // See if the pres have code in them
       let isPreNoCode = true;
