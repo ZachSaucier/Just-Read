@@ -873,7 +873,7 @@ button:disabled .simple-summary {
   }
 
   *:not(.simple-title *) {
-    overflow: auto !important;
+    overflow: visible !important;
   }
 
   @page :first {
