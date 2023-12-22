@@ -7,6 +7,10 @@
 .simple-no-scroll * {
   overflow: hidden !important;
 }
+.simple-no-scroll .dg .cr.color,
+.simple-no-scroll .dg .cr.color * {
+  overflow: visible !important;
+}
 
 #simple-article#simple-article {
   display: block !important;
