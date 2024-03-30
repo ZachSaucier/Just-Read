@@ -392,7 +392,7 @@ However, most all extensions should work with a _shared_ Just Read page, i.e. on
 <details id="too_many_shared">
   <summary>Why am I getting a "You have too many shared articles" error?</summary>
 
-Currently Just Read Premium has a shared article limit of 100 articles. This is to prevent users from filling up the entire server with their pages (especially with malicious intent). To get rid of this error, you must go to https://justread.link/dashboard and delete some old articles that you're not using any longer.
+Currently Just Read Premium has a shared article limit of 300 articles. This is to prevent users from filling up the entire server with their pages (especially with malicious intent). To get rid of this error, you must go to https://justread.link/dashboard and delete some old articles that you're not using any longer.
 
 </details>
 
