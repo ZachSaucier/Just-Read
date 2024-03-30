@@ -244,7 +244,9 @@ To enable this option, go to Just Read's "Options" pages and enable "Always add 
 
 If you select any text in Just Read, a toolbar [like this](https://i.imgur.com/goBVron.png) will appear. This toolbar lets you change the styling of the selected text as per each button's instructions.
 
-You can add comments by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added.
+You can add inline comments anywhere within the Just Read content by using <kbd>CTRL</kbd> / <kbd>CMD</kbd> + clicking. You can style these comments by using the <code>.jr-user-content-section</code> selector.
+
+You can add comments in the side panel by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added.
 
 </details>
 
