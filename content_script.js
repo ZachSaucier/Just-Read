@@ -761,74 +761,6 @@ function closeOverlay() {
   }, 100); // Make sure we can animate it
 }
 
-function getContainer() {
-  let selectedContainer;
-
-  if (contentSelector && document.querySelector(contentSelector)) {
-    selectedContainer = document.querySelector(contentSelector);
-  } else if (document.head.querySelector("meta[name='articleBody'")) {
-    selectedContainer = document.createElement("div");
-    selectedContainer.innerHTML = DOMPurify.sanitize(
-      document.head
-        .querySelector("meta[name='articleBody'")
-        .getAttribute("content")
-    );
-  } else {
-    const numWordsOnPage = document.body.innerText.match(/\S+/g).length;
-    let ps = document.body.querySelectorAll("p");
-
-    // Find the paragraphs with the most words in it
-    let pWithMostWords = document.body,
-      highestWordCount = 0;
-
-    if (ps.length === 0) {
-      ps = document.body.querySelectorAll("div");
-    }
-
-    ps.forEach((p) => {
-      if (
-        checkAgainstBlacklist(p, 3) && // Make sure it's not in our blacklist
-        p.offsetHeight !== 0
-      ) {
-        //  Make sure it's visible on the regular page
-        const myInnerText = p.innerText.match(/\S+/g);
-        if (myInnerText) {
-          const wordCount = myInnerText.length;
-          if (wordCount > highestWordCount) {
-            highestWordCount = wordCount;
-            pWithMostWords = p;
-          }
-        }
-      }
-
-      // Remove elements in JR that were hidden on the original page
-      if (p.offsetHeight === 0) {
-        p.dataset.simpleDelete = true;
-      }
-    });
-
-    // Keep selecting more generally until over 2/5th of the words on the page have been selected
-    selectedContainer = pWithMostWords;
-    let wordCountSelected = highestWordCount;
-
-    while (
-      wordCountSelected / numWordsOnPage < 0.4 &&
-      selectedContainer != document.body &&
-      selectedContainer.parentElement.innerText
-    ) {
-      selectedContainer = selectedContainer.parentElement;
-      wordCountSelected = selectedContainer.innerText.match(/\S+/g).length;
-    }
-
-    // Make sure a single p tag is not selected
-    if (selectedContainer.tagName === "P") {
-      selectedContainer = selectedContainer.parentElement;
-    }
-  }
-
-  return selectedContainer;
-}
-
 // Handle link clicks
 function linkListener(e) {
   if (!simpleArticleIframe.body.classList.contains("simple-deleting")) {
@@ -2675,6 +2607,140 @@ function handleMouseMove(e) {
   }
 }
 
+// Inline comment functionality
+function addInlineCommentFunctionality() {
+  const MAX_TRIES_PER_DIR = 10;
+  const PX_SHIFT_EACH_TRY = 2;
+
+  function findClosestPToClick(e) {
+    const x = e.pageX;
+    const y = e.clientY;
+    const above_res = checkNearbyPosForP(
+      x,
+      y,
+      -PX_SHIFT_EACH_TRY,
+      MAX_TRIES_PER_DIR
+    );
+    const above_dist = above_res ? Math.abs(y - above_res.y) : Infinity;
+    const below_res = checkNearbyPosForP(
+      x,
+      y,
+      PX_SHIFT_EACH_TRY,
+      MAX_TRIES_PER_DIR
+    );
+    const below_dist = below_res ? Math.abs(y - below_res.y) : Infinity;
+
+    if (above_dist <= below_dist) {
+      if (above_dist === 0) {
+        const el_height = above_res.el.offsetHeight;
+        if (Math.sign(e.offsetY - el_height / 2) < 0) {
+          return {
+            el: above_res?.el,
+            place_before: true,
+          };
+        }
+        return {
+          el: above_res?.el,
+          place_before: false,
+        };
+      }
+      return {
+        el: above_res?.el,
+        place_before: false,
+      };
+    }
+    return {
+      el: above_res?.el,
+      place_before: true,
+    };
+  }
+
+  function checkNearbyPosForP(x, y, shift, num_tries) {
+    const elementsFromPoint = simpleArticleIframe.elementsFromPoint(x, y);
+    // Make sure we're not nesting the comment
+    if (
+      elementsFromPoint.some((el) => el.classList.contains("jr-inline-comment"))
+    )
+      return;
+
+    const p = elementsFromPoint[0]?.closest("p");
+    if (p) return { el: p, y };
+    if (num_tries > 1) {
+      return checkNearbyPosForP(x, y + shift, shift, --num_tries);
+    }
+    return;
+  }
+
+  const format_content_editable = () =>
+    simpleArticleIframe.execCommand("formatBlock", false, "p");
+
+  function insertComment({ el, place_before }) {
+    const comment_container = simpleArticleIframe.createElement("div");
+    comment_container.className = "jr-user-content-section";
+
+    const tryToDeleteComment = () => {
+      if (
+        comment_container.innerText.trim() === "X" ||
+        window.confirm("Really delete this comment?")
+      ) {
+        comment_container?.parentElement.removeChild(comment_container);
+      }
+    };
+
+    const content = simpleArticleIframe.createElement("div");
+    content.className = "jr-user-content";
+    content.setAttribute("contentEditable", true);
+    comment_container.appendChild(content);
+
+    const delete_button = simpleArticleIframe.createElement("button");
+    delete_button.className = "jr-user-content-delete";
+    delete_button.innerText = "X";
+    delete_button.ariaLabel = "Delete comment";
+    delete_button.addEventListener("click", tryToDeleteComment);
+    comment_container.appendChild(delete_button);
+
+    content.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        format_content_editable();
+      }
+    });
+    content.addEventListener("blur", (e) => {
+      if (content.innerText.trim() === "") {
+        tryToDeleteComment();
+      }
+    });
+
+    if (place_before) {
+      el.parentElement.insertBefore(comment_container, el);
+    } else {
+      el.after(comment_container);
+    }
+
+    content.focus();
+    format_content_editable();
+
+    comment_container.addEventListener("click", () => {
+      content.focus();
+      // Move cursor to end
+      const range = simpleArticleIframe.createRange();
+      range.selectNodeContents(content);
+      range.collapse(false);
+      const selection = simpleArticleIframe.defaultView.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    });
+  }
+
+  simpleArticleIframe.addEventListener("click", (e) => {
+    if (!e.metaKey) return;
+
+    const res = findClosestPToClick(e);
+    if (res.el) {
+      insertComment(res);
+    }
+  });
+}
+
 // Custom search/find functionality
 function createFindBar() {
   const simpleFind = document.createElement("div");
@@ -2950,7 +3016,7 @@ function initScrollbar() {
   return progressBar;
 }
 
-function getContent(keepJR) {
+function getContentFromJrView(keepJR) {
   // Create a copy of the Just Read content
   const copy = simpleArticleIframe
     .querySelector(".simple-container")
@@ -3004,11 +3070,11 @@ function getContent(keepJR) {
   let removeElems;
   if (keepJR) {
     removeElems = copy.querySelectorAll(
-      ".simple-control:not(.simple-print), .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container"
+      ".simple-control:not(.simple-print), .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   } else {
     removeElems = copy.querySelectorAll(
-      ".simple-control, .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container"
+      ".simple-control, .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   }
   removeElems.forEach(function (elem) {
@@ -3026,7 +3092,7 @@ function getSavableLink() {
     if (!hasSavedLink) {
       hasSavedLink = true;
 
-      let copy = getContent(true);
+      let copy = getContentFromJrView(true);
 
       const myTitle = copy.querySelector(".simple-title")
           ? copy.querySelector(".simple-title").innerText
@@ -3245,11 +3311,15 @@ function createSimplifiedOverlay() {
 
   // If there is no text selected, auto-select the content
   if (!pageSelectedContainer) {
-    pageSelectedContainer = getContainer();
+    pageSelectedContainer = document.createElement("div");
+    const doc = removeOrigContent ? document : document.cloneNode(true);
+    const readabilityParse = new Readability(doc, {
+      charThreshold: 0,
+    }).parse();
 
     const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
     pageSelectedContainer.innerHTML = DOMPurify.sanitize(
-      pageSelectedContainer.innerHTML.replace(pattern, "</p><p>")
+      readabilityParse.content.replace(pattern, "</p><p>")
     );
   }
 
@@ -3536,10 +3606,7 @@ function createSimplifiedOverlay() {
     }
 
     // Add a notification of the summarizer if necessary
-    if (
-      jrOpenCount > 15 &&
-      !hasBeenNotifiedOfSummarizer
-    ) {
+    if (jrOpenCount > 15 && !hasBeenNotifiedOfSummarizer) {
       addSummaryNotifier();
       chrome.storage.sync.set({ jrHasBeenNotifiedOfSummarizer: true });
     }
@@ -3769,6 +3836,9 @@ function createSimplifiedOverlay() {
       frame.parentElement.classList.add("youtubeContainer")
     );
 
+    // Add inline comments
+    addInlineCommentFunctionality();
+
     simpleArticleIframe.addEventListener("mouseup", handleEnd);
     simpleArticleIframe.addEventListener("touchend", handleEnd);
     simpleArticleIframe.addEventListener("mousemove", handleMouseMove);
@@ -3938,7 +4008,7 @@ function finishLoading() {
 // Handle the stylesheet syncing
 /////////////////////////////////////
 const stylesheetObj = {},
-  stylesheetVersion = 4.8; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
+  stylesheetVersion = 6.0; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
   // Detect past overlay - don't show another

@@ -1,8 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
+:root {
+  --background-color: #222233;
+  --foreground-color: #d1d1d1;
+}
+
 body {
   font-family: "Roboto", BlinkMacSystemFont, sans-serif;
-  background-color: #222233;
+  background-color: var(--background-color);
   line-height: 1.6;
   font-size: 17px;
   color: #d1d1d1;
@@ -224,6 +229,12 @@ aside,
 .jr-highlight-blue,
 .jr-highlight-orange {
   color: #1d1d1d;
+}
+
+.jr-user-content-section {
+  background-color: #fff;
+  color: var(--background-color);
+  border: none;
 }
 
 /* Make emojis and icons a reasonable size */

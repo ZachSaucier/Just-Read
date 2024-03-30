@@ -10,6 +10,11 @@
   }
 }
 
+:root {
+  --foreground-color: black;
+  --background-color: white;
+}
+
 .rtl {
   direction: rtl;
 }
@@ -52,7 +57,7 @@
   margin: 0 3px;
   padding: 1px 6px;
 
-  color: black;
+  color: var(--foreground-color);
   fill: currentColor;
   opacity: 0.3;
 }
@@ -66,7 +71,7 @@
   height: 37px;
 
   background: none;
-  border: 1px solid black;
+  border: 1px solid var(--foreground-color);
   padding: 0px 10px 5px;
   margin-left: 8px;
 }
@@ -161,7 +166,7 @@
 
 .simple-ext-info {
   text-align: center;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--foreground-color);
   padding-top: 28px;
 }
 
@@ -234,7 +239,7 @@ button:disabled .simple-summary {
   .jr-hovered,
   .jr-hovered *:not(.simple-close):not(.simple-print) {
     cursor: pointer !important;
-    color: black !important;
+    color: var(--foreground-color) !important;
     background-color: #ff5050 !important;
   }
 }
@@ -316,7 +321,7 @@ button:disabled .simple-summary {
 }
 
 .jr-edit-bar {
-  border: 1px solid black;
+  border: 1px solid var(--foreground-color);
   padding: 5px;
   position: absolute;
   -moz-user-select: none;
@@ -396,7 +401,7 @@ button:disabled .simple-summary {
   width: 81px;
   margin-top: -6px;
   padding: 0px 6px 4px;
-  border: 1px solid black;
+  border: 1px solid var(--foreground-color);
   display: none;
 }
 .jr-dark .jr-color-picker {
@@ -569,7 +574,7 @@ button:disabled .simple-summary {
 .simple-comment-container .jr-post {
   background-color: #27aae1;
   background-image: linear-gradient(to bottom, #27aae1, #269cce);
-  color: white;
+  color: var(--background-color);
   margin-right: 6px;
 }
 .rtl .jr-post {
@@ -591,7 +596,7 @@ button:disabled .simple-summary {
 }
 
 .simple-comment {
-  color: black;
+  color: var(--foreground-color);
   font-family: sans-serif;
   line-height: 1.1;
   margin: 0;
@@ -631,7 +636,7 @@ button:disabled .simple-summary {
   left: 15px;
   z-index: 1;
   width: 201px;
-  background-color: white;
+  background-color: var(--background-color);
   border-radius: 2px;
   padding: 10px;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
@@ -790,7 +795,7 @@ button:disabled .simple-summary {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: white;
+  background-color: var(--background-color);
   border-radius: 2px;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
 }
@@ -814,8 +819,8 @@ button:disabled .simple-summary {
   padding: 20px;
   font-size: 0.8em;
   line-height: 1.4;
-  background-color: white;
-  color: black;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
 }
 
@@ -834,10 +839,10 @@ button:disabled .simple-summary {
 .jr-primary,
 .jr-secondary {
   outline: none;
-  background-color: white;
+  background-color: var(--background-color);
   padding: 10px;
   cursor: pointer;
-  border: 1px solid black;
+  border: 1px solid var(--foreground-color);
   opacity: 0.5;
   border-radius: 5px;
   transition: 0.1s;
@@ -845,7 +850,7 @@ button:disabled .simple-summary {
 
 .jr-primary {
   background-color: #27aae1;
-  color: white;
+  color: var(--background-color);
   opacity: 1;
   margin-left: 10px;
   border-color: transparent;
@@ -879,4 +884,16 @@ button:disabled .simple-summary {
   @page :first {
     margin-top: 0;
   }
+}
+
+.jr-user-content-section {
+  position: relative;
+  border: 1px solid var(--foreground-color);
+  padding: 8px 32px 8px 16px;
+}
+
+.jr-user-content-delete {
+  position: absolute;
+  top: 4px;
+  right: 4px;
 }
