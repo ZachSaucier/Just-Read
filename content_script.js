@@ -1163,7 +1163,7 @@ function addShareButton() {
   const shareAlert = document.createElement("div");
   shareAlert.className = "simple-share-alert";
   shareAlert.innerText =
-    "You have too many shared articles - the limit is 100. Please remove some from ";
+    "You have too many shared articles - the limit is 300. Please remove some from ";
   const shareLink = document.createElement("a");
   shareLink.setAttribute("href", "https://justread.link/dashboard");
   shareLink.innerText = "your user page";
