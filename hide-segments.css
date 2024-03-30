@@ -142,7 +142,7 @@
 }
 
 .entry-content.entry-content,
-pre * {
+pre *:not(li) {
   display: initial !important;
 }
 
