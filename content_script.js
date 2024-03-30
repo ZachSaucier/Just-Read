@@ -2735,7 +2735,12 @@ function addInlineCommentFunctionality() {
   }
 
   simpleArticleIframe.addEventListener("click", (e) => {
-    if (!e.metaKey) return;
+    if (!e.metaKey || e.target.tagName === "A") return;
+
+    if (!isPremium) {
+      alert("Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link");
+      return;
+    };
 
     const res = findClosestPToClick(e);
     if (res.el) {
