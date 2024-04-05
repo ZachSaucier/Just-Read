@@ -716,6 +716,74 @@ function getArticleAuthor() {
   return "Unknown author";
 }
 
+function getArticleContainer() {
+  let selectedContainer;
+
+  if (contentSelector && document.querySelector(contentSelector)) {
+    selectedContainer = document.querySelector(contentSelector);
+  } else if (document.head.querySelector("meta[name='articleBody'")) {
+    selectedContainer = document.createElement("div");
+    selectedContainer.innerHTML = DOMPurify.sanitize(
+      document.head
+        .querySelector("meta[name='articleBody'")
+        .getAttribute("content")
+    );
+  } else {
+    const numWordsOnPage = document.body.innerText.match(/\S+/g).length;
+    let ps = document.body.querySelectorAll("p");
+
+    // Find the paragraphs with the most words in it
+    let pWithMostWords = document.body,
+      highestWordCount = 0;
+
+    if (ps.length === 0) {
+      ps = document.body.querySelectorAll("div");
+    }
+
+    ps.forEach((p) => {
+      if (
+        checkAgainstBlacklist(p, 3) && // Make sure it's not in our blacklist
+        p.offsetHeight !== 0
+      ) {
+        //  Make sure it's visible on the regular page
+        const myInnerText = p.innerText.match(/\S+/g);
+        if (myInnerText) {
+          const wordCount = myInnerText.length;
+          if (wordCount > highestWordCount) {
+            highestWordCount = wordCount;
+            pWithMostWords = p;
+          }
+        }
+      }
+
+      // Remove elements in JR that were hidden on the original page
+      if (p.offsetHeight === 0) {
+        p.dataset.simpleDelete = true;
+      }
+    });
+
+    // Keep selecting more generally until over 2/5th of the words on the page have been selected
+    selectedContainer = pWithMostWords;
+    let wordCountSelected = highestWordCount;
+
+    while (
+      wordCountSelected / numWordsOnPage < 0.4 &&
+      selectedContainer != document.body &&
+      selectedContainer.parentElement.innerText
+    ) {
+      selectedContainer = selectedContainer.parentElement;
+      wordCountSelected = selectedContainer.innerText.match(/\S+/g).length;
+    }
+
+    // Make sure a single p tag is not selected
+    if (selectedContainer.tagName === "P") {
+      selectedContainer = selectedContainer.parentElement;
+    }
+  }
+
+  return selectedContainer;
+}
+
 // Remove what we added (besides styles)
 function closeOverlay() {
   // Refresh the page if the content has been removed
@@ -3319,16 +3387,26 @@ function createSimplifiedOverlay() {
 
   // If there is no text selected, auto-select the content
   if (!pageSelectedContainer) {
-    pageSelectedContainer = document.createElement("div");
-    const doc = removeOrigContent ? document : document.cloneNode(true);
-    const readabilityParse = new Readability(doc, {
-      charThreshold: 0,
-    }).parse();
+    try {
+      pageSelectedContainer = document.createElement("div");
+      const doc = removeOrigContent ? document : document.cloneNode(true);
+      const readabilityParse = new Readability(doc, {
+        charThreshold: 0,
+      }).parse();
 
-    const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
-    pageSelectedContainer.innerHTML = DOMPurify.sanitize(
-      readabilityParse.content.replace(pattern, "</p><p>")
-    );
+      const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
+      pageSelectedContainer.innerHTML = DOMPurify.sanitize(
+        readabilityParse.content.replace(pattern, "</p><p>")
+      );
+    } catch (e) {
+      // If Readability.js fails, fallback to old method
+      pageSelectedContainer = getArticleContainer();
+
+      const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
+      pageSelectedContainer.innerHTML = DOMPurify.sanitize(
+        pageSelectedContainer.innerHTML.replace(pattern, "</p><p>")
+      );
+    }
   }
 
   selected = pageSelectedContainer;
