@@ -95,7 +95,7 @@ function stylesheetToString(s) {
 let last, userSelected;
 function startSelectElement(doc) {
 
-  const mouseFunc = function (e) {
+  const pointerFunc = function (e) {
       const elem = e.target;
 
       if (last != elem) {
@@ -117,7 +117,7 @@ function startSelectElement(doc) {
       if (e.key === "Escape") exitFunc(true);
     },
     exitFunc = function (avoidLaunch) {
-      doc.removeEventListener("mouseover", mouseFunc);
+      doc.removeEventListener("pointerover", pointerFunc);
       doc.removeEventListener("click", clickFunc);
       doc.removeEventListener("keydown", escFunc);
 
@@ -135,7 +135,7 @@ function startSelectElement(doc) {
       launch();
     };
 
-  doc.addEventListener("mouseover", mouseFunc);
+  doc.addEventListener("pointerover", pointerFunc);
   doc.addEventListener("click", clickFunc);
   doc.addEventListener("keydown", escFunc);
 
@@ -152,7 +152,7 @@ function startSelectElement(doc) {
 
 // Similar to ^^ but for deletion once the article is open
 function startDeleteElement(doc) {
-  const mouseFunc = function (e) {
+  const pointerFunc = function (e) {
       const elem = e.target;
 
       if (
@@ -224,7 +224,7 @@ function startDeleteElement(doc) {
         a.removeEventListener("click", anchorFunc);
       });
 
-      doc.removeEventListener("mouseover", mouseFunc);
+      doc.removeEventListener("pointerover", pointerFunc);
       doc.removeEventListener("click", clickFunc);
       doc.removeEventListener("keydown", escFunc);
 
@@ -253,7 +253,7 @@ function startDeleteElement(doc) {
 
   doc.body.classList.add("simple-deleting");
 
-  doc.addEventListener("mouseover", mouseFunc);
+  doc.addEventListener("pointerover", pointerFunc);
   doc.addEventListener("click", clickFunc);
   doc.addEventListener("keydown", escFunc);
 
@@ -737,9 +737,9 @@ function closeOverlay() {
   simpleArticle.classList.add("simple-fade-up");
 
   // Remove some general listeners
-  simpleArticleIframe.removeEventListener("mouseup", handleEnd);
+  simpleArticleIframe.removeEventListener("pointerup", handleEnd);
   simpleArticleIframe.removeEventListener("touchend", handleEnd);
-  simpleArticleIframe.removeEventListener("mousemove", handleMouseMove);
+  simpleArticleIframe.removeEventListener("pointermove", handlePointerMove);
 
   // Reset our variables
   pageSelectedContainer = null;
@@ -2642,7 +2642,7 @@ function cancelComment(e, el) {
   simpleArticleIframe.body.classList.remove("simple-commenting");
 }
 
-function handleMouseMove(e) {
+function handlePointerMove(e) {
   let leftEdge, rightEdge;
   if (
     !simpleArticleIframe
@@ -3769,9 +3769,9 @@ function createSimplifiedOverlay() {
       frame.parentElement.classList.add("youtubeContainer")
     );
 
-    simpleArticleIframe.addEventListener("mouseup", handleEnd);
+    simpleArticleIframe.addEventListener("pointerup", handleEnd);
     simpleArticleIframe.addEventListener("touchend", handleEnd);
-    simpleArticleIframe.addEventListener("mousemove", handleMouseMove);
+    simpleArticleIframe.addEventListener("pointermove", handlePointerMove);
 
     setTimeout(() => checkBreakpoints(), 10);
 
