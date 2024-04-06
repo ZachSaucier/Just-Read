@@ -1,11 +1,16 @@
 @import url("https://fonts.googleapis.com/css?family=Merriweather|Source+Sans+Pro:400,700");
 
+:root {
+  --background-color: #fff;
+  --foreground-color: #333;
+}
+
 body {
   font-family: "Merriweather", serif;
-  background-color: #fff;
+  background-color: var(--background-color);
   line-height: 1.6;
   font-size: 17px;
-  color: #333;
+  color: var(--foreground-color);
   text-rendering: optimizeLegibility;
 }
 
@@ -81,7 +86,7 @@ li {
 }
 
 td {
-  border: 1px solid black;
+  border: 1px solid var(--foreground-color);
   padding: 3px 7px;
 }
 

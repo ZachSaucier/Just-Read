@@ -11,7 +11,7 @@ function startJustRead(tab) {
   } else {
     chrome.tabs.query({ currentWindow: true, active: true }, (tabArray) => {
       if (tabArray.length) executeScripts(tabArray[0].id);
-  });
+    });
   }
 }
 
@@ -37,6 +37,7 @@ function executeScripts(tabId) {
     .executeScript({
       target: { tabId: tabId, allFrames: false },
       files: [
+        "/external-libraries/readability/readability.js",
         "/external-libraries/datGUI/dat.gui.min.js",
         "/external-libraries/DOMPurify/purify.min.js",
         "/external-libraries/Rangy/rangy.min.js",
@@ -136,7 +137,7 @@ function addSiteToAutorunList(info, tab) {
   });
 }
 
-let pageCMId = linkCMId = autorunCMId = undefined;
+let pageCMId = (linkCMId = autorunCMId = undefined);
 function updateCMs() {
   chrome.storage.sync.get(
     ["enable-pageCM", "enable-linkCM", "enable-autorunCM"],
@@ -284,7 +285,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 // Add our context menus
-chrome.contextMenus.removeAll(function() {
+chrome.contextMenus.removeAll(function () {
   chrome.contextMenus.create(
     {
       title: "Select content to read",

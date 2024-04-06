@@ -716,52 +716,7 @@ function getArticleAuthor() {
   return "Unknown author";
 }
 
-// Remove what we added (besides styles)
-function closeOverlay() {
-  // Refresh the page if the content has been removed
-  if (removeOrigContent) {
-    const url = new URL(window.location);
-    url.searchParams.delete("jr");
-    window.location.replace(url);
-  }
-
-  // Remove the GUI if it is open
-  if (datGUI) {
-    datGUI.destroy();
-    datGUI = undefined;
-  }
-
-  window.removeEventListener("resize", hideToolbar);
-
-  // Fade out
-  simpleArticle.classList.add("simple-fade-up");
-
-  // Remove some general listeners
-  simpleArticleIframe.removeEventListener("pointerup", handleEnd);
-  simpleArticleIframe.removeEventListener("touchend", handleEnd);
-  simpleArticleIframe.removeEventListener("pointermove", handlePointerMove);
-
-  // Reset our variables
-  pageSelectedContainer = null;
-  userSelected = null;
-  simpleArticleIframe = undefined;
-  editBar = undefined;
-  chromeStorage = undefined;
-
-  setTimeout(function () {
-    // Enable scroll
-    document.documentElement.classList.remove("simple-no-scroll");
-
-    // Update our background script
-    chrome.runtime.sendMessage({ lastClosed: Date.now() });
-
-    // Remove our overlay
-    simpleArticle.parentElement.removeChild(simpleArticle);
-    simpleArticle = undefined;
-  }, 100); // Make sure we can animate it
-}
-
-function getContainer() {
+function getArticleContainer() {
   let selectedContainer;
 
   if (contentSelector && document.querySelector(contentSelector)) {
@@ -827,6 +782,51 @@ function getContainer() {
   }
 
   return selectedContainer;
+}
+
+// Remove what we added (besides styles)
+function closeOverlay() {
+  // Refresh the page if the content has been removed
+  if (removeOrigContent) {
+    const url = new URL(window.location);
+    url.searchParams.delete("jr");
+    window.location.replace(url);
+  }
+
+  // Remove the GUI if it is open
+  if (datGUI) {
+    datGUI.destroy();
+    datGUI = undefined;
+  }
+
+  window.removeEventListener("resize", hideToolbar);
+
+  // Fade out
+  simpleArticle.classList.add("simple-fade-up");
+
+  // Remove some general listeners
+  simpleArticleIframe.removeEventListener("mouseup", handleEnd);
+  simpleArticleIframe.removeEventListener("touchend", handleEnd);
+  simpleArticleIframe.removeEventListener("mousemove", handleMouseMove);
+
+  // Reset our variables
+  pageSelectedContainer = null;
+  userSelected = null;
+  simpleArticleIframe = undefined;
+  editBar = undefined;
+  chromeStorage = undefined;
+
+  setTimeout(function () {
+    // Enable scroll
+    document.documentElement.classList.remove("simple-no-scroll");
+
+    // Update our background script
+    chrome.runtime.sendMessage({ lastClosed: Date.now() });
+
+    // Remove our overlay
+    simpleArticle.parentElement.removeChild(simpleArticle);
+    simpleArticle = undefined;
+  }, 100); // Make sure we can animate it
 }
 
 // Handle link clicks
@@ -1231,7 +1231,7 @@ function addShareButton() {
   const shareAlert = document.createElement("div");
   shareAlert.className = "simple-share-alert";
   shareAlert.innerText =
-    "You have too many shared articles - the limit is 100. Please remove some from ";
+    "You have too many shared articles - the limit is 300. Please remove some from ";
   const shareLink = document.createElement("a");
   shareLink.setAttribute("href", "https://justread.link/dashboard");
   shareLink.innerText = "your user page";
@@ -1306,13 +1306,16 @@ function handleSummarizeClick(modelToTryWith) {
       );
     }
 
-    let { key, model, prompt, temperature, ...rest } = options;
+    let { baseUrl, key, model, prompt, temperature, ...rest } = options;
     const content = contentContainer.innerText;
 
     if (typeof modelToTryWith === "string") {
         model = modelToTryWith;
     }
 
+    if (typeof baseUrl !== "string" || baseUrl === "") {
+      baseUrl = "https://api.openai.com/v1/chat/completions";
+    }
     if (typeof key !== "string" || key === "") {
       return console.error("No OpenAI API key was provided");
     }
@@ -1357,7 +1360,7 @@ function handleSummarizeClick(modelToTryWith) {
     myHeaders.append("Authorization", `Bearer ${key}`);
     myHeaders.append("Content-Type", "application/json");
 
-    fetch("https://api.openai.com/v1/chat/completions", {
+    fetch(baseUrl, {
       method: "POST",
       headers: myHeaders,
       body: JSON.stringify({
@@ -1398,23 +1401,23 @@ function handleSummarizeClick(modelToTryWith) {
       .catch(function (err) {
         let message = err.message;
         if (err.code === "context_length_exceeded") {
-            const numbers = err.message.match(/\d+/g);
-            const tooLargeMessage = `Sorry, this article is too large for OpenAI to summarize. The request required ${numbers[1]} tokens but the max number of tokens is ${numbers[0]}.`;
-            if (gptModel === "gpt-3.5-turbo") {
-                if (Number(numbers[0]) < 16384) {
-                    return handleSummarizeClick("gpt-3.5-turbo-16k");
-                } else if (Number(numbers[0]) < 32768) {
-                    return handleSummarizeClick("gpt-4-32k");
-                } else {
-                    message = tooLargeMessage;
-                }
-            } else if (gptModel === "gpt-4" || gptModel === "gpt-3.5-turbo-16k") {
-              if (Number(numbers[0]) < 32768) {
-                return handleSummarizeClick("gpt-4-32k");
-              } else {
-                  message = tooLargeMessage;
-              }
+          const numbers = err.message.match(/\d+/g);
+          const tooLargeMessage = `Sorry, this article is too large for OpenAI to summarize. The request required ${numbers[1]} tokens but the max number of tokens is ${numbers[0]}.`;
+          if (gptModel === "gpt-3.5-turbo") {
+            if (Number(numbers[0]) < 16384) {
+              return handleSummarizeClick("gpt-3.5-turbo-16k");
+            } else if (Number(numbers[0]) < 32768) {
+              return handleSummarizeClick("gpt-4-32k");
+            } else {
+              message = tooLargeMessage;
             }
+          } else if (gptModel === "gpt-4" || gptModel === "gpt-3.5-turbo-16k") {
+            if (Number(numbers[0]) < 32768) {
+              return handleSummarizeClick("gpt-4-32k");
+            } else {
+              message = tooLargeMessage;
+            }
+          }
         }
         console.error(`Fetching summary error`, err);
         const simpleSummaryContainer =
@@ -2675,6 +2678,145 @@ function handlePointerMove(e) {
   }
 }
 
+// Inline comment functionality
+function addInlineCommentFunctionality() {
+  const MAX_TRIES_PER_DIR = 10;
+  const PX_SHIFT_EACH_TRY = 2;
+
+  function findClosestPToClick(e) {
+    const x = e.pageX;
+    const y = e.clientY;
+    const above_res = checkNearbyPosForP(
+      x,
+      y,
+      -PX_SHIFT_EACH_TRY,
+      MAX_TRIES_PER_DIR
+    );
+    const above_dist = above_res ? Math.abs(y - above_res.y) : Infinity;
+    const below_res = checkNearbyPosForP(
+      x,
+      y,
+      PX_SHIFT_EACH_TRY,
+      MAX_TRIES_PER_DIR
+    );
+    const below_dist = below_res ? Math.abs(y - below_res.y) : Infinity;
+
+    if (above_dist <= below_dist) {
+      if (above_dist === 0) {
+        const el_height = above_res.el.offsetHeight;
+        if (Math.sign(e.offsetY - el_height / 2) < 0) {
+          return {
+            el: above_res?.el,
+            place_before: true,
+          };
+        }
+        return {
+          el: above_res?.el,
+          place_before: false,
+        };
+      }
+      return {
+        el: above_res?.el,
+        place_before: false,
+      };
+    }
+    return {
+      el: above_res?.el,
+      place_before: true,
+    };
+  }
+
+  function checkNearbyPosForP(x, y, shift, num_tries) {
+    const elementsFromPoint = simpleArticleIframe.elementsFromPoint(x, y);
+    // Make sure we're not nesting the comment
+    if (
+      elementsFromPoint.some((el) => el.classList.contains("jr-inline-comment"))
+    )
+      return;
+
+    const p = elementsFromPoint[0]?.closest("p");
+    if (p) return { el: p, y };
+    if (num_tries > 1) {
+      return checkNearbyPosForP(x, y + shift, shift, --num_tries);
+    }
+    return;
+  }
+
+  const format_content_editable = () =>
+    simpleArticleIframe.execCommand("formatBlock", false, "p");
+
+  function insertComment({ el, place_before }) {
+    const comment_container = simpleArticleIframe.createElement("div");
+    comment_container.className = "jr-user-content-section";
+
+    const tryToDeleteComment = () => {
+      if (
+        comment_container.innerText.trim() === "X" ||
+        window.confirm("Really delete this comment?")
+      ) {
+        comment_container?.parentElement.removeChild(comment_container);
+      }
+    };
+
+    const content = simpleArticleIframe.createElement("div");
+    content.className = "jr-user-content";
+    content.setAttribute("contentEditable", true);
+    comment_container.appendChild(content);
+
+    const delete_button = simpleArticleIframe.createElement("button");
+    delete_button.className = "jr-user-content-delete";
+    delete_button.innerText = "X";
+    delete_button.ariaLabel = "Delete comment";
+    delete_button.addEventListener("click", tryToDeleteComment);
+    comment_container.appendChild(delete_button);
+
+    content.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        format_content_editable();
+      }
+    });
+    content.addEventListener("blur", (e) => {
+      if (content.innerText.trim() === "") {
+        tryToDeleteComment();
+      }
+    });
+
+    if (place_before) {
+      el.parentElement.insertBefore(comment_container, el);
+    } else {
+      el.after(comment_container);
+    }
+
+    content.focus();
+    format_content_editable();
+
+    comment_container.addEventListener("click", () => {
+      content.focus();
+      // Move cursor to end
+      const range = simpleArticleIframe.createRange();
+      range.selectNodeContents(content);
+      range.collapse(false);
+      const selection = simpleArticleIframe.defaultView.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    });
+  }
+
+  simpleArticleIframe.addEventListener("click", (e) => {
+    if (!e.metaKey || e.target.tagName === "A") return;
+
+    if (!isPremium) {
+      alert("Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link");
+      return;
+    };
+
+    const res = findClosestPToClick(e);
+    if (res.el) {
+      insertComment(res);
+    }
+  });
+}
+
 // Custom search/find functionality
 function createFindBar() {
   const simpleFind = document.createElement("div");
@@ -2950,7 +3092,7 @@ function initScrollbar() {
   return progressBar;
 }
 
-function getContent(keepJR) {
+function getContentFromJrView(keepJR) {
   // Create a copy of the Just Read content
   const copy = simpleArticleIframe
     .querySelector(".simple-container")
@@ -3004,11 +3146,11 @@ function getContent(keepJR) {
   let removeElems;
   if (keepJR) {
     removeElems = copy.querySelectorAll(
-      ".simple-control:not(.simple-print), .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container"
+      ".simple-control:not(.simple-print), .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   } else {
     removeElems = copy.querySelectorAll(
-      ".simple-control, .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container"
+      ".simple-control, .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   }
   removeElems.forEach(function (elem) {
@@ -3026,7 +3168,7 @@ function getSavableLink() {
     if (!hasSavedLink) {
       hasSavedLink = true;
 
-      let copy = getContent(true);
+      let copy = getContentFromJrView(true);
 
       const myTitle = copy.querySelector(".simple-title")
           ? copy.querySelector(".simple-title").innerText
@@ -3050,7 +3192,7 @@ function getSavableLink() {
       if (hideSegments) {
         let hideCSS = document.createElement("style");
         hideCSS.innerText =
-          '.content-container script,.content-container [class="ad"],.content-container [class *="ads"],.content-container [class ^="ad-"],.content-container [class ^="ad_"],.content-container [class *="-ad-"],.content-container [class $="-ad"],.content-container [class $="_ad"],.content-container [class ~="ad"],.content-container [class *="navigation"],.content-container [class *="nav"],.content-container nav,.content-container [class *="search"],.content-container [class *="menu"],.content-container [class *="print"],.content-container [class *="nocontent"],.content-container .hidden,.content-container [class *="popup"],.content-container [class *="share"],.content-container [class *="sharing"],.content-container [class *="social"],.content-container [class *="follow"],.content-container [class *="newsletter"],.content-container [class *="meta"],.content-container [class *="author"],.content-container [id *="author"],.content-container form,.content-container [class ^="form"],.content-container [class *="-form-"],.content-container [class $="form"],.content-container [class ~="form"],.content-container [class *="related"],.content-container [class *="recommended"],.content-container [class *="see-also"],.content-container [class *="popular"],.content-container [class *="trail"],.content-container [class *="comment"],.content-container [class *="disqus"],.content-container [id *="disqus"],.content-container [class ^="tag"],.content-container [class *="-tag-"],.content-container [class $="-tag"],.content-container [class $="_tag"],.content-container [class ~="tag"],.content-container [class *="-tags-"],.content-container [class $="-tags"],.content-container [class $="_tags"],.content-container [class ~="tags"],.content-container [id *="-tags-"],.content-container [id $="-tags"],.content-container [id $="_tags"],.content-container [id ~="tags"],.content-container [class *="subscribe"],.content-container [id *="subscribe"],.content-container [class *="subscription"],.content-container [id *="subscription"],.content-container [class ^="fav"],.content-container [class *="-fav-"],.content-container [class $="-fav"],.content-container [class $="_fav"],.content-container [class ~="fav"],.content-container [id ^="fav"],.content-container [id *="-fav-"],.content-container [id $="-fav"],.content-container [id $="_fav"],.content-container [id ~="fav"],.content-container [class *="favorites"],.content-container [id *="favorites"],.content-container [class *="signup"],.content-container [id *="signup"],.content-container [class *="signin"],.content-container [id *="signin"],.content-container [class *="signIn"],.content-container [id *="signIn"],.content-container footer,.content-container [class *="footer"],.content-container [id *="footer"],.content-container svg[class *="pinterest"],.content-container [class *="pinterest"] svg,.content-container svg[id *="pinterest"],.content-container [id *="pinterest"] svg,.content-container svg[class *="pinit"],.content-container [class *="pinit"] svg,.content-container svg[id *="pinit"],.content-container [id *="pinit"] svg,.content-container svg[class *="facebook"],.content-container [class *="facebook"] svg,.content-container svg[id *="facebook"],.content-container [id *="facebook"] svg,.content-container svg[class *="github"],.content-container [class *="github"] svg,.content-container svg[id *="github"],.content-container [id *="github"] svg,.content-container svg[class *="twitter"],.content-container [class *="twitter"] svg,.content-container svg[id *="twitter"],.content-container [id *="twitter"] svg,.content-container svg[class *="instagram"],.content-container [class *="instagram"] svg,.content-container svg[id *="instagram"],.content-container [id *="instagram"] svg,.content-container svg[class *="tumblr"],.content-container [class *="tumblr"] svg,.content-container svg[id *="tumblr"],.content-container [id *="tumblr"] svg,.content-container svg[class *="youtube"],.content-container [class *="youtube"] svg,.content-container svg[id *="youtube"],.content-container [id *="youtube"] svg,.content-container svg[class *="codepen"],.content-container [class *="codepen"] svg,.content-container svg[id *="codepen"],.content-container [id *="codepen"] svg,.content-container svg[class *="dribble"],.content-container [class *="dribble"] svg,.content-container svg[id *="dribble"],.content-container [id *="dribble"] svg,.content-container svg[class *="soundcloud"],.content-container [class *="soundcloud"] svg,.content-container svg[id *="soundcloud"],.content-container [id *="soundcloud"] svg,.content-container svg[class *="rss"],.content-container [class *="rss"] svg,.content-container svg[id *="rss"],.content-container [id *="rss"] svg,.content-container svg[class *="linkedin"],.content-container [class *="linkedin"] svg,.content-container svg[id *="linkedin"],.content-container [id *="linkedin"] svg,.content-container svg[class *="vimeo"],.content-container [class *="vimeo"] svg,.content-container svg[id *="vimeo"],.content-container [id *="vimeo"] svg,.content-container svg[class *="email"],.content-container [class *="email"] svg,.content-container svg[id *="email"],.content-container [id *="email"] svg{display: none;}.entry-content.entry-content,pre *{display: initial !important;}';
+          '.content-container script,.content-container [class="ad"],.content-container [class *="ads"],.content-container [class ^="ad-"],.content-container [class ^="ad_"],.content-container [class *="-ad-"],.content-container [class $="-ad"],.content-container [class $="_ad"],.content-container [class ~="ad"],.content-container [class *="navigation"],.content-container [class *="nav"],.content-container nav,.content-container [class *="search"],.content-container [class *="menu"],.content-container [class *="print"],.content-container [class *="nocontent"],.content-container .hidden,.content-container [class *="popup"],.content-container [class *="share"],.content-container [class *="sharing"],.content-container [class *="social"],.content-container [class *="follow"],.content-container [class *="newsletter"],.content-container [class *="meta"],.content-container [class *="author"],.content-container [id *="author"],.content-container form,.content-container [class ^="form"],.content-container [class *="-form-"],.content-container [class $="form"],.content-container [class ~="form"],.content-container [class *="related"],.content-container [class *="recommended"],.content-container [class *="see-also"],.content-container [class *="popular"],.content-container [class *="trail"],.content-container [class *="comment"],.content-container [class *="disqus"],.content-container [id *="disqus"],.content-container [class ^="tag"],.content-container [class *="-tag-"],.content-container [class $="-tag"],.content-container [class $="_tag"],.content-container [class ~="tag"],.content-container [class *="-tags-"],.content-container [class $="-tags"],.content-container [class $="_tags"],.content-container [class ~="tags"],.content-container [id *="-tags-"],.content-container [id $="-tags"],.content-container [id $="_tags"],.content-container [id ~="tags"],.content-container [class *="subscribe"],.content-container [id *="subscribe"],.content-container [class *="subscription"],.content-container [id *="subscription"],.content-container [class ^="fav"],.content-container [class *="-fav-"],.content-container [class $="-fav"],.content-container [class $="_fav"],.content-container [class ~="fav"],.content-container [id ^="fav"],.content-container [id *="-fav-"],.content-container [id $="-fav"],.content-container [id $="_fav"],.content-container [id ~="fav"],.content-container [class *="favorites"],.content-container [id *="favorites"],.content-container [class *="signup"],.content-container [id *="signup"],.content-container [class *="signin"],.content-container [id *="signin"],.content-container [class *="signIn"],.content-container [id *="signIn"],.content-container footer,.content-container [class *="footer"],.content-container [id *="footer"],.content-container svg[class *="pinterest"],.content-container [class *="pinterest"] svg,.content-container svg[id *="pinterest"],.content-container [id *="pinterest"] svg,.content-container svg[class *="pinit"],.content-container [class *="pinit"] svg,.content-container svg[id *="pinit"],.content-container [id *="pinit"] svg,.content-container svg[class *="facebook"],.content-container [class *="facebook"] svg,.content-container svg[id *="facebook"],.content-container [id *="facebook"] svg,.content-container svg[class *="github"],.content-container [class *="github"] svg,.content-container svg[id *="github"],.content-container [id *="github"] svg,.content-container svg[class *="twitter"],.content-container [class *="twitter"] svg,.content-container svg[id *="twitter"],.content-container [id *="twitter"] svg,.content-container svg[class *="instagram"],.content-container [class *="instagram"] svg,.content-container svg[id *="instagram"],.content-container [id *="instagram"] svg,.content-container svg[class *="tumblr"],.content-container [class *="tumblr"] svg,.content-container svg[id *="tumblr"],.content-container [id *="tumblr"] svg,.content-container svg[class *="youtube"],.content-container [class *="youtube"] svg,.content-container svg[id *="youtube"],.content-container [id *="youtube"] svg,.content-container svg[class *="codepen"],.content-container [class *="codepen"] svg,.content-container svg[id *="codepen"],.content-container [id *="codepen"] svg,.content-container svg[class *="dribble"],.content-container [class *="dribble"] svg,.content-container svg[id *="dribble"],.content-container [id *="dribble"] svg,.content-container svg[class *="soundcloud"],.content-container [class *="soundcloud"] svg,.content-container svg[id *="soundcloud"],.content-container [id *="soundcloud"] svg,.content-container svg[class *="rss"],.content-container [class *="rss"] svg,.content-container svg[id *="rss"],.content-container [id *="rss"] svg,.content-container svg[class *="linkedin"],.content-container [class *="linkedin"] svg,.content-container svg[id *="linkedin"],.content-container [id *="linkedin"] svg,.content-container svg[class *="vimeo"],.content-container [class *="vimeo"] svg,.content-container svg[id *="vimeo"],.content-container [id *="vimeo"] svg,.content-container svg[class *="email"],.content-container [class *="email"] svg,.content-container svg[id *="email"],.content-container [id *="email"] svg{display: none;}.entry-content.entry-content,pre *:not(li) {display: initial !important;}';
         copy.appendChild(hideCSS);
       }
 
@@ -3245,12 +3387,26 @@ function createSimplifiedOverlay() {
 
   // If there is no text selected, auto-select the content
   if (!pageSelectedContainer) {
-    pageSelectedContainer = getContainer();
+    try {
+      pageSelectedContainer = document.createElement("div");
+      const doc = removeOrigContent ? document : document.cloneNode(true);
+      const readabilityParse = new Readability(doc, {
+        charThreshold: 0,
+      }).parse();
 
-    const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
-    pageSelectedContainer.innerHTML = DOMPurify.sanitize(
-      pageSelectedContainer.innerHTML.replace(pattern, "</p><p>")
-    );
+      const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
+      pageSelectedContainer.innerHTML = DOMPurify.sanitize(
+        readabilityParse.content.replace(pattern, "</p><p>")
+      );
+    } catch (e) {
+      // If Readability.js fails, fallback to old method
+      pageSelectedContainer = getArticleContainer();
+
+      const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
+      pageSelectedContainer.innerHTML = DOMPurify.sanitize(
+        pageSelectedContainer.innerHTML.replace(pattern, "</p><p>")
+      );
+    }
   }
 
   selected = pageSelectedContainer;
@@ -3536,10 +3692,7 @@ function createSimplifiedOverlay() {
     }
 
     // Add a notification of the summarizer if necessary
-    if (
-      jrOpenCount > 15 &&
-      !hasBeenNotifiedOfSummarizer
-    ) {
+    if (jrOpenCount > 15 && !hasBeenNotifiedOfSummarizer) {
       addSummaryNotifier();
       chrome.storage.sync.set({ jrHasBeenNotifiedOfSummarizer: true });
     }
@@ -3769,6 +3922,9 @@ function createSimplifiedOverlay() {
       frame.parentElement.classList.add("youtubeContainer")
     );
 
+    // Add inline comments
+    addInlineCommentFunctionality();
+
     simpleArticleIframe.addEventListener("pointerup", handleEnd);
     simpleArticleIframe.addEventListener("touchend", handleEnd);
     simpleArticleIframe.addEventListener("pointermove", handlePointerMove);
@@ -3938,7 +4094,7 @@ function finishLoading() {
 // Handle the stylesheet syncing
 /////////////////////////////////////
 const stylesheetObj = {},
-  stylesheetVersion = 4.8; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
+  stylesheetVersion = 6.0; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
   // Detect past overlay - don't show another

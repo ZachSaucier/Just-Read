@@ -244,7 +244,9 @@ To enable this option, go to Just Read's "Options" pages and enable "Always add 
 
 If you select any text in Just Read, a toolbar [like this](https://i.imgur.com/goBVron.png) will appear. This toolbar lets you change the styling of the selected text as per each button's instructions.
 
-You can add comments by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added.
+You can add inline comments anywhere within the Just Read content by using <kbd>CTRL</kbd> / <kbd>CMD</kbd> + clicking. You can style these comments by using the <code>.jr-user-content-section</code> selector.
+
+You can add comments in the side panel by clicking the [add comment button](https://i.imgur.com/CHvhmrn.png) then filling in the input box. It will automatically edit the layout of the page to allow the comments to fit and add a datetime of posting once the comment has been added.
 
 </details>
 
@@ -390,7 +392,7 @@ However, most all extensions should work with a _shared_ Just Read page, i.e. on
 <details id="too_many_shared">
   <summary>Why am I getting a "You have too many shared articles" error?</summary>
 
-Currently Just Read Premium has a shared article limit of 100 articles. This is to prevent users from filling up the entire server with their pages (especially with malicious intent). To get rid of this error, you must go to https://justread.link/dashboard and delete some old articles that you're not using any longer.
+Currently Just Read Premium has a shared article limit of 300 articles. This is to prevent users from filling up the entire server with their pages (especially with malicious intent). To get rid of this error, you must go to https://justread.link/dashboard and delete some old articles that you're not using any longer.
 
 </details>
 
