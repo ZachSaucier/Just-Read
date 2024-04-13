@@ -1306,8 +1306,12 @@ function handleSummarizeClick(modelToTryWith) {
       );
     }
 
-    let { baseUrl, key, model, prompt, temperature, ...rest } = options;
+    let { format, baseUrl, key, model, prompt, temperature, ...rest } = options;
     const content = contentContainer.innerText;
+
+    if (typeof format !== "string" || format === "") {
+      format = "json";
+    }
 
     if (typeof modelToTryWith === "string") {
         model = modelToTryWith;
@@ -1379,24 +1383,44 @@ function handleSummarizeClick(modelToTryWith) {
         ...rest,
       }),
     })
-      .then((response) => response.json())
-      .then(function (json) {
-        if (json.error) throw json.error;
-
-        const summary = json.choices[0].message.content;
-        const tokensUsed = json.usage.total_tokens;
-
-        if (chromeStorage["summaryReplace"]) {
-          contentContainer.innerHTML = DOMPurify.sanitize(summary);
-          console.log(`Tokens used to create summary: ${tokensUsed}`);
+      .then((response) => {
+        const simpleSummaryContainer =
+          contentContainer.querySelector(".simple-summary");
+        const contentType = response.headers.get("content-type");
+        if (contentType.indexOf("text/html") !== -1) {
+          response.text().then(function (text) {
+            const responseIframe = document.createElement("iframe");
+            responseIframe.srcdoc = text;
+            responseIframe.style.width = "100%";
+            simpleSummaryContainer.parentElement.replaceChild(
+              responseIframe,
+              simpleSummaryContainer
+            );
+          });
         } else {
-          const simpleSummaryContainer =
-            contentContainer.querySelector(".simple-summary");
-          simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
+          response.json().then(function (json) {
+            if (json.error) {
+              simpleSummaryContainer.innerHTML = DOMPurify.sanitize(
+                `<h3>Error getting summary</h3><p>${json.error.message}</p>`
+              );
+              return;
+            }
+
+            const summary = json.choices[0].message.content;
+            const tokensUsed = json.usage.total_tokens;
+
+            if (chromeStorage["summaryReplace"]) {
+              contentContainer.innerHTML = DOMPurify.sanitize(summary);
+              console.log(`Tokens used to create summary: ${tokensUsed}`);
+            } else {
+              
+              simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
               <h3>Summary<span>: ${tokensUsed} tokens used</span></h3>
               <p>${summary}</p>
-          `);
-        }
+            `);
+            }
+          });
+         }
       })
       .catch(function (err) {
         let message = err.message;
@@ -1423,8 +1447,8 @@ function handleSummarizeClick(modelToTryWith) {
         const simpleSummaryContainer =
           contentContainer.querySelector(".simple-summary");
         simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
-            <h3>Error getting summary</h3>
-            <p>${message}</p>
+          <h3>Error getting summary</h3>
+          <p>${message}</p>
         `);
         summarizeBtn.disabled = false;
       });
