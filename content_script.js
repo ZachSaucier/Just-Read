@@ -87,6 +87,16 @@ function stylesheetToString(s) {
   return text;
 }
 
+function convertCssVariableToReadableValue(color) {
+  if (color.toLowerCase().indexOf('var(') !== -1) {
+    const regExp = /\(([^)]+)\)/;
+    const cssVar = regExp.exec(color)[1];
+    const computedStyles = getComputedStyle(document.getElementById("simple-article").contentWindow.document.body);
+    return computedStyles.getPropertyValue(cssVar);
+  }
+  return color;
+}
+
 /////////////////////////////////////
 // State functions
 /////////////////////////////////////
@@ -1978,7 +1988,7 @@ function getStylesheetValue(stylesheet, selector, property) {
   // Return it if it exists
   for (let rule of Array.from(stylesheet.cssRules)) {
     if (rule.selectorText === selector && rule.style[property]) {
-      return rule.style[property];
+      return convertCssVariableToReadableValue(rule.style[property]);
     }
   }
 
@@ -4118,7 +4128,7 @@ function finishLoading() {
 // Handle the stylesheet syncing
 /////////////////////////////////////
 const stylesheetObj = {},
-  stylesheetVersion = 6.0; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
+  stylesheetVersion = 6.1; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
   // Detect past overlay - don't show another
