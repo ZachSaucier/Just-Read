@@ -3423,7 +3423,7 @@ function createSimplifiedOverlay() {
   if (!pageSelectedContainer) {
     try {
       pageSelectedContainer = document.createElement("div");
-      const doc = removeOrigContent ? document : document.cloneNode(true);
+      const doc = document.cloneNode(true);
       const readabilityParse = new Readability(doc, {
         charThreshold: 0,
       }).parse();
