@@ -172,13 +172,11 @@ function startDeleteElement(doc) {
         !elem.classList.contains("simple-add-comment") &&
         !elem.classList.contains("simple-comments") &&
         !elem.classList.contains("simple-edit") &&
-        !elem.classList.contains("simple-find") &&
         elem.parentElement &&
         elem.parentElement.classList &&
         !(
           elem.parentElement.classList.contains("simple-add-comment") ||
-          elem.parentElement.classList.contains("simple-control") ||
-          elem.parentElement.classList.contains("simple-find")
+          elem.parentElement.classList.contains("simple-control")
         ) &&
         doc.body != elem &&
         doc.documentElement != elem &&
@@ -207,12 +205,10 @@ function startDeleteElement(doc) {
         !selected.classList.contains("simple-add-comment") &&
         !selected.classList.contains("simple-comments") &&
         !selected.classList.contains("simple-edit") &&
-        !selected.classList.contains("simple-find") &&
         selected.parentElement.classList &&
         !(
           selected.parentElement.classList.contains("simple-add-comment") ||
-          selected.parentElement.classList.contains("simple-control") ||
-          selected.parentElement.classList.contains("simple-find")
+          selected.parentElement.classList.contains("simple-control")
         ) &&
         doc.body != selected &&
         doc.documentElement != selected &&
@@ -2851,65 +2847,6 @@ function addInlineCommentFunctionality() {
   });
 }
 
-// Custom search/find functionality
-function createFindBar() {
-  const simpleFind = document.createElement("div");
-  simpleFind.className = "simple-find";
-
-  const findInput = document.createElement("input");
-  findInput.className = "simple-find-input";
-  findInput.setAttribute("type", "text");
-
-  const findCount = document.createElement("span");
-  findCount.className = "simple-find-count";
-  findCount.innerText = 0;
-
-  const findClose = document.createElement("button");
-  findClose.className = "simple-close-find";
-  findClose.setAttribute("title", "Close find bar");
-  findClose.setAttribute("tabindex", "0");
-  findClose.innerText = "X";
-
-  simpleFind.appendChild(findInput);
-  simpleFind.appendChild(findCount);
-  simpleFind.appendChild(findClose);
-
-  return simpleFind;
-}
-
-let find, findInput, findCount, closeFind;
-
-let searchResultApplier;
-function initFindBar() {
-  find = simpleArticleIframe.querySelector(".simple-find");
-  findInput = find.querySelector(".simple-find-input");
-  findCount = find.querySelector(".simple-find-count");
-  closeFind = find.querySelector(".simple-close-find");
-
-  searchResultApplier = rangy.createClassApplier("simple-found");
-
-  findInput.addEventListener("keydown", function (e) {
-    // Esc
-    if (e.key === "Escape") {
-      closeFindBar();
-      e.stopPropagation();
-    } else if (!e.ctrlKey) {
-      scheduleSearch();
-    }
-  });
-
-  findInput.addEventListener("keyup", (e) => {
-    if (!e.ctrlKey) scheduleSearch;
-  });
-  closeFind.onclick = closeFindBar;
-}
-
-function closeFindBar() {
-  find.classList.remove("active");
-
-  cancelSearch();
-}
-
 let timer = null;
 function scheduleSearch() {
   if (timer) {
@@ -3180,11 +3117,11 @@ function getContentFromJrView(keepJR) {
   let removeElems;
   if (keepJR) {
     removeElems = copy.querySelectorAll(
-      ".simple-control:not(.simple-print), .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
+      ".simple-control:not(.simple-print), .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   } else {
     removeElems = copy.querySelectorAll(
-      ".simple-control, .simple-find, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
+      ".simple-control, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   }
   removeElems.forEach(function (elem) {
@@ -3421,18 +3358,18 @@ function createSimplifiedOverlay() {
 
   // If there is no text selected, auto-select the content
   if (!pageSelectedContainer) {
-    try {
-      pageSelectedContainer = document.createElement("div");
-      const doc = document.cloneNode(true);
-      const readabilityParse = new Readability(doc, {
-        charThreshold: 0,
-      }).parse();
+    // try {
+    //   pageSelectedContainer = document.createElement("div");
+    //   const doc = document.cloneNode(true);
+    //   const readabilityParse = new Readability(doc, {
+    //     charThreshold: 0,
+    //   }).parse();
 
-      const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
-      pageSelectedContainer.innerHTML = DOMPurify.sanitize(
-        readabilityParse.content.replace(pattern, "</p><p>")
-      );
-    } catch (e) {
+    //   const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
+    //   pageSelectedContainer.innerHTML = DOMPurify.sanitize(
+    //     readabilityParse.content.replace(pattern, "</p><p>")
+    //   );
+    // } catch (e) {
       // If Readability.js fails, fallback to old method
       pageSelectedContainer = getArticleContainer();
 
@@ -3440,7 +3377,7 @@ function createSimplifiedOverlay() {
       pageSelectedContainer.innerHTML = DOMPurify.sanitize(
         pageSelectedContainer.innerHTML.replace(pattern, "</p><p>")
       );
-    }
+    // }
   }
 
   selected = pageSelectedContainer;
@@ -3669,9 +3606,6 @@ function createSimplifiedOverlay() {
 
   container.appendChild(uiContainer);
 
-  // Add the find bar
-  container.appendChild(createFindBar());
-
   // Add our iframe to the page
   document.body.appendChild(simpleArticle);
 
@@ -3891,13 +3825,6 @@ function createSimplifiedOverlay() {
         popStack();
       }
 
-      // Listen for CTRL/CMD + F or F3
-      if (e.key === "F3" || ((e.ctrlKey || e.metaKey) && e.key === "f")) {
-        find.classList.add("active");
-        findInput.focus();
-        e.preventDefault();
-      }
-
       // Listen for editor shortcuts
       if (editorShortcutsEnabled) {
         // CTRL/CMD + B
@@ -4057,7 +3984,7 @@ function finishLoading() {
   }
   window.addEventListener("popstate", closeOverlay);
 
-  // Add our required stylesheet for the articlž
+  // Add our required stylesheet for the article
   if (!simpleArticleIframe.head.querySelector(".required-styles"))
     addStylesheet(
       simpleArticleIframe,
@@ -4114,14 +4041,6 @@ function finishLoading() {
 
   // Attempt to mute the elements on the original page
   mutePage();
-
-  // Initiate JRP's find functionality
-  if (
-    typeof chromeStorage["findbar"] === "undefined" ||
-    chromeStorage["findbar"]
-  ) {
-    initFindBar();
-  }
 }
 
 /////////////////////////////////////

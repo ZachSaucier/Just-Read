@@ -628,70 +628,6 @@ button:disabled .simple-summary {
   left: 27px;
 }
 
-/* Find bar styling */
-.simple-find {
-  font-family: sans-serif;
-  position: fixed;
-  top: 0;
-  left: 15px;
-  z-index: 1;
-  width: 201px;
-  background-color: var(--background-color);
-  border-radius: 2px;
-  padding: 10px;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
-  -moz-user-select: none;
-  user-select: none;
-  outline: none;
-
-  transform: translateY(-120%);
-  transition: transform 0.1s;
-}
-.simple-find.active {
-  transform: translateY(0);
-}
-
-.simple-find button {
-  background: none;
-  border: none;
-  outline: none;
-}
-
-.simple-find button {
-  vertical-align: bottom;
-}
-
-.simple-find-input {
-  border: 0;
-  outline: none;
-  width: 157px;
-}
-
-.simple-find-count {
-  color: lightgray;
-  font-size: 0.9em;
-  position: absolute;
-  right: 34px;
-  top: 5px;
-  text-align: right;
-  visibility: hidden;
-}
-.rtl .simple-find-count {
-  right: auto;
-  left: 34px;
-}
-.simple-find-count.active {
-  visibility: visible;
-}
-
-.simple-find button {
-  transition: background-color 0.2s;
-}
-.simple-find button:hover,
-.simple-find button:focus {
-  background-color: #d6d6d6;
-}
-
 /* Autoscroll functionality */
 .pause-scroll {
   position: fixed;
@@ -866,7 +802,6 @@ button:disabled .simple-summary {
   .simple-control,
   .simple-bug-reporter,
   .simple-progress,
-  .simple-find,
   .pause-scroll,
   .jr-lightbox,
   .jr-notifier {

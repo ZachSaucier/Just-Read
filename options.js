@@ -85,8 +85,6 @@ function getDataFromStorage(storage) {
       linkCM.checked = storage[key];
     } else if (key === "enable-autorunCM") {
       autorunCM.checked = storage[key];
-    } else if (key === "findbar") {
-      findbar.checked = storage[key];
     } else if (key === "scrollbar") {
       scrollbar.checked = storage[key];
     } else if (key === "remove-orig-content") {
@@ -689,8 +687,7 @@ function addEventListeners() {
     leavePres = document.getElementById("leavePres"),
     addOrigURL = document.getElementById("addOrigURL"),
     addTimeEstimate = document.getElementById("addTimeEstimate"),
-    scrollbar = document.getElementById("scrollbar"),
-    findbar = document.getElementById("findbar");
+    scrollbar = document.getElementById("scrollbar");
 
   removeOrig.onchange = function () {
     chrome.storage.sync.set({ "remove-orig-content": this.checked });
@@ -713,9 +710,6 @@ function addEventListeners() {
     } else {
       showPremiumNotification();
     }
-  };
-  findbar.onchange = function () {
-    chrome.storage.sync.set({ findbar: this.checked });
   };
 
   // Add the listener for the save animation
