@@ -45,7 +45,6 @@
     {
       "matches": ["*://*/*"],
       "resources": [
-        "print.svg",
         "required-styles.css",
         "default-styles.css",
         "dark-styles.css",
