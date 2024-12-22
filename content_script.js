@@ -2712,6 +2712,7 @@ function handlePointerMove(e) {
 function addInlineCommentFunctionality() {
   const MAX_TRIES_PER_DIR = 10;
   const PX_SHIFT_EACH_TRY = 2;
+  const NUM_PARENTS_TO_CHECK_FOR_ANCHOR = 10;
 
   function findClosestPToClick(e) {
     const x = e.pageX;
@@ -2833,12 +2834,24 @@ function addInlineCommentFunctionality() {
   }
 
   simpleArticleIframe.addEventListener("click", (e) => {
-    if (!e.metaKey || e.target.tagName === "A") return;
+    if (!e.metaKey) return;
+    // Make sure it's not just a link being clicked
+    function checkForAnchor(el, i) {
+      if (!el || i < 0) {
+        return false;
+      }
+      return el.tagName === "A" || checkForAnchor(el.parentElement, --i);
+    }
+    if (checkForAnchor(e.target, NUM_PARENTS_TO_CHECK_FOR_ANCHOR)) {
+      return;
+    }
 
     if (!isPremium) {
-      alert("Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link");
+      alert(
+        "Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link"
+      );
       return;
-    };
+    }
 
     const res = findClosestPToClick(e);
     if (res.el) {
