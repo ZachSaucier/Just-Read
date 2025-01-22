@@ -3681,8 +3681,8 @@ function createSimplifiedOverlay() {
     // Add a notification of premium if necessary
     if (
       !isPremium &&
-      (jrOpenCount === 5 || jrOpenCount % 33 === 0) &&
-      jrOpenCount < 67
+      (jrOpenCount === 5 || jrOpenCount % 33 === 1) &&
+      jrOpenCount < 68
     ) {
       addPremiumNotifier();
     }
