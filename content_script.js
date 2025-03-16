@@ -811,9 +811,9 @@ function closeOverlay() {
   simpleArticle.classList.add("simple-fade-up");
 
   // Remove some general listeners
-  simpleArticleIframe.removeEventListener("mouseup", handleEnd);
+  simpleArticleIframe.removeEventListener("pointerup", handleEnd);
   simpleArticleIframe.removeEventListener("touchend", handleEnd);
-  simpleArticleIframe.removeEventListener("mousemove", handleMouseMove);
+  simpleArticleIframe.removeEventListener("pointermove", handlePointerMove);
 
   // Reset our variables
   pageSelectedContainer = null;
@@ -3995,7 +3995,6 @@ function finishLoading() {
     const url = new URL(window.location);
     window.history.pushState({}, "", url);
   }
-  window.addEventListener("popstate", closeOverlay);
 
   // Add our required stylesheet for the article
   if (!simpleArticleIframe.head.querySelector(".required-styles"))
