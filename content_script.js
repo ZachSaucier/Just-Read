@@ -2834,7 +2834,7 @@ function addInlineCommentFunctionality() {
   }
 
   simpleArticleIframe.addEventListener("click", (e) => {
-    if (!e.metaKey) return;
+    if (!(e.metaKey || e.ctrlKey)) return;
     // Make sure it's not just a link being clicked
     function checkForAnchor(el, i) {
       if (!el || i < 0) {
