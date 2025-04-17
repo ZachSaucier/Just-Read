@@ -698,25 +698,24 @@ button:disabled .simple-summary {
 }
 
 /* Lightbox functionality */
+.jr-lightbox-trigger,
 .jr-lightbox {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  border: 0;
 }
-.jr-lightbox img {
-  max-width: 90%;
-  max-height: 80%;
-  margin-top: 2%;
-}
-.jr-lightbox:target {
-  outline: none;
-  display: block;
+.jr-lightbox {
+  max-height: 100dvh;
+  overflow: auto;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  &:popover-open {
+    animation: fade-in 0.2s ease-out;
+  }
 }
 
 /* Sharing functionality */

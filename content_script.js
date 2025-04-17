@@ -3793,21 +3793,26 @@ function createSimplifiedOverlay() {
     lightboxes.forEach((elem) => {
       // Wrap our image in a link
       const imgId = uuidv4();
-      const wrapper = document.createElement("a");
-      wrapper.href = "#" + imgId;
+      const wrapper = document.createElement("button");
+      wrapper.className = "jr-lightbox-trigger";
+      wrapper.setAttribute("popovertarget", imgId);
+      
       if (elem.parentElement) {
         elem.parentElement.insertBefore(wrapper, elem);
         wrapper.appendChild(elem);
 
         // Create the lightbox version of our image
-        const lightbox = document.createElement("a");
-        lightbox.href = "#_";
+        const lightbox = document.createElement("dialog");
         lightbox.className = "jr-lightbox";
+        lightbox.setAttribute("popover", "auto");
         lightbox.id = imgId;
+
+        lightbox.addEventListener('click', () => lightbox.hidePopover());
 
         const lightboxImg = document.createElement("img");
         lightboxImg.src = elem.src;
         lightbox.appendChild(lightboxImg);
+
         simpleArticleIframe
           .querySelector(".simple-container")
           .appendChild(lightbox);
