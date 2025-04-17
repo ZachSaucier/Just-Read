@@ -3791,7 +3791,7 @@ function createSimplifiedOverlay() {
 
     // Add lightboxes
     lightboxes.forEach((elem) => {
-      // Wrap our image in a link
+      // Wrap our image in a button
       const imgId = uuidv4();
       const wrapper = document.createElement("button");
       wrapper.className = "jr-lightbox-trigger";
@@ -3808,6 +3808,12 @@ function createSimplifiedOverlay() {
         lightbox.id = imgId;
 
         lightbox.addEventListener('click', () => lightbox.hidePopover());
+        lightbox.addEventListener('keydown', (e) => {
+          if (e.key === "Escape") {
+            lightbox.hidePopover();
+            e.stopPropagation();
+          }
+        })
 
         const lightboxImg = document.createElement("img");
         lightboxImg.src = elem.src;
