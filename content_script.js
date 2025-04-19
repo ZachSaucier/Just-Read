@@ -305,6 +305,7 @@ function actionWithStack(actionName, elem, startText) {
   }
 
   updateSavedVersion();
+  // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
   getMeasurements(); // Update the scrollbar sizing
 }
 
@@ -327,6 +328,7 @@ function popStack() {
     undoBtn.classList.remove("shown");
   }
 
+  // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
   getMeasurements(); // Update the scrollbar sizing
 }
 
@@ -2999,13 +3001,13 @@ function getScrollSpeedInput() {
   return scrollSpeedInput;
 }
 
-// Progress bar functionality
-let progressBar,
-  ticking = false;
 let hideSegments = false;
 
+// Progress bar functionality
+// REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
+let progressBar,
+  ticking = false;
 let winheight, docheight, trackLength, throttlescroll;
-
 function getDocHeight() {
   let D = simpleArticleIframe;
   return Math.max(
@@ -3017,7 +3019,6 @@ function getDocHeight() {
     D.documentElement.clientHeight
   );
 }
-
 function getMeasurements() {
   if (chromeStorage["scrollbar"]) {
     let D = simpleArticleIframe;
@@ -3028,14 +3029,12 @@ function getMeasurements() {
     requestTick();
   }
 }
-
 function requestTick() {
   if (!ticking) {
     requestAnimationFrame(updateProgressBar);
     ticking = true;
   }
 }
-
 function updateProgressBar() {
   if (progressBar && simpleArticleIframe) {
     const D = simpleArticleIframe;
@@ -3049,6 +3048,7 @@ function updateProgressBar() {
 
   ticking = false;
 }
+// END STUFF TO REMOVE
 
 function initScrollbar() {
   // Hide the original scrollbar
@@ -3061,6 +3061,7 @@ function initScrollbar() {
     .querySelector(".content-container")
     .appendChild(progressBar);
 
+  // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
   getMeasurements();
   simpleArticleIframe.defaultView.addEventListener(
     "scroll",
@@ -3072,6 +3073,7 @@ function initScrollbar() {
     getMeasurements,
     false
   );
+  // END STUFF TO REMOVE
 
   return progressBar;
 }
@@ -3486,6 +3488,7 @@ function createSimplifiedOverlay() {
         }
       }
 
+      // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
       // Update our scrollbar sizing
       if (
         elem.nodeName === "IFRAME" ||

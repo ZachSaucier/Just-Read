@@ -697,6 +697,35 @@ button:disabled .simple-summary {
   margin-left: -5px;
 }
 
+/* CSS scrollbar version */
+/* .simple-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% + 7px);
+  height: 5px;
+  border: none;
+
+  background-color: #5d5d5d;
+  border-radius: 100px;
+  margin-left: -5px;
+
+  transform-origin: left center;
+
+  animation: progress linear;
+  animation-timeline: scroll();
+
+  /* Reset the default appearance * /
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+} */
+
 /* Lightbox functionality */
 .jr-lightbox-trigger,
 .jr-lightbox {
