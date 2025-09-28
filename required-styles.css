@@ -422,6 +422,11 @@ button:disabled .simple-summary {
   left: 123px;
 }
 
+.content-container[contenteditable="true"] {
+  border: none;
+  outline: 1px solid #27aae1;
+}
+
 /* Comment styles */
 .simple-with-comments .simple-comments {
   width: 300px;

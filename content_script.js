@@ -2286,6 +2286,16 @@ function strikeThrough() {
   }
 }
 
+function enableContentEditing() {
+  const content_container = simpleArticleIframe.querySelector(".content-container");
+  content_container.setAttribute("contenteditable", true);
+  content_container.addEventListener(
+    "blur",
+    () => content_container.setAttribute("contenteditable", false),
+    { once: true }
+  );
+}
+
 function deleteSelection() {
   if (isPremium) {
     const sel = rangy.getSelection(simpleArticleIframe);
@@ -3852,19 +3862,26 @@ function createSimplifiedOverlay() {
         popStack();
       }
 
+      // CTRL/CMD + E for content editing
+      if ((e.ctrlKey || e.metaKey) && e.key === "e") {
+        enableContentEditing();
+      }
+
       // Listen for editor shortcuts
       if (editorShortcutsEnabled) {
         // CTRL/CMD + B
         if ((e.ctrlKey || e.metaKey) && e.key === "b") {
           bolden();
+          e.preventDefault();
         }
 
         // CTRL/CMD + I
         if ((e.ctrlKey || e.metaKey) && e.key === "i") {
           italicize();
+          e.preventDefault();
         }
 
-        // CTRL + U
+        // CTRL/CMD + U
         if ((e.ctrlKey || e.metaKey) && e.key === "u") {
           underline();
           e.preventDefault();
@@ -4073,7 +4090,7 @@ function finishLoading() {
 // Handle the stylesheet syncing
 /////////////////////////////////////
 const stylesheetObj = {},
-  stylesheetVersion = 6.1; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
+  stylesheetVersion = 6.3; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
   // Detect past overlay - don't show another
