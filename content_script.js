@@ -171,7 +171,6 @@ function startDeleteElement(doc) {
         !elem.classList.contains("simple-control") &&
         !elem.classList.contains("simple-add-comment") &&
         !elem.classList.contains("simple-comments") &&
-        !elem.classList.contains("simple-edit") &&
         elem.parentElement &&
         elem.parentElement.classList &&
         !(
@@ -204,7 +203,6 @@ function startDeleteElement(doc) {
         !selected.classList.contains("simple-control") &&
         !selected.classList.contains("simple-add-comment") &&
         !selected.classList.contains("simple-comments") &&
-        !selected.classList.contains("simple-edit") &&
         selected.parentElement.classList &&
         !(
           selected.parentElement.classList.contains("simple-add-comment") ||
@@ -1046,36 +1044,6 @@ function addStylesheet(doc, link, classN) {
 
 // Add the article author and date
 function addArticleMeta() {
-  const editSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  editSVG.setAttribute("class", "simple-edit");
-  editSVG.setAttribute("viewBox", "0 0 512 512");
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute(
-    "d",
-    "M422.953,176.019c0.549-0.48,1.09-0.975,1.612-1.498l21.772-21.772c12.883-12.883,12.883-33.771,0-46.654 l-40.434-40.434c-12.883-12.883-33.771-12.883-46.653,0l-21.772,21.772c-0.523,0.523-1.018,1.064-1.498,1.613L422.953,176.019z"
-  );
-  const polygon1 = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "polygon"
-  );
-  polygon1.setAttribute("fill", "#020202");
-  polygon1.setAttribute(
-    "points",
-    "114.317,397.684 157.317,440.684 106.658,448.342 56,456 63.658,405.341 71.316,354.683"
-  );
-  const polygon2 = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "polygon"
-  );
-  polygon2.setAttribute("fill", "#020202");
-  polygon2.setAttribute(
-    "points",
-    "349.143,125.535 118.982,355.694 106.541,343.253 336.701,113.094 324.26,100.653 81.659,343.253 168.747,430.341 411.348,187.74"
-  );
-  editSVG.appendChild(path);
-  editSVG.appendChild(polygon1);
-  editSVG.appendChild(polygon2);
-
   const metaContainer = document.createElement("div");
   metaContainer.className = "simple-meta";
   const author = document.createElement("div"),
@@ -1091,7 +1059,6 @@ function addArticleMeta() {
   title.className = "simple-title";
 
   // Check a couple places for the date, othewise say it's unknown
-  date.appendChild(editSVG);
   let dateText = getArticleDate();
   if (dateText === "Unknown date") {
     metaContainer.classList.add("unknown-date");
@@ -1099,7 +1066,6 @@ function addArticleMeta() {
   dateContent.innerHTML = DOMPurify.sanitize(dateText);
   date.appendChild(dateContent);
   // Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
-  author.appendChild(editSVG.cloneNode(true));
   let authorText = getArticleAuthor();
   if (authorText === "Unknown author") {
     metaContainer.classList.add("unknown-author");
@@ -1107,7 +1073,6 @@ function addArticleMeta() {
   authorContent.innerHTML = DOMPurify.sanitize(authorText);
   author.appendChild(authorContent);
   // Check h1s for the title, otherwise say it's unknown
-  title.appendChild(editSVG.cloneNode(true));
   titleContent.innerText = getArticleTitle();
   title.appendChild(titleContent);
 
@@ -1131,15 +1096,9 @@ function addArticleMeta() {
   }
   metaContainer.appendChild(title);
 
-  date.querySelector(".simple-edit").onclick = function () {
-    editText(dateContent);
-  };
-  author.querySelector(".simple-edit").onclick = function () {
-    editText(authorContent);
-  };
-  title.querySelector(".simple-edit").onclick = function () {
-    editText(titleContent);
-  };
+  date.setAttribute("contenteditable", true);
+  author.setAttribute("contenteditable", true);
+  title.setAttribute("contenteditable", true);
 
   return metaContainer;
 }
@@ -1544,47 +1503,6 @@ function addExtInfo() {
   extContainer.appendChild(bugReporter);
 
   return extContainer;
-}
-
-// Add edit meta functionality
-function editText(elem) {
-  if (!simpleArticleIframe.body.classList.contains("simple-deleting")) {
-    let startText = elem.innerText;
-
-    // Hide the item
-    elem.style.display = "none";
-
-    // Insert an input temporarily
-    const textInput = document.createElement("input");
-    textInput.type = "text";
-    textInput.value = elem.innerText;
-
-    // Update the element on blur
-    textInput.onblur = function () {
-      if (textInput.parentElement.contains(textInput)) {
-        // Change the value
-        elem.innerText = textInput.value;
-
-        if (elem.innerText !== startText)
-          actionWithStack("edit", elem, startText);
-
-        // Un-hide the elem
-        elem.style.display = "block";
-
-        // Remove the input
-        textInput.parentElement.removeChild(textInput);
-      }
-    };
-
-    // Allow enter to be used to save the edit
-    textInput.onkeydown = function (e) {
-      if (e.key === "Enter") textInput.blur();
-    };
-
-    elem.parentElement.appendChild(textInput);
-
-    textInput.focus();
-  }
 }
 
 function addSummaryNotifier() {
@@ -2286,14 +2204,17 @@ function strikeThrough() {
   }
 }
 
-function enableContentEditing() {
+function toggleContentEditing() {
   const content_container = simpleArticleIframe.querySelector(".content-container");
-  content_container.setAttribute("contenteditable", true);
-  content_container.addEventListener(
-    "blur",
-    () => content_container.setAttribute("contenteditable", false),
-    { once: true }
-  );
+  const is_already_editable = content_container.getAttribute("contenteditable") === "true";
+
+  if (is_already_editable) {
+    content_container.setAttribute("contenteditable", false);
+    content_container.onblur = false;
+  } else {
+    content_container.setAttribute("contenteditable", true);
+    content_container.onblur = toggleContentEditing;
+  }
 }
 
 function deleteSelection() {
@@ -3142,11 +3063,11 @@ function getContentFromJrView(keepJR) {
   let removeElems;
   if (keepJR) {
     removeElems = copy.querySelectorAll(
-      ".simple-control:not(.simple-print), .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
+      ".simple-control:not(.simple-print), .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   } else {
     removeElems = copy.querySelectorAll(
-      ".simple-control, .simple-edit, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
+      ".simple-control, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete"
     );
   }
   removeElems.forEach(function (elem) {
@@ -3864,7 +3785,7 @@ function createSimplifiedOverlay() {
 
       // CTRL/CMD + E for content editing
       if ((e.ctrlKey || e.metaKey) && e.key === "e") {
-        enableContentEditing();
+        toggleContentEditing();
       }
 
       // Listen for editor shortcuts
