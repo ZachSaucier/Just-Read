@@ -214,12 +214,12 @@ If you have Premium, you can also delete anything that you highlight using <kbd>
 
 </details>
 
-<details id="edit_meta">
-  <summary>How can I edit the article's date, author, and title once in Just Read?</summary>
+<details id="edit">
+  <summary>How can I edit the article's content once in Just Read?</summary>
 
-If you hover over each of these, a [pencil icon](https://i.imgur.com/PzFZzVh.png) will appear. Click that to edit the text that you want.
+For editing the date, author, and title, simply click them then update the text! For editing the article's content, you first have to enable editing for it by pressing <kbd>Ctrl</kbd> + <kbd>E</kbd>.
 
-These actions can be undone by clicking the undo icon that appears or by using the shortcut <kbd>Ctrl</kbd> + <kbd>Z</kbd>.
+You can undo these actions by using the built-in browser commands of <kbd>Ctrl</kbd> + <kbd>Z</kbd>. If you're undoing the article's content, make sure to enable editing for it again before using the shortcut.
 
 </details>
 
