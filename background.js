@@ -73,7 +73,7 @@ function createPageCM() {
       id: "pageCM",
       contexts: ["page"],
     },
-    chrome.runtime.lastError
+    chrome.runtime.lastError,
   );
 }
 function createLinkCM() {
@@ -84,7 +84,7 @@ function createLinkCM() {
       id: "linkCM",
       contexts: ["link"],
     },
-    chrome.runtime.lastError
+    chrome.runtime.lastError,
   );
 }
 function createAutorunCM() {
@@ -95,7 +95,7 @@ function createAutorunCM() {
       id: "autorunCM",
       contexts: ["page"],
     },
-    chrome.runtime.lastError
+    chrome.runtime.lastError,
   );
 }
 function addSiteToAutorunList(info, tab) {
@@ -119,16 +119,16 @@ function addSiteToAutorunList(info, tab) {
           function () {
             if (currentDomains.indexOf(url.hostname)) {
               console.log(
-                "Just Read auto-run entry added.\n\nWarning: An auto-run entry with the same hostname has already been added. Be careful to not add two duplicates."
+                "Just Read auto-run entry added.\n\nWarning: An auto-run entry with the same hostname has already been added. Be careful to not add two duplicates.",
               );
             } else {
               console.log("Just Read auto-run entry added.");
             }
-          }
+          },
         );
       } else {
         console.error(
-          "Entry already exists inside of Just Read's auto-run list. Not adding new entry."
+          "Entry already exists inside of Just Read's auto-run list. Not adding new entry.",
         );
       }
     } else {
@@ -179,7 +179,7 @@ function updateCMs() {
         createLinkCM();
         createAutorunCM();
       }
-    }
+    },
   );
 }
 
@@ -210,7 +210,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         setTimeout(function () {
           chrome.tabs.remove(tab.id);
         }, 100);
-      }
+      },
     );
   } else if (request.lastClosed) {
     lastClosed = request.lastClosed;
@@ -253,34 +253,48 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   const change = Date.now() - lastClosed;
   if (changeInfo.status === "complete" && change > 300) {
     // Auto enable on sites specified
-    chrome.storage.sync.get("auto-enable-site-list", function (siteListObj) {
-      let siteList;
-      if (siteListObj) {
-        siteList = siteListObj["auto-enable-site-list"];
-        const url = tab.url;
+    chrome.storage.sync.get(
+      ["auto-enable-site-list", "jrClosedUrl", "jrClosedAt"],
+      function (siteListObj) {
+        let siteList;
+        if (siteListObj) {
+          // Skip autorun if this page was just closed via content removal (within 2s)
+          // to prevent an infinite reload loop when both autorun and remove-orig-content are enabled
+          const tabUrl = new URL(tab.url);
+          const tabUrlPath = tabUrl.origin + tabUrl.pathname;
+          if (
+            siteListObj.jrClosedUrl === tabUrlPath &&
+            Date.now() - siteListObj.jrClosedAt < 2000
+          ) {
+            return;
+          }
 
-        if (typeof siteList !== "undefined") {
-          for (let i = 0; i < siteList.length; i++) {
-            // Allows the format `text.npr.org>5000` to autorun JR after 5 seconds on text.npr.org
-            const entry = siteList[i];
-            const splitEntry = entry.split(">");
-            const entryRegex = splitEntry[0];
-            const urlRegex = new RegExp(entryRegex, "i");
+          siteList = siteListObj["auto-enable-site-list"];
+          const url = tab.url;
 
-            if (url.match(urlRegex)) {
-              chrome.storage.sync.set({ runOnLoad: true });
-              startJustRead(tab);
-              return;
+          if (typeof siteList !== "undefined") {
+            for (let i = 0; i < siteList.length; i++) {
+              // Allows the format `text.npr.org>5000` to autorun JR after 5 seconds on text.npr.org
+              const entry = siteList[i];
+              const splitEntry = entry.split(">");
+              const entryRegex = splitEntry[0];
+              const urlRegex = new RegExp(entryRegex, "i");
+
+              if (url.match(urlRegex)) {
+                chrome.storage.sync.set({ runOnLoad: true });
+                startJustRead(tab);
+                return;
+              }
             }
           }
-        }
 
-        // Check if jr=on is set, autorun if so
-        if (new URL(url).searchParams.get("jr") === "on") {
-          startJustRead(tab);
+          // Check if jr=on is set, autorun if so
+          if (new URL(url).searchParams.get("jr") === "on") {
+            startJustRead(tab);
+          }
         }
-      }
-    });
+      },
+    );
   }
 });
 
@@ -292,7 +306,7 @@ chrome.contextMenus.removeAll(function () {
       contexts: ["action"],
       id: "selectContentCM",
     },
-    chrome.runtime.lastError
+    chrome.runtime.lastError,
   );
   updateCMs();
 });

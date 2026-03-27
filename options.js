@@ -75,6 +75,8 @@ function getDataFromStorage(storage) {
       hideSegments.checked = storage[key];
     } else if (key === "summaryReplace") {
       summaryReplace.checked = storage[key];
+    } else if (key === "summaryAutoRun") {
+      summaryAutoRun.checked = storage[key];
     } else if (key === "openSharedPage") {
       openSharedPage.checked = storage[key];
     } else if (key === "closeOldPage") {
@@ -135,7 +137,7 @@ function setStylesOfStorage(nextFunc) {
         chrome.runtime
           .getBackgroundPage()
           .alert(
-            "File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/"
+            "File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/",
           );
       } else {
         if (nextFunc) nextFunc();
@@ -254,7 +256,7 @@ function styleListOnClick() {
       // Open up the file from localStorage
       editor.setValue(
         stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName],
-        -1
+        -1,
       );
 
       // Toggle the active class on the list items
@@ -352,7 +354,7 @@ function finishLoading() {
       const fileName = li.textContent;
       editor.setValue(
         stylesheetObj[fileName] === undefined ? "" : stylesheetObj[fileName],
-        -1
+        -1,
       );
     }
 
@@ -444,7 +446,7 @@ function continueSaving() {
 
     document.querySelector(".stylesheets").lastChild.onclick = makeDoubleClick(
       rename,
-      styleListOnClick
+      styleListOnClick,
     );
 
     // Update our stylesheet storage
@@ -554,7 +556,7 @@ function addEventListeners() {
       // Clear out the editor and add some smart defaults
       editor.setValue(
         "/* Some defaults you may want */\n.simple-container {\n  max-width: 600px;\n  margin: 0 auto;\n  padding-top: 70px;\n  padding-bottom: 20px;\n}\nimg { max-width: 100%; }\n/* Also keep in mind that the close button is by default black. */\n\n\n",
-        -1
+        -1,
       );
 
       // Force them to save to keep it
@@ -603,7 +605,7 @@ function addEventListeners() {
             function () {
               styleListOnClick.call(defaultLiItem);
               defaultLiItem.classList.add("used", "active");
-            }
+            },
           );
         }
 
@@ -626,6 +628,10 @@ function addEventListeners() {
 
   summaryReplace.onchange = function () {
     chrome.storage.sync.set({ summaryReplace: this.checked });
+  };
+
+  summaryAutoRun.onchange = function () {
+    chrome.storage.sync.set({ summaryAutoRun: this.checked });
   };
 
   openSharedPage.onchange = function () {
@@ -728,6 +734,7 @@ let stylesheetListItems;
 
 const hideSegments = document.getElementById("hideSegments"),
   summaryReplace = document.getElementById("summaryReplace"),
+  summaryAutoRun = document.getElementById("summaryAutoRun"),
   openSharedPage = document.getElementById("openSharedPage"),
   closeOldPage = document.getElementById("closeOldPage"),
   pageCM = document.getElementById("pageCM"),
@@ -759,10 +766,10 @@ function createNotification(options) {
     "click",
     function () {
       this.parentNode.parentNode.parentNode.removeChild(
-        this.parentNode.parentNode
+        this.parentNode.parentNode,
       );
     },
-    { once: true }
+    { once: true },
   );
   secondaryBtn.innerText = options.secondaryText;
 

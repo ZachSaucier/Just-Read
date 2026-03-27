@@ -788,9 +788,13 @@ button:disabled .simple-summary {
   padding: 20px;
   font-size: 0.8em;
   line-height: 1.4;
-  background-color: var(--background-color);
-  color: var(--foreground-color);
+  background-color: var(--foreground-color);
+  color: var(--background-color);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
+
+  & p a {
+    font-weight: bold;
+  }
 }
 
 .jr-notifier {
@@ -812,7 +816,7 @@ button:disabled .simple-summary {
   padding: 10px;
   cursor: pointer;
   border: 1px solid var(--foreground-color);
-  opacity: 0.5;
+  opacity: 0.8;
   border-radius: 5px;
   transition: 0.1s;
 }
@@ -826,6 +830,9 @@ button:disabled .simple-summary {
 }
 .jr-primary:hover {
   background-color: #4ecaff;
+}
+.jr-secondary {
+  color: var(--foreground-color);
 }
 .jr-secondary:hover {
   opacity: 1;

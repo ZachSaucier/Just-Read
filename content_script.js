@@ -761,6 +761,14 @@ function getArticleContainer() {
 function closeOverlay() {
   // Refresh the page if the content has been removed
   if (removeOrigContent) {
+    // Record the URL and timestamp so autorun can skip re-triggering on the
+    // page reload that follows content removal
+    chrome.storage.sync.set({
+      jrClosedUrl: window.location.origin + window.location.pathname,
+      jrClosedAt: Date.now(),
+    });
+    
+    // The page refresh
     const url = new URL(window.location);
     url.searchParams.delete("jr");
     window.location.replace(url);
@@ -1210,6 +1218,28 @@ function addShareButton() {
   return shareButton;
 }
 
+// Add the share via email button
+function addShareViaEmailButton(title) {
+  let shareViaEmail = document.createElement("a");
+  shareViaEmail.href = `mailto:?&body=&subject=${title}`;
+  shareViaEmail.className = "simple-email simple-control";
+  shareViaEmail.title = "Share via email";
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 64 64");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute(
+    "d",
+    "M62.0308 18.5851L35.6606 35.4196C35.6493 35.4268 35.6375 35.4339 35.626 35.4407C34.5294 36.0789 33.2833 36.415 32.0144 36.4151C30.7454 36.4151 29.4986 36.079 28.4019 35.4407C28.3904 35.434 28.3785 35.4268 28.3673 35.4196L1.96923 18.5851V50.7642C1.96923 53.6876 4.31646 56.0376 7.1875 56.0377H56.8125C59.6835 56.0376 62.0308 53.6876 62.0308 50.7642V18.5851ZM62.0308 13.2358C62.0308 10.3124 59.6835 7.96237 56.8125 7.96226H7.1875C4.31646 7.96237 1.96923 10.3124 1.96923 13.2358V16.2559L29.399 33.7476C30.194 34.2095 31.0963 34.4528 32.0144 34.4528C32.9299 34.4527 33.8289 34.2099 34.6221 33.7505L62.0308 16.2559V13.2358ZM64 50.7642C64 54.7494 60.793 57.9999 56.8125 58H7.1875C3.20698 57.9999 0 54.7494 0 50.7642V13.2358C0 9.25064 3.20698 6.0001 7.1875 6H56.8125C60.793 6.0001 64 9.25064 64 13.2358V50.7642Z",
+  );
+  svg.appendChild(path);
+  shareViaEmail.appendChild(svg);
+
+  // shareViaEmail.innerText += "Share via email"; // TODO fix
+
+  return shareViaEmail;
+}
+
 function handleSummarizeClick(modelToTryWith) {
     if (summarizeBtn.disabled) return;
     summarizeBtn.disabled = true;
@@ -1538,17 +1568,13 @@ function createNotification(options) {
   const btnContainer = document.createElement("div");
   btnContainer.className = "right-align-buttons";
 
+  const removeNotification = () => {
+    notifier.parentElement.removeChild(notifier);
+  };
+
   const secondaryBtn = document.createElement("button");
   secondaryBtn.className = "jr-secondary";
-  secondaryBtn.addEventListener(
-    "click",
-    function () {
-      this.parentElement.parentElement.parentElement.removeChild(
-        this.parentElement.parentElement
-      );
-    },
-    { once: true }
-  );
+  secondaryBtn.addEventListener("click", removeNotification, { once: true });
   secondaryBtn.innerText = options.secondaryText;
 
   const primaryLink = document.createElement("a");
@@ -1558,6 +1584,7 @@ function createNotification(options) {
   const primaryBtn = document.createElement("button");
   primaryBtn.className = "jr-primary";
   primaryBtn.innerText = options.primaryText;
+  primaryBtn.addEventListener("click", removeNotification, { once: true });
 
   primaryLink.appendChild(primaryBtn);
   btnContainer.appendChild(secondaryBtn);
@@ -3013,10 +3040,15 @@ function getContentFromJrView(keepJR) {
   originalLink.innerText = "View original page";
   originalLink.className = "original-link";
 
-  if (copy.querySelector(".simple-meta"))
-    copy
-      .querySelector(".simple-meta")
-      .insertBefore(originalLink, copy.querySelector(".simple-title"));
+  const simpleMeta = copy.querySelector(".simple-meta");
+  if (simpleMeta) {
+    const firstChild = simpleMeta.querySelector("*");
+    simpleMeta.insertBefore(originalLink, firstChild);
+    const br = document.createElement("br");
+    simpleMeta.insertBefore(br, firstChild);
+    const br2 = document.createElement("br");
+    simpleMeta.insertBefore(br2, firstChild);
+  }
 
   // If there were changes from the GUI, update the <style> element based on the changed stylesheet
   if (usedGUI) styleElem.innerText = stylesheetToString(s);
@@ -3037,6 +3069,12 @@ function getContentFromJrView(keepJR) {
   removeElems.forEach(function (elem) {
     elem.parentElement.removeChild(elem);
   });
+
+  // Add the email share button
+  const simpleUIContainer = copy.querySelector(".simple-ui-container");
+  const title = copy.querySelector(".simple-title").innerText;
+  const shareViaEmailButton = addShareViaEmailButton(title);
+  simpleUIContainer.appendChild(shareViaEmailButton);
 
   return copy;
 }
@@ -3548,7 +3586,7 @@ function createSimplifiedOverlay() {
       addPremiumNotifier();
     }
 
-    // Ask for a review and such]
+    // Ask for a review and such
     if (!hasBeenAskedForReview100 && jrOpenCount > 100) {
       const roundedNumViews = 100 * Math.floor(jrOpenCount / 100);
       chrome.storage.sync.set({ jrHasBeenAskedForReview100: true });
@@ -3880,7 +3918,7 @@ function finishLoading() {
     addStylesheet(
       simpleArticleIframe,
       "required-styles.css",
-      "required-styles"
+      "required-styles",
     );
 
   // Add the segments hider if needed
@@ -3932,13 +3970,18 @@ function finishLoading() {
 
   // Attempt to mute the elements on the original page
   mutePage();
+
+  // Auto-run the summarizer if configured
+  if (chromeStorage["summaryAutoRun"] && chromeStorage["summarizer-options"]) {
+    handleSummarizeClick();
+  }
 }
 
 /////////////////////////////////////
 // Handle the stylesheet syncing
 /////////////////////////////////////
 const stylesheetObj = {},
-  stylesheetVersion = 6.3; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
+  stylesheetVersion = 6.4; // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
 function launch() {
   // Detect past overlay - don't show another

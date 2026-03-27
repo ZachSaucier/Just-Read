@@ -237,6 +237,10 @@ aside,
   border: none;
 }
 
+.jr-tooltip p a {
+  color: #059bff;
+}
+
 /* Make emojis and icons a reasonable size */
 .content-container svg,
 [class*="emoji"],
