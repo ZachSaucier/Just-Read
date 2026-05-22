@@ -509,7 +509,7 @@ function addEventListeners() {
     chrome.storage.sync.set({ "auto-enable-site-list": domainLine });
   };
 
-  // Update the OpenAI params
+  // Update the AI summarizer params
   summarizerOptions.onkeyup = function (e) {
     chrome.storage.sync.set({ "summarizer-options": summarizerOptions.value });
   };

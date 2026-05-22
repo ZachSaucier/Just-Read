@@ -79,25 +79,36 @@
           >.
         </div>
 
-        <h3>Summarization options</h3>
+        <h3>AI summarization options</h3>
         <div>
-          Just Read can summarize articles for you! For more info, see
+          Just Read can summarize articles using any AI provider. Supported
+          providers: <code>openai</code>, <code>anthropic</code>,
+          <code>gemini</code>, <code>perplexity</code>, <code>custom</code>.
+          For more info, see
           <a href="https://justread.link/summarizer">this post</a>.
         </div>
         <textarea
           name="summarizerOptions"
           id="summarizerOptions"
-          style="height: 140px"
+          style="height: 160px"
           spellcheck="false"
         >
 {
-    "key": "YOUR_OPENAI_API_KEY_GOES_HERE",
-    "model": "gpt-3.5-turbo",
+    "provider": "openai",
+    "apiKey": "YOUR_API_KEY_GOES_HERE",
+    "model": "gpt-4o-mini",
     "prompt": "Summarize the content you are provided as concisely as possible while retaining the key points.",
     "temperature": 0
 }
             </textarea
         >
+        <div style="font-size: 0.85em; margin-top: 4px;">
+          Use <code>"provider": "anthropic"</code> for Claude,
+          <code>"provider": "gemini"</code> for Google Gemini,
+          <code>"provider": "perplexity"</code> for Perplexity, or
+          <code>"provider": "custom"</code> with an <code>"endpoint"</code> field
+          for any OpenAI-compatible API.
+        </div>
         <label>
           <input id="summaryReplace" type="checkbox" /> Replace the article
           content with the summary.
