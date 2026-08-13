@@ -79,8 +79,7 @@ function onCommentInput() {
 }
 
 function placeComment() {
-  JR.hasSavedLink = false;
-  JR.shareDropdown.classList.remove("active");
+  markSharedPageDirty();
 
   JR.readerDocument.body.classList.remove("simple-commenting");
 
@@ -114,15 +113,6 @@ function placeComment() {
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "delete-button";
   deleteBtn.innerText = "X";
-  deleteBtn.onclick = function () {
-    JR.hasSavedLink = false;
-    JR.shareDropdown.classList.remove("active");
-    const compactRef = JR.readerDocument.querySelector(
-      "[href *= " + this.parentElement.parentElement.id + "]"
-    );
-    compactRef.parentElement.removeChild(compactRef);
-    cancelComment(null, parent);
-  };
 
   const backBtn = document.createElement("button");
   backBtn.className = "back-to-ref";
@@ -139,6 +129,7 @@ function placeComment() {
   parent.appendChild(comment);
   parent.appendChild(deleteBtn);
   parent.appendChild(backBtn);
+  bindPostedSidebarComment(parent.parentElement);
 
   updateSavedVersion();
 }
@@ -155,6 +146,89 @@ function cancelComment(e, el) {
 
   syncSidebarCommentsLayout();
   JR.readerDocument.body.classList.remove("simple-commenting");
+}
+
+function deletePostedComment(styling) {
+  const box = styling && styling.parentElement;
+  if (!box) return;
+  recordAction("delete-comment", box);
+}
+
+function bindPostedSidebarComment(box) {
+  const styling = box.querySelector(".simple-comment-styling");
+  if (!styling) return;
+
+  let deleteBtn = styling.querySelector(".delete-button");
+  if (!deleteBtn) {
+    deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-button";
+    deleteBtn.innerText = "X";
+    styling.appendChild(deleteBtn);
+  }
+  deleteBtn.onclick = function () {
+    deletePostedComment(styling);
+  };
+}
+
+function bindInlineCommentSection(section) {
+  if (!section || !JR.readerDocument) return;
+
+  const content = section.querySelector(".jr-user-content");
+  if (content) content.setAttribute("contenteditable", true);
+
+  let deleteButton = section.querySelector(".jr-user-content-delete");
+  if (!deleteButton) {
+    deleteButton = JR.readerDocument.createElement("button");
+    deleteButton.className = "jr-user-content-delete";
+    deleteButton.innerText = "X";
+    deleteButton.ariaLabel = "Delete comment";
+    section.appendChild(deleteButton);
+  }
+  deleteButton.onclick = function () {
+    if (section.parentElement) recordAction("delete", section);
+  };
+
+  if (!content || content.dataset.jrBound) return;
+  content.dataset.jrBound = "1";
+
+  content.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      JR.readerDocument.execCommand("formatBlock", false, "p");
+    }
+  });
+  content.addEventListener("blur", () => {
+    if (content.innerText.trim() === "" && section.parentElement) {
+      recordAction("delete", section);
+    }
+  });
+  section.addEventListener("click", () => {
+    content.focus();
+    const range = JR.readerDocument.createRange();
+    range.selectNodeContents(content);
+    range.collapse(false);
+    const selection = JR.readerDocument.defaultView.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  });
+}
+
+function rewireExistingComments() {
+  if (JR.comments) {
+    JR.comments
+      .querySelectorAll(".simple-comment-container")
+      .forEach(bindPostedSidebarComment);
+  }
+
+  if (JR.compactComments) {
+    JR.compactComments.querySelectorAll(".simple-comment-link").forEach((a) => {
+      a.onclick = linkListener;
+    });
+  }
+
+  if (!JR.readerDocument) return;
+  JR.readerDocument
+    .querySelectorAll(".jr-user-content-section")
+    .forEach(bindInlineCommentSection);
 }
 
 function handlePointerMove(e) {
@@ -262,37 +336,10 @@ function addInlineCommentFunctionality() {
     const comment_container = JR.readerDocument.createElement("div");
     comment_container.className = "jr-user-content-section";
 
-    const tryToDeleteComment = () => {
-      if (
-        comment_container.innerText.trim() === "X" ||
-        window.confirm("Really delete this comment?")
-      ) {
-        comment_container?.parentElement.removeChild(comment_container);
-      }
-    };
-
     const content = JR.readerDocument.createElement("div");
     content.className = "jr-user-content";
-    content.setAttribute("contentEditable", true);
     comment_container.appendChild(content);
-
-    const delete_button = JR.readerDocument.createElement("button");
-    delete_button.className = "jr-user-content-delete";
-    delete_button.innerText = "X";
-    delete_button.ariaLabel = "Delete comment";
-    delete_button.addEventListener("click", tryToDeleteComment);
-    comment_container.appendChild(delete_button);
-
-    content.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        format_content_editable();
-      }
-    });
-    content.addEventListener("blur", (e) => {
-      if (content.innerText.trim() === "") {
-        tryToDeleteComment();
-      }
-    });
+    bindInlineCommentSection(comment_container);
 
     if (place_before) {
       el.parentElement.insertBefore(comment_container, el);
@@ -302,17 +349,6 @@ function addInlineCommentFunctionality() {
 
     content.focus();
     format_content_editable();
-
-    comment_container.addEventListener("click", () => {
-      content.focus();
-      // Move cursor to end
-      const range = JR.readerDocument.createRange();
-      range.selectNodeContents(content);
-      range.collapse(false);
-      const selection = JR.readerDocument.defaultView.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-    });
   }
 
   JR.readerDocument.addEventListener("click", (e) => {

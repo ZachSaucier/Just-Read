@@ -190,61 +190,6 @@ function injectHydrateToolbar(container) {
   }
 }
 
-function rewireExistingComments() {
-  if (JR.comments) {
-    JR.comments.querySelectorAll(".simple-comment-container").forEach((box) => {
-      const styling = box.querySelector(".simple-comment-styling");
-      if (!styling) return;
-
-      let deleteBtn = styling.querySelector(".delete-button");
-      if (!deleteBtn) {
-        deleteBtn = document.createElement("button");
-        deleteBtn.className = "delete-button";
-        deleteBtn.innerText = "X";
-        styling.appendChild(deleteBtn);
-      }
-      deleteBtn.onclick = function () {
-        markSharedPageDirty();
-        const compactRef = JR.readerDocument.querySelector(
-          "[href *= " + box.id + "]",
-        );
-        if (compactRef && compactRef.parentElement) {
-          compactRef.parentElement.removeChild(compactRef);
-        }
-        cancelComment(null, styling);
-      };
-    });
-  }
-
-  if (JR.compactComments) {
-    JR.compactComments.querySelectorAll(".simple-comment-link").forEach((a) => {
-      a.onclick = linkListener;
-    });
-  }
-
-  JR.readerDocument.querySelectorAll(".jr-user-content-section").forEach((section) => {
-    const content = section.querySelector(".jr-user-content");
-    if (content) content.setAttribute("contenteditable", true);
-
-    if (section.querySelector(".jr-user-content-delete")) return;
-
-    const deleteButton = JR.readerDocument.createElement("button");
-    deleteButton.className = "jr-user-content-delete";
-    deleteButton.innerText = "X";
-    deleteButton.ariaLabel = "Delete comment";
-    deleteButton.addEventListener("click", () => {
-      if (
-        (content && content.innerText.trim() === "") ||
-        window.confirm("Really delete this comment?")
-      ) {
-        markSharedPageDirty();
-        section.parentElement.removeChild(section);
-      }
-    });
-    section.appendChild(deleteButton);
-  });
-}
-
 function enableSharedMetaEditing() {
   [".simple-date", ".simple-author", ".simple-title"].forEach((sel) => {
     const el = JR.readerDocument.querySelector(sel);

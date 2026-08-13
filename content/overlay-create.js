@@ -112,19 +112,8 @@ function restoreSavedComments() {
   if (!JR.savedComments) return;
 
   JR.comments.innerHTML = DOMPurify.sanitize(JR.savedComments);
-  JR.comments.querySelectorAll(".delete-button").forEach((btn) => {
-    btn.onclick = function () {
-      JR.hasSavedLink = false;
-      JR.shareDropdown.classList.remove("active");
-      const compactRef = JR.readerDocument.querySelector(
-        "[href *= " + this.parentElement.parentElement.id + "]"
-      );
-      compactRef.parentElement.removeChild(compactRef);
-      cancelComment(null, this.parentElement);
-    };
-  });
-
   JR.compactComments.innerHTML = DOMPurify.sanitize(JR.savedCompactComments);
+  rewireExistingComments();
 }
 
 function runWhenIframeReady(callback) {

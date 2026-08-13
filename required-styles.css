@@ -89,6 +89,7 @@
   font-size: 0; /* Hide the print text */
 }
 .simple-print svg,
+.simple-share svg,
 .simple-edit-theme svg,
 .simple-delete svg {
   width: 100%;
@@ -96,7 +97,7 @@
 }
 
 .simple-share {
-  margin-top: 5px;
+  margin-top: -1px;
 }
 
 .simple-undo {

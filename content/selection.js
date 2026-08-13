@@ -176,26 +176,57 @@ function markSharedPageDirty() {
 }
 
 const stack = [];
+
+function snapshotRemovedNode(node) {
+  if (!node || !node.parentElement) return null;
+  const parent = node.parentElement;
+  return {
+    parent: parent,
+    index: Array.from(parent.children).indexOf(node),
+    elem: node,
+  };
+}
+
+function restoreRemovedNode(snap) {
+  if (!snap || !snap.parent) return;
+  snap.parent.insertBefore(
+    snap.elem,
+    snap.parent.children[snap.index] || null,
+  );
+}
+
+function findCompactComment(box) {
+  if (!box || !box.id || !JR.readerDocument) return null;
+  return JR.readerDocument.querySelector('[href*="' + box.id + '"]');
+}
+
 function recordAction(actionName, elem) {
   markSharedPageDirty();
 
   let actionObj;
   if (actionName === "delete") {
     elem.classList.remove("jr-hovered");
-
-    let parent = elem.parentElement;
-
+    actionObj = Object.assign({ type: "delete" }, snapshotRemovedNode(elem));
+    if (actionObj) actionObj.parent.removeChild(elem);
+  } else if (actionName === "delete-comment") {
+    const compact = findCompactComment(elem);
     actionObj = {
-      type: "delete",
-      index: Array.from(parent.children).indexOf(elem),
-      parent: parent,
-      elem: parent.removeChild(elem),
+      type: "delete-comment",
+      comment: snapshotRemovedNode(elem),
+      compact: snapshotRemovedNode(compact),
     };
+    if (compact && compact.parentElement) {
+      compact.parentElement.removeChild(compact);
+    }
+    if (elem && elem.parentElement) {
+      elem.parentElement.removeChild(elem);
+    }
+    syncSidebarCommentsLayout();
   }
 
   if (actionName) {
     stack.push(actionObj);
-    JR.undoBtn.classList.add("shown");
+    if (JR.undoBtn) JR.undoBtn.classList.add("shown");
   }
 
   updateSavedVersion();
@@ -207,18 +238,19 @@ function undoLastAction() {
   let actionObj = stack.pop();
 
   if (actionObj && actionObj.type === "delete") {
-    actionObj.parent.insertBefore(
-      actionObj.elem,
-      actionObj.parent.children[actionObj.index]
-    );
+    restoreRemovedNode(actionObj);
   } else if (actionObj && actionObj.type === "edit") {
     actionObj.elem.innerText = actionObj.text;
+  } else if (actionObj && actionObj.type === "delete-comment") {
+    restoreRemovedNode(actionObj.comment);
+    restoreRemovedNode(actionObj.compact);
+    syncSidebarCommentsLayout();
   }
 
   updateSavedVersion();
 
   // If empty, hide undo button
-  if (stack.length === 0) {
+  if (stack.length === 0 && JR.undoBtn) {
     JR.undoBtn.classList.remove("shown");
   }
 

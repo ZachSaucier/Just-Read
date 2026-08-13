@@ -1,37 +1,40 @@
 // Highlighter-related functionality
 let highlighter;
+let highlightPainter;
 const rangyOptions = { exclusive: false };
 function initHighlighter() {
   highlighter = rangy.createHighlighter(JR.readerDocument);
+  highlightPainter = rangy.createHighlighter(JR.readerDocument);
 
   const rangeOptions = {
     onElementCreate: (elem) => {
       elem.id = "jr-" + Date.now();
-      JR.hasSavedLink = false;
-      JR.shareDropdown.classList.remove("active");
+      markSharedPageDirty();
       setTimeout(() => updateSavedVersion(), 10);
     },
   };
 
-  highlighter.addClassApplier(
+  // Highlight colors live on a separate Highlighter so exclusive color
+  // replacement does not unapply bold/italic/other text styles.
+  highlightPainter.addClassApplier(
     rangy.createClassApplier("jr-highlight-yellow", rangeOptions),
   );
-  highlighter.addClassApplier(
+  highlightPainter.addClassApplier(
     rangy.createClassApplier("jr-highlight-blue", rangeOptions),
   );
-  highlighter.addClassApplier(
+  highlightPainter.addClassApplier(
     rangy.createClassApplier("jr-highlight-green", rangeOptions),
   );
-  highlighter.addClassApplier(
+  highlightPainter.addClassApplier(
     rangy.createClassApplier("jr-highlight-pink", rangeOptions),
   );
-  highlighter.addClassApplier(
+  highlightPainter.addClassApplier(
     rangy.createClassApplier("jr-highlight-purple", rangeOptions),
   );
-  highlighter.addClassApplier(
+  highlightPainter.addClassApplier(
     rangy.createClassApplier("jr-highlight-orange", rangeOptions),
   );
-  highlighter.addClassApplier(
+  highlightPainter.addClassApplier(
     rangy.createClassApplier("jr-highlight-red", rangeOptions),
   );
 
@@ -230,7 +233,7 @@ function addHighlighterNotification() {
 function highlightSelectedText(colorName) {
   JR.lastHighlightColor = colorName;
   if (JR.isPremium) {
-    highlighter.highlightSelection("jr-highlight-" + colorName, {
+    highlightPainter.highlightSelection("jr-highlight-" + colorName, {
       exclusive: true,
     });
   } else {
@@ -423,6 +426,30 @@ function restoreSelectionFromBookmarks(container, bookmarks) {
   });
 }
 
+function forEachAnnotationApplier(fn) {
+  [highlighter, highlightPainter].forEach((instance) => {
+    if (!instance) return;
+    const appliers = instance.classAppliers;
+    for (const className in appliers) {
+      if (Object.prototype.hasOwnProperty.call(appliers, className)) {
+        fn(instance, appliers[className]);
+      }
+    }
+  });
+}
+
+function dropIntersectingHighlights(instance, rangyRanges) {
+  if (!instance) return;
+  try {
+    const intersecting = instance.getIntersectingHighlights(rangyRanges);
+    instance.highlights = instance.highlights.filter(
+      (h) => intersecting.indexOf(h) === -1,
+    );
+  } catch (e) {
+    // Highlighter has no record of this selection
+  }
+}
+
 function removeHighlightFromSelectedText() {
   // unhighlightSelection() only tracks this session and always clears the
   // selection. Class appliers' undoToRange() reads the DOM, so it can split
@@ -434,26 +461,17 @@ function removeHighlightFromSelectedText() {
   );
   const rangyRanges = toRangyRanges(nativeRanges);
 
-  if (highlighter && rangyRanges.length) {
-    try {
-      const intersecting = highlighter.getIntersectingHighlights(rangyRanges);
-      highlighter.highlights = highlighter.highlights.filter(
-        (h) => intersecting.indexOf(h) === -1,
-      );
-    } catch (e) {
-      // Highlighter has no record of this selection
-    }
+  if (rangyRanges.length) {
+    dropIntersectingHighlights(highlighter, rangyRanges);
+    dropIntersectingHighlights(highlightPainter, rangyRanges);
 
-    const appliers = highlighter.classAppliers;
-    for (const className in appliers) {
-      if (Object.prototype.hasOwnProperty.call(appliers, className)) {
-        try {
-          appliers[className].undoToRanges(rangyRanges);
-        } catch (e) {
-          // Applier could not undo this range
-        }
+    forEachAnnotationApplier((instance, applier) => {
+      try {
+        applier.undoToRanges(rangyRanges);
+      } catch (e) {
+        // Applier could not undo this range
       }
-    }
+    });
   }
 
   restoreSelectionFromBookmarks(container, bookmarks);

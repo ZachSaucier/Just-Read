@@ -145,7 +145,8 @@ function addDelModeButton() {
 
 // Add the share button
 function addShareButton() {
-  let shareButton = document.createElement("a");
+  let shareButton = document.createElement("button");
+  shareButton.type = "button";
   shareButton.className = "premium-feature simple-share simple-control";
   shareButton.title = "Share article";
 

@@ -47,10 +47,14 @@ function cloneReaderContentForShare(keepJR) {
     }
   }
 
-  if (JR.usedGUI && JR.styleElem && JR.themeStylesheet) {
-    JR.styleElem.innerText = stylesheetToString(JR.themeStylesheet);
-  }
-  if (JR.styleElem && !copy.querySelector("style")) {
+  if (JR.usedGUI && JR.themeStylesheet) {
+    const styleCopy =
+      copy.querySelector("style") || JR.styleElem?.cloneNode(true);
+    if (styleCopy) {
+      styleCopy.innerText = stylesheetToString(JR.themeStylesheet);
+      if (!copy.querySelector("style")) copy.appendChild(styleCopy);
+    }
+  } else if (JR.styleElem && !copy.querySelector("style")) {
     copy.appendChild(JR.styleElem.cloneNode(true));
   }
 
@@ -117,7 +121,12 @@ function rewriteCommentTimestamps(copy) {
 }
 
 let alertTimeout;
-function shareReaderView() {
+function shareReaderView(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   if (!(JR.isPremium && JR.jrSecret)) {
     const notification = {
       textContent:
@@ -221,8 +230,7 @@ function shareReaderView() {
       JR.shareDropdown.innerText = url;
     })
     .catch(function (err) {
-      JR.hasSavedLink = false;
-      document.documentElement.dataset.jrDirty = "1";
+      markSharedPageDirty();
       if (err.status === 428) {
         JR.readerDocument
           .querySelector(".simple-share-alert")
