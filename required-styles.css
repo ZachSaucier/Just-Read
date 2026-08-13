@@ -250,7 +250,6 @@ button:disabled .simple-summary {
 }
 
 /* For the highlighter functionality */
-.simple-found,
 .jr-highlight-yellow {
   background-color: yellow;
 }

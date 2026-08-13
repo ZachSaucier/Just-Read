@@ -140,7 +140,7 @@ function startDeleteElement(doc) {
 
       sd.classList.remove("active");
       sd.onclick = function () {
-        startDeleteElement(JR.simpleArticleIframe);
+        startDeleteElement(JR.readerDocument);
       };
     },
     anchorFunc = function (e) {
@@ -161,7 +161,7 @@ function startDeleteElement(doc) {
   const iframes = doc.querySelectorAll("iframe");
   [...iframes].forEach((elem) => (elem.style.pointerEvents = "none"));
 
-  const deleteModeButton = JR.simpleArticleIframe.querySelector(".simple-delete");
+  const deleteModeButton = JR.readerDocument.querySelector(".simple-delete");
 
   deleteModeButton.classList.add("active");
   deleteModeButton.onclick = function () {
@@ -226,18 +226,18 @@ function updateSavedVersion() {
     const data = {
       url: window.location.href,
       content: DOMPurify.sanitize(
-        JR.simpleArticleIframe.querySelector(".content-container").innerHTML
+        JR.readerDocument.querySelector(".content-container").innerHTML
       ),
     };
 
     if (
-      JR.simpleArticleIframe.querySelector(".simple-comments").innerHTML !== ""
+      JR.readerDocument.querySelector(".simple-comments").innerHTML !== ""
     ) {
       data.savedComments = DOMPurify.sanitize(
-        JR.simpleArticleIframe.querySelector(".simple-comments").innerHTML
+        JR.readerDocument.querySelector(".simple-comments").innerHTML
       );
       data.savedCompactComments = DOMPurify.sanitize(
-        JR.simpleArticleIframe.querySelector(".simple-compact-comments").innerHTML
+        JR.readerDocument.querySelector(".simple-compact-comments").innerHTML
       );
     }
 

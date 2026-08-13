@@ -49,7 +49,7 @@
         "dark-styles.css",
         "hide-segments.css",
         "page.css",
-        "options.js",
+        "options/*",
         "options.css",
         "fonts/*"
       ]

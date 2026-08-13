@@ -1,7 +1,7 @@
 function addComment(loc) {
-  if (!JR.simpleArticleIframe.body.classList.contains("simple-deleting")) {
-    JR.simpleArticleIframe.body.classList.add("simple-with-comments");
-    JR.simpleArticleIframe.body.classList.add("simple-commenting");
+  if (!JR.readerDocument.body.classList.contains("simple-deleting")) {
+    JR.readerDocument.body.classList.add("simple-with-comments");
+    JR.readerDocument.body.classList.add("simple-commenting");
 
     // Add the compact comment
     let compactComment = document.createElement("a");
@@ -47,7 +47,7 @@ function addComment(loc) {
 
     textarea.focus();
     setTimeout(function () {
-      if (JR.simpleArticleIframe.body.classList.contains("simple-compact-view"))
+      if (JR.readerDocument.body.classList.contains("simple-compact-view"))
         commentContainer.scrollIntoView();
     }, 50);
   }
@@ -67,7 +67,7 @@ function placeComment() {
   JR.hasSavedLink = false;
   JR.shareDropdown.classList.remove("active");
 
-  JR.simpleArticleIframe.body.classList.remove("simple-commenting");
+  JR.readerDocument.body.classList.remove("simple-commenting");
 
   const parent = this.parentElement;
 
@@ -102,7 +102,7 @@ function placeComment() {
   deleteBtn.onclick = function () {
     JR.hasSavedLink = false;
     JR.shareDropdown.classList.remove("active");
-    const compactRef = JR.simpleArticleIframe.querySelector(
+    const compactRef = JR.readerDocument.querySelector(
       "[href *= " + this.parentElement.parentElement.id + "]"
     );
     compactRef.parentElement.removeChild(compactRef);
@@ -113,7 +113,7 @@ function placeComment() {
   backBtn.className = "back-to-ref";
   backBtn.innerText = "↑";
   backBtn.onclick = function () {
-    JR.simpleArticleIframe.defaultView.scrollTo(0, this.dataset.scrollPos);
+    JR.readerDocument.defaultView.scrollTo(0, this.dataset.scrollPos);
   };
 
   while (parent.firstChild) {
@@ -139,28 +139,28 @@ function cancelComment(e, el) {
   parent.parentElement.removeChild(parent);
 
   if (
-    JR.simpleArticleIframe.querySelectorAll(".simple-comment-container").length ===
+    JR.readerDocument.querySelectorAll(".simple-comment-container").length ===
     0
   ) {
-    JR.simpleArticleIframe.body.classList.remove("simple-with-comments");
+    JR.readerDocument.body.classList.remove("simple-with-comments");
   }
-  JR.simpleArticleIframe.body.classList.remove("simple-commenting");
+  JR.readerDocument.body.classList.remove("simple-commenting");
 }
 
 function handlePointerMove(e) {
   let leftEdge, rightEdge;
   if (
-    !JR.simpleArticleIframe
+    !JR.readerDocument
       .querySelector(".simple-container")
       .classList.contains("rtl")
   ) {
-    const edge = JR.simpleArticleIframe
+    const edge = JR.readerDocument
       .querySelector(".simple-article-container")
       .getBoundingClientRect().right;
     leftEdge = edge - 70;
     rightEdge = edge + 170;
   } else {
-    const edge = JR.simpleArticleIframe
+    const edge = JR.readerDocument
       .querySelector(".simple-article-container")
       .getBoundingClientRect().left;
     leftEdge = edge - 170;
@@ -168,15 +168,15 @@ function handlePointerMove(e) {
   }
   const paddingTop = parseInt(
     window
-      .getComputedStyle(JR.simpleArticleIframe.querySelector(".simple-container"))
+      .getComputedStyle(JR.readerDocument.querySelector(".simple-container"))
       .getPropertyValue("padding-top")
   );
   if (e.clientX > leftEdge && e.clientX < rightEdge) {
-    JR.simpleArticleIframe.body.classList.add("simple-show-adder");
+    JR.readerDocument.body.classList.add("simple-show-adder");
     JR.addCommentBtn.style.top =
-      e.clientY - paddingTop + JR.simpleArticleIframe.defaultView.scrollY - 27;
+      e.clientY - paddingTop + JR.readerDocument.defaultView.scrollY - 27;
   } else {
-    JR.simpleArticleIframe.body.classList.remove("simple-show-adder");
+    JR.readerDocument.body.classList.remove("simple-show-adder");
   }
 }
 
@@ -230,7 +230,7 @@ function addInlineCommentFunctionality() {
   }
 
   function checkNearbyPosForP(x, y, shift, num_tries) {
-    const elementsFromPoint = JR.simpleArticleIframe.elementsFromPoint(x, y);
+    const elementsFromPoint = JR.readerDocument.elementsFromPoint(x, y);
     // Make sure we're not nesting the comment
     if (
       elementsFromPoint.some((el) => el.classList.contains("jr-inline-comment"))
@@ -246,10 +246,10 @@ function addInlineCommentFunctionality() {
   }
 
   const format_content_editable = () =>
-    JR.simpleArticleIframe.execCommand("formatBlock", false, "p");
+    JR.readerDocument.execCommand("formatBlock", false, "p");
 
   function insertComment({ el, place_before }) {
-    const comment_container = JR.simpleArticleIframe.createElement("div");
+    const comment_container = JR.readerDocument.createElement("div");
     comment_container.className = "jr-user-content-section";
 
     const tryToDeleteComment = () => {
@@ -261,12 +261,12 @@ function addInlineCommentFunctionality() {
       }
     };
 
-    const content = JR.simpleArticleIframe.createElement("div");
+    const content = JR.readerDocument.createElement("div");
     content.className = "jr-user-content";
     content.setAttribute("contentEditable", true);
     comment_container.appendChild(content);
 
-    const delete_button = JR.simpleArticleIframe.createElement("button");
+    const delete_button = JR.readerDocument.createElement("button");
     delete_button.className = "jr-user-content-delete";
     delete_button.innerText = "X";
     delete_button.ariaLabel = "Delete comment";
@@ -296,16 +296,16 @@ function addInlineCommentFunctionality() {
     comment_container.addEventListener("click", () => {
       content.focus();
       // Move cursor to end
-      const range = JR.simpleArticleIframe.createRange();
+      const range = JR.readerDocument.createRange();
       range.selectNodeContents(content);
       range.collapse(false);
-      const selection = JR.simpleArticleIframe.defaultView.getSelection();
+      const selection = JR.readerDocument.defaultView.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
     });
   }
 
-  JR.simpleArticleIframe.addEventListener("click", (e) => {
+  JR.readerDocument.addEventListener("click", (e) => {
     if (!(e.metaKey || e.ctrlKey)) return;
     // Make sure it's not just a link being clicked
     function checkForAnchor(el, i) {

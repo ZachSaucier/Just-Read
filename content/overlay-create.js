@@ -1,203 +1,38 @@
-let savedComments, savedCompactComments;
-
-function applyDomainSelectors() {
-  if (!JR.chromeStorage["domainSelectors"]) return;
-
-  const domainSelectorArr = JR.chromeStorage["domainSelectors"];
-  for (let i = 0; i < domainSelectorArr.length; i++) {
-    const domainSelObj = domainSelectorArr[i];
-    const regex = new RegExp(domainSelObj.domainPattern, "i");
-
-    if (window.location.href.match(regex)) {
-      if (domainSelObj.titleSelector)
-        JR.titleSelector = domainSelObj.titleSelector;
-      if (domainSelObj.authorSelector)
-        JR.authorSelector = domainSelObj.authorSelector;
-      if (domainSelObj.dateSelector) JR.dateSelector = domainSelObj.dateSelector;
-      if (domainSelObj.contentSelector)
-        JR.contentSelector = domainSelObj.contentSelector;
-      if (domainSelObj.headerImageSelector)
-        JR.headerImageSelector = domainSelObj.headerImageSelector;
-      if (domainSelObj.selectorsToDelete)
-        JR.selectorsToDelete = domainSelObj.selectorsToDelete;
-    }
-  }
-}
-
-function restoreBackupIfPresent(data) {
-  if (typeof data.JRSavedPage === "undefined") return;
-
-  const lastSavedPage = JSON.parse(data.JRSavedPage);
-  if (!lastSavedPage || window.location.href !== lastSavedPage.url) return;
-
-  const restored = document.createElement("div");
-  restored.innerHTML = DOMPurify.sanitize(lastSavedPage.content);
-  JR.pageSelectedContainer = restored;
-
-  if (lastSavedPage.savedComments) {
-    savedComments = lastSavedPage.savedComments;
-    savedCompactComments = lastSavedPage.savedCompactComments;
-  }
-}
-
-function applyDomainSettingsThenCreateOverlay() {
-  applyDomainSelectors();
-
-  if (JR.chromeStorage["backup"]) {
-    chrome.storage.local.get("JRSavedPage", (data) => {
-      restoreBackupIfPresent(data);
-      createReaderOverlay();
-    });
-  } else {
-    createReaderOverlay();
-  }
-}
-
 function createReaderOverlay() {
-  // Disable scroll on main page until closed
   document.documentElement.classList.add("simple-no-scroll");
 
-  // Create an iframe so we don't use old styles
-  JR.simpleArticle = document.createElement("iframe");
-  JR.simpleArticle.id = "simple-article";
-  JR.simpleArticle.className = "simple-fade-up no-trans"; // Add fade
+  JR.readerIframe = document.createElement("iframe");
+  JR.readerIframe.id = "simple-article";
+  JR.readerIframe.className = "simple-fade-up no-trans";
 
-  const container = document.createElement("div");
-  container.className = "simple-container";
+  const { container, articleContainer, lightboxes } = prepareArticleMarkup();
+  const addCommentContainer = createCommentChrome();
+  const { uiContainer, delModeBtn } = createReaderToolbar();
 
-  const articleContainer = document.createElement("div");
-  articleContainer.className = "simple-article-container";
+  container.appendChild(uiContainer);
+  document.body.appendChild(JR.readerIframe);
+  document.getElementById("simple-article").focus();
 
-  // Try using the selected element's content
-  if (JR.userSelected) {
-    JR.pageSelectedContainer = JR.userSelected;
-  }
+  container.appendChild(articleContainer);
+  container.appendChild(JR.compactComments);
+  container.appendChild(addCommentContainer);
+  container.appendChild(JR.comments);
 
-  // If there is no text selected, auto-select the content
-  if (!JR.pageSelectedContainer) {
-    JR.pageSelectedContainer = getArticleContainer();
+  restoreSavedComments();
 
-    const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
-    JR.pageSelectedContainer.innerHTML = DOMPurify.sanitize(
-      JR.pageSelectedContainer.innerHTML.replace(pattern, "</p><p>")
-    );
-  }
-
-  JR.selected = JR.pageSelectedContainer;
-
-  // Get the title, author, etc.
-  articleContainer.appendChild(addArticleMeta());
-
-  // Set the text as our text
-  const contentContainer = document.createElement("div");
-  contentContainer.className = "content-container";
-  contentContainer.innerHTML = DOMPurify.sanitize(
-    JR.pageSelectedContainer.innerHTML
+  runWhenIframeReady(() =>
+    initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes)
   );
+}
 
-  const lightboxes = [];
-
-  const title = articleContainer.querySelector(".simple-title")?.textContent;
-
-  // Strip inline styles
-  const allElems = contentContainer.querySelectorAll("*");
-  allElems.forEach((elem) => {
-    if (elem != undefined) {
-      elem.removeAttribute("style");
-      elem.removeAttribute("color");
-      elem.removeAttribute("width");
-      elem.removeAttribute("height");
-      elem.removeAttribute("background");
-      elem.removeAttribute("bgcolor");
-      elem.removeAttribute("border");
-
-      // Delete the title if we find it in the article
-      if (elem.textContent.trim() === title) {
-        elem.parentElement.removeChild(elem);
-      }
-
-      // See if the pres have code in them
-      let isPreNoCode = true;
-      if (elem.nodeName === "PRE" && !JR.chromeStorage["leavePres"]) {
-        isPreNoCode = false;
-
-        Array.from(elem.children).forEach((child) => {
-          if (child.nodeName === "CODE") {
-            isPreNoCode = true;
-          }
-        });
-
-        // If there's no code, format it
-        if (!isPreNoCode) {
-          elem.innerHTML = DOMPurify.sanitize(
-            elem.innerHTML.replace(/\n/g, "<br/>")
-          );
-        }
-      }
-
-      // Replace the depreciated font element and pres without code with ps
-      if ((elem.nodeName === "FONT" || !isPreNoCode) && elem.parentElement) {
-        const p = document.createElement("p");
-        p.innerHTML = DOMPurify.sanitize(elem.innerHTML);
-
-        elem.parentElement.insertBefore(p, elem);
-        elem.parentElement.removeChild(elem);
-      }
-
-      // Remove any inline style, LaTeX text, or noindex elements and things with aria hidden
-      if (
-        elem.nodeName === "STYLE" ||
-        elem.nodeName === "NOINDEX" ||
-        elem.nodeName === "LINK" ||
-        elem.getAttribute("encoding") == "application/x-tex" ||
-        (elem.getAttribute("aria-hidden") == "true" &&
-          !elem.classList.contains("mwe-math-fallback-image-inline"))
-      )
-        elem.setAttribute("data-simple-delete", true);
-
-      // Show LaTeX plain text on hover
-      if (elem.classList.contains("mwe-math-fallback-image-inline")) {
-        const plainText = document.createElement("div");
-        plainText.className = "simple-plain-text";
-        plainText.innerText = elem.alt;
-        elem.parentElement.insertBefore(plainText, elem.nextSibling);
-      }
-
-      if (elem.nodeName === "IMG") {
-        // Lightbox our images
-        let img = elem;
-        lightboxes.push(img);
-
-        // Load lazy loaded images
-        if (img.dataset.srcset) {
-          img.srcset = img.dataset.srcset;
-        } else if (img.dataset.src) {
-          img.src = img.dataset.src;
-        }
-      }
-
-      // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
-      // Update our scrollbar sizing
-      if (
-        elem.nodeName === "IFRAME" ||
-        elem.nodeName === "VIDEO" ||
-        elem.nodeName === "IMG"
-      ) {
-        elem.addEventListener("load", updateScrollbarMetrics, { once: true });
-      }
-    }
-  });
-
-  // Add the compact comment section
+function createCommentChrome() {
   JR.compactComments = document.createElement("div");
   JR.compactComments.className = "simple-compact-comments";
 
-  // Add the comment section
   JR.comments = document.createElement("div");
   JR.comments.className = "simple-comments";
 
-  // Add the "add comment" button
-  let addCommentContainer = document.createElement("div");
+  const addCommentContainer = document.createElement("div");
   addCommentContainer.className = "simple-add-comment-container";
 
   JR.addCommentBtn = document.createElement("button");
@@ -235,114 +70,49 @@ function createReaderOverlay() {
         primaryText: "Learn more",
         secondaryText: "Maybe later",
       };
-      JR.simpleArticleIframe.body.appendChild(createNotification(notification));
+      JR.readerDocument.body.appendChild(
+        createNotification(notification, JR.readerDocument)
+      );
     }
   };
   addCommentContainer.appendChild(JR.addCommentBtn);
 
-  // Add the next chapter button if there is one
-  const potentialOldMatches = [...contentContainer.querySelectorAll("a[href]")];
-  if (
-    !potentialOldMatches.some((match) => {
-      const text = match.innerText.replace(/\s/g, "").toUpperCase();
-      if (text === "NEXTCHAPTER" || text === "NEXT") {
-        match.className = "jrNextChapter";
-        return true;
-      }
-    })
-  ) {
-    const potentialNewMatches = [...document.querySelectorAll("a[href]")];
+  return addCommentContainer;
+}
 
-    potentialNewMatches.some((match) => {
-      const text = match.innerText?.replace(/\s/g, "").toUpperCase();
-      if (text === "NEXTCHAPTER" || text === "NEXT") {
-        match.className = "jrNextChapter";
-        contentContainer.appendChild(match);
-        return true;
-      }
-    });
-  }
-
-  // Handle RTL sites
-  const direction = window
-    .getComputedStyle(document.body)
-    .getPropertyValue("direction");
-  if (
-    direction === "rtl" ||
-    (contentContainer.firstChild &&
-      isRTL(contentContainer.firstChild.innerText))
-  ) {
-    container.classList.add("rtl");
-  }
-
-  articleContainer.appendChild(contentContainer);
-
-  // Add small bit of info about our extension
-  articleContainer.appendChild(addExtInfo());
-
-  if (JR.headerImageSelector && document.querySelector(JR.headerImageSelector)) {
-    const headerImg = document.querySelector(JR.headerImageSelector);
-    contentContainer.appendChild(headerImg);
-  }
-
-  // Create a container for the UI buttons
-  let uiContainer = document.createElement("div");
+function createReaderToolbar() {
+  const uiContainer = document.createElement("div");
   uiContainer.className = "simple-ui-container";
 
-  // Add the close button
   uiContainer.appendChild(addCloseButton());
-
-  // Add the print button
   uiContainer.appendChild(addPrintButton());
-
-  // Add the share button
   uiContainer.appendChild(addShareButton());
-
-  // Add the summarize button
   uiContainer.appendChild(addSummarizeButton());
 
-  // Add the deletion mode button
-  let delModeBtn = addDelModeButton();
+  const delModeBtn = addDelModeButton();
   uiContainer.appendChild(delModeBtn);
-
-  // Add the undo button
   uiContainer.appendChild(addUndoButton());
 
-  container.appendChild(uiContainer);
+  return { uiContainer, delModeBtn };
+}
 
-  // Add our iframe to the page
-  document.body.appendChild(JR.simpleArticle);
+function restoreSavedComments() {
+  if (!JR.savedComments) return;
 
-  // Focus the article so our shortcuts work from the start
-  document.getElementById("simple-article").focus();
+  JR.comments.innerHTML = DOMPurify.sanitize(JR.savedComments);
+  JR.comments.querySelectorAll(".delete-button").forEach((btn) => {
+    btn.onclick = function () {
+      JR.hasSavedLink = false;
+      JR.shareDropdown.classList.remove("active");
+      const compactRef = JR.readerDocument.querySelector(
+        "[href *= " + this.parentElement.parentElement.id + "]"
+      );
+      compactRef.parentElement.removeChild(compactRef);
+      cancelComment(null, this.parentElement);
+    };
+  });
 
-  // Append our custom HTML to the iframe
-  container.appendChild(articleContainer);
-  container.appendChild(JR.compactComments);
-  container.appendChild(addCommentContainer);
-  container.appendChild(JR.comments);
-
-  // Add saved comments if applicable
-  if (savedComments) {
-    JR.comments.innerHTML = DOMPurify.sanitize(savedComments);
-    JR.comments.querySelectorAll(".delete-button").forEach((btn) => {
-      btn.onclick = function () {
-        JR.hasSavedLink = false;
-        JR.shareDropdown.classList.remove("active");
-        const compactRef = JR.simpleArticleIframe.querySelector(
-          "[href *= " + this.parentElement.parentElement.id + "]"
-        );
-        compactRef.parentElement.removeChild(compactRef);
-        cancelComment(null, this.parentElement);
-      };
-    });
-
-    JR.compactComments.innerHTML = DOMPurify.sanitize(savedCompactComments);
-  }
-
-  runWhenIframeReady(() =>
-    initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes)
-  );
+  JR.compactComments.innerHTML = DOMPurify.sanitize(JR.savedCompactComments);
 }
 
 function runWhenIframeReady(callback) {
@@ -355,14 +125,14 @@ function runWhenIframeReady(callback) {
 }
 
 function initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes) {
-  JR.simpleArticleIframe =
+  JR.readerDocument =
     document.getElementById("simple-article").contentWindow.document;
-  JR.simpleArticleIframe.body.appendChild(container);
-  JR.simpleArticleIframe.documentElement.setAttribute(
+  JR.readerDocument.body.appendChild(container);
+  JR.readerDocument.documentElement.setAttribute(
     "lang",
     document.documentElement.getAttribute("lang")
   );
-  JR.simpleArticleIframe.body.className = window.location.hostname.replace(
+  JR.readerDocument.body.className = window.location.hostname.replace(
     /\./g,
     "-"
   );
@@ -375,27 +145,27 @@ function initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes) 
   createImageLightboxes(lightboxes);
   bindReaderKeyboardShortcuts();
 
-  JR.simpleArticleIframe.querySelectorAll(
+  JR.readerDocument.querySelectorAll(
     "iframe[src *= 'youtube.com/embed/']"
   ).forEach((frame) => frame.parentElement.classList.add("youtubeContainer"));
 
   addInlineCommentFunctionality();
 
-  JR.simpleArticleIframe.addEventListener("pointerup", handleSelectionPointerUp);
-  JR.simpleArticleIframe.addEventListener("touchend", handleSelectionPointerUp);
-  JR.simpleArticleIframe.addEventListener("pointermove", handlePointerMove);
+  JR.readerDocument.addEventListener("pointerup", handleSelectionPointerUp);
+  JR.readerDocument.addEventListener("touchend", handleSelectionPointerUp);
+  JR.readerDocument.addEventListener("pointermove", handlePointerMove);
 
   setTimeout(checkBreakpoints, 10);
-  completeReaderSetup();
+  finishOpeningReader();
 }
 
 function applyTimeEstimate() {
   if (!JR.chromeStorage["addTimeEstimate"]) return;
 
-  const wordCount = JR.simpleArticleIframe
+  const wordCount = JR.readerDocument
     .querySelector(".content-container")
     .innerHTML.split(/\s+/).length;
-  JR.simpleArticleIframe.querySelector(".simple-time-estimate").innerText =
+  JR.readerDocument.querySelector(".simple-time-estimate").innerText =
     Math.floor(wordCount / 200) + " minute read";
 }
 
@@ -443,13 +213,13 @@ function showUsageNotifiers() {
 function removeFlaggedElements() {
   if (JR.selectorsToDelete) {
     JR.selectorsToDelete.forEach((selector) => {
-      JR.simpleArticleIframe.querySelectorAll(selector).forEach((elem) => {
+      JR.readerDocument.querySelectorAll(selector).forEach((elem) => {
         elem.dataset.simpleDelete = true;
       });
     });
   }
 
-  JR.simpleArticleIframe
+  JR.readerDocument
     .querySelectorAll("[data-simple-delete]")
     .forEach((elem) => {
       elem.parentElement.removeChild(elem);
@@ -457,27 +227,27 @@ function removeFlaggedElements() {
 }
 
 function bindReaderControls() {
-  JR.simpleArticleIframe
+  JR.readerDocument
     .querySelector(".simple-close")
     .addEventListener("click", closeOverlay);
 
-  JR.simpleArticleIframe
+  JR.readerDocument
     .querySelector(".simple-print")
     .addEventListener("click", function () {
-      JR.simpleArticleIframe.defaultView.print();
+      JR.readerDocument.defaultView.print();
     });
 
-  JR.simpleArticleIframe
+  JR.readerDocument
     .querySelector(".simple-share")
     .addEventListener("click", shareReaderView);
-  JR.shareDropdown = JR.simpleArticleIframe.querySelector(
+  JR.shareDropdown = JR.readerDocument.querySelector(
     ".simple-share-dropdown"
   );
 
-  const deleteModeButton = JR.simpleArticleIframe.querySelector(".simple-delete");
+  const deleteModeButton = JR.readerDocument.querySelector(".simple-delete");
   if (deleteModeButton) {
     deleteModeButton.onclick = function () {
-      startDeleteElement(JR.simpleArticleIframe);
+      startDeleteElement(JR.readerDocument);
     };
   }
 
@@ -511,26 +281,26 @@ function createImageLightboxes(lightboxes) {
     lightboxImg.src = elem.src;
     lightbox.appendChild(lightboxImg);
 
-    JR.simpleArticleIframe
+    JR.readerDocument
       .querySelector(".simple-container")
       .appendChild(lightbox);
   });
 }
 
 function bindReaderKeyboardShortcuts() {
-  JR.simpleArticleIframe.onkeydown = function (e) {
+  JR.readerDocument.onkeydown = function (e) {
     if (
       e.key === "Escape" &&
-      !JR.simpleArticleIframe.body.classList.contains("simple-deleting") &&
+      !JR.readerDocument.body.classList.contains("simple-deleting") &&
       document.hasFocus()
     )
       closeOverlay();
 
     if (e.key === ";" && (e.ctrlKey || e.metaKey) && e.shiftKey)
-      startDeleteElement(JR.simpleArticleIframe);
+      startDeleteElement(JR.readerDocument);
 
     if ((e.ctrlKey || e.metaKey) && e.key === "p") {
-      JR.simpleArticleIframe.defaultView.print();
+      JR.readerDocument.defaultView.print();
       e.preventDefault();
     }
 

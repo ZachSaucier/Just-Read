@@ -24,10 +24,6 @@
   }
 })(window.document, Element.prototype);
 
-function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-
 // Mute a singular HTML5 element
 function muteMe(elem) {
   elem.muted = true;
@@ -65,25 +61,6 @@ function convertCssVariableToReadableValue(color) {
     return computedStyles.getPropertyValue(cssVar);
   }
   return color;
-}
-
-// Given a chrome storage object add them to our local stylsheet obj
-function getStylesFromStorage(storage) {
-  for (let key in storage) {
-    if (key.substring(0, 3) === "jr-") {
-      // Get stylesheets in the new format
-      JR.stylesheetObj[key.substring(3)] = storage[key];
-    }
-  }
-}
-
-// Set the chrome storage based on our stylesheet object
-function setStylesOfStorage() {
-  for (let stylesheet in JR.stylesheetObj) {
-    const obj = {};
-    obj["jr-" + stylesheet] = JR.stylesheetObj[stylesheet];
-    chrome.storage.sync.set(obj);
-  }
 }
 
 // From https://stackoverflow.com/a/14824756/2065702
@@ -131,7 +108,7 @@ function checkAgainstBlacklist(elem, level) {
 // See if an element is part of the selectable content
 function isContentElem(elem) {
   if (
-    JR.simpleArticleIframe
+    JR.readerDocument
       .querySelector(".simple-article-container")
       .contains(elem)
   )

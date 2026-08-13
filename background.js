@@ -9,6 +9,10 @@ let injectingTabs = {};
 // Add new content/*.js files here (init.js must stay last).
 const CONTENT_SCRIPT_FILES = [
   "content/state.js",
+  "shared/helpers.js",
+  "shared/stylesheets.js",
+  "shared/premium.js",
+  "shared/notifications.js",
   "content/helpers.js",
   "content/selection.js",
   "content/article.js",
@@ -18,9 +22,9 @@ const CONTENT_SCRIPT_FILES = [
   "content/highlighter.js",
   "content/edit-bar.js",
   "content/comments.js",
-  "content/search.js",
   "content/features.js",
   "content/overlay.js",
+  "content/overlay-article.js",
   "content/overlay-create.js",
   "content/init.js",
 ];
@@ -32,7 +36,6 @@ const LIBRARY_FILES = [
   "/external-libraries/Rangy/rangy.min.js",
   "/external-libraries/Rangy/rangy-classapplier.min.js",
   "/external-libraries/Rangy/rangy-highlighter.min.js",
-  "/external-libraries/Rangy/rangy-textrange.min.js",
 ];
 
 function startJustRead(tab) {

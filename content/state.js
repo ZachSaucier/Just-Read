@@ -22,8 +22,11 @@ var JR = {
   userSelected: undefined,
   selected: undefined,
 
-  simpleArticle: undefined,
-  simpleArticleIframe: undefined,
+  readerIframe: undefined,
+  readerDocument: undefined,
+
+  savedComments: undefined,
+  savedCompactComments: undefined,
 
   stylesheetObj: {},
   stylesheetVersion: 6.4, // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE

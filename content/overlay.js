@@ -23,17 +23,17 @@ function closeOverlay() {
   window.removeEventListener("resize", hideToolbar);
 
   // Fade out
-  JR.simpleArticle.classList.add("simple-fade-up");
+  JR.readerIframe.classList.add("simple-fade-up");
 
   // Remove some general listeners
-  JR.simpleArticleIframe.removeEventListener("pointerup", handleSelectionPointerUp);
-  JR.simpleArticleIframe.removeEventListener("touchend", handleSelectionPointerUp);
-  JR.simpleArticleIframe.removeEventListener("pointermove", handlePointerMove);
+  JR.readerDocument.removeEventListener("pointerup", handleSelectionPointerUp);
+  JR.readerDocument.removeEventListener("touchend", handleSelectionPointerUp);
+  JR.readerDocument.removeEventListener("pointermove", handlePointerMove);
 
   // Reset our variables
   JR.pageSelectedContainer = null;
   JR.userSelected = null;
-  JR.simpleArticleIframe = undefined;
+  JR.readerDocument = undefined;
   JR.editBar = undefined;
   JR.chromeStorage = undefined;
 
@@ -45,14 +45,14 @@ function closeOverlay() {
     chrome.runtime.sendMessage({ lastClosed: Date.now() });
 
     // Remove our overlay
-    JR.simpleArticle.parentElement.removeChild(JR.simpleArticle);
-    JR.simpleArticle = undefined;
+    JR.readerIframe.parentElement.removeChild(JR.readerIframe);
+    JR.readerIframe = undefined;
   }, 100); // Make sure we can animate it
 }
 
 // Handle link clicks
 function linkListener(e) {
-  if (!JR.simpleArticleIframe.body.classList.contains("simple-deleting")) {
+  if (!JR.readerDocument.body.classList.contains("simple-deleting")) {
     // Don't change the top most if it's not in the current window
     if (
       e.ctrlKey ||
@@ -73,8 +73,8 @@ function linkListener(e) {
       (hrefArr[0] !== top.window.location.href.split("#")[0] && // Anchored to an ID on another page
         hrefArr[0] !== "about:blank" &&
         hrefArr[0] !== "_blank") ||
-      (JR.simpleArticleIframe.getElementById(hrefArr[1]) == null && // The element is not in the article section
-        JR.simpleArticleIframe.querySelector("a[name='" + hrefArr[1] + "']") ==
+      (JR.readerDocument.getElementById(hrefArr[1]) == null && // The element is not in the article section
+        JR.readerDocument.querySelector("a[name='" + hrefArr[1] + "']") ==
           null &&
         hrefArr[1] !== "_")
     ) {
@@ -85,14 +85,14 @@ function linkListener(e) {
       e.stopPropagation();
 
       if (hrefArr[1].startsWith("jr-")) {
-        JR.simpleArticleIframe.getElementById(hrefArr[1]).scrollIntoView(true);
-        let backArrow = JR.simpleArticleIframe.querySelector(
+        JR.readerDocument.getElementById(hrefArr[1]).scrollIntoView(true);
+        let backArrow = JR.readerDocument.querySelector(
           this.id + " .back-to-ref"
         );
-        backArrow.dataset.scrollPos = JR.simpleArticleIframe.scrollTop;
+        backArrow.dataset.scrollPos = JR.readerDocument.scrollTop;
       } else {
         top.window.location.hash = hrefArr[1];
-        JR.simpleArticleIframe.defaultView.location.hash = hrefArr[1];
+        JR.readerDocument.defaultView.location.hash = hrefArr[1];
       }
     }
   }

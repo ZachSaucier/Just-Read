@@ -2,7 +2,7 @@
 let highlighter;
 const rangyOptions = { exclusive: false };
 function initHighlighter() {
-  highlighter = rangy.createHighlighter(JR.simpleArticleIframe);
+  highlighter = rangy.createHighlighter(JR.readerDocument);
 
   const rangeOptions = {
     onElementCreate: (elem) => {
@@ -84,7 +84,7 @@ function handleSelectionPointerUp(e) {
   if (typeof JR.editBar === "undefined") {
     JR.editBar = createEditBar();
     JR.editBar.style.display = "none";
-    JR.simpleArticleIframe.body.appendChild(JR.editBar);
+    JR.readerDocument.body.appendChild(JR.editBar);
 
     if (isTouch) {
       JR.editBar.style.transform = "translateY(-100%)";
@@ -144,33 +144,33 @@ function handleSelectionPointerUp(e) {
       .addEventListener("click", removeHighlightFromSelectedText);
   }
 
-  const sel = rangy.getSelection(JR.simpleArticleIframe).toString();
+  const sel = rangy.getSelection(JR.readerDocument).toString();
   if (sel !== "" && sel !== lastMessage && isContentElem(e.target)) {
     JR.editorShortcutsEnabled = true;
     lastMessage = sel;
 
     JR.editBar.style.display = "block";
     const r = rangy
-      .getSelection(JR.simpleArticleIframe)
+      .getSelection(JR.readerDocument)
       .nativeSelection.getRangeAt(0)
       .getBoundingClientRect();
     JR.editBar.style.top =
-      r.top + JR.simpleArticleIframe.defaultView.pageYOffset - 60 + "px";
+      r.top + JR.readerDocument.defaultView.pageYOffset - 60 + "px";
     JR.editBar.style.left =
       r.left +
       r.width / 2 +
-      JR.simpleArticleIframe.defaultView.pageXOffset -
+      JR.readerDocument.defaultView.pageXOffset -
       105 +
       "px";
   } else if (!JR.editBar.contains(e.target)) {
     hideToolbar();
 
     if (
-      JR.simpleArticleIframe.querySelector(".jr-adding") &&
-      JR.simpleArticleIframe.querySelector(".jr-adding textarea").value === "" &&
-      !JR.simpleArticleIframe.querySelector(".jr-adding").contains(e.target)
+      JR.readerDocument.querySelector(".jr-adding") &&
+      JR.readerDocument.querySelector(".jr-adding textarea").value === "" &&
+      !JR.readerDocument.querySelector(".jr-adding").contains(e.target)
     ) {
-      cancelComment(null, JR.simpleArticleIframe.querySelector(".jr-adding"));
+      cancelComment(null, JR.readerDocument.querySelector(".jr-adding"));
     }
   }
 }
@@ -194,15 +194,15 @@ function hideToolbar() {
 }
 
 function checkBreakpoints() {
-  if (JR.simpleArticleIframe) {
-    let container = JR.simpleArticleIframe.querySelector(
+  if (JR.readerDocument) {
+    let container = JR.readerDocument.querySelector(
       ".simple-article-container"
     );
     if (window.innerWidth - container.offsetWidth < 320) {
       // Too small to show regular comments
-      JR.simpleArticleIframe.body.classList.add("simple-compact-view");
+      JR.readerDocument.body.classList.add("simple-compact-view");
     } else {
-      JR.simpleArticleIframe.body.classList.remove("simple-compact-view");
+      JR.readerDocument.body.classList.remove("simple-compact-view");
     }
   }
 }
@@ -215,7 +215,9 @@ function addHighlighterNotification() {
     primaryText: "Learn more",
     secondaryText: "Maybe later",
   };
-  JR.simpleArticleIframe.body.appendChild(createNotification(notification));
+  JR.readerDocument.body.appendChild(
+    createNotification(notification, JR.readerDocument)
+  );
 }
 
 function highlightSelectedText(colorName) {
@@ -271,7 +273,7 @@ function strikeThrough() {
 }
 
 function toggleContentEditing() {
-  const content_container = JR.simpleArticleIframe.querySelector(".content-container");
+  const content_container = JR.readerDocument.querySelector(".content-container");
   const is_already_editable = content_container.getAttribute("contenteditable") === "true";
 
   if (is_already_editable) {
@@ -286,7 +288,7 @@ function toggleContentEditing() {
 
 function deleteSelection() {
   if (JR.isPremium) {
-    const sel = rangy.getSelection(JR.simpleArticleIframe);
+    const sel = rangy.getSelection(JR.readerDocument);
     if (sel.rangeCount > 0) {
       for (let i = 0; i < sel.rangeCount; i++) {
         sel.getRangeAt(i).deleteContents();

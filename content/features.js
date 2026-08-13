@@ -1,8 +1,8 @@
 // Auto-scroll functionality
 function scrollPage() {
   if (
-    JR.simpleArticleIframe &&
-    !JR.simpleArticleIframe.body.classList.contains("paused")
+    JR.readerDocument &&
+    !JR.readerDocument.body.classList.contains("paused")
   ) {
     let curTime = Date.now(),
       timePassed = curTime - JR.lastTime;
@@ -10,7 +10,7 @@ function scrollPage() {
     if (timePassed > 16.6666667) {
       // Run at a max of 60 fps
       JR.nextMove += JR.scrollSpeed;
-      JR.simpleArticleIframe.defaultView.scrollBy(0, JR.nextMove);
+      JR.readerDocument.defaultView.scrollBy(0, JR.nextMove);
 
       JR.lastTime = curTime;
 
@@ -22,8 +22,8 @@ function scrollPage() {
 }
 
 function toggleScroll() {
-  JR.simpleArticleIframe.body.classList.toggle("paused");
-  if (JR.simpleArticleIframe.body.classList.contains("paused")) {
+  JR.readerDocument.body.classList.toggle("paused");
+  if (JR.readerDocument.body.classList.contains("paused")) {
     JR.pauseScrollBtn.innerText = "Start scroll";
   } else {
     JR.pauseScrollBtn.innerText = "Pause scroll";
@@ -67,7 +67,7 @@ let progressBar,
   ticking = false;
 let winheight, docheight, trackLength;
 function getDocHeight() {
-  let D = JR.simpleArticleIframe;
+  let D = JR.readerDocument;
   return Math.max(
     D.body.scrollHeight,
     D.documentElement.scrollHeight,
@@ -79,7 +79,7 @@ function getDocHeight() {
 }
 function updateScrollbarMetrics() {
   if (JR.chromeStorage["scrollbar"]) {
-    let D = JR.simpleArticleIframe;
+    let D = JR.readerDocument;
     winheight =
       D.defaultView.innerHeight || (D.documentElement || D.body).clientHeight;
     docheight = getDocHeight();
@@ -94,8 +94,8 @@ function scheduleProgressBarUpdate() {
   }
 }
 function updateProgressBar() {
-  if (progressBar && JR.simpleArticleIframe) {
-    const D = JR.simpleArticleIframe;
+  if (progressBar && JR.readerDocument) {
+    const D = JR.readerDocument;
     const scrollTop =
       D.defaultView.pageYOffset ||
       (D.documentElement || D.body.parentElement || D.body).scrollTop;
@@ -110,23 +110,23 @@ function updateProgressBar() {
 
 function initScrollbar() {
   // Hide the original scrollbar
-  JR.simpleArticleIframe.body.classList.add("hideScrollbar");
+  JR.readerDocument.body.classList.add("hideScrollbar");
 
   progressBar = document.createElement("progress");
   progressBar.classList.add("simple-progress");
   progressBar.max = 100;
-  JR.simpleArticleIframe
+  JR.readerDocument
     .querySelector(".content-container")
     .appendChild(progressBar);
 
   // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
   updateScrollbarMetrics();
-  JR.simpleArticleIframe.defaultView.addEventListener(
+  JR.readerDocument.defaultView.addEventListener(
     "scroll",
     scheduleProgressBarUpdate,
     false
   );
-  JR.simpleArticleIframe.defaultView.addEventListener(
+  JR.readerDocument.defaultView.addEventListener(
     "resize",
     updateScrollbarMetrics,
     false
@@ -138,7 +138,7 @@ function initScrollbar() {
 
 function cloneReaderContentForShare(keepJR) {
   // Create a copy of the Just Read content
-  const copy = JR.simpleArticleIframe
+  const copy = JR.readerDocument
     .querySelector(".simple-container")
     .cloneNode(true);
 
@@ -168,7 +168,7 @@ function cloneReaderContentForShare(keepJR) {
   });
 
   // Add the body's classes to our container (used to keep styling correct)
-  copy.className += " " + JR.simpleArticleIframe.body.className;
+  copy.className += " " + JR.readerDocument.body.className;
 
   // Add link to original article
   const originalLink = document.createElement("a");
@@ -306,12 +306,12 @@ function shareReaderView() {
         .catch(function (err) {
           JR.hasSavedLink = false;
           if (err.status === 428) {
-            JR.simpleArticleIframe
+            JR.readerDocument
               .querySelector(".simple-share-alert")
               .classList.add("active");
             window.clearTimeout(alertTimeout);
             alertTimeout = setTimeout(function () {
-              JR.simpleArticleIframe
+              JR.readerDocument
                 .querySelector(".simple-share-alert")
                 .classList.remove("active");
             }, 10000);
@@ -328,6 +328,8 @@ function shareReaderView() {
       primaryText: "Learn more",
       secondaryText: "Maybe later",
     };
-    JR.simpleArticleIframe.body.appendChild(createNotification(notification));
+    JR.readerDocument.body.appendChild(
+      createNotification(notification, JR.readerDocument)
+    );
   }
 }

@@ -1,6 +1,6 @@
 // Add the theme editor button
 function addThemeEditorButton() {
-  const button = JR.simpleArticleIframe.createElement("button");
+  const button = JR.readerDocument.createElement("button");
 
   button.className = "simple-control simple-edit-theme";
   button.title = "Edit your theme";
@@ -153,7 +153,7 @@ function saveStyles() {
   Array.from(JR.themeStylesheet.cssRules).forEach((rule) => (CSSString += rule.cssText + "\n"));
 
   JR.stylesheetObj[JR.theme] = CSSString;
-  setStylesOfStorage();
+  saveStylesheetsToStorage(JR.stylesheetObj);
   if (newTheme) {
     let selectElem = document.querySelector(".dg select");
     selectElem.innerHTML = DOMPurify.sanitize(
@@ -207,7 +207,7 @@ function closeStyleEditor() {
 }
 
 function openStyleEditor() {
-  JR.themeStylesheet = JR.simpleArticleIframe.styleSheets[2];
+  JR.themeStylesheet = JR.readerDocument.styleSheets[2];
 
   if (JR.datGUI) {
     JR.datGUI.domElement.style.display = "block";
@@ -226,7 +226,7 @@ function openStyleEditor() {
     themeList.onChange((value) => {
       saved = true;
       JR.styleElem.innerHTML = DOMPurify.sanitize(JR.stylesheetObj[value]);
-      JR.themeStylesheet = JR.simpleArticleIframe.styleSheets[2];
+      JR.themeStylesheet = JR.readerDocument.styleSheets[2];
       updateEditorStyles(editor);
 
       JR.theme = value;

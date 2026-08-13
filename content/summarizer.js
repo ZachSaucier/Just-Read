@@ -157,7 +157,7 @@ function handleSummarizeClick() {
     const options = normalizeSummarizerOptions(rawOptions);
 
     const contentContainer =
-      JR.simpleArticleIframe.querySelector(".content-container");
+      JR.readerDocument.querySelector(".content-container");
     if (contentContainer.querySelector(".simple-summary")) {
       contentContainer.removeChild(
         contentContainer.querySelector(".simple-summary")

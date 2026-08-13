@@ -1,100 +1,36 @@
-function checkPremium() {
-  // Check if premium
-  if (
-    JR.chromeStorage.jrSecret &&
-    // Limit API calls on open to just 1 per day
-    (typeof JR.chromeStorage.jrLastChecked === "undefined" ||
-      JR.chromeStorage.jrLastChecked === "" ||
-      Date.now() - JR.chromeStorage.jrLastChecked > 86400000)
-  ) {
-    chrome.storage.sync.set({ jrLastChecked: Date.now() });
-
-    JR.jrSecret = JR.chromeStorage.jrSecret;
-    fetch(JR.jrDomain + "checkPremium", {
-      mode: "cors",
-      method: "POST",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-      body: JSON.stringify({
-        jrSecret: JR.jrSecret,
-      }),
-    })
-      .then(function (response) {
-        if (!response.ok) throw response;
-        else return response.text();
-      })
-      .then((response) => {
-        JR.isPremium = response === "true";
-        chrome.storage.sync.set({ isPremium: JR.isPremium });
-        loadStylesThenOpenReader();
-      })
-      .catch((err) => console.error(`Fetch Error =\n`, err));
-  } else {
-    JR.isPremium = JR.chromeStorage.isPremium ? JR.chromeStorage.isPremium : false;
-    JR.jrSecret = JR.chromeStorage.jrSecret ? JR.chromeStorage.jrSecret : false;
-    loadStylesThenOpenReader();
-  }
+function verifyPremiumThenOpenReader() {
+  refreshPremiumStatus({
+    domain: JR.jrDomain,
+    secret: JR.chromeStorage.jrSecret,
+    lastChecked: JR.chromeStorage.jrLastChecked,
+    cachedIsPremium: JR.chromeStorage.isPremium,
+    onReady: ({ isPremium, secret }) => {
+      JR.isPremium = isPremium;
+      JR.jrSecret = secret;
+      loadStoredThemesThenOpenReader();
+    },
+  });
 }
 
-function loadStylesThenOpenReader() {
-  // Collect all of our stylesheets in our object
-  getStylesFromStorage(JR.chromeStorage);
+function loadStoredThemesThenOpenReader() {
+  collectStylesheetsFromStorage(JR.chromeStorage, JR.stylesheetObj);
 
-  // Check to see if the default stylesheet needs to be updated
-  let needsUpdate = false;
-  let versionResult = JR.chromeStorage["stylesheet-version"];
-
-  // If the user has a version of the stylesheets and it is less than the current one, update it
-  if (
+  const versionResult = JR.chromeStorage["stylesheet-version"];
+  const needsUpdate =
     typeof versionResult === "undefined" ||
-    versionResult < JR.stylesheetVersion
-  ) {
-    chrome.storage.sync.set({ "stylesheet-version": JR.stylesheetVersion });
+    versionResult < JR.stylesheetVersion;
 
-    needsUpdate = true;
+  if (needsUpdate) {
+    chrome.storage.sync.set({ "stylesheet-version": JR.stylesheetVersion });
   }
 
-  if (
-    isEmpty(JR.stylesheetObj) || // Not found, so we add our default
-    needsUpdate
-  ) {
-    // Update the default stylesheet if it's on a previous version
-
-    // Open the default CSS file and save it to our object
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", chrome.runtime.getURL("default-styles.css"), true);
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-        // Save the file's contents to our object
-        JR.stylesheetObj["default-styles.css"] = xhr.responseText;
-
-        // Save it to Chrome storage
-        setStylesOfStorage();
-
-        // Continue on loading the page
-        beginOpeningReader();
-      }
-    };
-    xhr.send();
-
-    let xhr2 = new XMLHttpRequest();
-    xhr2.open("GET", chrome.runtime.getURL("dark-styles.css"), true);
-    xhr2.onreadystatechange = function () {
-      if (xhr2.readyState == XMLHttpRequest.DONE && xhr2.status == 200) {
-        // Save the file's contents to our object
-        JR.stylesheetObj["dark-styles.css"] = xhr2.responseText;
-
-        // Save it to Chrome storage
-        setStylesOfStorage();
-      }
-    };
-    xhr2.send();
-
-    needsUpdate = false;
-
+  if (isEmpty(JR.stylesheetObj) || needsUpdate) {
+    loadBundledTheme(JR.stylesheetObj, "dark-styles.css");
+    loadBundledTheme(JR.stylesheetObj, "default-styles.css", applyThemeAndCreateOverlay);
     return;
   }
 
-  beginOpeningReader();
+  applyThemeAndCreateOverlay();
 }
 
 // Add the article author and date
@@ -415,7 +351,9 @@ function addSummaryNotifier() {
     primaryText: "Learn more",
     secondaryText: "Not interested",
   };
-  JR.simpleArticleIframe.body.appendChild(createNotification(notification));
+  JR.readerDocument.body.appendChild(
+    createNotification(notification, JR.readerDocument)
+  );
 }
 
 function addPremiumNotifier() {
@@ -426,7 +364,9 @@ function addPremiumNotifier() {
     primaryText: "Learn more",
     secondaryText: "Maybe later",
   };
-  JR.simpleArticleIframe.body.appendChild(createNotification(notification));
+  JR.readerDocument.body.appendChild(
+    createNotification(notification, JR.readerDocument)
+  );
 }
 
 function addReviewNotifier(roundedNumViews, advertisePremium, tenK) {
@@ -457,47 +397,7 @@ function addReviewNotifier(roundedNumViews, advertisePremium, tenK) {
     notification.url = mailtoUrl;
   }
 
-  JR.simpleArticleIframe.body.appendChild(createNotification(notification));
-}
-
-function createNotification(options) {
-  const oldNotification = JR.simpleArticleIframe.querySelector(".jr-notifier");
-  if (oldNotification)
-    oldNotification.parentElement.removeChild(oldNotification);
-
-  const notifier = document.createElement("div");
-  notifier.className = "jr-tooltip jr-notifier";
-
-  const notificationText = document.createElement("p");
-  notificationText.innerHTML = DOMPurify.sanitize(options.textContent);
-
-  const btnContainer = document.createElement("div");
-  btnContainer.className = "right-align-buttons";
-
-  const removeNotification = () => {
-    notifier.parentElement.removeChild(notifier);
-  };
-
-  const secondaryBtn = document.createElement("button");
-  secondaryBtn.className = "jr-secondary";
-  secondaryBtn.addEventListener("click", removeNotification, { once: true });
-  secondaryBtn.innerText = options.secondaryText;
-
-  const primaryLink = document.createElement("a");
-  primaryLink.href = options.url;
-  primaryLink.target = "_blank";
-
-  const primaryBtn = document.createElement("button");
-  primaryBtn.className = "jr-primary";
-  primaryBtn.innerText = options.primaryText;
-  primaryBtn.addEventListener("click", removeNotification, { once: true });
-
-  primaryLink.appendChild(primaryBtn);
-  btnContainer.appendChild(secondaryBtn);
-  btnContainer.appendChild(primaryLink);
-
-  notifier.appendChild(notificationText);
-  notifier.appendChild(btnContainer);
-
-  return notifier;
+  JR.readerDocument.body.appendChild(
+    createNotification(notification, JR.readerDocument)
+  );
 }
