@@ -1,5 +1,37 @@
 // Must load last (see CONTENT_SCRIPT_FILES in background.js).
 
+function verifyPremiumThenOpenReader() {
+  refreshPremiumStatus({
+    domain: JR.jrDomain,
+    secret: JR.jrSecret,
+    lastChecked: JR.jrLastChecked,
+    cachedIsPremium: JR.isPremium,
+    onReady: ({ isPremium, secret }) => {
+      JR.isPremium = isPremium;
+      JR.jrSecret = secret;
+      loadStoredThemesThenOpenReader();
+    },
+  });
+}
+
+function loadStoredThemesThenOpenReader() {
+  const needsUpdate =
+    typeof JR.settings.stylesheetVersion === "undefined" ||
+    JR.settings.stylesheetVersion < JR.stylesheetVersion;
+
+  if (needsUpdate) {
+    chrome.storage.sync.set({ "stylesheet-version": JR.stylesheetVersion });
+  }
+
+  if (isEmpty(JR.stylesheetObj) || needsUpdate) {
+    loadBundledTheme(JR.stylesheetObj, "dark-styles.css");
+    loadBundledTheme(JR.stylesheetObj, "default-styles.css", applyThemeAndCreateOverlay);
+    return;
+  }
+
+  applyThemeAndCreateOverlay();
+}
+
 function applySessionFromStorage(storage) {
   JR.jrSecret = storage.jrSecret || false;
   JR.isPremium = !!storage.isPremium;

@@ -19,14 +19,6 @@ function makeDoubleClick(doubleClickCallback, singleClickCallback) {
   })();
 }
 
-function checkFileName(fileName) {
-  let tempName = fileName,
-    count = 1;
-  while (stylesheetObj[tempName])
-    tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css");
-  return tempName;
-}
-
 function rename() {
   const liItem = this;
 
@@ -38,7 +30,7 @@ function rename() {
 
   fileNameInput.onblur = function () {
     if (fileNameInput.value != fileNameInput.dataset.originalName) {
-      fileNameInput.value = checkFileName(fileNameInput.value);
+      fileNameInput.value = checkFileName(fileNameInput.value, stylesheetObj);
 
       stylesheetObj[fileNameInput.value] = stylesheetObj[liItem.innerText];
       delete stylesheetObj[liItem.innerText];
@@ -105,7 +97,7 @@ function afterThemeSaved() {
   const currFileElem = document.querySelector(".stylesheets .active");
 
   if (currFileElem.classList.contains("locked")) {
-    const fileName = checkFileName(currFileElem.innerText);
+    const fileName = checkFileName(currFileElem.innerText, stylesheetObj);
 
     const list = document.querySelector(".stylesheets"),
       li = document.createElement("li");

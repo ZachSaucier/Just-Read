@@ -1,3 +1,11 @@
+function checkFileName(fileName, stylesheetObj) {
+  let tempName = fileName,
+    count = 1;
+  while (stylesheetObj[tempName])
+    tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css");
+  return tempName;
+}
+
 function collectStylesheetsFromStorage(storage, stylesheetObj) {
   for (let key in storage) {
     if (key.substring(0, 3) === "jr-") {

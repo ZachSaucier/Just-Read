@@ -109,16 +109,6 @@ function openOptionsPage() {
   chrome.runtime.sendMessage("Open options");
 }
 
-// Check to make sure there isn't a file with this name already. If so, add a number to the end
-function checkFileName(fileName) {
-  let tempName = fileName,
-    count = 1;
-
-  while (JR.stylesheetObj[tempName])
-    tempName = fileName.replace(/(\.[\w\d_-]+)$/i, "(" + count++ + ").css");
-  return tempName;
-}
-
 function updatePrevStyles(newTheme) {
   prevStyles.theme = newTheme;
   prevStyles.fontSize = getStylesheetValue(JR.themeStylesheet, bodySelector, "font-size");
@@ -144,7 +134,7 @@ function saveStyles() {
   // Save styles to the stylesheet
   let newTheme = false;
   if (JR.theme === "default-styles.css" || JR.theme === "dark-styles.css") {
-    JR.theme = checkFileName(JR.theme);
+    JR.theme = checkFileName(JR.theme, JR.stylesheetObj);
     chrome.storage.sync.set({ currentTheme: JR.theme });
     newTheme = true;
   }

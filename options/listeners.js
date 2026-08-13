@@ -29,7 +29,7 @@ function addEventListeners() {
 
       fileName = fileName.replace(/[^a-z0-9]/gi, "-").toLowerCase() + ".css";
 
-      fileName = checkFileName(fileName);
+      fileName = checkFileName(fileName, stylesheetObj);
 
       const list = document.querySelector(".stylesheets"),
         li = document.createElement("li");
