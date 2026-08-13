@@ -14,66 +14,66 @@ function initHighlighter() {
   };
 
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-highlight-yellow", rangeOptions)
+    rangy.createClassApplier("jr-highlight-yellow", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-highlight-blue", rangeOptions)
+    rangy.createClassApplier("jr-highlight-blue", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-highlight-green", rangeOptions)
+    rangy.createClassApplier("jr-highlight-green", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-highlight-pink", rangeOptions)
+    rangy.createClassApplier("jr-highlight-pink", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-highlight-purple", rangeOptions)
+    rangy.createClassApplier("jr-highlight-purple", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-highlight-orange", rangeOptions)
+    rangy.createClassApplier("jr-highlight-orange", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-highlight-red", rangeOptions)
-  );
-
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-white", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-black", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-yellow", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-blue", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-green", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-pink", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-purple", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-orange", rangeOptions)
-  );
-  highlighter.addClassApplier(
-    rangy.createClassApplier("jr-color-red", rangeOptions)
+    rangy.createClassApplier("jr-highlight-red", rangeOptions),
   );
 
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-strike-through", rangeOptions)
+    rangy.createClassApplier("jr-color-white", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-underline", rangeOptions)
+    rangy.createClassApplier("jr-color-black", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-italicize", rangeOptions)
+    rangy.createClassApplier("jr-color-yellow", rangeOptions),
   );
   highlighter.addClassApplier(
-    rangy.createClassApplier("jr-bolden", rangeOptions)
+    rangy.createClassApplier("jr-color-blue", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-color-green", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-color-pink", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-color-purple", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-color-orange", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-color-red", rangeOptions),
+  );
+
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-strike-through", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-underline", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-italicize", rangeOptions),
+  );
+  highlighter.addClassApplier(
+    rangy.createClassApplier("jr-bolden", rangeOptions),
   );
 }
 
@@ -100,7 +100,9 @@ function handleSelectionPointerUp(e) {
     JR.editBar.addEventListener("click", hidePickers);
 
     JR.editBar.querySelector(".jr-bold").addEventListener("click", bolden);
-    JR.editBar.querySelector(".jr-italics").addEventListener("click", italicize);
+    JR.editBar
+      .querySelector(".jr-italics")
+      .addEventListener("click", italicize);
     JR.editBar.querySelector(".jr-underl").addEventListener("click", underline);
     JR.editBar
       .querySelector(".jr-strike")
@@ -201,7 +203,7 @@ function hideToolbar() {
 function checkBreakpoints() {
   if (JR.readerDocument) {
     let container = JR.readerDocument.querySelector(
-      ".simple-article-container"
+      ".simple-article-container",
     );
     if (window.innerWidth - container.offsetWidth < 320) {
       // Too small to show regular comments
@@ -221,7 +223,7 @@ function addHighlighterNotification() {
     secondaryText: "Maybe later",
   };
   JR.readerDocument.body.appendChild(
-    createNotification(notification, JR.readerDocument)
+    createNotification(notification, JR.readerDocument),
   );
 }
 
@@ -278,8 +280,10 @@ function strikeThrough() {
 }
 
 function toggleContentEditing() {
-  const content_container = JR.readerDocument.querySelector(".content-container");
-  const is_already_editable = content_container.getAttribute("contenteditable") === "true";
+  const content_container =
+    JR.readerDocument.querySelector(".content-container");
+  const is_already_editable =
+    content_container.getAttribute("contenteditable") === "true";
 
   if (is_already_editable) {
     content_container.setAttribute("contenteditable", false);
@@ -329,85 +333,130 @@ function rangesForAnnotationRemoval() {
   });
 }
 
-function annotationElementsInRange(range) {
-  const root =
-    JR.readerDocument.querySelector(".content-container") ||
-    JR.readerDocument.body;
-  const selector = [
-    "[class*='jr-highlight-']",
-    "[class*='jr-color-']",
-    ".jr-strike-through",
-    ".jr-underline",
-    ".jr-italicize",
-    ".jr-bolden",
-  ].join(",");
-
-  const matches = [];
-  root.querySelectorAll(selector).forEach((el) => {
-    if (rangeIntersectsNode(range, el)) matches.push(el);
+function toRangyRanges(nativeRanges) {
+  const out = [];
+  nativeRanges.forEach((nativeRange) => {
+    try {
+      const wr = rangy.createRange(JR.readerDocument);
+      wr.setStart(nativeRange.startContainer, nativeRange.startOffset);
+      wr.setEnd(nativeRange.endContainer, nativeRange.endOffset);
+      out.push(wr);
+    } catch (e) {
+      // Range no longer valid
+    }
   });
-  return matches;
+  return out;
 }
 
-function rangeIntersectsNode(range, node) {
-  try {
-    if (typeof range.intersectsNode === "function") {
-      return range.intersectsNode(node);
-    }
-  } catch (e) {
-    // Fall through to boundary comparison
-  }
-
-  const nodeRange = JR.readerDocument.createRange();
-  try {
-    nodeRange.selectNode(node);
-  } catch (e) {
-    return false;
-  }
+function annotationBookmarkRoot() {
   return (
-    range.compareBoundaryPoints(Range.START_TO_END, nodeRange) < 0 &&
-    range.compareBoundaryPoints(Range.END_TO_START, nodeRange) > 0
+    JR.readerDocument.querySelector(".content-container") ||
+    JR.readerDocument.body
   );
 }
 
-function unwrapElement(el) {
-  const parent = el.parentNode;
-  if (!parent) return;
-  while (el.firstChild) parent.insertBefore(el.firstChild, el);
-  parent.removeChild(el);
-  parent.normalize();
+function charOffsetBefore(container, node, offset) {
+  const pre = JR.readerDocument.createRange();
+  pre.selectNodeContents(container);
+  try {
+    pre.setEnd(node, offset);
+  } catch (e) {
+    return 0;
+  }
+  return pre.toString().length;
+}
+
+function bookmarkNativeRange(container, range) {
+  const start = charOffsetBefore(
+    container,
+    range.startContainer,
+    range.startOffset,
+  );
+  return { start: start, end: start + range.toString().length };
+}
+
+function rangeFromCharOffsets(container, start, end) {
+  const walker = JR.readerDocument.createTreeWalker(
+    container,
+    NodeFilter.SHOW_TEXT,
+    null,
+  );
+  let pos = 0;
+  let startNode = null;
+  let startOff = 0;
+  let endNode = null;
+  let endOff = 0;
+  let node;
+  while ((node = walker.nextNode())) {
+    const len = node.data.length;
+    if (startNode === null && start <= pos + len) {
+      startNode = node;
+      startOff = start - pos;
+    }
+    if (end <= pos + len) {
+      endNode = node;
+      endOff = end - pos;
+      break;
+    }
+    pos += len;
+  }
+  if (!startNode) return null;
+  if (!endNode) {
+    endNode = startNode;
+    endOff = startNode.data.length;
+  }
+  const range = JR.readerDocument.createRange();
+  range.setStart(
+    startNode,
+    Math.max(0, Math.min(startOff, startNode.data.length)),
+  );
+  range.setEnd(endNode, Math.max(0, Math.min(endOff, endNode.data.length)));
+  return range;
+}
+
+function restoreSelectionFromBookmarks(container, bookmarks) {
+  const sel = JR.readerDocument.getSelection();
+  sel.removeAllRanges();
+  bookmarks.forEach((bm) => {
+    const range = rangeFromCharOffsets(container, bm.start, bm.end);
+    if (range) sel.addRange(range);
+  });
 }
 
 function removeHighlightFromSelectedText() {
-  // Rangy's unhighlightSelection() only knows highlights created this
-  // session, and it always clears the selection — even when it unwraps
-  // nothing. Collect and unwrap matching spans first, including those
-  // persisted on a shared page, then let Rangy drop any session state.
-  const toUnwrap = [];
-  rangesForAnnotationRemoval().forEach((range) => {
-    annotationElementsInRange(range).forEach((el) => {
-      if (!toUnwrap.includes(el)) toUnwrap.push(el);
-    });
-  });
+  // unhighlightSelection() only tracks this session and always clears the
+  // selection. Class appliers' undoToRange() reads the DOM, so it can split
+  // persisted spans the same way Rangy splits new ones.
+  const nativeRanges = rangesForAnnotationRemoval();
+  const container = annotationBookmarkRoot();
+  const bookmarks = nativeRanges.map((range) =>
+    bookmarkNativeRange(container, range),
+  );
+  const rangyRanges = toRangyRanges(nativeRanges);
 
-  toUnwrap
-    .sort((a, b) => {
-      const depth = (el) => {
-        let d = 0;
-        for (let n = el; n; n = n.parentElement) d++;
-        return d;
-      };
-      return depth(b) - depth(a);
-    })
-    .forEach(unwrapElement);
-
-  if (highlighter) {
+  if (highlighter && rangyRanges.length) {
     try {
-      highlighter.unhighlightSelection();
+      const intersecting = highlighter.getIntersectingHighlights(rangyRanges);
+      highlighter.highlights = highlighter.highlights.filter(
+        (h) => intersecting.indexOf(h) === -1,
+      );
     } catch (e) {
       // Highlighter has no record of this selection
     }
+
+    const appliers = highlighter.classAppliers;
+    for (const className in appliers) {
+      if (Object.prototype.hasOwnProperty.call(appliers, className)) {
+        try {
+          appliers[className].undoToRanges(rangyRanges);
+        } catch (e) {
+          // Applier could not undo this range
+        }
+      }
+    }
   }
+
+  restoreSelectionFromBookmarks(container, bookmarks);
 
   savedAnnotationRanges = [];
   updateSavedVersion();
