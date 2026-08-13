@@ -34,7 +34,7 @@ Just Read collects zero data from users by default. If you sign up for an accoun
 
 ### End-user license agreement (EULA)
 
-By using Just Read, you are agreeing to [Just Read's EULA](https://github.com/ZachSaucier/Just-Read/blob/master/docs/EULA.md).
+By using Just Read, you are agreeing to [Just Read's EULA](https://github.com/ZachSaucier/Just-Read/blob/main/docs/EULA.md).
 
 ---
 
@@ -408,7 +408,7 @@ For _account related issues_, contact <a href="mailto:support@justread.link">sup
 <details id="local">
   <summary>How can I run Just Read from a local copy on my computer?</summary>
 
-To run Just Read from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/master.zip), unzip it, open up the extension page of your browser (like `chrome://extensions/` in Chrome or `about:debugging#/runtime/this-firefox` in Firefox), enable developer mode, and load the extension. Some browsers may require that you load the packed (zipped) files while others may require the unpacked version. This is particularly useful if you are wanting to modify how Just Read works or debug issues.
+To run Just Read from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/main.zip), unzip it, open up the extension page of your browser (like `chrome://extensions/` in Chrome or `about:debugging#/runtime/this-firefox` in Firefox), enable developer mode, and load the extension. Some browsers may require that you load the packed (zipped) files while others may require the unpacked version. This is particularly useful if you are wanting to modify how Just Read works or debug issues.
 
 </details>
 
