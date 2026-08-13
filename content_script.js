@@ -1306,6 +1306,7 @@ const AI_PROVIDERS = {
       const h = new Headers();
       h.append("x-api-key", apiKey);
       h.append("anthropic-version", "2023-06-01");
+      h.append("anthropic-dangerous-direct-browser-access", "true");
       h.append("Content-Type", "application/json");
       return h;
     },
@@ -1368,23 +1369,39 @@ const AI_PROVIDERS = {
   custom: null, // resolved dynamically in handleSummarizeClick
 };
 
+const SUMMARIZER_PROVIDERS = ["openai", "anthropic", "gemini", "perplexity", "custom"];
+const PLACEHOLDER_API_KEYS = [
+  "YOUR_API_KEY_GOES_HERE",
+  "YOUR_OPENAI_API_KEY_GOES_HERE",
+];
+
 // Migrate legacy config ({ key, baseUrl, ... }) to the new format.
 // Returns a normalised options object with provider, apiKey, endpoint, etc.
 function normalizeSummarizerOptions(raw) {
-  // New format: has a "provider" field
-  if (raw.provider) return raw;
-
-  // Legacy format: had "key" (and optional "baseUrl")
   const migrated = Object.assign({}, raw);
-  migrated.provider = "openai";
-  if (raw.key) {
-    migrated.apiKey = raw.key;
-    delete migrated.key;
+
+  if (typeof migrated.provider === "string" && migrated.provider !== "") {
+    migrated.provider = migrated.provider.toLowerCase();
+  } else {
+    migrated.provider = "openai";
   }
-  if (raw.baseUrl) {
-    migrated.endpoint = raw.baseUrl;
-    delete migrated.baseUrl;
+
+  if (
+    (typeof migrated.apiKey !== "string" || migrated.apiKey === "") &&
+    migrated.key
+  ) {
+    migrated.apiKey = migrated.key;
   }
+  delete migrated.key;
+
+  if (
+    (typeof migrated.endpoint !== "string" || migrated.endpoint === "") &&
+    migrated.baseUrl
+  ) {
+    migrated.endpoint = migrated.baseUrl;
+  }
+  delete migrated.baseUrl;
+
   return migrated;
 }
 
@@ -1428,17 +1445,25 @@ function handleSummarizeClick() {
       prompt: configPrompt,
       temperature: configTemperature,
       requestFormat,
+      format: _legacyFormat,
       ...rest
     } = options;
 
     const content = contentContainer.innerText;
+
+    if (SUMMARIZER_PROVIDERS.indexOf(provider) === -1) {
+      summarizeBtn.disabled = false;
+      return console.error(
+        `Unknown summarizer provider "${provider}". Supported: ${SUMMARIZER_PROVIDERS.join(", ")}.`
+      );
+    }
 
     // Validate API key
     if (typeof apiKey !== "string" || apiKey === "") {
       summarizeBtn.disabled = false;
       return console.error("No API key was provided in the summarizer options.");
     }
-    if (apiKey === "YOUR_API_KEY_GOES_HERE") {
+    if (PLACEHOLDER_API_KEYS.indexOf(apiKey) !== -1) {
       summarizeBtn.disabled = false;
       return console.error(
         "Placeholder API key detected. Replace it with your actual API key in Just Read's options page."
@@ -1468,11 +1493,19 @@ function handleSummarizeClick() {
     // default, or anthropic format when requestFormat === "anthropic".
     let adapter;
     if (provider === "custom") {
-      adapter = requestFormat === "anthropic"
-        ? AI_PROVIDERS.anthropic
-        : AI_PROVIDERS.openai;
+      if (typeof customEndpoint !== "string" || customEndpoint === "") {
+        summarizeBtn.disabled = false;
+        return console.error(
+          'Custom provider requires an "endpoint" field in the summarizer options.'
+        );
+      }
+      adapter =
+        typeof requestFormat === "string" &&
+        requestFormat.toLowerCase() === "anthropic"
+          ? AI_PROVIDERS.anthropic
+          : AI_PROVIDERS.openai;
     } else {
-      adapter = AI_PROVIDERS[provider] || AI_PROVIDERS.openai;
+      adapter = AI_PROVIDERS[provider];
     }
 
     // Resolve the endpoint: custom overrides take precedence, then provider default.
@@ -1498,7 +1531,7 @@ function handleSummarizeClick() {
           contentContainer.querySelector(".simple-summary");
         const contentType = response.headers.get("content-type") || "";
         if (contentType.indexOf("text/html") !== -1) {
-          response.text().then(function (text) {
+          return response.text().then(function (text) {
             const responseIframe = document.createElement("iframe");
             responseIframe.srcdoc = text;
             responseIframe.style.width = "100%";
@@ -1507,45 +1540,42 @@ function handleSummarizeClick() {
               simpleSummaryContainer
             );
           });
-        } else {
-          response.json().then(function (json) {
-            // Surface API-level errors (OpenAI, Anthropic, Gemini all use an "error" field)
-            const apiError = json.error || (json.promptFeedback && json.promptFeedback.blockReason);
-            if (apiError) {
-              const errorMsg = typeof apiError === "object" ? apiError.message : apiError;
-              simpleSummaryContainer.innerHTML = DOMPurify.sanitize(
-                `<h3>Error getting summary</h3><p>${errorMsg}</p>`
-              );
-              summarizeBtn.disabled = false;
-              return;
-            }
+        }
 
-            let summaryText;
-            try {
-              summaryText = adapter.extractText(json);
-            } catch (e) {
-              simpleSummaryContainer.innerHTML = DOMPurify.sanitize(
-                `<h3>Error getting summary</h3><p>Unexpected response format from the AI provider.</p>`
-              );
-              summarizeBtn.disabled = false;
-              return;
-            }
+        return response.json().then(function (json) {
+          // Surface API-level errors (OpenAI, Anthropic, Gemini all use an "error" field)
+          const apiError = json.error || (json.promptFeedback && json.promptFeedback.blockReason);
+          if (apiError) {
+            const errorMsg = typeof apiError === "object" ? apiError.message : apiError;
+            simpleSummaryContainer.innerHTML = DOMPurify.sanitize(
+              `<h3>Error getting summary</h3><p>${errorMsg}</p>`
+            );
+            return;
+          }
 
-            const tokensUsed = adapter.extractTokens(json);
-            const tokenLabel = tokensUsed != null ? `: ${tokensUsed} tokens used` : "";
+          let summaryText;
+          try {
+            summaryText = adapter.extractText(json);
+          } catch (e) {
+            simpleSummaryContainer.innerHTML = DOMPurify.sanitize(
+              `<h3>Error getting summary</h3><p>Unexpected response format from the AI provider.</p>`
+            );
+            return;
+          }
 
-            if (chromeStorage["summaryReplace"]) {
-              contentContainer.innerHTML = DOMPurify.sanitize(summaryText);
-              if (tokensUsed != null) console.log(`Tokens used to create summary: ${tokensUsed}`);
-            } else {
-              simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
+          const tokensUsed = adapter.extractTokens(json);
+          const tokenLabel = tokensUsed != null ? `: ${tokensUsed} tokens used` : "";
+
+          if (chromeStorage["summaryReplace"]) {
+            contentContainer.innerHTML = DOMPurify.sanitize(summaryText);
+            if (tokensUsed != null) console.log(`Tokens used to create summary: ${tokensUsed}`);
+          } else {
+            simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
                 <h3>Summary<span>${tokenLabel}</span></h3>
                 <p>${summaryText}</p>
               `);
-            }
-            summarizeBtn.disabled = false;
-          });
-        }
+          }
+        });
       })
       .catch(function (err) {
         console.error("Fetching summary error", err);
@@ -1557,6 +1587,8 @@ function handleSummarizeClick() {
             <p>${err.message}</p>
           `);
         }
+      })
+      .finally(function () {
         summarizeBtn.disabled = false;
       });
 }

@@ -1,6 +1,6 @@
 # Just Read
 
-Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content. You can also get it to summarize the article by connecting an OpenAI API key (for more detail, [see here](https://justread.link/summarizer)).
+Just Read makes it easy to view web articles in a more readable, attractive, and custom format - like a read mode, but better. It removes the distractions like ads, modals, and navigation from vision, letting the user just read the content. You can also get it to summarize the article by connecting an AI provider API key (for more detail, [see here](https://justread.link/summarizer)).
 
 Learn more about Just Read by [watching this video](https://www.youtube.com/watch?v=mKMUXEg873Q).
 
