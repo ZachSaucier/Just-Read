@@ -1,148 +1,8 @@
-// Auto-scroll functionality
-function scrollPage() {
-  if (
-    JR.readerDocument &&
-    !JR.readerDocument.body.classList.contains("paused")
-  ) {
-    let curTime = Date.now(),
-      timePassed = curTime - JR.lastTime;
-
-    if (timePassed > 16.6666667) {
-      // Run at a max of 60 fps
-      JR.nextMove += JR.scrollSpeed;
-      JR.readerDocument.defaultView.scrollBy(0, JR.nextMove);
-
-      JR.lastTime = curTime;
-
-      if (JR.nextMove > 1) JR.nextMove = 0;
-    }
-  }
-
-  requestAnimationFrame(scrollPage);
-}
-
-function toggleScroll() {
-  JR.readerDocument.body.classList.toggle("paused");
-  if (JR.readerDocument.body.classList.contains("paused")) {
-    JR.pauseScrollBtn.innerText = "Start scroll";
-  } else {
-    JR.pauseScrollBtn.innerText = "Pause scroll";
-  }
-}
-
-function createPauseScrollButton() {
-  JR.pauseScrollBtn = document.createElement("button");
-  JR.pauseScrollBtn.className = "pause-scroll";
-  JR.pauseScrollBtn.innerText = "Pause scroll";
-  JR.pauseScrollBtn.onclick = toggleScroll;
-
-  return JR.pauseScrollBtn;
-}
-
-function handleScrollSpeedInput(e) {
-  const speed = parseFloat(JR.scrollSpeedInput.value);
-  if (speed) {
-    JR.scrollSpeed = speed;
-    chrome.storage.sync.set({ "scroll-speed": speed });
-  }
-}
-
-function createScrollSpeedInput() {
-  JR.scrollSpeedInput = document.createElement("input");
-  JR.scrollSpeedInput.type = "number";
-  JR.scrollSpeedInput.className = "scroll-input";
-  JR.scrollSpeedInput.value = JR.scrollSpeed;
-  JR.scrollSpeedInput.step = "0.1";
-  JR.scrollSpeedInput.pattern = "^d*(.d{0,2})?$";
-  JR.scrollSpeedInput.min = "0";
-  JR.scrollSpeedInput.onchange = handleScrollSpeedInput;
-  JR.scrollSpeedInput.onkeyup = handleScrollSpeedInput;
-
-  return JR.scrollSpeedInput;
-}
-
-// Progress bar functionality
-// REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
-let progressBar,
-  ticking = false;
-let winheight, docheight, trackLength;
-function getDocHeight() {
-  let D = JR.readerDocument;
-  return Math.max(
-    D.body.scrollHeight,
-    D.documentElement.scrollHeight,
-    D.body.offsetHeight,
-    D.documentElement.offsetHeight,
-    D.body.clientHeight,
-    D.documentElement.clientHeight
-  );
-}
-function updateScrollbarMetrics() {
-  if (JR.chromeStorage["scrollbar"]) {
-    let D = JR.readerDocument;
-    winheight =
-      D.defaultView.innerHeight || (D.documentElement || D.body).clientHeight;
-    docheight = getDocHeight();
-    trackLength = docheight - winheight;
-    scheduleProgressBarUpdate();
-  }
-}
-function scheduleProgressBarUpdate() {
-  if (!ticking) {
-    requestAnimationFrame(updateProgressBar);
-    ticking = true;
-  }
-}
-function updateProgressBar() {
-  if (progressBar && JR.readerDocument) {
-    const D = JR.readerDocument;
-    const scrollTop =
-      D.defaultView.pageYOffset ||
-      (D.documentElement || D.body.parentElement || D.body).scrollTop;
-    const pctScrolled = (scrollTop / trackLength) * 100 || 0;
-
-    progressBar.value = pctScrolled;
-  }
-
-  ticking = false;
-}
-// END STUFF TO REMOVE
-
-function initScrollbar() {
-  // Hide the original scrollbar
-  JR.readerDocument.body.classList.add("hideScrollbar");
-
-  progressBar = document.createElement("progress");
-  progressBar.classList.add("simple-progress");
-  progressBar.max = 100;
-  JR.readerDocument
-    .querySelector(".content-container")
-    .appendChild(progressBar);
-
-  // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
-  updateScrollbarMetrics();
-  JR.readerDocument.defaultView.addEventListener(
-    "scroll",
-    scheduleProgressBarUpdate,
-    false
-  );
-  JR.readerDocument.defaultView.addEventListener(
-    "resize",
-    updateScrollbarMetrics,
-    false
-  );
-  // END STUFF TO REMOVE
-
-  return progressBar;
-}
-
 function cloneReaderContentForShare(keepJR) {
-  // Create a copy of the Just Read content
   const copy = JR.readerDocument
     .querySelector(".simple-container")
     .cloneNode(true);
 
-  // Change all relative URL links to absolute ones
   copy.querySelectorAll("a").forEach(function (a) {
     const newURL = new URL(a.href, window.location.href);
     if (
@@ -155,7 +15,6 @@ function cloneReaderContentForShare(keepJR) {
     }
   });
 
-  // Change all relative URL images to absolute ones
   copy.querySelectorAll("img").forEach(function (img) {
     const newURL = new URL(img.src, window.location.href);
     if (
@@ -167,10 +26,8 @@ function cloneReaderContentForShare(keepJR) {
     }
   });
 
-  // Add the body's classes to our container (used to keep styling correct)
   copy.className += " " + JR.readerDocument.body.className;
 
-  // Add link to original article
   const originalLink = document.createElement("a");
   originalLink.href = window.location.href;
   originalLink.innerText = "View original page";
@@ -186,12 +43,9 @@ function cloneReaderContentForShare(keepJR) {
     simpleMeta.insertBefore(br2, firstChild);
   }
 
-  // If there were changes from the GUI, update the <style> element based on the changed stylesheet
   if (JR.usedGUI) JR.styleElem.innerText = stylesheetToString(JR.themeStylesheet);
-  // Add the user's styles to the copy
   copy.appendChild(JR.styleElem.cloneNode(true));
 
-  // Remove JR elements that are not used on the shared version
   let removeElems;
   if (keepJR) {
     removeElems = copy.querySelectorAll(
@@ -206,7 +60,6 @@ function cloneReaderContentForShare(keepJR) {
     elem.parentElement.removeChild(elem);
   });
 
-  // Add the email share button
   const simpleUIContainer = copy.querySelector(".simple-ui-container");
   const title = copy.querySelector(".simple-title").innerText;
   const shareViaEmailButton = addShareViaEmailButton(title);
@@ -215,7 +68,6 @@ function cloneReaderContentForShare(keepJR) {
   return copy;
 }
 
-// Duplicating content to make a savable copy
 let alertTimeout;
 function shareReaderView() {
   if (JR.isPremium && JR.jrSecret) {
@@ -242,8 +94,7 @@ function shareReaderView() {
         timestamp.innerText = "Left on ";
         timestamp.appendChild(timestampLink);
       });
-      // Hack to add hide segments to the actual content
-      if (JR.hideSegments) {
+      if (JR.settings.hideSegments) {
         let hideCSS = document.createElement("style");
         hideCSS.innerText =
           '.content-container script,.content-container [class="ad"],.content-container [class *="ads"],.content-container [class ^="ad-"],.content-container [class ^="ad_"],.content-container [class *="-ad-"],.content-container [class $="-ad"],.content-container [class $="_ad"],.content-container [class ~="ad"],.content-container [class *="navigation"],.content-container [class *="nav"],.content-container nav,.content-container [class *="search"],.content-container [class *="menu"],.content-container [class *="print"],.content-container [class *="nocontent"],.content-container .hidden,.content-container [class *="popup"],.content-container [class *="share"],.content-container [class *="sharing"],.content-container [class *="social"],.content-container [class *="follow"],.content-container [class *="newsletter"],.content-container [class *="meta"],.content-container [class *="author"],.content-container [id *="author"],.content-container form,.content-container [class ^="form"],.content-container [class *="-form-"],.content-container [class $="form"],.content-container [class ~="form"],.content-container [class *="related"],.content-container [class *="recommended"],.content-container [class *="see-also"],.content-container [class *="popular"],.content-container [class *="trail"],.content-container [class *="comment"],.content-container [class *="disqus"],.content-container [id *="disqus"],.content-container [class ^="tag"],.content-container [class *="-tag-"],.content-container [class $="-tag"],.content-container [class $="_tag"],.content-container [class ~="tag"],.content-container [class *="-tags-"],.content-container [class $="-tags"],.content-container [class $="_tags"],.content-container [class ~="tags"],.content-container [id *="-tags-"],.content-container [id $="-tags"],.content-container [id $="_tags"],.content-container [id ~="tags"],.content-container [class *="subscribe"],.content-container [id *="subscribe"],.content-container [class *="subscription"],.content-container [id *="subscription"],.content-container [class ^="fav"],.content-container [class *="-fav-"],.content-container [class $="-fav"],.content-container [class $="_fav"],.content-container [class ~="fav"],.content-container [id ^="fav"],.content-container [id *="-fav-"],.content-container [id $="-fav"],.content-container [id $="_fav"],.content-container [id ~="fav"],.content-container [class *="favorites"],.content-container [id *="favorites"],.content-container [class *="signup"],.content-container [id *="signup"],.content-container [class *="signin"],.content-container [id *="signin"],.content-container [class *="signIn"],.content-container [id *="signIn"],.content-container footer,.content-container [class *="footer"],.content-container [id *="footer"],.content-container svg[class *="pinterest"],.content-container [class *="pinterest"] svg,.content-container svg[id *="pinterest"],.content-container [id *="pinterest"] svg,.content-container svg[class *="pinit"],.content-container [class *="pinit"] svg,.content-container svg[id *="pinit"],.content-container [id *="pinit"] svg,.content-container svg[class *="facebook"],.content-container [class *="facebook"] svg,.content-container svg[id *="facebook"],.content-container [id *="facebook"] svg,.content-container svg[class *="github"],.content-container [class *="github"] svg,.content-container svg[id *="github"],.content-container [id *="github"] svg,.content-container svg[class *="twitter"],.content-container [class *="twitter"] svg,.content-container svg[id *="twitter"],.content-container [id *="twitter"] svg,.content-container svg[class *="instagram"],.content-container [class *="instagram"] svg,.content-container svg[id *="instagram"],.content-container [id *="instagram"] svg,.content-container svg[class *="tumblr"],.content-container [class *="tumblr"] svg,.content-container svg[id *="tumblr"],.content-container [id *="tumblr"] svg,.content-container svg[class *="youtube"],.content-container [class *="youtube"] svg,.content-container svg[id *="youtube"],.content-container [id *="youtube"] svg,.content-container svg[class *="codepen"],.content-container [class *="codepen"] svg,.content-container svg[id *="codepen"],.content-container [id *="codepen"] svg,.content-container svg[class *="dribble"],.content-container [class *="dribble"] svg,.content-container svg[id *="dribble"],.content-container [id *="dribble"] svg,.content-container svg[class *="soundcloud"],.content-container [class *="soundcloud"] svg,.content-container svg[id *="soundcloud"],.content-container [id *="soundcloud"] svg,.content-container svg[class *="rss"],.content-container [class *="rss"] svg,.content-container svg[id *="rss"],.content-container [id *="rss"] svg,.content-container svg[class *="linkedin"],.content-container [class *="linkedin"] svg,.content-container svg[id *="linkedin"],.content-container [id *="linkedin"] svg,.content-container svg[class *="vimeo"],.content-container [class *="vimeo"] svg,.content-container svg[id *="vimeo"],.content-container [id *="vimeo"] svg,.content-container svg[class *="email"],.content-container [class *="email"] svg,.content-container svg[id *="email"],.content-container [id *="email"] svg{display: none;}.entry-content.entry-content,pre *:not(li) {display: initial !important;}';
@@ -281,24 +132,14 @@ function shareReaderView() {
         })
         .then(function (url) {
           if (url) {
-            // Close the original page if the option is enabled
-            if (
-              (JR.chromeStorage["openSharedPage"] ||
-                typeof JR.chromeStorage["openSharedPage"] === "undefined") &&
-              JR.chromeStorage["closeOldPage"]
-            ) {
+            if (JR.settings.openSharedPage && JR.settings.closeOldPage) {
               chrome.runtime.sendMessage({ closeTab: "true" });
             }
 
-            // Open up the sharable copy if the options is enabled
-            if (
-              JR.chromeStorage["openSharedPage"] ||
-              typeof JR.chromeStorage["openSharedPage"] === "undefined"
-            ) {
+            if (JR.settings.openSharedPage) {
               window.open(url, "_blank");
             }
 
-            // Show the link in the dropdown
             JR.shareDropdown.classList.add("active");
             JR.shareDropdown.innerText = url;
           }

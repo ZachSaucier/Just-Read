@@ -1,7 +1,7 @@
 function applyDomainSelectors() {
-  if (!JR.chromeStorage["domainSelectors"]) return;
+  if (!JR.settings.domainSelectors) return;
 
-  const domainSelectorArr = JR.chromeStorage["domainSelectors"];
+  const domainSelectorArr = JR.settings.domainSelectors;
   for (let i = 0; i < domainSelectorArr.length; i++) {
     const domainSelObj = domainSelectorArr[i];
     const regex = new RegExp(domainSelObj.domainPattern, "i");
@@ -41,7 +41,7 @@ function restoreBackupIfPresent(data) {
 function applySiteSettingsThenCreateOverlay() {
   applyDomainSelectors();
 
-  if (JR.chromeStorage["backup"]) {
+  if (JR.settings.backup) {
     chrome.storage.local.get("JRSavedPage", (data) => {
       restoreBackupIfPresent(data);
       createReaderOverlay();
@@ -85,7 +85,7 @@ function normalizeArticleElements(contentContainer, title, lightboxes) {
     }
 
     let isPreNoCode = true;
-    if (elem.nodeName === "PRE" && !JR.chromeStorage["leavePres"]) {
+    if (elem.nodeName === "PRE" && !JR.settings.leavePres) {
       isPreNoCode = false;
 
       Array.from(elem.children).forEach((child) => {

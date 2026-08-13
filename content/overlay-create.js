@@ -160,7 +160,7 @@ function initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes) 
 }
 
 function applyTimeEstimate() {
-  if (!JR.chromeStorage["addTimeEstimate"]) return;
+  if (!JR.settings.addTimeEstimate) return;
 
   const wordCount = JR.readerDocument
     .querySelector(".content-container")

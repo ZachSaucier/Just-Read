@@ -1,6 +1,6 @@
 function closeOverlay() {
   // Refresh the page if the content has been removed
-  if (JR.removeOrigContent) {
+  if (JR.settings.removeOrigContent) {
     // Record the URL and timestamp so autorun can skip re-triggering on the
     // page reload that follows content removal
     chrome.storage.sync.set({
@@ -35,7 +35,6 @@ function closeOverlay() {
   JR.userSelected = null;
   JR.readerDocument = undefined;
   JR.editBar = undefined;
-  JR.chromeStorage = undefined;
 
   setTimeout(function () {
     // Enable scroll

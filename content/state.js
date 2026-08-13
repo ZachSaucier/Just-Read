@@ -2,19 +2,22 @@
 // CONTENT_SCRIPT_FILES in background.js) into the same isolated world.
 // Keep shared mutable state on this object — a file-local `let`/`const`
 // is not visible to other files.
+//
+// Prefs live on JR.settings (see shared/settings.js). This object is
+// session/DOM state for the open reader view.
 
 var JR = {
   jrDomain: "https://justread.link/",
   isPremium: false,
   jrSecret: undefined,
+  jrLastChecked: undefined,
   jrOpenCount: undefined,
   hasBeenAskedForReview100: false,
   hasBeenAskedForReview1000: false,
   hasBeenAskedForReview10000: false,
   hasBeenNotifiedOfSummarizer: false,
 
-  removeOrigContent: undefined,
-  chromeStorage: undefined,
+  settings: {},
   pageSelectedContainer: undefined,
 
   useText: undefined,
@@ -45,8 +48,6 @@ var JR = {
   pauseScrollBtn: undefined,
   scrollSpeedInput: undefined,
   lastTime: undefined,
-
-  hideSegments: false,
 
   hasSavedLink: false,
 

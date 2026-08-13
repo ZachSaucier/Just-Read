@@ -10,6 +10,7 @@ let injectingTabs = {};
 const CONTENT_SCRIPT_FILES = [
   "content/state.js",
   "shared/helpers.js",
+  "shared/settings.js",
   "shared/stylesheets.js",
   "shared/premium.js",
   "shared/notifications.js",
@@ -22,7 +23,9 @@ const CONTENT_SCRIPT_FILES = [
   "content/highlighter.js",
   "content/edit-bar.js",
   "content/comments.js",
-  "content/features.js",
+  "content/autoscroll.js",
+  "content/scrollbar.js",
+  "content/share.js",
   "content/overlay.js",
   "content/overlay-article.js",
   "content/overlay-create.js",

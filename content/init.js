@@ -1,36 +1,42 @@
 // Must load last (see CONTENT_SCRIPT_FILES in background.js).
 
+function applySessionFromStorage(storage) {
+  JR.jrSecret = storage.jrSecret || false;
+  JR.isPremium = !!storage.isPremium;
+  JR.jrLastChecked = storage.jrLastChecked;
+  JR.useText = storage.useText;
+  JR.runOnLoad = storage.runOnLoad;
+  JR.scrollSpeed = JR.settings.scrollSpeed;
+  JR.theme = JR.settings.currentTheme;
+
+  JR.hasBeenNotifiedOfSummarizer =
+    typeof storage.jrHasBeenNotifiedOfSummarizer !== "undefined";
+  JR.hasBeenAskedForReview100 =
+    typeof storage.jrHasBeenAskedForReview100 !== "undefined";
+  JR.hasBeenAskedForReview1000 =
+    typeof storage.jrHasBeenAskedForReview1000 !== "undefined";
+  JR.hasBeenAskedForReview10000 =
+    typeof storage.jrHasBeenAskedForReview10000 !== "undefined";
+
+  if (typeof storage.jrOpenCount !== "undefined") {
+    JR.jrOpenCount = storage.jrOpenCount;
+  }
+
+  if (!storage.currentTheme) {
+    chrome.storage.sync.set({ currentTheme: JR.settings.currentTheme });
+  }
+}
+
 function applyThemeAndCreateOverlay() {
   JR.styleElem = document.createElement("style");
 
-  if (typeof JR.chromeStorage["jrHasBeenNotifiedOfSummarizer"] !== "undefined") {
-    JR.hasBeenNotifiedOfSummarizer = true;
-  }
-
-  if (typeof JR.chromeStorage["jrOpenCount"] === "undefined") {
+  if (typeof JR.jrOpenCount === "undefined") {
     chrome.storage.sync.set({ jrOpenCount: 0 });
     JR.jrOpenCount = 0;
   } else {
-    JR.jrOpenCount = JR.chromeStorage["jrOpenCount"];
     chrome.storage.sync.set({ jrOpenCount: JR.jrOpenCount + 1 });
   }
 
-  if (typeof JR.chromeStorage["jrHasBeenAskedForReview100"] !== "undefined") {
-    JR.hasBeenAskedForReview100 = true;
-  }
-  if (typeof JR.chromeStorage["jrHasBeenAskedForReview1000"] !== "undefined") {
-    JR.hasBeenAskedForReview1000 = true;
-  }
-  if (typeof JR.chromeStorage["jrHasBeenAskedForReview10000"] !== "undefined") {
-    JR.hasBeenAskedForReview10000 = true;
-  }
-
-  if (JR.chromeStorage["currentTheme"]) {
-    JR.theme = JR.chromeStorage["currentTheme"];
-  } else {
-    chrome.storage.sync.set({ currentTheme: "default-styles.css" });
-    JR.theme = "default-styles.css";
-  }
   JR.styleElem.appendChild(document.createTextNode(JR.stylesheetObj[JR.theme]));
 
   applySiteSettingsThenCreateOverlay();
@@ -41,7 +47,7 @@ function fadeIn() {
     JR.readerIframe.classList.remove("no-trans");
     JR.readerIframe.classList.remove("simple-fade-up");
 
-    if (JR.removeOrigContent) {
+    if (JR.settings.removeOrigContent) {
       JR.readerIframe.addEventListener(
         "transitionend",
         (e) => {
@@ -80,11 +86,9 @@ function finishOpeningReader() {
     );
 
   if (
-    (JR.chromeStorage["hideSegments"] &&
-      !JR.readerDocument.head.querySelector(".hide-segments")) ||
-    typeof JR.chromeStorage["hideSegments"] === "undefined"
+    JR.settings.hideSegments &&
+    !JR.readerDocument.head.querySelector(".hide-segments")
   ) {
-    JR.hideSegments = true;
     addStylesheet(JR.readerDocument, "hide-segments.css", "hide-segments");
   }
 
@@ -105,10 +109,7 @@ function finishOpeningReader() {
     fadeIn();
   });
 
-  if (JR.chromeStorage["autoscroll"]) {
-    if (JR.chromeStorage["scroll-speed"])
-      JR.scrollSpeed = JR.chromeStorage["scroll-speed"];
-
+  if (JR.settings.autoscroll) {
     JR.readerDocument.body.appendChild(createScrollSpeedInput());
     JR.readerDocument.body.appendChild(createPauseScrollButton());
 
@@ -116,13 +117,13 @@ function finishOpeningReader() {
     scrollPage();
   }
 
-  if (JR.chromeStorage["scrollbar"]) {
+  if (JR.settings.scrollbar) {
     initScrollbar();
   }
 
   mutePage();
 
-  if (JR.chromeStorage["summaryAutoRun"] && JR.chromeStorage["summarizer-options"]) {
+  if (JR.settings.summaryAutoRun && JR.settings.summarizerOptions) {
     handleSummarizeClick();
   }
 }
@@ -148,13 +149,9 @@ function launch() {
 }
 
 chrome.storage.sync.get(null, function (result) {
-  JR.chromeStorage = result || {};
-
-  if (JR.chromeStorage["remove-orig-content"] !== false) {
-    JR.removeOrigContent = true;
-  }
-  JR.useText = JR.chromeStorage["useText"];
-  JR.runOnLoad = JR.chromeStorage["runOnLoad"];
-
+  result = result || {};
+  JR.settings = parseSettings(result);
+  collectStylesheetsFromStorage(result, JR.stylesheetObj);
+  applySessionFromStorage(result);
   launch();
 });

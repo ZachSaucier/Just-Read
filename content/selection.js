@@ -222,7 +222,7 @@ function undoLastAction() {
 }
 
 function updateSavedVersion() {
-  if (JR.chromeStorage["backup"]) {
+  if (JR.settings.backup) {
     const data = {
       url: window.location.href,
       content: DOMPurify.sanitize(

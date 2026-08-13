@@ -136,7 +136,7 @@ function handleSummarizeClick() {
     if (JR.summarizeBtn.disabled) return;
     JR.summarizeBtn.disabled = true;
 
-    const userOptions = JR.chromeStorage["summarizer-options"];
+    const userOptions = JR.settings.summarizerOptions;
 
     if (typeof userOptions === "undefined") {
       JR.summarizeBtn.disabled = false;
@@ -293,7 +293,7 @@ function handleSummarizeClick() {
           const tokensUsed = adapter.extractTokens(json);
           const tokenLabel = tokensUsed != null ? `: ${tokensUsed} tokens used` : "";
 
-          if (JR.chromeStorage["summaryReplace"]) {
+          if (JR.settings.summaryReplace) {
             contentContainer.innerHTML = DOMPurify.sanitize(summaryText);
             if (tokensUsed != null) console.log(`Tokens used to create summary: ${tokensUsed}`);
           } else {

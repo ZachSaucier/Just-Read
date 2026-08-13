@@ -7,60 +7,51 @@ function setDomains(domains) {
   domainList.value = domainString;
 }
 
+function applySettingsToOptionsForm(settings) {
+  hideSegments.checked = settings.hideSegments;
+  summaryReplace.checked = settings.summaryReplace;
+  summaryAutoRun.checked = settings.summaryAutoRun;
+  openSharedPage.checked = settings.openSharedPage;
+  closeOldPage.checked = settings.closeOldPage;
+  pageCM.checked = settings.enablePageCM;
+  linkCM.checked = settings.enableLinkCM;
+  autorunCM.checked = settings.enableAutorunCM;
+  scrollbar.checked = settings.scrollbar;
+  removeOrig.checked = settings.removeOrigContent;
+  backup.checked = settings.backup;
+  leavePres.checked = settings.leavePres;
+  addOrigURL.checked = settings.addOrigURL;
+  addTimeEstimate.checked = settings.addTimeEstimate;
+  alwaysAddAR.checked = settings.alwaysAddAR;
+  autoscroll.checked = settings.autoscroll;
+  scrollSpeed.value = settings.scrollSpeed;
+
+  if (settings.domainSelectors) {
+    domainSelectors.value = JSON.stringify(settings.domainSelectors, null, 4);
+  }
+  if (settings.summarizerOptions) {
+    summarizerOptions.value = settings.summarizerOptions;
+  }
+  if (settings.autorunSiteList) {
+    setDomains(settings.autorunSiteList);
+  }
+
+  currTheme = settings.currentTheme;
+}
+
 function applyStorageToOptionsForm(storage) {
   collectStylesheetsFromStorage(storage, stylesheetObj);
+  applySettingsToOptionsForm(parseSettings(storage));
 
-  for (let key in storage) {
-    if (key === "auto-enable-site-list") {
-      setDomains(storage[key]);
-    } else if (key === "hideSegments") {
-      hideSegments.checked = storage[key];
-    } else if (key === "summaryReplace") {
-      summaryReplace.checked = storage[key];
-    } else if (key === "summaryAutoRun") {
-      summaryAutoRun.checked = storage[key];
-    } else if (key === "openSharedPage") {
-      openSharedPage.checked = storage[key];
-    } else if (key === "closeOldPage") {
-      closeOldPage.checked = storage[key];
-    } else if (key === "enable-pageCM") {
-      pageCM.checked = storage[key];
-    } else if (key === "enable-linkCM") {
-      linkCM.checked = storage[key];
-    } else if (key === "enable-autorunCM") {
-      autorunCM.checked = storage[key];
-    } else if (key === "scrollbar") {
-      scrollbar.checked = storage[key];
-    } else if (key === "remove-orig-content") {
-      removeOrig.checked = storage[key] !== false;
-    } else if (key === "backup") {
-      backup.checked = storage[key];
-    } else if (key === "leave-pres") {
-      leavePres.checked = storage[key];
-    } else if (key === "addOrigURL") {
-      addOrigURL.checked = storage[key];
-    } else if (key === "addTimeEstimate") {
-      addTimeEstimate.checked = storage[key];
-    } else if (key === "alwaysAddAR") {
-      alwaysAddAR.checked = storage[key];
-    } else if (key === "autoscroll") {
-      autoscroll.checked = storage[key];
-    } else if (key === "scroll-speed") {
-      scrollSpeed.value = storage[key];
-    } else if (key === "domainSelectors") {
-      domainSelectors.value = JSON.stringify(storage[key], null, 4);
-    } else if (key === "summarizer-options") {
-      summarizerOptions.value = storage[key];
-    } else if (key === "currentTheme") {
-      currTheme = storage[key];
-    } else if (key === "jrSecret") {
-      hasAccount = true;
-      jrSecret = storage[key];
-    } else if (key === "isPremium") {
-      isPremium = storage[key];
-    } else if (key === "jrLastChecked") {
-      jrLastChecked = storage[key];
-    }
+  if (storage.jrSecret) {
+    hasAccount = true;
+    jrSecret = storage.jrSecret;
+  }
+  if (typeof storage.isPremium !== "undefined") {
+    isPremium = storage.isPremium;
+  }
+  if (typeof storage.jrLastChecked !== "undefined") {
+    jrLastChecked = storage.jrLastChecked;
   }
 }
 

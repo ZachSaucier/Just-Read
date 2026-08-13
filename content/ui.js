@@ -1,9 +1,9 @@
 function verifyPremiumThenOpenReader() {
   refreshPremiumStatus({
     domain: JR.jrDomain,
-    secret: JR.chromeStorage.jrSecret,
-    lastChecked: JR.chromeStorage.jrLastChecked,
-    cachedIsPremium: JR.chromeStorage.isPremium,
+    secret: JR.jrSecret,
+    lastChecked: JR.jrLastChecked,
+    cachedIsPremium: JR.isPremium,
     onReady: ({ isPremium, secret }) => {
       JR.isPremium = isPremium;
       JR.jrSecret = secret;
@@ -13,12 +13,9 @@ function verifyPremiumThenOpenReader() {
 }
 
 function loadStoredThemesThenOpenReader() {
-  collectStylesheetsFromStorage(JR.chromeStorage, JR.stylesheetObj);
-
-  const versionResult = JR.chromeStorage["stylesheet-version"];
   const needsUpdate =
-    typeof versionResult === "undefined" ||
-    versionResult < JR.stylesheetVersion;
+    typeof JR.settings.stylesheetVersion === "undefined" ||
+    JR.settings.stylesheetVersion < JR.stylesheetVersion;
 
   if (needsUpdate) {
     chrome.storage.sync.set({ "stylesheet-version": JR.stylesheetVersion });
@@ -69,12 +66,12 @@ function addArticleMeta() {
 
   metaContainer.appendChild(date);
   metaContainer.appendChild(author);
-  if (JR.chromeStorage["addTimeEstimate"]) {
+  if (JR.settings.addTimeEstimate) {
     let timeEstimate = document.createElement("div");
     timeEstimate.className = "simple-time-estimate";
     metaContainer.appendChild(timeEstimate);
   }
-  if (JR.chromeStorage["addOrigURL"]) {
+  if (JR.settings.addOrigURL) {
     // Add the original URL if necessary
     let urlContainer = document.createElement("div");
     urlContainer.className = "simple-url";
