@@ -11,7 +11,14 @@
  *   dist/just-read-gecko-vX.Y.Z.zip
  */
 
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
@@ -58,6 +65,7 @@ function buildGeckoManifest(base) {
     browser_specific_settings: {
       gecko: {
         id: GECKO_ID,
+        strict_min_version: "115.0",
       },
     },
   };
@@ -76,7 +84,10 @@ function writePackage(target, manifest) {
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
 
-  writeFileSync(join(outDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+  writeFileSync(
+    join(outDir, "manifest.json"),
+    JSON.stringify(manifest, null, 2) + "\n",
+  );
   copyExtensionFiles(outDir);
 
   const zipName = `just-read-${target}-v${manifest.version}.zip`;

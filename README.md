@@ -408,7 +408,9 @@ For _account related issues_, contact <a href="mailto:support@justread.link">sup
 <details id="local">
   <summary>How can I run Just Read from a local copy on my computer?</summary>
 
-To run Just Read from a local copy you need to [download Just Read as a ZIP](https://github.com/ZachSaucier/Just-Read/archive/main.zip), unzip it, open up the extension page of your browser (like `chrome://extensions/` in Chrome or `about:debugging#/runtime/this-firefox` in Firefox), enable developer mode, and load the extension. Some browsers may require that you load the packed (zipped) files while others may require the unpacked version. This is particularly useful if you are wanting to modify how Just Read works or debug issues.
+1. Run `node pack.mjs`.
+2. **Chrome / Edge / Brave:** `chrome://extensions/` → Developer mode → **Load unpacked** → select `dist/webkit/` (or the repo root).
+3. **Firefox:** `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on…** → select `dist/gecko/manifest.json`.
 
 </details>
 
@@ -416,10 +418,8 @@ To run Just Read from a local copy you need to [download Just Read as a ZIP](htt
 
 ## Building browser packages
 
-`manifest.json` is the shared Chromium/WebKit source. To generate store-ready packages:
-
 ```bash
 node pack.mjs
 ```
 
-This writes `dist/webkit/` and `dist/gecko/` (plus matching `.zip` files) with the correct background and Firefox `browser_specific_settings` entries.
+Writes `dist/webkit/` + `.zip`, and `dist/gecko/` + `.zip` (with Firefox background scripts and add-on ID).
