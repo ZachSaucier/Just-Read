@@ -127,7 +127,25 @@ function shareReaderView() {
                 date.getSeconds(),
               title: myTitle,
               author: myAuthor,
-              content: copy.outerHTML,
+              content: DOMPurify.sanitize(copy.outerHTML, {
+                ADD_TAGS: ["style", "progress"],
+                ADD_ATTR: ["target", "popover", "popovertarget"],
+                FORBID_TAGS: [
+                  "script",
+                  "iframe",
+                  "object",
+                  "embed",
+                  "link",
+                  "meta",
+                  "base",
+                  "form",
+                  "input",
+                  "textarea",
+                  "select",
+                ],
+                FORBID_ATTR: ["srcdoc"],
+                ALLOW_UNKNOWN_PROTOCOLS: false,
+              }),
             }),
           });
         })

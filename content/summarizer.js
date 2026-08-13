@@ -258,14 +258,15 @@ function handleSummarizeClick() {
           contentContainer.querySelector(".simple-summary");
         const contentType = response.headers.get("content-type") || "";
         if (contentType.indexOf("text/html") !== -1) {
-          return response.text().then(function (text) {
-            const responseIframe = document.createElement("iframe");
-            responseIframe.srcdoc = text;
-            responseIframe.style.width = "100%";
-            simpleSummaryContainer.parentElement.replaceChild(
-              responseIframe,
-              simpleSummaryContainer
-            );
+          return response.text().then(function () {
+            simpleSummaryContainer.replaceChildren();
+            const heading = document.createElement("h3");
+            heading.textContent = "Error getting summary";
+            const detail = document.createElement("p");
+            detail.textContent =
+              "The AI provider returned an HTML page instead of a JSON summary. Check your API endpoint and key.";
+            simpleSummaryContainer.appendChild(heading);
+            simpleSummaryContainer.appendChild(detail);
           });
         }
 
@@ -273,10 +274,15 @@ function handleSummarizeClick() {
           // Surface API-level errors (OpenAI, Anthropic, Gemini all use an "error" field)
           const apiError = json.error || (json.promptFeedback && json.promptFeedback.blockReason);
           if (apiError) {
-            const errorMsg = typeof apiError === "object" ? apiError.message : apiError;
-            simpleSummaryContainer.innerHTML = DOMPurify.sanitize(
-              `<h3>Error getting summary</h3><p>${errorMsg}</p>`
-            );
+            const errorMsg =
+              typeof apiError === "object" ? apiError.message : apiError;
+            simpleSummaryContainer.replaceChildren();
+            const heading = document.createElement("h3");
+            heading.textContent = "Error getting summary";
+            const detail = document.createElement("p");
+            detail.textContent = String(errorMsg ?? "Unknown error");
+            simpleSummaryContainer.appendChild(heading);
+            simpleSummaryContainer.appendChild(detail);
             return;
           }
 
@@ -284,23 +290,38 @@ function handleSummarizeClick() {
           try {
             summaryText = adapter.extractText(json);
           } catch (e) {
-            simpleSummaryContainer.innerHTML = DOMPurify.sanitize(
-              `<h3>Error getting summary</h3><p>Unexpected response format from the AI provider.</p>`
-            );
+            simpleSummaryContainer.replaceChildren();
+            const heading = document.createElement("h3");
+            heading.textContent = "Error getting summary";
+            const detail = document.createElement("p");
+            detail.textContent =
+              "Unexpected response format from the AI provider.";
+            simpleSummaryContainer.appendChild(heading);
+            simpleSummaryContainer.appendChild(detail);
             return;
           }
 
           const tokensUsed = adapter.extractTokens(json);
-          const tokenLabel = tokensUsed != null ? `: ${tokensUsed} tokens used` : "";
+          const tokenLabel =
+            tokensUsed != null ? `: ${tokensUsed} tokens used` : "";
 
           if (JR.settings.summaryReplace) {
             contentContainer.innerHTML = DOMPurify.sanitize(summaryText);
-            if (tokensUsed != null) console.log(`Tokens used to create summary: ${tokensUsed}`);
+            if (tokensUsed != null)
+              console.log(`Tokens used to create summary: ${tokensUsed}`);
           } else {
-            simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
-                <h3>Summary<span>${tokenLabel}</span></h3>
-                <p>${summaryText}</p>
-              `);
+            simpleSummaryContainer.replaceChildren();
+            const heading = document.createElement("h3");
+            heading.textContent = "Summary";
+            if (tokenLabel) {
+              const span = document.createElement("span");
+              span.textContent = tokenLabel;
+              heading.appendChild(span);
+            }
+            const body = document.createElement("div");
+            body.innerHTML = DOMPurify.sanitize(summaryText);
+            simpleSummaryContainer.appendChild(heading);
+            simpleSummaryContainer.appendChild(body);
           }
         });
       })
@@ -309,10 +330,13 @@ function handleSummarizeClick() {
         const simpleSummaryContainer =
           contentContainer.querySelector(".simple-summary");
         if (simpleSummaryContainer) {
-          simpleSummaryContainer.innerHTML = DOMPurify.sanitize(`
-            <h3>Error getting summary</h3>
-            <p>${err.message}</p>
-          `);
+          simpleSummaryContainer.replaceChildren();
+          const heading = document.createElement("h3");
+          heading.textContent = "Error getting summary";
+          const detail = document.createElement("p");
+          detail.textContent = String(err.message || err);
+          simpleSummaryContainer.appendChild(heading);
+          simpleSummaryContainer.appendChild(detail);
         }
       })
       .finally(function () {
