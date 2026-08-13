@@ -137,7 +137,7 @@ function finishOpeningReader() {
   JR.readerDocument.head.appendChild(JR.styleElem);
 
   whenReaderDocumentReady(() => {
-    chrome.runtime.sendMessage({ tabOpenedJR: window.location });
+    chrome.runtime.sendMessage({ tabOpenedJR: window.location.href });
     fadeIn();
   });
 

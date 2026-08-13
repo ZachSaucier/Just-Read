@@ -258,7 +258,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   } else if (request.resetJRLastChecked) {
     chrome.storage.sync.set({ jrLastChecked: "" });
   } else if (request.tabOpenedJR) {
-    const tabURL = request.tabOpenedJR.href.split("?")[0];
+    const tabURL = request.tabOpenedJR.split("?")[0];
     for (const tabId in injectingTabs) {
       chrome.tabs.get(parseInt(tabId), (tab) => {
         if (tab.url.split("?")[0] === tabURL) {
