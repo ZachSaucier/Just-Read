@@ -658,15 +658,15 @@ function addEventListeners() {
 
   pageCM.onchange = function () {
     chrome.storage.sync.set({ "enable-pageCM": this.checked });
-    chrome.runtime.sendMessage({ updateCMs: "true" });
+    chrome.runtime.sendMessage({ updateContextMenus: true });
   };
   linkCM.onchange = function () {
     chrome.storage.sync.set({ "enable-linkCM": this.checked });
-    chrome.runtime.sendMessage({ updateCMs: "true" });
+    chrome.runtime.sendMessage({ updateContextMenus: true });
   };
   autorunCM.onchange = function () {
     chrome.storage.sync.set({ "enable-autorunCM": this.checked });
-    chrome.runtime.sendMessage({ updateCMs: "true" });
+    chrome.runtime.sendMessage({ updateContextMenus: true });
   };
 
   alwaysAddAR.onchange = function () {

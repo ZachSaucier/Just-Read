@@ -24,7 +24,7 @@ const GECKO_ID = "{cb2b337b-99d7-4b86-aa04-84a6f5c3e218}";
 /** Top-level paths that ship with the extension. */
 const INCLUDE = [
   "background.js",
-  "content_script.js",
+  "content",
   "messager.js",
   "options.html",
   "options.js",

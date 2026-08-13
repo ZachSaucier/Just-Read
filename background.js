@@ -3,23 +3,54 @@ function isEmpty(obj) {
   return true;
 }
 
-let preventInstance = {};
+let injectingTabs = {};
+
+// Classic content scripts, injected in order into the same isolated world.
+// Add new content/*.js files here (init.js must stay last).
+const CONTENT_SCRIPT_FILES = [
+  "content/state.js",
+  "content/helpers.js",
+  "content/selection.js",
+  "content/article.js",
+  "content/ui.js",
+  "content/summarizer.js",
+  "content/theme-editor.js",
+  "content/highlighter.js",
+  "content/edit-bar.js",
+  "content/comments.js",
+  "content/search.js",
+  "content/features.js",
+  "content/overlay.js",
+  "content/overlay-create.js",
+  "content/init.js",
+];
+
+const LIBRARY_FILES = [
+  "/external-libraries/readability/readability.js",
+  "/external-libraries/datGUI/dat.gui.min.js",
+  "/external-libraries/DOMPurify/purify.min.js",
+  "/external-libraries/Rangy/rangy.min.js",
+  "/external-libraries/Rangy/rangy-classapplier.min.js",
+  "/external-libraries/Rangy/rangy-highlighter.min.js",
+  "/external-libraries/Rangy/rangy-textrange.min.js",
+];
 
 function startJustRead(tab) {
   if (tab) {
-    executeScripts(tab.id);
+    injectReaderScripts(tab);
   } else {
     chrome.tabs.query({ currentWindow: true, active: true }, (tabArray) => {
-      if (tabArray.length) executeScripts(tabArray[0].id);
+      if (tabArray.length) injectReaderScripts(tabArray[0]);
     });
   }
 }
 
-function executeScripts(tabId) {
-  if (preventInstance[tabId]) return;
+function injectReaderScripts(tab) {
+  const tabId = tab.id;
+  if (injectingTabs[tabId]) return;
 
-  preventInstance[tabId] = true;
-  setTimeout(() => delete preventInstance[tabId], 10000);
+  injectingTabs[tabId] = true;
+  setTimeout(() => delete injectingTabs[tabId], 10000);
 
   // Add a badge to signify the extension is in use
   chrome.action.setBadgeBackgroundColor({ color: [242, 38, 19, 230] });
@@ -32,24 +63,16 @@ function executeScripts(tabId) {
     }
   });
 
-  // Load our external scripts, then our content script
+  // Load our external scripts, then our content scripts
   chrome.scripting
     .executeScript({
       target: { tabId: tabId, allFrames: false },
-      files: [
-        "/external-libraries/readability/readability.js",
-        "/external-libraries/datGUI/dat.gui.min.js",
-        "/external-libraries/DOMPurify/purify.min.js",
-        "/external-libraries/Rangy/rangy.min.js",
-        "/external-libraries/Rangy/rangy-classapplier.min.js",
-        "/external-libraries/Rangy/rangy-highlighter.min.js",
-        "/external-libraries/Rangy/rangy-textrange.min.js",
-      ],
+      files: LIBRARY_FILES,
     })
     .then(() => {
       chrome.scripting.executeScript({
         target: { tabId: tabId, allFrames: false },
-        files: ["content_script.js"],
+        files: CONTENT_SCRIPT_FILES,
       });
 
       setTimeout(function () {
@@ -65,7 +88,7 @@ function startSelectText() {
   startJustRead();
 }
 
-function createPageCM() {
+function createPageContextMenu() {
   // Create a right click menu option
   pageCMId = chrome.contextMenus.create(
     {
@@ -76,7 +99,7 @@ function createPageCM() {
     chrome.runtime.lastError,
   );
 }
-function createLinkCM() {
+function createLinkContextMenu() {
   // Create an entry to allow user to open a given link using Just read
   linkCMId = chrome.contextMenus.create(
     {
@@ -87,7 +110,7 @@ function createLinkCM() {
     chrome.runtime.lastError,
   );
 }
-function createAutorunCM() {
+function createAutorunContextMenu() {
   // Create an entry to allow user to open a given link using Just read
   autorunCMId = chrome.contextMenus.create(
     {
@@ -117,7 +140,15 @@ function addSiteToAutorunList(info, tab) {
             "auto-enable-site-list": [...currentDomains, entry],
           },
           function () {
-            if (currentDomains.indexOf(url.hostname)) {
+            if (
+              currentDomains.some((existing) => {
+                const existingPattern = existing.split(">")[0];
+                return (
+                  existingPattern === url.hostname ||
+                  existingPattern.startsWith(url.hostname + "/")
+                );
+              })
+            ) {
               console.log(
                 "Just Read auto-run entry added.\n\nWarning: An auto-run entry with the same hostname has already been added. Be careful to not add two duplicates.",
               );
@@ -138,7 +169,7 @@ function addSiteToAutorunList(info, tab) {
 }
 
 let pageCMId = (linkCMId = autorunCMId = undefined);
-function updateCMs() {
+function updateContextMenus() {
   chrome.storage.sync.get(
     ["enable-pageCM", "enable-linkCM", "enable-autorunCM"],
     function (result) {
@@ -149,7 +180,7 @@ function updateCMs() {
 
         if (key === "enable-pageCM") {
           if (result[key]) {
-            if (typeof pageCMId == "undefined") createPageCM();
+            if (typeof pageCMId == "undefined") createPageContextMenu();
           } else {
             if (typeof pageCMId != "undefined") {
               pageCMId = undefined;
@@ -157,7 +188,7 @@ function updateCMs() {
           }
         } else if (key === "enable-linkCM") {
           if (result[key]) {
-            if (typeof linkCMId == "undefined") createLinkCM();
+            if (typeof linkCMId == "undefined") createLinkContextMenu();
           } else {
             if (typeof linkCMId != "undefined") {
               linkCMId = undefined;
@@ -165,7 +196,7 @@ function updateCMs() {
           }
         } else if (key === "enable-autorunCM") {
           if (result[key]) {
-            if (typeof autorunCMId == "undefined") createAutorunCM();
+            if (typeof autorunCMId == "undefined") createAutorunContextMenu();
           } else {
             if (typeof autorunCMId != "undefined") {
               autorunCMId = undefined;
@@ -175,9 +206,9 @@ function updateCMs() {
       }
 
       if (size === 0) {
-        createPageCM();
-        createLinkCM();
-        createAutorunCM();
+        createPageContextMenu();
+        createLinkContextMenu();
+        createAutorunContextMenu();
       }
     },
   );
@@ -197,8 +228,8 @@ let lastClosed = Date.now();
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request === "Open options") {
     chrome.runtime.openOptionsPage();
-  } else if (request.updateCMs === "true") {
-    updateCMs();
+  } else if (request.updateContextMenus) {
+    updateContextMenus();
   } else if (request.closeTab === "true") {
     chrome.tabs.query(
       {
@@ -222,10 +253,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     chrome.storage.sync.set({ jrLastChecked: "" });
   } else if (request.tabOpenedJR) {
     const tabURL = request.tabOpenedJR.href.split("?")[0];
-    for (const tabId in preventInstance) {
+    for (const tabId in injectingTabs) {
       chrome.tabs.get(parseInt(tabId), (tab) => {
         if (tab.url.split("?")[0] === tabURL) {
-          setTimeout(() => delete preventInstance[tabId], 1000);
+          setTimeout(() => delete injectingTabs[tabId], 1000);
         }
       });
     }
@@ -243,12 +274,12 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
       startJustRead(newTab);
     });
   } else if (info.menuItemId === "autorunCM") {
-    addSiteToAutorunList();
+    addSiteToAutorunList(info, tab);
   }
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if (preventInstance[tabId]) return;
+  if (injectingTabs[tabId]) return;
 
   const change = Date.now() - lastClosed;
   if (changeInfo.status === "complete" && change > 300) {
@@ -282,7 +313,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
               if (url.match(urlRegex)) {
                 chrome.storage.sync.set({ runOnLoad: true });
-                startJustRead(tab);
+                const delay = parseInt(splitEntry[1], 10) || 0;
+                if (delay > 0) {
+                  setTimeout(() => startJustRead(tab), delay);
+                } else {
+                  startJustRead(tab);
+                }
                 return;
               }
             }
@@ -308,5 +344,5 @@ chrome.contextMenus.removeAll(function () {
     },
     chrome.runtime.lastError,
   );
-  updateCMs();
+  updateContextMenus();
 });
