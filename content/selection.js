@@ -169,10 +169,15 @@ function startDeleteElement(doc) {
   };
 }
 
+function markSharedPageDirty() {
+  JR.hasSavedLink = false;
+  document.documentElement.dataset.jrDirty = "1";
+  if (JR.shareDropdown) JR.shareDropdown.classList.remove("active");
+}
+
 const stack = [];
 function recordAction(actionName, elem) {
-  JR.hasSavedLink = false;
-  JR.shareDropdown.classList.remove("active");
+  markSharedPageDirty();
 
   let actionObj;
   if (actionName === "delete") {
@@ -222,6 +227,8 @@ function undoLastAction() {
 }
 
 function updateSavedVersion() {
+  markSharedPageDirty();
+
   if (JR.settings.backup) {
     const data = {
       url: window.location.href,

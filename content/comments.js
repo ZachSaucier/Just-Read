@@ -1,6 +1,21 @@
+function setSidebarCommentsOpen(open) {
+  const doc = JR.readerDocument;
+  if (!doc) return;
+  doc.body.classList.toggle("simple-with-comments", open);
+  const container = doc.querySelector(".simple-container");
+  if (container) container.classList.toggle("simple-with-comments", open);
+}
+
+function syncSidebarCommentsLayout() {
+  const remaining = JR.readerDocument.querySelectorAll(
+    ".simple-comment-container",
+  ).length;
+  setSidebarCommentsOpen(remaining > 0);
+}
+
 function addComment(loc) {
   if (!JR.readerDocument.body.classList.contains("simple-deleting")) {
-    JR.readerDocument.body.classList.add("simple-with-comments");
+    setSidebarCommentsOpen(true);
     JR.readerDocument.body.classList.add("simple-commenting");
 
     // Add the compact comment
@@ -138,12 +153,7 @@ function cancelComment(e, el) {
 
   parent.parentElement.removeChild(parent);
 
-  if (
-    JR.readerDocument.querySelectorAll(".simple-comment-container").length ===
-    0
-  ) {
-    JR.readerDocument.body.classList.remove("simple-with-comments");
-  }
+  syncSidebarCommentsLayout();
   JR.readerDocument.body.classList.remove("simple-commenting");
 }
 

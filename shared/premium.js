@@ -17,8 +17,7 @@ function refreshPremiumStatus(options) {
 
   chrome.storage.sync.set({ jrLastChecked: Date.now() });
 
-  fetch(options.domain + "checkPremium", {
-    mode: "cors",
+  jrFetch(options.domain + "checkPremium", {
     method: "POST",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify({ jrSecret: secret }),

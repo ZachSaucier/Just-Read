@@ -91,7 +91,7 @@ Once you're on an article that you want to read with Just Read installed on that
 
 You can share a page in Just Read's format by clicking [the share icon](https://i.imgur.com/4VospZC.png). This will show a [justread.link](https://justread.link) URL which will point to your Just Read version of the article. This may also open up the [justread.link](https://justread.link) URL in a new tab and close the current page depending on your settings under "Options" -> "Sharing preferences".
 
-Note that the [justread.link](https://justread.link) version of a page _cannot be edited_. If you need to edit it at that point, you must make your edits on the original Just Read version of the page and then re-share the page (which will create an entirely new address).
+To edit a shared page later, open the justread.link URL and start Just Read again. If you are signed into the Premium account that created the page, Just Read will attach its editor to the existing article. Click the share icon to save; the URL stays the same. Edits you make in the original reader tab after sharing also update that same address instead of creating a new one.
 
 </details>
 

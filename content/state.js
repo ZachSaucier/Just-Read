@@ -50,6 +50,9 @@ var JR = {
   lastTime: undefined,
 
   hasSavedLink: false,
+  isHydratedSharedPage: false,
+  sharedPageUrl: undefined,
+  sharedOrigURL: undefined,
 
   compactComments: undefined,
   comments: undefined,

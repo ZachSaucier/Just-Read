@@ -161,9 +161,19 @@ function finishOpeningReader() {
 }
 
 function launch() {
+  if (
+    JR.isHydratedSharedPage ||
+    document.documentElement.dataset.jrHydrated === "true"
+  ) {
+    closeOverlay();
+    return;
+  }
+
   if (document.getElementById("simple-article") == null) {
     if (JR.useText) {
       startSelectElement(document);
+    } else if (isJustReadSharedArticlePage()) {
+      verifyPremiumThenHydrate();
     } else {
       if (!document.head.querySelector(".page-styles"))
         addStylesheet(document, "page.css", "page-styles");

@@ -57,7 +57,8 @@ function convertCssVariableToReadableValue(color) {
   if (color.toLowerCase().indexOf('var(') !== -1) {
     const regExp = /\(([^)]+)\)/;
     const cssVar = regExp.exec(color)[1];
-    const computedStyles = getComputedStyle(document.getElementById("simple-article").contentWindow.document.body);
+    const doc = JR.readerDocument || document;
+    const computedStyles = getComputedStyle(doc.body);
     return computedStyles.getPropertyValue(cssVar);
   }
   return color;

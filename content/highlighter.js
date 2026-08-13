@@ -78,6 +78,7 @@ function initHighlighter() {
 }
 
 let lastMessage;
+let savedAnnotationRanges = [];
 function handleSelectionPointerUp(e) {
   let isTouch = e.type === "touchend";
 
@@ -94,6 +95,8 @@ function handleSelectionPointerUp(e) {
       });
     }
 
+    // Keep the article selection when clicking toolbar buttons.
+    JR.editBar.addEventListener("mousedown", (e) => e.preventDefault());
     JR.editBar.addEventListener("click", hidePickers);
 
     JR.editBar.querySelector(".jr-bold").addEventListener("click", bolden);
@@ -148,6 +151,7 @@ function handleSelectionPointerUp(e) {
   if (sel !== "" && sel !== lastMessage && isContentElem(e.target)) {
     JR.editorShortcutsEnabled = true;
     lastMessage = sel;
+    savedAnnotationRanges = cloneSelectionRanges();
 
     JR.editBar.style.display = "block";
     const r = rangy
@@ -184,6 +188,7 @@ function hidePickers() {
 function hideToolbar() {
   JR.editorShortcutsEnabled = false;
   lastMessage = "";
+  savedAnnotationRanges = [];
 
   if (JR.editBar) {
     JR.editBar.style.display = "none";
@@ -301,8 +306,111 @@ function deleteSelection() {
   }
 }
 
+function cloneSelectionRanges() {
+  const ranges = [];
+  const nativeSel = JR.readerDocument.getSelection();
+  if (nativeSel && nativeSel.rangeCount > 0) {
+    for (let i = 0; i < nativeSel.rangeCount; i++) {
+      ranges.push(nativeSel.getRangeAt(i).cloneRange());
+    }
+  }
+  return ranges;
+}
+
+function rangesForAnnotationRemoval() {
+  const live = cloneSelectionRanges().filter((range) => !range.collapsed);
+  if (live.length) return live;
+  return savedAnnotationRanges.filter((range) => {
+    try {
+      return range.startContainer && range.startContainer.isConnected;
+    } catch (e) {
+      return false;
+    }
+  });
+}
+
+function annotationElementsInRange(range) {
+  const root =
+    JR.readerDocument.querySelector(".content-container") ||
+    JR.readerDocument.body;
+  const selector = [
+    "[class*='jr-highlight-']",
+    "[class*='jr-color-']",
+    ".jr-strike-through",
+    ".jr-underline",
+    ".jr-italicize",
+    ".jr-bolden",
+  ].join(",");
+
+  const matches = [];
+  root.querySelectorAll(selector).forEach((el) => {
+    if (rangeIntersectsNode(range, el)) matches.push(el);
+  });
+  return matches;
+}
+
+function rangeIntersectsNode(range, node) {
+  try {
+    if (typeof range.intersectsNode === "function") {
+      return range.intersectsNode(node);
+    }
+  } catch (e) {
+    // Fall through to boundary comparison
+  }
+
+  const nodeRange = JR.readerDocument.createRange();
+  try {
+    nodeRange.selectNode(node);
+  } catch (e) {
+    return false;
+  }
+  return (
+    range.compareBoundaryPoints(Range.START_TO_END, nodeRange) < 0 &&
+    range.compareBoundaryPoints(Range.END_TO_START, nodeRange) > 0
+  );
+}
+
+function unwrapElement(el) {
+  const parent = el.parentNode;
+  if (!parent) return;
+  while (el.firstChild) parent.insertBefore(el.firstChild, el);
+  parent.removeChild(el);
+  parent.normalize();
+}
+
 function removeHighlightFromSelectedText() {
-  highlighter.unhighlightSelection();
+  // Rangy's unhighlightSelection() only knows highlights created this
+  // session, and it always clears the selection — even when it unwraps
+  // nothing. Collect and unwrap matching spans first, including those
+  // persisted on a shared page, then let Rangy drop any session state.
+  const toUnwrap = [];
+  rangesForAnnotationRemoval().forEach((range) => {
+    annotationElementsInRange(range).forEach((el) => {
+      if (!toUnwrap.includes(el)) toUnwrap.push(el);
+    });
+  });
+
+  toUnwrap
+    .sort((a, b) => {
+      const depth = (el) => {
+        let d = 0;
+        for (let n = el; n; n = n.parentElement) d++;
+        return d;
+      };
+      return depth(b) - depth(a);
+    })
+    .forEach(unwrapElement);
+
+  if (highlighter) {
+    try {
+      highlighter.unhighlightSelection();
+    } catch (e) {
+      // Highlighter has no record of this selection
+    }
+  }
+
+  savedAnnotationRanges = [];
+  updateSavedVersion();
   lastMessage = "";
-  JR.editBar.style.display = "none";
+  hideToolbar();
 }

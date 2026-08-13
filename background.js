@@ -26,6 +26,7 @@ const CONTENT_SCRIPT_FILES = [
   "content/autoscroll.js",
   "content/scrollbar.js",
   "content/share.js",
+  "content/hydrate.js",
   "content/overlay.js",
   "content/overlay-article.js",
   "content/overlay-create.js",
@@ -229,9 +230,54 @@ chrome.commands.onCommand.addListener(function (command) {
   if (command == "select-text") startSelectText();
 });
 
+function handleJrFetch(details, sendResponse) {
+  let parsed;
+  try {
+    parsed = new URL(details.url);
+  } catch (e) {
+    sendResponse({ networkError: "Invalid URL" });
+    return;
+  }
+
+  const extensionOrigin = chrome.runtime.getURL("");
+  const allowed =
+    details.url.startsWith(extensionOrigin) ||
+    parsed.protocol === "https:" ||
+    parsed.protocol === "http:";
+  if (!allowed) {
+    sendResponse({ networkError: "Blocked URL" });
+    return;
+  }
+
+  const init = {
+    method: details.method || "GET",
+    headers: details.headers || {},
+  };
+  if (details.body != null && init.method !== "GET" && init.method !== "HEAD") {
+    init.body = details.body;
+  }
+
+  fetch(details.url, init)
+    .then(async (res) => {
+      sendResponse({
+        ok: res.ok,
+        status: res.status,
+        contentType: res.headers.get("content-type"),
+        text: await res.text(),
+      });
+    })
+    .catch((err) => {
+      sendResponse({ networkError: String(err) });
+    });
+}
+
 // Listen for messages
 let lastClosed = Date.now();
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.jrFetch) {
+    handleJrFetch(request.jrFetch, sendResponse);
+    return true;
+  }
   if (request === "Open options") {
     chrome.runtime.openOptionsPage();
   } else if (request.updateContextMenus) {

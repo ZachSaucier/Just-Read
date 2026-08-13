@@ -26,11 +26,23 @@ function createReaderOverlay() {
 }
 
 function createCommentChrome() {
-  JR.compactComments = document.createElement("div");
-  JR.compactComments.className = "simple-compact-comments";
+  if (!JR.compactComments) {
+    JR.compactComments = document.createElement("div");
+    JR.compactComments.className = "simple-compact-comments";
+  }
 
-  JR.comments = document.createElement("div");
-  JR.comments.className = "simple-comments";
+  if (!JR.comments) {
+    JR.comments = document.createElement("div");
+    JR.comments.className = "simple-comments";
+  }
+
+  if (
+    JR.readerDocument &&
+    JR.readerDocument.querySelector(".simple-add-comment-container")
+  ) {
+    JR.addCommentBtn = JR.readerDocument.querySelector(".simple-add-comment");
+    return JR.readerDocument.querySelector(".simple-add-comment-container");
+  }
 
   const addCommentContainer = document.createElement("div");
   addCommentContainer.className = "simple-add-comment-container";
@@ -227,19 +239,18 @@ function removeFlaggedElements() {
 }
 
 function bindReaderControls() {
-  JR.readerDocument
-    .querySelector(".simple-close")
-    .addEventListener("click", closeOverlay);
+  const closeBtn = JR.readerDocument.querySelector(".simple-close");
+  if (closeBtn) closeBtn.addEventListener("click", closeOverlay);
 
-  JR.readerDocument
-    .querySelector(".simple-print")
-    .addEventListener("click", function () {
+  const printBtn = JR.readerDocument.querySelector(".simple-print");
+  if (printBtn) {
+    printBtn.addEventListener("click", function () {
       JR.readerDocument.defaultView.print();
     });
+  }
 
-  JR.readerDocument
-    .querySelector(".simple-share")
-    .addEventListener("click", shareReaderView);
+  const shareBtn = JR.readerDocument.querySelector(".simple-share");
+  if (shareBtn) shareBtn.addEventListener("click", shareReaderView);
   JR.shareDropdown = JR.readerDocument.querySelector(
     ".simple-share-dropdown"
   );
@@ -251,7 +262,7 @@ function bindReaderControls() {
     };
   }
 
-  JR.undoBtn.addEventListener("click", undoLastAction);
+  if (JR.undoBtn) JR.undoBtn.addEventListener("click", undoLastAction);
 }
 
 function createImageLightboxes(lightboxes) {

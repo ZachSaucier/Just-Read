@@ -1,4 +1,14 @@
 function closeOverlay() {
+  if (
+    JR.isHydratedSharedPage ||
+    document.documentElement.dataset.jrHydrated === "true"
+  ) {
+    unhydrateSharedPage();
+    return;
+  }
+
+  if (!JR.readerIframe) return;
+
   // Refresh the page if the content has been removed
   if (JR.settings.removeOrigContent) {
     // Record the URL and timestamp so autorun can skip re-triggering on the

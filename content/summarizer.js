@@ -248,7 +248,7 @@ function handleSummarizeClick() {
     summaryEl.appendChild(summaryHeader);
     contentContainer.prepend(summaryEl);
 
-    fetch(endpoint, {
+    jrFetch(endpoint, {
       method: "POST",
       headers: adapter.buildHeaders(apiKey),
       body: JSON.stringify(adapter.buildBody(model, prompt, content, temperature, rest)),
