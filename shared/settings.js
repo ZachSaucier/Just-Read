@@ -36,6 +36,5 @@ function parseSettings(storage) {
     summarizerOptions: storage["summarizer-options"],
     autorunSiteList: storage["auto-enable-site-list"],
     currentTheme: storage.currentTheme || "default-styles.css",
-    stylesheetVersion: storage["stylesheet-version"],
   };
 }

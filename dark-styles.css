@@ -236,6 +236,16 @@ aside,
   border: none;
 }
 
+.simple-comment-styling,
+.simple-comment {
+  color: var(--background-color);
+}
+
+.jr-tooltip {
+  background-color: #fff;
+  color: var(--background-color);
+}
+
 .jr-tooltip p a {
   color: #059bff;
 }

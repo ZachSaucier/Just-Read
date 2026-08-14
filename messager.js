@@ -1,18 +1,43 @@
-const url = "https://justread.link";
+if (window.__jrMessagerBound) {
+  window.postMessage({ hasJR: true }, window.location.origin);
+} else {
+  window.__jrMessagerBound = true;
 
-// Tell the JR website that the extension is installed
-window.postMessage({ hasJR: true }, url);
+  const JR_ORIGINS = ["https://justread.link", "https://www.justread.link"];
 
-// Listen for events from the JR website
-window.addEventListener("message", (event) => {
-  if (event.origin !== url) return;
-
-  const jrSecret = event.data.jrSecret;
-  const resetJRLastChecked = event.data.resetJRLastChecked;
-  if(jrSecret) {
-    chrome.runtime.sendMessage({jrSecret});
+  function isAllowedOrigin(origin) {
+    return origin === window.location.origin && JR_ORIGINS.includes(origin);
   }
-  if(resetJRLastChecked) {
-    chrome.runtime.sendMessage({resetJRLastChecked: true});
+
+  function sendSecret(jrSecret) {
+    if (!jrSecret || jrSecret === "undefined") return;
+    chrome.runtime.sendMessage({ jrSecret: jrSecret });
   }
-}, false);
+
+  function readDomSecret() {
+    return document.documentElement.getAttribute("data-jr-secret") || "";
+  }
+
+  sendSecret(readDomSecret());
+  window.postMessage({ hasJR: true }, window.location.origin);
+
+  new MutationObserver(() => {
+    sendSecret(readDomSecret());
+  }).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-jr-secret"],
+  });
+
+  window.addEventListener(
+    "message",
+    (event) => {
+      if (!event.data || typeof event.data !== "object") return;
+      if (!isAllowedOrigin(event.origin)) return;
+      if (event.data.jrSecret) sendSecret(event.data.jrSecret);
+      if (event.data.resetJRLastChecked) {
+        chrome.runtime.sendMessage({ resetJRLastChecked: true });
+      }
+    },
+    false,
+  );
+}

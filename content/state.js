@@ -32,7 +32,6 @@ var JR = {
   savedCompactComments: undefined,
 
   stylesheetObj: {},
-  stylesheetVersion: 6.5, // THIS NUMBER MUST BE UPDATED FOR THE STYLESHEETS TO KNOW TO UPDATE
 
   datGUI: undefined,
   themeStylesheet: undefined,

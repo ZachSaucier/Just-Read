@@ -98,6 +98,10 @@
 
 .simple-share {
   margin-top: -1px;
+  position: relative;
+}
+.simple-share.simple-share-needs-save {
+  opacity: 1;
 }
 
 .simple-undo {
@@ -514,6 +518,7 @@ button:disabled .simple-summary {
   width: 240px;
   padding: 5px;
   background-color: white;
+  color: #333;
   border: 1px solid lightgrey;
 }
 .jr-posted {
@@ -601,7 +606,7 @@ button:disabled .simple-summary {
 }
 
 .simple-comment {
-  color: var(--foreground-color);
+  color: inherit;
   font-family: sans-serif;
   line-height: 1.1;
   margin: 0;
@@ -754,7 +759,8 @@ button:disabled .simple-summary {
 
 /* Sharing functionality */
 .simple-share-dropdown,
-.simple-share-alert {
+.simple-share-alert,
+.simple-share-save-hint {
   display: none;
   cursor: auto;
   font-family: sans-serif;
@@ -769,12 +775,18 @@ button:disabled .simple-summary {
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15);
 }
 .simple-share-dropdown.active,
-.simple-share-alert.active {
+.simple-share-alert.active,
+.simple-share.simple-share-needs-save .simple-share-save-hint {
   display: block;
 }
-
 .simple-share-alert {
   width: 200px;
+}
+.simple-share-save-hint {
+  pointer-events: none;
+  white-space: nowrap;
+  padding: 6px 8px;
+  color: var(--foreground-color);
 }
 
 /* Notification functionality */
@@ -812,27 +824,27 @@ button:disabled .simple-summary {
 .jr-primary,
 .jr-secondary {
   outline: none;
-  background-color: var(--background-color);
   padding: 10px;
   cursor: pointer;
-  border: 1px solid var(--foreground-color);
-  opacity: 0.8;
   border-radius: 5px;
   transition: 0.1s;
 }
 
 .jr-primary {
   background-color: #27aae1;
-  color: var(--background-color);
+  color: #fff;
   opacity: 1;
   margin-left: 10px;
-  border-color: transparent;
+  border: 1px solid transparent;
 }
 .jr-primary:hover {
   background-color: #4ecaff;
 }
 .jr-secondary {
-  color: var(--foreground-color);
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+  opacity: 0.8;
 }
 .jr-secondary:hover {
   opacity: 1;

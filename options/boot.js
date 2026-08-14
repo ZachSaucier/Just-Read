@@ -1,8 +1,4 @@
 function afterOptionsStorageLoaded() {
-  if (typeof stylesheetObj[darkStylesheet] === "undefined") {
-    loadBundledTheme(stylesheetObj, darkStylesheet);
-  }
-
   refreshPremiumStatus({
     domain: jrDomain,
     secret: jrSecret,
@@ -68,13 +64,8 @@ function renderOptionsPage() {
 function loadOptionsFromStorage() {
   chrome.storage.sync.get(null, function (result) {
     applyStorageToOptionsForm(result);
-
-    if (isEmpty(stylesheetObj)) {
-      loadBundledTheme(stylesheetObj, defaultStylesheet, afterOptionsStorageLoaded);
-      return;
-    }
-
-    afterOptionsStorageLoaded();
+    dropStoredBundledThemes();
+    loadBundledThemes(stylesheetObj, afterOptionsStorageLoaded);
   });
 }
 

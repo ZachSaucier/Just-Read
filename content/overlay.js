@@ -9,6 +9,17 @@ function closeOverlay() {
 
   if (!JR.readerIframe) return;
 
+  if (hasUnsavedSharedEdits()) {
+    if (
+      !window.confirm(
+        UNSAVED_SHARED_EDITS_MESSAGE + " Close without saving?",
+      )
+    ) {
+      return;
+    }
+    allowSharedPageUnload = true;
+  }
+
   // Refresh the page if the content has been removed
   if (JR.settings.removeOrigContent) {
     // Record the URL and timestamp so autorun can skip re-triggering on the

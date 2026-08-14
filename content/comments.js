@@ -135,14 +135,18 @@ function placeComment() {
 }
 
 function cancelComment(e, el) {
-  let parent;
-  if (el) {
-    parent = el.parentElement;
-  } else {
-    parent = this.parentElement.parentElement;
-  }
+  const box =
+    el ||
+    (this && this.closest && this.closest(".simple-comment-container"));
+  if (!box) return;
 
-  parent.parentElement.removeChild(parent);
+  const compact = findCompactComment(box);
+  if (compact && compact.parentElement) {
+    compact.parentElement.removeChild(compact);
+  }
+  if (box.parentElement) {
+    box.parentElement.removeChild(box);
+  }
 
   syncSidebarCommentsLayout();
   JR.readerDocument.body.classList.remove("simple-commenting");
@@ -185,7 +189,12 @@ function bindInlineCommentSection(section) {
     section.appendChild(deleteButton);
   }
   deleteButton.onclick = function () {
-    if (section.parentElement) recordAction("delete", section);
+    if (!section.parentElement) return;
+    if (content && content.innerText.trim() === "") {
+      section.parentElement.removeChild(section);
+      return;
+    }
+    recordAction("delete", section);
   };
 
   if (!content || content.dataset.jrBound) return;
@@ -198,7 +207,7 @@ function bindInlineCommentSection(section) {
   });
   content.addEventListener("blur", () => {
     if (content.innerText.trim() === "" && section.parentElement) {
-      recordAction("delete", section);
+      section.parentElement.removeChild(section);
     }
   });
   section.addEventListener("click", () => {

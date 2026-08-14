@@ -142,10 +142,7 @@ function shareReaderView(e) {
   }
 
   if (JR.hasSavedLink) {
-    if (JR.sharedPageUrl && JR.shareDropdown) {
-      JR.shareDropdown.classList.add("active");
-      JR.shareDropdown.innerText = JR.sharedPageUrl;
-    }
+    updateShareButtonSaveState();
     return;
   }
 
@@ -226,8 +223,7 @@ function shareReaderView(e) {
         }
       }
 
-      JR.shareDropdown.classList.add("active");
-      JR.shareDropdown.innerText = url;
+      updateShareButtonSaveState();
     })
     .catch(function (err) {
       markSharedPageDirty();

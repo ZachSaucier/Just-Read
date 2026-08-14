@@ -1,5 +1,34 @@
 // Must load last (see CONTENT_SCRIPT_FILES in background.js).
 
+function withPageJrSecret(cb) {
+  const host = location.hostname;
+  if (host !== "justread.link" && host !== "www.justread.link") {
+    cb("");
+    return;
+  }
+
+  const existing = readPageJrSecret();
+  if (existing) {
+    cb(existing);
+    return;
+  }
+
+  let done = false;
+  const finish = (secret) => {
+    if (done) return;
+    done = true;
+    window.removeEventListener("message", onMsg);
+    cb(secret || "");
+  };
+  function onMsg(event) {
+    if (event.origin !== location.origin) return;
+    if (event.data && event.data.jrSecret) finish(event.data.jrSecret);
+  }
+  window.addEventListener("message", onMsg);
+  window.postMessage({ hasJR: true }, location.origin);
+  setTimeout(() => finish(readPageJrSecret()), 400);
+}
+
 function verifyPremiumThenOpenReader() {
   refreshPremiumStatus({
     domain: JR.jrDomain,
@@ -15,25 +44,12 @@ function verifyPremiumThenOpenReader() {
 }
 
 function loadStoredThemesThenOpenReader() {
-  const needsUpdate =
-    typeof JR.settings.stylesheetVersion === "undefined" ||
-    JR.settings.stylesheetVersion < JR.stylesheetVersion;
-
-  if (needsUpdate) {
-    chrome.storage.sync.set({ "stylesheet-version": JR.stylesheetVersion });
-  }
-
-  if (isEmpty(JR.stylesheetObj) || needsUpdate) {
-    loadBundledTheme(JR.stylesheetObj, "dark-styles.css");
-    loadBundledTheme(JR.stylesheetObj, "default-styles.css", applyThemeAndCreateOverlay);
-    return;
-  }
-
-  applyThemeAndCreateOverlay();
+  dropStoredBundledThemes();
+  loadBundledThemes(JR.stylesheetObj, applyThemeAndCreateOverlay);
 }
 
 function applySessionFromStorage(storage) {
-  JR.jrSecret = storage.jrSecret || false;
+  JR.jrSecret = storage.jrSecret || readPageJrSecret() || false;
   JR.isPremium = !!storage.isPremium;
   JR.jrLastChecked = storage.jrLastChecked;
   JR.useText = storage.useText;
@@ -161,6 +177,8 @@ function finishOpeningReader() {
 }
 
 function launch() {
+  bindUnsavedSharedEditsWarning();
+
   if (
     JR.isHydratedSharedPage ||
     document.documentElement.dataset.jrHydrated === "true"
@@ -195,5 +213,12 @@ chrome.storage.sync.get(null, function (result) {
   JR.settings = parseSettings(result);
   collectStylesheetsFromStorage(result, JR.stylesheetObj);
   applySessionFromStorage(result);
-  launch();
+  withPageJrSecret((pageSecret) => {
+    if (pageSecret) {
+      JR.jrSecret = pageSecret;
+      JR.jrLastChecked = "";
+      chrome.runtime.sendMessage({ jrSecret: pageSecret });
+    }
+    launch();
+  });
 });

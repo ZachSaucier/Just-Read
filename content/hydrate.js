@@ -134,10 +134,7 @@ function hydrateSharedPage(data) {
 
   setTimeout(checkBreakpoints, 10);
 
-  if (JR.shareDropdown) {
-    JR.shareDropdown.classList.add("active");
-    JR.shareDropdown.innerText = JR.sharedPageUrl;
-  }
+  updateShareButtonSaveState();
 }
 
 function injectHydrateStyles() {
@@ -176,9 +173,7 @@ function injectHydrateToolbar(container) {
     }
   }
 
-  if (!ui.querySelector(".simple-summarize")) {
-    ui.appendChild(addSummarizeButton());
-  }
+  ui.querySelectorAll(".simple-summarize").forEach((btn) => btn.remove());
 
   const delModeBtn = addDelModeButton();
   if (!ui.querySelector(".simple-delete")) {
@@ -200,17 +195,11 @@ function enableSharedMetaEditing() {
 }
 
 function unhydrateSharedPage() {
-  const dirty =
-    document.documentElement.dataset.jrDirty === "1" ||
-    (JR.isHydratedSharedPage && !JR.hasSavedLink);
-  if (dirty) {
-    if (
-      !window.confirm(
-        "You have unsaved edits. Close without saving to this shared page?",
-      )
-    ) {
+  if (hasUnsavedSharedEdits()) {
+    if (!window.confirm(UNSAVED_SHARED_EDITS_MESSAGE + " Close without saving?")) {
       return;
     }
   }
+  allowSharedPageUnload = true;
   window.location.reload();
 }

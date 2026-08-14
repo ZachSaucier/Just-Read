@@ -271,6 +271,79 @@ function handleJrFetch(details, sendResponse) {
     });
 }
 
+const JR_SITE = "https://justread.link/";
+
+function isJustReadSite(url) {
+  try {
+    const host = new URL(url).hostname;
+    return host === "justread.link" || host === "www.justread.link";
+  } catch {
+    return false;
+  }
+}
+
+function pullSecretFromTab(tabId) {
+  chrome.scripting
+    .executeScript({
+      target: { tabId: tabId, allFrames: false },
+      func: () => document.documentElement.getAttribute("data-jr-secret"),
+    })
+    .then((results) => {
+      const secret = results && results[0] && results[0].result;
+      if (secret) return activatePremiumSecret(secret);
+    })
+    .catch(() => {});
+}
+
+function injectMessager(tabId) {
+  pullSecretFromTab(tabId);
+  chrome.scripting
+    .executeScript({
+      target: { tabId: tabId, allFrames: false },
+      files: ["messager.js"],
+    })
+    .catch(() => {});
+}
+
+function associateJustReadTabs() {
+  chrome.tabs.query(
+    { url: ["https://justread.link/*", "https://www.justread.link/*"] },
+    (tabs) => {
+      (tabs || []).forEach((tab) => {
+        if (tab.id) injectMessager(tab.id);
+      });
+    },
+  );
+}
+
+function activatePremiumSecret(jrSecret) {
+  if (!jrSecret || jrSecret === "undefined") {
+    return Promise.resolve({ ok: false, error: "missing jrSecret" });
+  }
+  chrome.storage.sync.set({ jrSecret: jrSecret, jrLastChecked: "" });
+  return fetch(JR_SITE + "checkPremium", {
+    method: "POST",
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+    body: JSON.stringify({ jrSecret: jrSecret }),
+  })
+    .then(async (res) => {
+      const text = await res.text();
+      const isPremium = String(text).trim() === "true";
+      if (!res.ok) {
+        return { ok: false, status: res.status, body: text, isPremium: false };
+      }
+      chrome.storage.sync.set({
+        isPremium: isPremium,
+        jrLastChecked: Date.now(),
+      });
+      return { ok: true, status: res.status, body: text, isPremium: isPremium };
+    })
+    .catch((err) => {
+      console.error("checkPremium error", err);
+      return { ok: false, error: String(err), isPremium: false };
+    });
+}
+
 // Listen for messages
 let lastClosed = Date.now();
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -300,9 +373,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   // For JRP
   else if (request.jrSecret) {
-    chrome.storage.sync.set({ jrSecret: request.jrSecret });
+    activatePremiumSecret(request.jrSecret).then(sendResponse);
+    return true;
   } else if (request.resetJRLastChecked) {
-    chrome.storage.sync.set({ jrLastChecked: "" });
+    chrome.storage.sync.set({ jrLastChecked: "" }, function () {
+      chrome.storage.sync.get("jrSecret", function (stored) {
+        if (stored && stored.jrSecret) {
+          activatePremiumSecret(stored.jrSecret).then(sendResponse);
+        } else {
+          sendResponse({ ok: false, error: "no stored jrSecret" });
+        }
+      });
+    });
+    return true;
   } else if (request.tabOpenedJR) {
     const tabURL = request.tabOpenedJR.split("?")[0];
     for (const tabId in injectingTabs) {
@@ -331,6 +414,14 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  if (
+    tab.url &&
+    isJustReadSite(tab.url) &&
+    (changeInfo.status === "loading" || changeInfo.status === "complete")
+  ) {
+    injectMessager(tabId);
+  }
+
   if (injectingTabs[tabId]) return;
 
   const change = Date.now() - lastClosed;
@@ -398,3 +489,7 @@ chrome.contextMenus.removeAll(function () {
   );
   updateContextMenus();
 });
+
+associateJustReadTabs();
+chrome.runtime.onStartup.addListener(associateJustReadTabs);
+chrome.runtime.onInstalled.addListener(associateJustReadTabs);

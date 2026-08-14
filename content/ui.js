@@ -197,8 +197,14 @@ function addShareButton() {
   svg.appendChild(path3);
   svg.appendChild(path4);
 
+  const saveHint = document.createElement("div");
+  saveHint.className = "simple-share-save-hint";
+  saveHint.textContent = "Re-share to save";
+  saveHint.setAttribute("aria-hidden", "true");
+
   shareButton.appendChild(dropDown);
   shareButton.appendChild(shareAlert);
+  shareButton.appendChild(saveHint);
   shareButton.appendChild(svg);
 
   return shareButton;

@@ -1,6 +1,12 @@
 function refreshPremiumStatus(options) {
   const secret = options.secret;
   const lastChecked = options.lastChecked;
+  const ready = (isPremium, readySecret) => {
+    options.onReady({
+      isPremium: !!isPremium,
+      secret: readySecret || false,
+    });
+  };
   const needsRefresh =
     secret &&
     (typeof lastChecked === "undefined" ||
@@ -8,14 +14,9 @@ function refreshPremiumStatus(options) {
       Date.now() - lastChecked > 86400000);
 
   if (!needsRefresh) {
-    options.onReady({
-      isPremium: !!options.cachedIsPremium,
-      secret: secret || false,
-    });
+    ready(options.cachedIsPremium, secret);
     return;
   }
-
-  chrome.storage.sync.set({ jrLastChecked: Date.now() });
 
   jrFetch(options.domain + "checkPremium", {
     method: "POST",
@@ -27,12 +28,15 @@ function refreshPremiumStatus(options) {
       return response.text();
     })
     .then((response) => {
-      const isPremium = response === "true";
-      chrome.storage.sync.set({ isPremium: isPremium });
-      options.onReady({
+      const isPremium = String(response).trim() === "true";
+      chrome.storage.sync.set({
         isPremium: isPremium,
-        secret: secret,
+        jrLastChecked: Date.now(),
       });
+      ready(isPremium, secret);
     })
-    .catch((err) => console.error(`Fetch Error =\n`, err));
+    .catch((err) => {
+      console.error(`Fetch Error =\n`, err);
+      ready(options.cachedIsPremium, secret);
+    });
 }

@@ -1,7 +1,6 @@
 // User-selected text functionality
 let hoveredElement;
 function startSelectElement(doc) {
-
   const pointerFunc = function (e) {
       const elem = e.target;
 
@@ -172,7 +171,55 @@ function startDeleteElement(doc) {
 function markSharedPageDirty() {
   JR.hasSavedLink = false;
   document.documentElement.dataset.jrDirty = "1";
-  if (JR.shareDropdown) JR.shareDropdown.classList.remove("active");
+  updateShareButtonSaveState();
+}
+
+function hasUnsavedSharedEdits() {
+  if (!JR.sharedPageUrl) return false;
+  return document.documentElement.dataset.jrDirty === "1" || !JR.hasSavedLink;
+}
+
+function updateShareButtonSaveState() {
+  const shareBtn =
+    JR.readerDocument && JR.readerDocument.querySelector(".simple-share");
+  if (!shareBtn) return;
+
+  const dirty = hasUnsavedSharedEdits();
+  shareBtn.classList.toggle("simple-share-needs-save", dirty);
+  if (dirty) {
+    shareBtn.removeAttribute("title");
+    shareBtn.setAttribute("aria-label", "Re-share to save");
+  } else {
+    shareBtn.removeAttribute("aria-label");
+    shareBtn.title = JR.sharedPageUrl
+      ? "Save changes to this shared page"
+      : "Share article";
+  }
+
+  if (!JR.shareDropdown) return;
+  if (dirty) {
+    JR.shareDropdown.classList.remove("active");
+  } else if (JR.hasSavedLink && JR.sharedPageUrl) {
+    JR.shareDropdown.classList.add("active");
+    JR.shareDropdown.innerText = JR.sharedPageUrl;
+  } else {
+    JR.shareDropdown.classList.remove("active");
+  }
+}
+
+const UNSAVED_SHARED_EDITS_MESSAGE =
+  'You have unsaved edits. Click "Share" to save them to the shared page.';
+
+let allowSharedPageUnload = false;
+function warnUnsavedSharedEdits(e) {
+  if (allowSharedPageUnload || !hasUnsavedSharedEdits()) return;
+  e.preventDefault();
+  e.returnValue = "";
+}
+
+function bindUnsavedSharedEditsWarning() {
+  window.removeEventListener("beforeunload", warnUnsavedSharedEdits);
+  window.addEventListener("beforeunload", warnUnsavedSharedEdits);
 }
 
 const stack = [];
@@ -189,10 +236,7 @@ function snapshotRemovedNode(node) {
 
 function restoreRemovedNode(snap) {
   if (!snap || !snap.parent) return;
-  snap.parent.insertBefore(
-    snap.elem,
-    snap.parent.children[snap.index] || null,
-  );
+  snap.parent.insertBefore(snap.elem, snap.parent.children[snap.index] || null);
 }
 
 function findCompactComment(box) {
@@ -265,18 +309,16 @@ function updateSavedVersion() {
     const data = {
       url: window.location.href,
       content: DOMPurify.sanitize(
-        JR.readerDocument.querySelector(".content-container").innerHTML
+        JR.readerDocument.querySelector(".content-container").innerHTML,
       ),
     };
 
-    if (
-      JR.readerDocument.querySelector(".simple-comments").innerHTML !== ""
-    ) {
+    if (JR.readerDocument.querySelector(".simple-comments").innerHTML !== "") {
       data.savedComments = DOMPurify.sanitize(
-        JR.readerDocument.querySelector(".simple-comments").innerHTML
+        JR.readerDocument.querySelector(".simple-comments").innerHTML,
       );
       data.savedCompactComments = DOMPurify.sanitize(
-        JR.readerDocument.querySelector(".simple-compact-comments").innerHTML
+        JR.readerDocument.querySelector(".simple-compact-comments").innerHTML,
       );
     }
 
