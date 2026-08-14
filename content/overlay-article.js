@@ -4,7 +4,12 @@ function applyDomainSelectors() {
   const domainSelectorArr = JR.settings.domainSelectors;
   for (let i = 0; i < domainSelectorArr.length; i++) {
     const domainSelObj = domainSelectorArr[i];
-    const regex = new RegExp(domainSelObj.domainPattern, "i");
+    let regex;
+    try {
+      regex = new RegExp(domainSelObj.domainPattern, "i");
+    } catch (e) {
+      continue;
+    }
 
     if (window.location.href.match(regex)) {
       if (domainSelObj.titleSelector)
@@ -52,6 +57,9 @@ function applySiteSettingsThenCreateOverlay() {
 }
 
 function selectArticleSource() {
+  // Snapshot JSON-LD / Open Graph before the article innerHTML is rewritten.
+  JR.structuredMeta = collectStructuredMeta();
+
   if (JR.userSelected) {
     JR.pageSelectedContainer = JR.userSelected;
   }
@@ -207,10 +215,9 @@ function prepareArticleMarkup() {
   articleContainer.appendChild(contentContainer);
   articleContainer.appendChild(addExtInfo());
 
-  if (JR.headerImageSelector && document.querySelector(JR.headerImageSelector)) {
-    contentContainer.appendChild(
-      document.querySelector(JR.headerImageSelector)
-    );
+  const headerImg = safeQuery(document, JR.headerImageSelector);
+  if (headerImg) {
+    contentContainer.appendChild(headerImg);
   }
 
   return { container, articleContainer, lightboxes };

@@ -14,21 +14,18 @@ function addArticleMeta() {
   date.className = "simple-date";
   title.className = "simple-title";
 
-  // Check a couple places for the date, othewise say it's unknown
   let dateText = getArticleDate();
   if (dateText === "Unknown date") {
     metaContainer.classList.add("unknown-date");
   }
-  dateContent.innerHTML = DOMPurify.sanitize(dateText);
+  dateContent.innerText = dateText;
   date.appendChild(dateContent);
-  // Check to see if there is an author available in the meta, if so get it, otherwise say it's unknown
   let authorText = getArticleAuthor();
   if (authorText === "Unknown author") {
     metaContainer.classList.add("unknown-author");
   }
-  authorContent.innerHTML = DOMPurify.sanitize(authorText);
+  authorContent.innerText = authorText;
   author.appendChild(authorContent);
-  // Check h1s for the title, otherwise say it's unknown
   titleContent.innerText = getArticleTitle();
   title.appendChild(titleContent);
 

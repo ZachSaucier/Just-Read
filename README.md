@@ -413,13 +413,3 @@ For _account related issues_, contact <a href="mailto:support@justread.link">sup
 3. **Firefox:** `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on…** → select `dist/gecko/manifest.json`.
 
 </details>
-
----
-
-## Building browser packages
-
-```bash
-node pack.mjs
-```
-
-Writes `dist/webkit/` + `.zip`, and `dist/gecko/` + `.zip` (with Firefox background scripts and add-on ID).

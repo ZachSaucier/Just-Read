@@ -75,6 +75,24 @@ function isRTL(s) {
   return rtlDirCheck.test(s);
 }
 
+function safeQuery(root, selector) {
+  if (!root || !selector) return null;
+  try {
+    return root.querySelector(selector);
+  } catch (e) {
+    return null;
+  }
+}
+
+function safeQueryAll(root, selector) {
+  if (!root || !selector) return [];
+  try {
+    return Array.from(root.querySelectorAll(selector));
+  } catch (e) {
+    return [];
+  }
+}
+
 // Check given item against blacklist, return null if in blacklist
 const blacklist = ["comment"];
 function checkAgainstBlacklist(elem, level) {

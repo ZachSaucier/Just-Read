@@ -60,6 +60,9 @@ var JR = {
   undoBtn: undefined,
   summarizeBtn: undefined,
 
+  structuredMeta: undefined,
+  articleMeta: undefined,
+
   titleSelector: undefined,
   authorSelector: undefined,
   dateSelector: undefined,
