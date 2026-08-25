@@ -490,6 +490,19 @@ chrome.contextMenus.removeAll(function () {
   updateContextMenus();
 });
 
+function clearBundledThemeCache() {
+  chrome.storage.sync.remove([
+    "jr-default-styles.css",
+    "jr-dark-styles.css",
+    "stylesheet-version",
+  ]);
+}
+
 associateJustReadTabs();
 chrome.runtime.onStartup.addListener(associateJustReadTabs);
-chrome.runtime.onInstalled.addListener(associateJustReadTabs);
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === "update") {
+    clearBundledThemeCache();
+  }
+  associateJustReadTabs();
+});

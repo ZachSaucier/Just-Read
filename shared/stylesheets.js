@@ -15,19 +15,25 @@ function checkFileName(fileName, stylesheetObj) {
 function collectStylesheetsFromStorage(storage, stylesheetObj) {
   for (let key in storage) {
     if (key.substring(0, 3) === "jr-") {
-      const name = key.substring(3);
-      if (isBundledTheme(name)) continue;
-      stylesheetObj[name] = storage[key];
+      stylesheetObj[key.substring(3)] = storage[key];
     }
   }
 }
 
-function dropStoredBundledThemes() {
-  chrome.storage.sync.remove([
-    "jr-default-styles.css",
-    "jr-dark-styles.css",
-    "stylesheet-version",
-  ]);
+function missingBundledThemes(stylesheetObj) {
+  return BUNDLED_THEME_FILES.filter((filename) => !stylesheetObj[filename]);
+}
+
+function saveBundledThemesToStorage(stylesheetObj) {
+  const obj = {};
+  for (const filename of BUNDLED_THEME_FILES) {
+    if (stylesheetObj[filename]) {
+      obj["jr-" + filename] = stylesheetObj[filename];
+    }
+  }
+  if (Object.keys(obj).length) {
+    chrome.storage.sync.set(obj);
+  }
 }
 
 function saveStylesheetsToStorage(stylesheetObj, onSaved) {
@@ -54,16 +60,28 @@ function saveStylesheetsToStorage(stylesheetObj, onSaved) {
   if (pending === 0 && onSaved) onSaved();
 }
 
-function loadBundledThemes(stylesheetObj, onLoaded) {
+function ensureBundledThemes(stylesheetObj, onLoaded) {
+  const missing = missingBundledThemes(stylesheetObj);
+  if (missing.length === 0) {
+    if (onLoaded) onLoaded();
+    return;
+  }
+
   Promise.all(
-    BUNDLED_THEME_FILES.map((filename) =>
+    missing.map((filename) =>
       fetchExtensionCss(filename).then((text) => {
         stylesheetObj[filename] = text;
       }),
     ),
   )
     .then(() => {
+      saveBundledThemesToStorage(stylesheetObj);
       if (onLoaded) onLoaded();
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      if (missingBundledThemes(stylesheetObj).length < BUNDLED_THEME_FILES.length) {
+        if (onLoaded) onLoaded();
+      }
+    });
 }

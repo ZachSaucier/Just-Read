@@ -64,8 +64,7 @@ function renderOptionsPage() {
 function loadOptionsFromStorage() {
   chrome.storage.sync.get(null, function (result) {
     applyStorageToOptionsForm(result);
-    dropStoredBundledThemes();
-    loadBundledThemes(stylesheetObj, afterOptionsStorageLoaded);
+    ensureBundledThemes(stylesheetObj, afterOptionsStorageLoaded);
   });
 }
 

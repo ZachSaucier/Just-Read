@@ -74,8 +74,21 @@ function jrFetch(url, options) {
   });
 }
 
+function pageNeedsJrFetchProxy() {
+  const host = location.hostname;
+  return host === "justread.link" || host === "www.justread.link";
+}
+
+function fetchViaDirectOrProxy(url) {
+  const primary = pageNeedsJrFetchProxy() ? jrFetch : fetch.bind(null);
+  const fallback = pageNeedsJrFetchProxy() ? fetch.bind(null) : jrFetch;
+
+  return primary(url).catch(() => fallback(url));
+}
+
 function fetchExtensionCss(filename) {
-  return jrFetch(chrome.runtime.getURL(filename)).then((response) => {
+  const url = chrome.runtime.getURL(filename);
+  return fetchViaDirectOrProxy(url).then((response) => {
     if (!response.ok) throw new Error("Failed to load " + filename);
     return response.text();
   });

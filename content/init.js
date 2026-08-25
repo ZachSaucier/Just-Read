@@ -44,8 +44,7 @@ function verifyPremiumThenOpenReader() {
 }
 
 function loadStoredThemesThenOpenReader() {
-  dropStoredBundledThemes();
-  loadBundledThemes(JR.stylesheetObj, applyThemeAndCreateOverlay);
+  ensureBundledThemes(JR.stylesheetObj, applyThemeAndCreateOverlay);
 }
 
 function applySessionFromStorage(storage) {
