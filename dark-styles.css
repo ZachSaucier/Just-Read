@@ -241,6 +241,10 @@ aside,
   color: var(--background-color);
 }
 
+.simple-comment-container button:not(.jr-post) {
+  color: var(--background-color);
+}
+
 .jr-tooltip {
   background-color: #fff;
   color: var(--background-color);

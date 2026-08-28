@@ -201,10 +201,8 @@ function enableSharedMetaEditing() {
 }
 
 function unhydrateSharedPage() {
-  if (hasUnsavedSharedEdits()) {
-    if (!window.confirm(UNSAVED_SHARED_EDITS_MESSAGE + " Close without saving?")) {
-      return;
-    }
+  if (hasUnsavedSharedEdits() && !confirmCloseWithUnsavedEdits()) {
+    return;
   }
   allowSharedPageUnload = true;
   window.location.reload();

@@ -175,8 +175,11 @@ function markSharedPageDirty() {
 }
 
 function hasUnsavedSharedEdits() {
-  if (!JR.sharedPageUrl) return false;
-  return document.documentElement.dataset.jrDirty === "1" || !JR.hasSavedLink;
+  const dirty = document.documentElement.dataset.jrDirty === "1";
+  if (JR.sharedPageUrl) {
+    return dirty || !JR.hasSavedLink;
+  }
+  return JR.isPremium && dirty && !JR.hasSavedLink;
 }
 
 function updateShareButtonSaveState() {
@@ -188,7 +191,10 @@ function updateShareButtonSaveState() {
   shareBtn.classList.toggle("simple-share-needs-save", dirty);
   if (dirty) {
     shareBtn.removeAttribute("title");
-    shareBtn.setAttribute("aria-label", "Re-share to save");
+    shareBtn.setAttribute(
+      "aria-label",
+      JR.sharedPageUrl ? "Re-share to save" : "Share to save",
+    );
   } else {
     shareBtn.removeAttribute("aria-label");
     shareBtn.title = JR.sharedPageUrl
@@ -207,8 +213,13 @@ function updateShareButtonSaveState() {
   }
 }
 
-const UNSAVED_SHARED_EDITS_MESSAGE =
-  'You have unsaved edits. Click "Share" to save them to the shared page.';
+const UNSAVED_SHARED_EDITS_MESSAGE = "You have unsaved edits.";
+
+function confirmCloseWithUnsavedEdits() {
+  return window.confirm(
+    UNSAVED_SHARED_EDITS_MESSAGE + " Close without saving?",
+  );
+}
 
 let allowSharedPageUnload = false;
 function warnUnsavedSharedEdits(e) {

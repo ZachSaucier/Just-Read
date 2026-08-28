@@ -215,3 +215,20 @@ chrome.storage.sync.get(null, function (result) {
     launch();
   });
 });
+
+if (!globalThis.__jrToggleListenerRegistered) {
+  globalThis.__jrToggleListenerRegistered = true;
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.toggleJustRead) {
+      chrome.storage.sync.get(null, (result) => {
+        result = result || {};
+        JR.settings = parseSettings(result);
+        collectStylesheetsFromStorage(result, JR.stylesheetObj);
+        applySessionFromStorage(result);
+        launch();
+        sendResponse({ ok: true });
+      });
+      return true;
+    }
+  });
+}

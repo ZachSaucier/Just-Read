@@ -588,7 +588,7 @@ button:disabled .simple-summary {
   padding: 5px 10px;
   background-color: #f5f5f5;
   background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
-  color: grey;
+  color: var(--foreground-color);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 .simple-comment-container .jr-post {

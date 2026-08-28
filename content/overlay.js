@@ -7,14 +7,22 @@ function closeOverlay() {
     return;
   }
 
+  if (!JR.readerIframe) {
+    JR.readerIframe = document.getElementById("simple-article");
+  }
+
   if (!JR.readerIframe) return;
 
+  if (!JR.readerDocument) {
+    try {
+      JR.readerDocument = JR.readerIframe.contentWindow?.document;
+    } catch (e) {
+      // Cross-origin iframe access can throw.
+    }
+  }
+
   if (hasUnsavedSharedEdits()) {
-    if (
-      !window.confirm(
-        UNSAVED_SHARED_EDITS_MESSAGE + " Close without saving?",
-      )
-    ) {
+    if (!confirmCloseWithUnsavedEdits()) {
       return;
     }
     allowSharedPageUnload = true;
@@ -28,11 +36,15 @@ function closeOverlay() {
       jrClosedUrl: window.location.origin + window.location.pathname,
       jrClosedAt: Date.now(),
     });
-    
-    // The page refresh
+
     const url = new URL(window.location);
     url.searchParams.delete("jr");
-    window.location.replace(url);
+    if (url.href !== window.location.href) {
+      window.location.replace(url);
+    } else {
+      window.location.reload();
+    }
+    return;
   }
 
   // Remove the GUI if it is open
@@ -42,14 +54,17 @@ function closeOverlay() {
   }
 
   window.removeEventListener("resize", hideToolbar);
+  document.removeEventListener("keydown", handleReaderEscape, true);
 
   // Fade out
   JR.readerIframe.classList.add("simple-fade-up");
 
   // Remove some general listeners
-  JR.readerDocument.removeEventListener("pointerup", handleSelectionPointerUp);
-  JR.readerDocument.removeEventListener("touchend", handleSelectionPointerUp);
-  JR.readerDocument.removeEventListener("pointermove", handlePointerMove);
+  if (JR.readerDocument) {
+    JR.readerDocument.removeEventListener("pointerup", handleSelectionPointerUp);
+    JR.readerDocument.removeEventListener("touchend", handleSelectionPointerUp);
+    JR.readerDocument.removeEventListener("pointermove", handlePointerMove);
+  }
 
   // Reset our variables
   JR.pageSelectedContainer = null;
@@ -107,7 +122,7 @@ function linkListener(e) {
       if (hrefArr[1].startsWith("jr-")) {
         JR.readerDocument.getElementById(hrefArr[1]).scrollIntoView(true);
         let backArrow = JR.readerDocument.querySelector(
-          this.id + " .back-to-ref"
+          this.id + " .back-to-ref",
         );
         backArrow.dataset.scrollPos = JR.readerDocument.scrollTop;
       } else {

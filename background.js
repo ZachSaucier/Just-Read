@@ -46,11 +46,21 @@ const LIBRARY_FILES = [
 ];
 
 function startJustRead(tab) {
+  const run = (resolvedTab) => {
+    if (!resolvedTab?.id) return;
+
+    chrome.tabs.sendMessage(resolvedTab.id, { toggleJustRead: true }, () => {
+      if (chrome.runtime.lastError) {
+        injectReaderScripts(resolvedTab);
+      }
+    });
+  };
+
   if (tab) {
-    injectReaderScripts(tab);
+    run(tab);
   } else {
     chrome.tabs.query({ currentWindow: true, active: true }, (tabArray) => {
-      if (tabArray.length) injectReaderScripts(tabArray[0]);
+      if (tabArray.length) run(tabArray[0]);
     });
   }
 }
@@ -301,7 +311,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         } else {
           sendResponse({ ok: true });
         }
-      }
+      },
     );
     return true;
   }

@@ -21,7 +21,7 @@ function createReaderOverlay() {
   restoreSavedComments();
 
   runWhenIframeReady(() =>
-    initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes)
+    initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes),
   );
 }
 
@@ -56,13 +56,13 @@ function createCommentChrome() {
   const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path1.setAttribute(
     "d",
-    "M676,368.3H520.1V212.4c0-11.1-9-20.1-20.1-20.1c-11.1,0-20.1,9-20.1,20.1v155.9H324c-11.1,0-20.1,9-20.1,20.1c0,11.1,9,20.1,20.1,20.1h155.9v155.9c0,11.1,9,20.1,20.1,20.1c11.1,0,20.1-9,20.1-20.1V408.5H676c11.1,0,20.1-9,20.1-20.1C696.1,377.3,687.1,368.3,676,368.3z"
+    "M676,368.3H520.1V212.4c0-11.1-9-20.1-20.1-20.1c-11.1,0-20.1,9-20.1,20.1v155.9H324c-11.1,0-20.1,9-20.1,20.1c0,11.1,9,20.1,20.1,20.1h155.9v155.9c0,11.1,9,20.1,20.1,20.1c11.1,0,20.1-9,20.1-20.1V408.5H676c11.1,0,20.1-9,20.1-20.1C696.1,377.3,687.1,368.3,676,368.3z",
   );
 
   const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path2.setAttribute(
     "d",
-    "M657.9,19.3H342.1C159,19.3,10,181.4,10,380.6C10,549.8,117.2,695,267.1,732.5v228.1c0,7.9,4.6,15.1,11.8,18.3c2.7,1.2,5.5,1.8,8.3,1.8c4.8,0,9.6-1.7,13.3-5L566,741.8h91.9C841,741.8,990,579.7,990,380.6S841,19.3,657.9,19.3z M657.9,701.6h-99.5c-4.9,0-9.6,1.8-13.3,5L307.4,916V716.3c0-9.6-6.8-17.9-16.3-19.8c-139.5-27.1-240.8-160-240.8-316c0-177,130.9-321,291.9-321h315.8c160.9,0,291.9,144,291.9,321C949.8,557.6,818.8,701.6,657.9,701.6z"
+    "M657.9,19.3H342.1C159,19.3,10,181.4,10,380.6C10,549.8,117.2,695,267.1,732.5v228.1c0,7.9,4.6,15.1,11.8,18.3c2.7,1.2,5.5,1.8,8.3,1.8c4.8,0,9.6-1.7,13.3-5L566,741.8h91.9C841,741.8,990,579.7,990,380.6S841,19.3,657.9,19.3z M657.9,701.6h-99.5c-4.9,0-9.6,1.8-13.3,5L307.4,916V716.3c0-9.6-6.8-17.9-16.3-19.8c-139.5-27.1-240.8-160-240.8-316c0-177,130.9-321,291.9-321h315.8c160.9,0,291.9,144,291.9,321C949.8,557.6,818.8,701.6,657.9,701.6z",
   );
   path2.setAttribute("transform", "scale(-1, 1) translate(-1000, 0)");
 
@@ -83,7 +83,7 @@ function createCommentChrome() {
         secondaryText: "Maybe later",
       };
       JR.readerDocument.body.appendChild(
-        createNotification(notification, JR.readerDocument)
+        createNotification(notification, JR.readerDocument),
       );
     }
   };
@@ -125,17 +125,22 @@ function runWhenIframeReady(callback) {
   }
 }
 
-function initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes) {
+function initializeReaderIframe(
+  container,
+  uiContainer,
+  delModeBtn,
+  lightboxes,
+) {
   JR.readerDocument =
     document.getElementById("simple-article").contentWindow.document;
   JR.readerDocument.body.appendChild(container);
   JR.readerDocument.documentElement.setAttribute(
     "lang",
-    document.documentElement.getAttribute("lang")
+    document.documentElement.getAttribute("lang"),
   );
   JR.readerDocument.body.className = window.location.hostname.replace(
     /\./g,
-    "-"
+    "-",
   );
 
   applyTimeEstimate();
@@ -146,9 +151,9 @@ function initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes) 
   createImageLightboxes(lightboxes);
   bindReaderKeyboardShortcuts();
 
-  JR.readerDocument.querySelectorAll(
-    "iframe[src *= 'youtube.com/embed/']"
-  ).forEach((frame) => frame.parentElement.classList.add("youtubeContainer"));
+  JR.readerDocument
+    .querySelectorAll("iframe[src *= 'youtube.com/embed/']")
+    .forEach((frame) => frame.parentElement.classList.add("youtubeContainer"));
 
   addInlineCommentFunctionality();
 
@@ -223,11 +228,9 @@ function removeFlaggedElements() {
     });
   }
 
-  JR.readerDocument
-    .querySelectorAll("[data-simple-delete]")
-    .forEach((elem) => {
-      elem.parentElement.removeChild(elem);
-    });
+  JR.readerDocument.querySelectorAll("[data-simple-delete]").forEach((elem) => {
+    elem.parentElement.removeChild(elem);
+  });
 }
 
 function bindReaderControls() {
@@ -243,9 +246,7 @@ function bindReaderControls() {
 
   const shareBtn = JR.readerDocument.querySelector(".simple-share");
   if (shareBtn) shareBtn.addEventListener("click", shareReaderView);
-  JR.shareDropdown = JR.readerDocument.querySelector(
-    ".simple-share-dropdown"
-  );
+  JR.shareDropdown = JR.readerDocument.querySelector(".simple-share-dropdown");
 
   const deleteModeButton = JR.readerDocument.querySelector(".simple-delete");
   if (deleteModeButton) {
@@ -284,20 +285,97 @@ function createImageLightboxes(lightboxes) {
     lightboxImg.src = elem.src;
     lightbox.appendChild(lightboxImg);
 
-    JR.readerDocument
-      .querySelector(".simple-container")
-      .appendChild(lightbox);
+    JR.readerDocument.querySelector(".simple-container").appendChild(lightbox);
   });
 }
 
+function dismissReaderEscape(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+function clearReaderSelection() {
+  if (!JR.readerDocument) return;
+
+  const sel = JR.readerDocument.getSelection();
+  if (sel) sel.removeAllRanges();
+
+  if (typeof rangy !== "undefined") {
+    rangy.getSelection(JR.readerDocument).removeAllRanges();
+  }
+}
+
+function isEditBarVisible() {
+  return JR.editBar && JR.editBar.style.display !== "none";
+}
+
+function getActiveInputElement() {
+  for (const root of [document, JR.readerDocument]) {
+    if (!root) continue;
+
+    const active = root.activeElement;
+    if (!active || active === root.body || active === root.documentElement) continue;
+    if (active === JR.readerIframe) continue;
+
+    const tag = active.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return active;
+    if (active.isContentEditable) return active;
+  }
+
+  return null;
+}
+
+function handleReaderEscape(e) {
+  if (e.key !== "Escape") return;
+
+  if (!JR.readerIframe) {
+    JR.readerIframe = document.getElementById("simple-article");
+  }
+  if (!JR.readerIframe) return;
+  if (JR.readerDocument?.body?.classList.contains("simple-deleting")) return;
+
+  const openLightbox = JR.readerDocument?.querySelector(".jr-lightbox:popover-open");
+  if (openLightbox) {
+    openLightbox.hidePopover();
+    dismissReaderEscape(e);
+    return;
+  }
+
+  const addingComment = JR.readerDocument?.querySelector(
+    ".simple-comment-container.jr-adding",
+  );
+  if (addingComment) {
+    cancelComment(null, addingComment);
+    dismissReaderEscape(e);
+    return;
+  }
+
+  const focusedInput = getActiveInputElement();
+  if (focusedInput) {
+    focusedInput.blur();
+    dismissReaderEscape(e);
+    return;
+  }
+
+  if (isEditBarVisible()) {
+    hideToolbar();
+    clearReaderSelection();
+    dismissReaderEscape(e);
+    return;
+  }
+
+  closeOverlay();
+  dismissReaderEscape(e);
+}
+
 function bindReaderKeyboardShortcuts() {
+  document.addEventListener("keydown", handleReaderEscape, true);
+
   JR.readerDocument.onkeydown = function (e) {
-    if (
-      e.key === "Escape" &&
-      !JR.readerDocument.body.classList.contains("simple-deleting") &&
-      document.hasFocus()
-    )
-      closeOverlay();
+    if (e.key === "Escape") {
+      handleReaderEscape(e);
+      return;
+    }
 
     if (e.key === ";" && (e.ctrlKey || e.metaKey) && e.shiftKey)
       startDeleteElement(JR.readerDocument);
