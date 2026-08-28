@@ -1,43 +1,31 @@
-if (window.__jrMessagerBound) {
+const JR_ORIGINS = ["https://justread.link", "https://www.justread.link"];
+
+function announceHasJR() {
   window.postMessage({ hasJR: true }, window.location.origin);
-} else {
-  window.__jrMessagerBound = true;
-
-  const JR_ORIGINS = ["https://justread.link", "https://www.justread.link"];
-
-  function isAllowedOrigin(origin) {
-    return origin === window.location.origin && JR_ORIGINS.includes(origin);
-  }
-
-  function sendSecret(jrSecret) {
-    if (!jrSecret || jrSecret === "undefined") return;
-    chrome.runtime.sendMessage({ jrSecret: jrSecret });
-  }
-
-  function readDomSecret() {
-    return document.documentElement.getAttribute("data-jr-secret") || "";
-  }
-
-  sendSecret(readDomSecret());
-  window.postMessage({ hasJR: true }, window.location.origin);
-
-  new MutationObserver(() => {
-    sendSecret(readDomSecret());
-  }).observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["data-jr-secret"],
-  });
-
-  window.addEventListener(
-    "message",
-    (event) => {
-      if (!event.data || typeof event.data !== "object") return;
-      if (!isAllowedOrigin(event.origin)) return;
-      if (event.data.jrSecret) sendSecret(event.data.jrSecret);
-      if (event.data.resetJRLastChecked) {
-        chrome.runtime.sendMessage({ resetJRLastChecked: true });
-      }
-    },
-    false,
-  );
 }
+
+// Tell the JR website that the extension is installed (retry for late page scripts)
+announceHasJR();
+setTimeout(announceHasJR, 100);
+setTimeout(announceHasJR, 1000);
+
+// Listen for events from the JR website
+window.addEventListener(
+  "message",
+  (event) => {
+    if (!JR_ORIGINS.includes(event.origin)) return;
+    if (!event.data || typeof event.data !== "object") return;
+
+    const jrSecret = event.data.jrSecret;
+    const resetJRLastChecked = event.data.resetJRLastChecked;
+    if (jrSecret) {
+      chrome.runtime.sendMessage({ jrSecret: jrSecret }, () => {
+        window.postMessage({ jrPremiumEnabled: true }, window.location.origin);
+      });
+    }
+    if (resetJRLastChecked) {
+      chrome.runtime.sendMessage({ resetJRLastChecked: true });
+    }
+  },
+  false,
+);

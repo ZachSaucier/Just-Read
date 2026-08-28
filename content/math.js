@@ -1,77 +1,27 @@
 /**
- * Inject bundled MathJax 3 into the reader document and typeset .jr-math nodes.
- * Requires JRMathSanitize + JRMathExtract (shared/).
+ * Typeset .jr-math in the reader iframe using bundled MathJax 3.
+ * MathJax loads in the extension isolated world via the background
+ * scripting API (content scripts cannot use chrome.scripting in Firefox).
  */
-
-function jrMathScriptUrl(file) {
-  return chrome.runtime.getURL("external-libraries/mathjax/" + file);
-}
-
-function jrMathFontUrl() {
-  return chrome.runtime.getURL(
-    "external-libraries/mathjax/output/chtml/fonts/woff-v2"
-  );
-}
 
 function readerHasMath(doc) {
   return !!(doc && doc.querySelector && doc.querySelector(".jr-math"));
 }
 
-function configureMathJaxOnWindow(win) {
-  // Do not overwrite an existing page config (e.g. shared justread.link bootstrap).
-  if (!win || win.MathJax) return;
-  win.MathJax = JRMathSanitize.mathJaxConfig({ fontURL: jrMathFontUrl() });
-}
+let mathJaxLoadPromise = null;
 
-function loadScript(doc, src) {
-  return new Promise((resolve, reject) => {
-    const existing = doc.querySelector('script[src="' + src + '"]');
-    if (existing) {
-      if (doc.defaultView?.MathJax?.typesetPromise) {
-        resolve();
-        return;
-      }
-      existing.addEventListener("load", () => resolve());
-      existing.addEventListener("error", () =>
-        reject(new Error("MathJax script failed"))
-      );
-      return;
-    }
-    const script = doc.createElement("script");
-    script.src = src;
-    script.async = false;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Failed to load " + src));
-    (doc.head || doc.documentElement).appendChild(script);
-  });
-}
-
-/**
- * Load MathJax into a document (reader iframe or shared page via extension).
- * For shared pages with CSP script-src 'self', page-world chrome-extension
- * scripts are blocked — callers should prefer window.MathJax from the server
- * or run typeset after injecting via chrome.scripting (isolated world).
- */
-function injectMathJax(doc) {
-  if (!doc) return Promise.resolve(false);
-  const win = doc.defaultView;
-  if (!win) return Promise.resolve(false);
-
-  if (win.MathJax?.typesetPromise) return Promise.resolve(true);
-
-  configureMathJaxOnWindow(win);
-  return loadScript(doc, jrMathScriptUrl("tex-mml-chtml.js")).then(() => {
-    // Optional safe extension if present.
-    return loadScript(doc, jrMathScriptUrl("safe.js")).catch(() => {});
-  }).then(() => true);
-}
-
-function waitForMathJax(win, attempts) {
-  attempts = attempts == null ? 40 : attempts;
+function waitForMathJaxReady(mjx, attempts) {
+  attempts = attempts == null ? 80 : attempts;
+  if (mjx?.startup?.promise) {
+    return mjx.startup.promise.then(() => {
+      if (typeof mjx.typesetPromise === "function") return mjx;
+      throw new Error("MathJax failed to initialize");
+    });
+  }
   return new Promise((resolve, reject) => {
     function tick(n) {
-      if (win.MathJax && typeof win.MathJax.typesetPromise === "function") {
-        resolve(win.MathJax);
+      if (mjx && typeof mjx.typesetPromise === "function") {
+        resolve(mjx);
         return;
       }
       if (n <= 0) {
@@ -82,6 +32,36 @@ function waitForMathJax(win, attempts) {
     }
     tick(attempts);
   });
+}
+
+/**
+ * Load MathJax into the extension isolated world for this tab.
+ * @returns {Promise<object>}
+ */
+function loadMathJaxIsolated() {
+  if (globalThis.MathJax?.typesetPromise) {
+    return waitForMathJaxReady(globalThis.MathJax);
+  }
+  if (mathJaxLoadPromise) return mathJaxLoadPromise;
+
+  mathJaxLoadPromise = new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage({ jrLoadMathJax: true }, (response) => {
+      if (chrome.runtime.lastError) {
+        reject(new Error(chrome.runtime.lastError.message));
+        return;
+      }
+      if (!response?.ok) {
+        reject(new Error(response?.error || "MathJax load failed"));
+        return;
+      }
+      waitForMathJaxReady(globalThis.MathJax).then(resolve).catch(reject);
+    });
+  }).catch((err) => {
+    mathJaxLoadPromise = null;
+    throw err;
+  });
+
+  return mathJaxLoadPromise;
 }
 
 /**
@@ -98,17 +78,7 @@ function typesetMath(doc) {
   const nodes = extract.prepareMathNodesForTypeset(doc);
   if (!nodes.length) return Promise.resolve();
 
-  const win = doc.defaultView;
-  if (!win) return Promise.resolve();
-
-  // Prefer MathJax already on the page (shared pages). Only inject the
-  // extension bundle when the document has no MathJax config yet.
-  const ensure = win.MathJax
-    ? Promise.resolve(true)
-    : injectMathJax(doc);
-
-  return ensure
-    .then(() => waitForMathJax(win))
+  return loadMathJaxIsolated()
     .then((MathJax) => MathJax.typesetPromise(nodes))
     .catch((err) => {
       console.warn("Just Read math typeset failed", err);

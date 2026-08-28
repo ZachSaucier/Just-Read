@@ -7,12 +7,6 @@ function withPageJrSecret(cb) {
     return;
   }
 
-  const existing = readPageJrSecret();
-  if (existing) {
-    cb(existing);
-    return;
-  }
-
   let done = false;
   const finish = (secret) => {
     if (done) return;
@@ -26,7 +20,7 @@ function withPageJrSecret(cb) {
   }
   window.addEventListener("message", onMsg);
   window.postMessage({ hasJR: true }, location.origin);
-  setTimeout(() => finish(readPageJrSecret()), 400);
+  setTimeout(() => finish(""), 400);
 }
 
 function verifyPremiumThenOpenReader() {
@@ -48,7 +42,7 @@ function loadStoredThemesThenOpenReader() {
 }
 
 function applySessionFromStorage(storage) {
-  JR.jrSecret = storage.jrSecret || readPageJrSecret() || false;
+  JR.jrSecret = storage.jrSecret || false;
   JR.isPremium = !!storage.isPremium;
   JR.jrLastChecked = storage.jrLastChecked;
   JR.useText = storage.useText;

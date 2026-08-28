@@ -196,8 +196,30 @@ function closeStyleEditor() {
   saved = false;
 }
 
+function getThemeStylesheet() {
+  const sheets = JR.readerDocument?.styleSheets;
+  if (!sheets) return null;
+
+  if (JR.styleElem) {
+    for (let i = 0; i < sheets.length; i++) {
+      try {
+        if (sheets[i].ownerNode === JR.styleElem) return sheets[i];
+      } catch (e) {
+        // Cross-origin stylesheets can throw on ownerNode access.
+      }
+    }
+  }
+
+  return sheets[2] || null;
+}
+
 function openStyleEditor() {
-  JR.themeStylesheet = JR.readerDocument.styleSheets[2];
+  JR.themeStylesheet = getThemeStylesheet();
+
+  if (!JR.themeStylesheet) {
+    console.warn("Just Read: theme stylesheet not ready yet");
+    return;
+  }
 
   if (JR.datGUI) {
     JR.datGUI.domElement.style.display = "block";
@@ -216,7 +238,8 @@ function openStyleEditor() {
     themeList.onChange((value) => {
       saved = true;
       JR.styleElem.innerHTML = DOMPurify.sanitize(JR.stylesheetObj[value]);
-      JR.themeStylesheet = JR.readerDocument.styleSheets[2];
+      JR.themeStylesheet = getThemeStylesheet();
+      if (!JR.themeStylesheet) return;
       updateEditorStyles(editor);
 
       JR.theme = value;
@@ -276,6 +299,8 @@ function openStyleEditor() {
 }
 
 function getStylesheetValue(stylesheet, selector, property) {
+  if (!stylesheet?.cssRules) return null;
+
   // Make the strings lowercase
   selector = selector.toLowerCase();
   property = property.toLowerCase();
@@ -291,6 +316,8 @@ function getStylesheetValue(stylesheet, selector, property) {
 }
 
 function changeStylesheetRule(stylesheet, selector, property, value) {
+  if (!stylesheet?.cssRules) return;
+
   // Make the strings lowercase
   selector = selector.toLowerCase();
   property = property.toLowerCase();

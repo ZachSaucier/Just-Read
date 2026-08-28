@@ -3,14 +3,6 @@ function isEmpty(obj) {
   return true;
 }
 
-function readPageJrSecret() {
-  try {
-    return document.documentElement.getAttribute("data-jr-secret") || "";
-  } catch (e) {
-    return "";
-  }
-}
-
 function serializeHeaders(headers) {
   if (!headers) return {};
   if (typeof headers.forEach === "function") {
