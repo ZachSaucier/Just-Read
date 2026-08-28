@@ -1,0 +1,12 @@
+{
+  "name": "just-read",
+  "private": true,
+  "description": "Dev dependencies for Just Read tests only — not shipped in extension packs.",
+  "scripts": {
+    "test": "node --test tests/math/*.test.mjs tests/pack.test.mjs"
+  },
+  "devDependencies": {
+    "isomorphic-dompurify": "^2.36.0",
+    "jsdom": "^26.1.0"
+  }
+}

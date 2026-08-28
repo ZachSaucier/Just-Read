@@ -84,7 +84,22 @@ function cloneReaderContentForShare(keepJR) {
   return copy;
 }
 
+function normalizeMathPlaceholdersForShare(copy) {
+  copy.querySelectorAll(".jr-math").forEach((el) => {
+    const tex = el.getAttribute("data-jr-tex");
+    const display = el.getAttribute("data-jr-display") === "block";
+    // Drop MathJax/mjx output so DOMPurify does not strip custom elements
+    // and leave an empty node; keep data-* for server-side re-typeset.
+    while (el.firstChild) el.removeChild(el.firstChild);
+    el.textContent = tex || "[math]";
+    if (!el.getAttribute("data-jr-display")) {
+      el.setAttribute("data-jr-display", display ? "block" : "inline");
+    }
+  });
+}
+
 function sharedContentPayload(copy) {
+  normalizeMathPlaceholdersForShare(copy);
   return DOMPurify.sanitize(copy.outerHTML, {
     ADD_TAGS: ["style", "progress"],
     ADD_ATTR: ["target", "popover", "popovertarget"],

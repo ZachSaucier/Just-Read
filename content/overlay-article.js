@@ -64,9 +64,22 @@ function selectArticleSource() {
     JR.pageSelectedContainer = JR.userSelected;
   }
 
+  let freshlySelected = false;
   if (!JR.pageSelectedContainer) {
     JR.pageSelectedContainer = getArticleContainer();
+    freshlySelected = true;
+  }
 
+  // Capture TeX/MathML into .jr-math before DOMPurify strips script/annotation nodes.
+  if (
+    JR.pageSelectedContainer &&
+    typeof JRMathExtract !== "undefined" &&
+    JRMathExtract.extractMathPlaceholders
+  ) {
+    JRMathExtract.extractMathPlaceholders(JR.pageSelectedContainer);
+  }
+
+  if (freshlySelected) {
     const pattern = new RegExp("<br/?>[ \r\ns]*<br/?>", "g");
     JR.pageSelectedContainer.innerHTML = DOMPurify.sanitize(
       JR.pageSelectedContainer.innerHTML.replace(pattern, "</p><p>")
@@ -79,6 +92,11 @@ function selectArticleSource() {
 function normalizeArticleElements(contentContainer, title, lightboxes) {
   contentContainer.querySelectorAll("*").forEach((elem) => {
     if (elem == undefined) return;
+
+    // Leave math placeholders alone (keep data-* and text for typeset / re-share).
+    if (elem.classList?.contains("jr-math") || elem.closest?.(".jr-math")) {
+      return;
+    }
 
     elem.removeAttribute("style");
     elem.removeAttribute("color");
@@ -127,6 +145,7 @@ function normalizeArticleElements(contentContainer, title, lightboxes) {
     )
       elem.setAttribute("data-simple-delete", true);
 
+    // Wiki math images not converted to .jr-math still get hover plaintext.
     if (elem.classList.contains("mwe-math-fallback-image-inline")) {
       const plainText = document.createElement("div");
       plainText.className = "simple-plain-text";

@@ -135,6 +135,12 @@ function hydrateSharedPage(data) {
   setTimeout(checkBreakpoints, 10);
 
   updateShareButtonSaveState();
+
+  // Shared pages typeset via self-hosted MathJax; still run for placeholders
+  // that appear after hydrate or if page MathJax has not finished.
+  if (typeof typesetMath === "function") {
+    typesetMath(document);
+  }
 }
 
 function injectHydrateStyles() {

@@ -218,6 +218,16 @@ button:disabled .simple-summary {
   margin-top: -5px;
 }
 
+/* Math placeholders before MathJax typesets */
+.jr-math[data-jr-display="block"] {
+  display: block;
+  margin: 0.75em 0;
+  overflow-x: auto;
+}
+.jr-math[data-jr-display="inline"] {
+  display: inline;
+}
+
 .simple-article-container {
   display: inline-block;
   vertical-align: top;

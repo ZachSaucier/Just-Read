@@ -157,7 +157,11 @@ function initializeReaderIframe(container, uiContainer, delModeBtn, lightboxes) 
   JR.readerDocument.addEventListener("pointermove", handlePointerMove);
 
   setTimeout(checkBreakpoints, 10);
-  finishOpeningReader();
+  if (typeof typesetReaderMath === "function") {
+    typesetReaderMath().finally(() => finishOpeningReader());
+  } else {
+    finishOpeningReader();
+  }
 }
 
 function applyTimeEstimate() {

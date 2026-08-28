@@ -28,7 +28,10 @@ const DIST = join(ROOT, "dist");
 
 const GECKO_ID = "{cb2b337b-99d7-4b86-aa04-84a6f5c3e218}";
 
-/** Top-level paths that ship with the extension. */
+/** Top-level paths that ship with the extension.
+ *  Intentionally omit tests/, package.json, and node_modules/ — those are
+ *  for local/CI only and must never appear in customer zips.
+ */
 const INCLUDE = [
   "background.js",
   "content",

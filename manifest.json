@@ -51,7 +51,10 @@
         "page.css",
         "options/*",
         "options.css",
-        "fonts/*"
+        "fonts/*",
+        "external-libraries/mathjax/tex-mml-chtml.js",
+        "external-libraries/mathjax/safe.js",
+        "external-libraries/mathjax/output/chtml/fonts/woff-v2/*"
       ]
     }
   ],
