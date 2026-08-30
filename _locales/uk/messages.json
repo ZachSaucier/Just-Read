@@ -1,138 +1,138 @@
 {
   "addComment": {
-    "message": "Add a comment",
+    "message": "Додати коментар",
     "description": "Add comment button tooltip"
   },
   "badgeOn": {
-    "message": "on",
+    "message": "увімк.",
     "description": "Toolbar badge text while Just Read is loading"
   },
   "cancelButton": {
-    "message": "Cancel",
+    "message": "Скасувати",
     "description": "Cancel comment button"
   },
   "closeJustRead": {
-    "message": "Close Just Read",
+    "message": "Закрити Just Read",
     "description": "Close reader button tooltip"
   },
   "closeWithoutSaving": {
-    "message": "Close without saving",
+    "message": "Закрити без збереження",
     "description": "Theme editor close without save button"
   },
   "closeWithoutSavingConfirm": {
-    "message": " Close without saving?",
+    "message": " Закрити без збереження?",
     "description": "Suffix for unsaved edits confirm dialog"
   },
   "commandOpenJustRead": {
-    "message": "Open the Just Read format for the current page",
+    "message": "Відкрити формат Just Read для поточної сторінки",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commandSelectText": {
-    "message": "Enable user text selection mode using Just Read",
+    "message": "Увімкнути режим вибору тексту користувача за допомогою Just Read",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commentButton": {
-    "message": "Comment",
+    "message": "Коментар",
     "description": "Post comment button"
   },
   "commentLeftOnPrefix": {
-    "message": "Left on ",
+    "message": "Залишено ",
     "description": "Prefix before comment timestamp; keep trailing space"
   },
   "commentsPremiumAlert": {
-    "message": "Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link",
+    "message": "Вибачте, ця функція доступна лише користувачам Just Read Premium! Зареєструйтеся на justread.link",
     "description": "Alert when non-premium user tries cmd-click comment"
   },
   "contextMenuAutorun": {
-    "message": "Add this site to Just Read's auto-run list",
+    "message": "Додати цей сайт до списку автозапуску Just Read",
     "description": "Page right-click context menu item for auto-run"
   },
   "contextMenuSelectContent": {
-    "message": "Select content to read",
+    "message": "Вибрати вміст для читання",
     "description": "Extension icon right-click context menu item"
   },
   "contextMenuViewLink": {
-    "message": "View the linked page using Just Read",
+    "message": "Переглянути пов’язану сторінку за допомогою Just Read",
     "description": "Link right-click context menu item"
   },
   "contextMenuViewPage": {
-    "message": "View this page using Just Read",
+    "message": "Переглянути цю сторінку за допомогою Just Read",
     "description": "Page right-click context menu item"
   },
   "defaultSummarizerPrompt": {
-    "message": "Summarize the content you are provided as concisely as possible while retaining the key points.",
+    "message": "Стисло підсумуйте наданий вам вміст, зберігаючи ключові моменти.",
     "description": "Default AI summarizer prompt in options textarea JSON"
   },
   "deletionMode": {
-    "message": "Start/end deletion mode",
+    "message": "Увімкнути/вимкнути режим видалення",
     "description": "Deletion mode button tooltip"
   },
   "editBarBoldMac": {
-    "message": "Bold (⌘+b)",
+    "message": "Жирний (⌘+b)",
     "description": "Edit bar bold button tooltip on macOS"
   },
   "editBarBoldWin": {
-    "message": "Bold (Ctrl+b)",
+    "message": "Жирний (Ctrl+b)",
     "description": "Edit bar bold button tooltip on Windows/Linux"
   },
   "editBarClearFormatMac": {
-    "message": "Clear formatting (⌘+\\)",
+    "message": "Очистити форматування (⌘+\\)",
     "description": "Edit bar clear formatting tooltip on macOS"
   },
   "editBarClearFormatWin": {
-    "message": "Clear formatting (Ctrl+\\)",
+    "message": "Очистити форматування (Ctrl+\\)",
     "description": "Edit bar clear formatting tooltip on Windows/Linux"
   },
   "editBarDeleteSelMac": {
-    "message": "Delete highlighted text (⌘+Shift+d)",
+    "message": "Видалити виділений текст (⌘+Shift+d)",
     "description": "Edit bar delete selection tooltip on macOS"
   },
   "editBarDeleteSelWin": {
-    "message": "Delete highlighted text (Ctrl+Shift+d)",
+    "message": "Видалити виділений текст (Ctrl+Shift+d)",
     "description": "Edit bar delete selection tooltip on Windows/Linux"
   },
   "editBarHighlightMac": {
-    "message": "Highlight color (⌘+Shift+h)",
+    "message": "Колір виділення (⌘+Shift+h)",
     "description": "Edit bar highlight button tooltip on macOS"
   },
   "editBarHighlightWin": {
-    "message": "Highlight color (Ctrl+Shift+h)",
+    "message": "Колір виділення (Ctrl+Shift+h)",
     "description": "Edit bar highlight button tooltip on Windows/Linux"
   },
   "editBarItalicMac": {
-    "message": "Italicize (⌘+i)",
+    "message": "Курсив (⌘+i)",
     "description": "Edit bar italic button tooltip on macOS"
   },
   "editBarItalicWin": {
-    "message": "Italicize (Ctrl+i)",
+    "message": "Курсив (Ctrl+i)",
     "description": "Edit bar italic button tooltip on Windows/Linux"
   },
   "editBarStrikeMac": {
-    "message": "Strike-through (⌘+Shift+s)",
+    "message": "Закреслення (⌘+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on macOS"
   },
   "editBarStrikeWin": {
-    "message": "Strike-through (Ctrl+Shift+s)",
+    "message": "Закреслення (Ctrl+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on Windows/Linux"
   },
   "editBarTextColorMac": {
-    "message": "Text color (⌘+Shift+c)",
+    "message": "Колір тексту (⌘+Shift+c)",
     "description": "Edit bar text color button tooltip on macOS"
   },
   "editBarTextColorWin": {
-    "message": "Text color (Ctrl+Shift+c)",
+    "message": "Колір тексту (Ctrl+Shift+c)",
     "description": "Edit bar text color button tooltip on Windows/Linux"
   },
   "editBarUnderlineMac": {
-    "message": "Underline (⌘+u)",
+    "message": "Підкреслення (⌘+u)",
     "description": "Edit bar underline button tooltip on macOS"
   },
   "editBarUnderlineWin": {
-    "message": "Underline (Ctrl+u)",
+    "message": "Підкреслення (Ctrl+u)",
     "description": "Edit bar underline button tooltip on Windows/Linux"
   },
   "editTheme": {
-    "message": "Edit your theme",
+    "message": "Редагувати тему",
     "description": "Theme editor button tooltip"
   },
   "extActionTitle": {
@@ -140,7 +140,7 @@
     "description": "Toolbar button tooltip"
   },
   "extDescription": {
-    "message": "A feature-packed, customizable reader extension.",
+    "message": "Розширення для читання з багатьма функціями та налаштуваннями.",
     "description": "Extension description in manifest and store"
   },
   "extName": {
@@ -148,19 +148,19 @@
     "description": "Extension name shown in browser UI and store"
   },
   "learnMore": {
-    "message": "Learn more",
+    "message": "Дізнатися більше",
     "description": "Primary button on upgrade notifications"
   },
   "leaveReview": {
-    "message": "Leave a review",
+    "message": "Залишити відгук",
     "description": "Button linking to extension store review page"
   },
   "maybeLater": {
-    "message": "Maybe later",
+    "message": "Можливо, пізніше",
     "description": "Secondary dismiss button on notifications"
   },
   "minuteReadPlural": {
-    "message": "$COUNT$ minutes read",
+    "message": "$COUNT$ хв читання",
     "description": "Reading time estimate for multiple minutes",
     "placeholders": {
       "count": {
@@ -170,7 +170,7 @@
     }
   },
   "minuteReadSingular": {
-    "message": "$COUNT$ minute read",
+    "message": "$COUNT$ хв читання",
     "description": "Reading time estimate for one minute",
     "placeholders": {
       "count": {
@@ -180,7 +180,7 @@
     }
   },
   "notInterested": {
-    "message": "Not interested",
+    "message": "Не цікавить",
     "description": "Dismiss button on summarizer feature notification"
   },
   "ok": {
@@ -188,83 +188,83 @@
     "description": "Generic confirm button"
   },
   "openDashboard": {
-    "message": "Open dashboard",
+    "message": "Відкрити панель керування",
     "description": "Button linking to justread.link dashboard"
   },
   "openEmail": {
-    "message": "Open email",
+    "message": "Відкрити електронну пошту",
     "description": "Button opening mailto link"
   },
   "optionsAddOrigURL": {
-    "message": "Always add the original URL to the Just Read view.",
+    "message": "Завжди додавати оригінальну URL-адресу до перегляду Just Read.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAddTimeEstimate": {
-    "message": "Always add the estimated time to read the article.",
+    "message": "Завжди додавати орієнтовний час читання статті.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAdditionalPrefsHeading": {
-    "message": "Additional preferences",
+    "message": "Додаткові налаштування",
     "description": "Options section heading"
   },
   "optionsAlwaysAddAR": {
-    "message": "Always add current site to Just Read's auto-run list when Just Read is started on a page.",
+    "message": "Завжди додавати поточний сайт до списку автозапуску Just Read, коли Just Read запускається на сторінці.",
     "description": "Auto-run preference checkbox"
   },
   "optionsAutorunCM": {
-    "message": "Enable auto-run context menu entry.",
+    "message": "Увімкнути пункт контекстного меню автозапуску.",
     "description": "Context menu preference checkbox"
   },
   "optionsAutorunHeading": {
-    "message": "Auto-run domain list",
+    "message": "Список доменів для автозапуску",
     "description": "Options section heading"
   },
   "optionsAutorunHelpBefore": {
-    "message": "This list is checked using regex. For more info, see ",
+    "message": "Цей список перевіряється за допомогою regex. Докладніше див. ",
     "description": "Auto-run help text before link"
   },
   "optionsAutorunHelpLink": {
-    "message": "this post",
+    "message": "цю публікацію",
     "description": "Auto-run help link text"
   },
   "optionsAutoscroll": {
-    "message": "Use JR's auto-scroll functionality.",
+    "message": "Використовувати функцію автопрокрутки JR.",
     "description": "Premium feature checkbox"
   },
   "optionsBackup": {
-    "message": "Backup the most recent Just Read page (in case of accidental closure).",
+    "message": "Резервне копіювання останньої сторінки Just Read (на випадок випадкового закриття).",
     "description": "Backup preference checkbox"
   },
   "optionsCloseOldPage": {
-    "message": "Always close the original page that Just Read was started on when a shared page is open (Note that this can only be checked if the above option is checked).",
+    "message": "Завжди закривати оригінальну сторінку, з якої було запущено Just Read, коли відкрито спільну сторінку (Примітка: цей параметр можна увімкнути лише якщо увімкнено параметр вище).",
     "description": "Sharing preference checkbox"
   },
   "optionsConfirmChangeBeforeSave": {
-    "message": "Do you really want to change files before saving?",
+    "message": "Ви справді хочете змінити файли перед збереженням?",
     "description": "Confirm when switching theme with unsaved edits"
   },
   "optionsConfirmRemoveFile": {
-    "message": "Do you really want to remove this file?",
+    "message": "Ви справді хочете видалити цей файл?",
     "description": "Confirm before removing theme file"
   },
   "optionsContextMenuHeading": {
-    "message": "Context menu entries",
+    "message": "Пункти контекстного меню",
     "description": "Options section heading"
   },
   "optionsDoneFeedback": {
-    "message": "Done!",
+    "message": "Готово!",
     "description": "Transient feedback on use-theme button"
   },
   "optionsFeaturesHeading": {
-    "message": "Additional features",
+    "message": "Додаткові функції",
     "description": "Options section heading"
   },
   "optionsFileLocked": {
-    "message": "This file is locked and cannot be deleted.",
+    "message": "Цей файл заблоковано і його не можна видалити.",
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Configure ",
+    "message": "Налаштування ",
     "description": "Options page h1 text before italic Just Read"
   },
   "optionsHeadingBrand": {
@@ -272,163 +272,175 @@
     "description": "Options page h1 brand name in italics"
   },
   "optionsHideSegments": {
-    "message": "Use hide-segments.css",
+    "message": "Використовувати hide-segments.css",
     "description": "Checkbox label for hide-segments stylesheet"
   },
+  "optionsLanguageAuto": {
+    "message": "Мова браузера",
+    "description": "Option to follow the browser UI language for extension strings"
+  },
+  "optionsLanguageHeading": {
+    "message": "Мова",
+    "description": "Options section heading for extension UI language"
+  },
+  "optionsLanguageLabel": {
+    "message": "Мова розширення",
+    "description": "Label for extension language select on options page"
+  },
   "optionsLeavePres": {
-    "message": "Never reformat pre tags.",
+    "message": "Ніколи не переформатовувати теги pre.",
     "description": "Formatting preference checkbox"
   },
   "optionsLinkCM": {
-    "message": "Enable link context menu entry.",
+    "message": "Увімкнути пункт контекстного меню для посилань.",
     "description": "Context menu preference checkbox"
   },
   "optionsNewThemePlaceholder": {
-    "message": "New theme name...",
+    "message": "Назва нової теми...",
     "description": "Placeholder for new theme name input"
   },
   "optionsOpenSharedPage": {
-    "message": "Always automatically open the shared page in a new tab.",
+    "message": "Завжди автоматично відкривати спільну сторінку в новій вкладці.",
     "description": "Sharing preference checkbox"
   },
   "optionsPageCM": {
-    "message": "Enable page context menu entry.",
+    "message": "Увімкнути пункт контекстного меню для сторінок.",
     "description": "Context menu preference checkbox"
   },
   "optionsPageTitle": {
-    "message": "Options - Just Read",
+    "message": "Налаштування — Just Read",
     "description": "Options page document title"
   },
   "optionsRemoveOrig": {
-    "message": "Remove the original page's content once the Just Read view has opened (better performance but loses original page load if JR view closed).",
+    "message": "Видаляти вміст оригінальної сторінки після відкриття перегляду Just Read (краща продуктивність, але втрачається завантаження оригінальної сторінки, якщо перегляд JR закрито).",
     "description": "Performance preference checkbox"
   },
   "optionsRemoveTheme": {
-    "message": "Remove theme",
+    "message": "Видалити тему",
     "description": "Button to delete selected theme"
   },
   "optionsSaveStyles": {
-    "message": "Save style changes",
+    "message": "Зберегти зміни стилів",
     "description": "Button to save CSS editor changes"
   },
   "optionsSavedFeedback": {
-    "message": "Saved!",
+    "message": "Збережено!",
     "description": "Transient feedback on save button"
   },
   "optionsScrollSpeed": {
-    "message": "Auto-scroll speed (closer to 0 = slower):",
+    "message": "Швидкість автопрокрутки (ближче до 0 = повільніше):",
     "description": "Auto-scroll speed label"
   },
   "optionsScrollbar": {
-    "message": "Use a custom scrollbar instead of the browser's default.",
+    "message": "Використовувати власну смугу прокрутки замість стандартної в браузері.",
     "description": "Premium feature checkbox"
   },
   "optionsSelectorsHeading": {
-    "message": "Domain-specific selectors",
+    "message": "Селектори для конкретних доменів",
     "description": "Options section heading"
   },
   "optionsSharingHeading": {
-    "message": "Sharing preferences",
+    "message": "Налаштування спільного доступу",
     "description": "Options section heading"
   },
   "optionsSubtitleAfterDashboard": {
-    "message": " to view your saved pages. Thanks for supporting Just Read!",
+    "message": " для перегляду збережених сторінок. Дякуємо, що підтримуєте Just Read!",
     "description": "Options subtitle after dashboard link"
   },
   "optionsSubtitleBeforeDashboard": {
-    "message": "Or go to ",
+    "message": "Або перейдіть до ",
     "description": "Options subtitle before dashboard link"
   },
   "optionsSubtitleDashboardLink": {
-    "message": "your dashboard",
+    "message": "вашої панелі керування",
     "description": "Options subtitle dashboard link text"
   },
   "optionsSummarizerHeading": {
-    "message": "AI summarization options",
+    "message": "Параметри підсумовування ШІ",
     "description": "Options section heading"
   },
   "optionsSummarizerIntro": {
-    "message": "Just Read can summarize articles using any AI provider. Supported providers:",
+    "message": "Just Read може підсумовувати статті за допомогою будь-якого провайдера ШІ. Підтримувані провайдери:",
     "description": "Summarizer options intro before provider code list"
   },
   "optionsSummarizerLink": {
-    "message": "this post",
+    "message": "цю публікацію",
     "description": "Summarizer docs link text"
   },
   "optionsSummarizerProvidersHelp": {
-    "message": "Use \"provider\": \"anthropic\" for Claude, \"provider\": \"gemini\" for Google Gemini, \"provider\": \"perplexity\" for Perplexity, or \"provider\": \"custom\" with an \"endpoint\" field for any OpenAI-compatible API.",
+    "message": "Використовуйте \"provider\": \"anthropic\" для Claude, \"provider\": \"gemini\" для Google Gemini, \"provider\": \"perplexity\" для Perplexity або \"provider\": \"custom\" з полем \"endpoint\" для будь-якого API, сумісного з OpenAI.",
     "description": "Summarizer provider help text below textarea"
   },
   "optionsSummarizerSeeAlso": {
-    "message": "For more info, see",
+    "message": "Докладніше див.",
     "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
-    "message": "Automatically run the summarizer when Just Read is opened.",
+    "message": "Автоматично запускати підсумовувач під час відкриття Just Read.",
     "description": "Summarizer checkbox label"
   },
   "optionsSummaryReplace": {
-    "message": "Replace the article content with the summary.",
+    "message": "Замінити вміст статті підсумком.",
     "description": "Summarizer checkbox label"
   },
   "optionsUpgradeHeading": {
-    "message": "To access all of Just Read's features, upgrade to Just Read Premium! ",
+    "message": "Щоб отримати доступ до всіх функцій Just Read, оновіть до Just Read Premium! ",
     "description": "Premium upsell heading on options page"
   },
   "optionsUpgradeLink": {
-    "message": "Learn more here",
+    "message": "Дізнатися більше тут",
     "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
-    "message": "Use as current theme",
+    "message": "Використовувати як поточну тему",
     "description": "Button to activate selected theme"
   },
   "optionsViewMoreThemes": {
-    "message": "View more themes",
+    "message": "Переглянути більше тем",
     "description": "Link to community themes on GitHub"
   },
   "pauseScroll": {
-    "message": "Pause scroll",
+    "message": "Призупинити прокрутку",
     "description": "Auto-scroll pause button label"
   },
   "premiumUpsellAnnotations": {
-    "message": "To annotate this article, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Annotations are just <em>one</em> of the additional features included.",
+    "message": "Щоб анотувати цю статтю, оновіть до <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Анотації — лише <em>одна</em> з додаткових функцій.",
     "description": "Highlighter premium upsell (HTML)"
   },
   "premiumUpsellComments": {
-    "message": "To add comments, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Comments are just <em>one</em> of the additional features included.",
+    "message": "Щоб додавати коментарі, оновіть до <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Коментарі — лише <em>одна</em> з додаткових функцій.",
     "description": "Comments feature premium upsell (HTML)"
   },
   "premiumUpsellGeneric": {
-    "message": "To access this feature, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
+    "message": "Щоб отримати доступ до цієї функції, оновіть до <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
     "description": "Premium gate notification body (HTML)"
   },
   "premiumUpsellMain": {
-    "message": "Have you considered <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? With Premium you can annotate your articles, share them with others, and more!",
+    "message": "Чи розглядали ви <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? З Premium ви можете анотувати статті, ділитися ними з іншими та багато іншого!",
     "description": "Periodic premium promotion in reader (HTML)"
   },
   "premiumUpsellShare": {
-    "message": "To share this reader view with others, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Shared pages are just <em>one</em> of the additional features included.",
+    "message": "Щоб поділитися цим переглядом читача з іншими, оновіть до <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Спільні сторінки — лише <em>одна</em> з додаткових функцій.",
     "description": "Share feature premium upsell (HTML)"
   },
   "premiumUpsellSharedEdit": {
-    "message": "To edit a shared Just Read page, sign in with a <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium account</a>.",
+    "message": "Щоб редагувати спільну сторінку Just Read, увійдіть за допомогою <a href='https://justread.link/#get-Just-Read' target='_blank'>облікового запису Premium</a>.",
     "description": "Shared page edit premium gate (HTML)"
   },
   "printArticle": {
-    "message": "Print article",
+    "message": "Друкувати статтю",
     "description": "Print button tooltip"
   },
   "reportError": {
-    "message": "Report an error",
+    "message": "Повідомити про помилку",
     "description": "Footer link to report bugs"
   },
   "reshareToSave": {
-    "message": "Re-share to save",
+    "message": "Повторно поділитися, щоб зберегти",
     "description": "Share button aria-label when shared page has unsaved edits"
   },
   "reviewMilestone": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='$REVIEW_URL$' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "Вау, ви використали Just Read понад $VIEWS$ разів! Чи могли б ви <a href='$REVIEW_URL$' target='_blank'>залишити відгук</a> або поділитися Just Read з друзями чи в соціальних мережах? Я буду дуже вдячний!",
     "description": "Usage milestone review request (HTML)",
     "placeholders": {
       "views": {
@@ -442,7 +454,7 @@
     }
   },
   "reviewMilestonePremium": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='$REVIEW_URL$' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "Вау, ви використали Just Read понад $VIEWS$ разів! Чи могли б ви <a href='https://justread.link/#get-Just-Read' target='_blank'>оновити до Premium</a>, <a href='$REVIEW_URL$' target='_blank'>залишити відгук</a> або поділитися Just Read з друзями чи в соціальних мережах? Я буду дуже вдячний!",
     "description": "Usage milestone notification with premium CTA (HTML)",
     "placeholders": {
       "views": {
@@ -456,7 +468,7 @@
     }
   },
   "reviewTenK": {
-    "message": "You've just started Just read for the 10,000th time! I'd love to hear from you about how you use Just Read via email if you're open to it. Please reach out to <a href='$MAILTO$'>hello@zachsaucier.com</a>",
+    "message": "Ви щойно запустили Just Read в 10 000-й раз! Я був би радий почути від вас, як ви використовуєте Just Read, електронною поштою, якщо вам це цікаво. Будь ласка, напишіть на <a href='$MAILTO$'>hello@zachsaucier.com</a>",
     "description": "10,000 opens milestone email request (HTML)",
     "placeholders": {
       "mailto": {
@@ -466,83 +478,83 @@
     }
   },
   "saveAndClose": {
-    "message": "Save and close",
+    "message": "Зберегти та закрити",
     "description": "Theme editor save button"
   },
   "saveSharedChanges": {
-    "message": "Save changes to this shared page",
+    "message": "Зберегти зміни на цій спільній сторінці",
     "description": "Share button tooltip on hydrated shared page"
   },
   "shareArticle": {
-    "message": "Share article",
+    "message": "Поділитися статтею",
     "description": "Share button tooltip"
   },
   "shareLimitLead": {
-    "message": "You have too many shared articles - the limit is 300. Please remove some from ",
+    "message": "У вас забагато спільних статей — ліміт становить 300. Будь ласка, видаліть деякі з ",
     "description": "Share limit alert text before dashboard link"
   },
   "shareLimitTail": {
-    "message": " before adding more.",
+    "message": " перед додаванням нових.",
     "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
-    "message": "Share to save",
+    "message": "Поділитися, щоб зберегти",
     "description": "Share button aria-label when edits need saving"
   },
   "shareViaEmail": {
-    "message": "Share via email",
+    "message": "Поділитися електронною поштою",
     "description": "Email share button tooltip"
   },
   "sharedEditNotOwner": {
-    "message": "You can only edit shared pages that you created with this Just Read account.",
+    "message": "Ви можете редагувати лише спільні сторінки, які створили цим обліковим записом Just Read.",
     "description": "Error when user cannot edit a shared page"
   },
   "startScroll": {
-    "message": "Start scroll",
+    "message": "Почати прокрутку",
     "description": "Auto-scroll resume button label"
   },
   "stylesheetQuotaExceeded": {
-    "message": "File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/",
+    "message": "Файл не збережено: ваша таблиця стилів занадто велика. Може допомогти її мініфікація або видалення менш використовуваних записів.\n\nМініфікувати можна тут: https://cssminifier.com/",
     "description": "Alert when theme stylesheet exceeds storage quota"
   },
   "summarizeArticle": {
-    "message": "Summarize article",
+    "message": "Підсумувати статтю",
     "description": "Summarize button tooltip"
   },
   "summarizerFeatureNotify": {
-    "message": "Did you know that Just Read can summarize articles using AI?",
+    "message": "Чи знали ви, що Just Read може підсумовувати статті за допомогою ШІ?",
     "description": "Summarizer feature discovery notification"
   },
   "summarizerNoApiKey": {
-    "message": "To use the summarizer, add your AI provider API key to Just Read's options page. For more info, see https://justread.link/summarizer",
+    "message": "Щоб використовувати підсумовувач, додайте API-ключ вашого провайдера ШІ на сторінку налаштувань Just Read. Докладніше: https://justread.link/summarizer",
     "description": "Alert when summarizer options are not configured"
   },
   "summaryErrorFormat": {
-    "message": "Unexpected response format from the AI provider.",
+    "message": "Неочікуваний формат відповіді від провайдера ШІ.",
     "description": "Summary error when response JSON shape is wrong"
   },
   "summaryErrorHeading": {
-    "message": "Error getting summary",
+    "message": "Помилка отримання підсумку",
     "description": "Heading when summary request fails"
   },
   "summaryErrorHtml": {
-    "message": "The AI provider returned an HTML page instead of a JSON summary. Check your API endpoint and key.",
+    "message": "Провайдер ШІ повернув HTML-сторінку замість JSON-підсумку. Перевірте кінцеву точку API та ключ.",
     "description": "Summary error when provider returns HTML"
   },
   "summaryErrorUnknown": {
-    "message": "Unknown error",
+    "message": "Невідома помилка",
     "description": "Fallback summary error detail"
   },
   "summaryHeading": {
-    "message": "Summary",
+    "message": "Підсумок",
     "description": "Heading above generated summary"
   },
   "summaryLoading": {
-    "message": "Summary loading",
+    "message": "Завантаження підсумку",
     "description": "Heading while AI summary is being fetched"
   },
   "summaryTokensUsed": {
-    "message": ": $TOKENS$ tokens used",
+    "message": ": використано $TOKENS$ токенів",
     "description": "Suffix on summary heading showing token count",
     "placeholders": {
       "tokens": {
@@ -552,63 +564,63 @@
     }
   },
   "themeEditorBackgroundColor": {
-    "message": "Background color",
+    "message": "Колір тла",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorFontSize": {
-    "message": "Font size",
+    "message": "Розмір шрифту",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkColor": {
-    "message": "Link color",
+    "message": "Колір посилань",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkHoverColor": {
-    "message": "Link hover color",
+    "message": "Колір посилань при наведенні",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorMaxWidth": {
-    "message": "Max width",
+    "message": "Максимальна ширина",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorOpenFullStyles": {
-    "message": "Open full styles",
+    "message": "Відкрити повні стилі",
     "description": "dat.GUI theme editor button label"
   },
   "themeEditorTextColor": {
-    "message": "Text color",
+    "message": "Колір тексту",
     "description": "dat.GUI theme editor control label"
   },
   "undoLastAction": {
-    "message": "Undo last action",
+    "message": "Скасувати останню дію",
     "description": "Undo button tooltip"
   },
   "unknownAuthor": {
-    "message": "Unknown author",
+    "message": "Невідомий автор",
     "description": "Fallback when article author cannot be detected"
   },
   "unknownDate": {
-    "message": "Unknown date",
+    "message": "Невідома дата",
     "description": "Fallback when article date cannot be detected"
   },
   "unknownTitle": {
-    "message": "Unknown title",
+    "message": "Невідома назва",
     "description": "Fallback when article title cannot be detected"
   },
   "unsavedSharedEdits": {
-    "message": "You have unsaved edits.",
+    "message": "У вас є незбережені зміни.",
     "description": "Confirm dialog when closing with unsaved shared page edits"
   },
   "viewOriginalPage": {
-    "message": "View original page",
+    "message": "Переглянути оригінальну сторінку",
     "description": "Link on shared reader pages to original URL"
   },
   "viewedUsing": {
-    "message": "Viewed using ",
+    "message": "Переглянуто за допомогою ",
     "description": "Footer prefix before Just Read link"
   },
   "yourUserPage": {
-    "message": "your user page",
+    "message": "вашої сторінки користувача",
     "description": "Link text to dashboard in share limit alert"
   }
 }

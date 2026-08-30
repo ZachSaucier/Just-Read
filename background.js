@@ -192,6 +192,31 @@ function addSiteToAutorunList(info, tab) {
 }
 
 let pageCMId = (linkCMId = autorunCMId = undefined);
+
+function setupContextMenus() {
+  pageCMId = linkCMId = autorunCMId = undefined;
+  chrome.contextMenus.removeAll(function () {
+    chrome.contextMenus.create(
+      {
+        title: t("contextMenuSelectContent"),
+        contexts: ["action"],
+        id: "selectContentCM",
+      },
+      chrome.runtime.lastError,
+    );
+    updateContextMenus();
+  });
+}
+
+initI18nFromStorage().then(setupContextMenus);
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && changes.extensionLocale) {
+    resetI18nCache();
+    initI18nFromStorage().then(setupContextMenus);
+  }
+});
+
 function updateContextMenus() {
   chrome.storage.sync.get(
     ["enable-pageCM", "enable-linkCM", "enable-autorunCM"],
@@ -424,19 +449,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       },
     );
   }
-});
-
-// Add our context menus
-chrome.contextMenus.removeAll(function () {
-  chrome.contextMenus.create(
-    {
-      title: t("contextMenuSelectContent"),
-      contexts: ["action"],
-      id: "selectContentCM",
-    },
-    chrome.runtime.lastError,
-  );
-  updateContextMenus();
 });
 
 function clearBundledThemeCache() {

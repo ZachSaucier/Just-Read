@@ -180,6 +180,12 @@ function addEventListeners() {
     }
   };
 
+  extensionLocale.onchange = function () {
+    chrome.storage.sync.set({ extensionLocale: this.value || "" }, () => {
+      location.reload();
+    });
+  };
+
   saveButton.addEventListener("animationend", function () {
     saveButton.classList.remove("saved");
   });

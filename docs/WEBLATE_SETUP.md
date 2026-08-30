@@ -1,46 +1,62 @@
 # Weblate setup (Extension)
 
-One-time steps to connect Hosted Weblate to the public `Just-Read` repository.
+Hosted Weblate project for Just Read extension translations.
 
-## Prerequisites
-
-1. Copy `.env.example` to `.env` and set `WEBLATE_API_TOKEN`.
-2. Run `npm run i18n:weblate:verify` — must print authenticated user.
-
-## Hosted Weblate project
-
-1. Apply for [Libre hosting](https://hosted.weblate.org/) (open-source license on Just-Read).
-2. Connect GitHub and install the [Hosted Weblate GitHub App](https://github.com/apps/hosted-weblate) on `ZachSaucier/Just-Read`.
-3. Create project **Just Read** (note the URL slug → `WEBLATE_PROJECT` in `.env`).
-4. Add **Extension** component:
+## Project (configured)
 
 | Setting | Value |
 |---|---|
-| File format | WebExtension JSON file |
-| Monolingual base language file | `_locales/en/messages.json` |
+| Project name | Just Read |
+| Project slug (`WEBLATE_PROJECT`) | `just-read` |
+| Component name | Extension |
+| Component slug (`WEBLATE_COMPONENT`) | `extension` |
+| Project URL | https://hosted.weblate.org/projects/just-read/ |
+| Component URL | https://hosted.weblate.org/projects/just-read/extension/ |
+| Translation license | GPL-3.0-only |
+| Repository branch | `main` |
+| File format | WebExtension JSON |
 | File mask | `_locales/*/messages.json` |
-| Version control | GitHub |
-| Push branch | `weblate` |
-| Merge type | Pull request |
+| Monolingual base | `_locales/en/messages.json` |
 
-5. Enable launch languages: `ru`, `es`, `pt_BR`, `zh_CN`, `de`, `fr`, `zh_TW`, `ja`, `ko`, `it`, `pt_PT`, `uk`, `sv`, `pl`, `tr`.
-6. Set `WEBLATE_COMPONENT=extension` (or the actual component slug) in `.env`.
-7. Run `npm run i18n:weblate:status` to confirm the component is reachable.
+## Local `.env`
+
+Copy `.env.example` to `.env`:
+
+```bash
+WEBLATE_API_URL=https://hosted.weblate.org/api
+WEBLATE_API_TOKEN=...          # or WEBLATE_API_KEY
+WEBLATE_PROJECT=just-read
+WEBLATE_COMPONENT=extension
+```
+
+Verify:
+
+```bash
+npm run i18n:weblate:verify
+npm run i18n:weblate:status
+```
+
+## Languages enabled
+
+All 15 launch locales: `ru`, `es`, `pt_BR`, `zh_CN`, `de`, `fr`, `zh_TW`, `ja`, `ko`, `it`, `pt_PT`, `uk`, `sv`, `pl`, `tr`, plus English source.
 
 ## Day-to-day workflow
 
 ```bash
 # After changing English strings in _locales/en/messages.json
-npm run i18n:translate          # AI draft for all 15 locales (needs OPENAI_API_KEY)
-npm run i18n:check              # verify key parity
+npm run i18n:translate          # AI draft (needs OPENAI_API_KEY in .env)
+npm run i18n:check              # verify key parity across locales
 git push
 npm run i18n:weblate:pull       # sync Weblate with git
 
-# Review community corrections
-npm run i18n:weblate:status
+npm run i18n:weblate:status     # per-locale stats (watch failing% drop after real translations)
 # merge Weblate PRs from GitHub
 ```
 
+### English placeholder locales
+
+If locales were generated with `npm run i18n:translate:copy-en`, Weblate will show **100% translated** but high **failing** checks (text still matches English). Run `npm run i18n:translate` with `OPENAI_API_KEY` set, push, and pull Weblate again for real drafts.
+
 ## Cursor MCP
 
-`.cursor/mcp.json` loads `@mmntm/weblate-mcp` using the same `.env` token for agent tooling.
+`.cursor/mcp.json` loads `@mmntm/weblate-mcp` using the same `.env` token.

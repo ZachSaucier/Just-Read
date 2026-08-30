@@ -1,138 +1,138 @@
 {
   "addComment": {
-    "message": "Add a comment",
+    "message": "Kommentar hinzufügen",
     "description": "Add comment button tooltip"
   },
   "badgeOn": {
-    "message": "on",
+    "message": "an",
     "description": "Toolbar badge text while Just Read is loading"
   },
   "cancelButton": {
-    "message": "Cancel",
+    "message": "Abbrechen",
     "description": "Cancel comment button"
   },
   "closeJustRead": {
-    "message": "Close Just Read",
+    "message": "Just Read schließen",
     "description": "Close reader button tooltip"
   },
   "closeWithoutSaving": {
-    "message": "Close without saving",
+    "message": "Schließen ohne Speichern",
     "description": "Theme editor close without save button"
   },
   "closeWithoutSavingConfirm": {
-    "message": " Close without saving?",
+    "message": " Ohne Speichern schließen?",
     "description": "Suffix for unsaved edits confirm dialog"
   },
   "commandOpenJustRead": {
-    "message": "Open the Just Read format for the current page",
+    "message": "Just-Read-Format für die aktuelle Seite öffnen",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commandSelectText": {
-    "message": "Enable user text selection mode using Just Read",
+    "message": "Textauswahlmodus mit Just Read aktivieren",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commentButton": {
-    "message": "Comment",
+    "message": "Kommentieren",
     "description": "Post comment button"
   },
   "commentLeftOnPrefix": {
-    "message": "Left on ",
+    "message": "Hinterlassen am ",
     "description": "Prefix before comment timestamp; keep trailing space"
   },
   "commentsPremiumAlert": {
-    "message": "Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link",
+    "message": "Diese Funktion ist nur für Just Read Premium-Nutzer verfügbar! Registriere dich auf justread.link",
     "description": "Alert when non-premium user tries cmd-click comment"
   },
   "contextMenuAutorun": {
-    "message": "Add this site to Just Read's auto-run list",
+    "message": "Diese Website zur Auto-Run-Liste von Just Read hinzufügen",
     "description": "Page right-click context menu item for auto-run"
   },
   "contextMenuSelectContent": {
-    "message": "Select content to read",
+    "message": "Inhalt zum Lesen auswählen",
     "description": "Extension icon right-click context menu item"
   },
   "contextMenuViewLink": {
-    "message": "View the linked page using Just Read",
+    "message": "Verlinkte Seite mit Just Read anzeigen",
     "description": "Link right-click context menu item"
   },
   "contextMenuViewPage": {
-    "message": "View this page using Just Read",
+    "message": "Diese Seite mit Just Read anzeigen",
     "description": "Page right-click context menu item"
   },
   "defaultSummarizerPrompt": {
-    "message": "Summarize the content you are provided as concisely as possible while retaining the key points.",
+    "message": "Fasse den bereitgestellten Inhalt so knapp wie möglich zusammen und behalte dabei die wichtigsten Punkte bei.",
     "description": "Default AI summarizer prompt in options textarea JSON"
   },
   "deletionMode": {
-    "message": "Start/end deletion mode",
+    "message": "Löschmodus starten/beenden",
     "description": "Deletion mode button tooltip"
   },
   "editBarBoldMac": {
-    "message": "Bold (⌘+b)",
+    "message": "Fett (⌘+b)",
     "description": "Edit bar bold button tooltip on macOS"
   },
   "editBarBoldWin": {
-    "message": "Bold (Ctrl+b)",
+    "message": "Fett (Ctrl+b)",
     "description": "Edit bar bold button tooltip on Windows/Linux"
   },
   "editBarClearFormatMac": {
-    "message": "Clear formatting (⌘+\\)",
+    "message": "Formatierung löschen (⌘+\\)",
     "description": "Edit bar clear formatting tooltip on macOS"
   },
   "editBarClearFormatWin": {
-    "message": "Clear formatting (Ctrl+\\)",
+    "message": "Formatierung löschen (Ctrl+\\)",
     "description": "Edit bar clear formatting tooltip on Windows/Linux"
   },
   "editBarDeleteSelMac": {
-    "message": "Delete highlighted text (⌘+Shift+d)",
+    "message": "Markierten Text löschen (⌘+Shift+d)",
     "description": "Edit bar delete selection tooltip on macOS"
   },
   "editBarDeleteSelWin": {
-    "message": "Delete highlighted text (Ctrl+Shift+d)",
+    "message": "Markierten Text löschen (Ctrl+Shift+d)",
     "description": "Edit bar delete selection tooltip on Windows/Linux"
   },
   "editBarHighlightMac": {
-    "message": "Highlight color (⌘+Shift+h)",
+    "message": "Hervorhebungsfarbe (⌘+Shift+h)",
     "description": "Edit bar highlight button tooltip on macOS"
   },
   "editBarHighlightWin": {
-    "message": "Highlight color (Ctrl+Shift+h)",
+    "message": "Hervorhebungsfarbe (Ctrl+Shift+h)",
     "description": "Edit bar highlight button tooltip on Windows/Linux"
   },
   "editBarItalicMac": {
-    "message": "Italicize (⌘+i)",
+    "message": "Kursiv (⌘+i)",
     "description": "Edit bar italic button tooltip on macOS"
   },
   "editBarItalicWin": {
-    "message": "Italicize (Ctrl+i)",
+    "message": "Kursiv (Ctrl+i)",
     "description": "Edit bar italic button tooltip on Windows/Linux"
   },
   "editBarStrikeMac": {
-    "message": "Strike-through (⌘+Shift+s)",
+    "message": "Durchgestrichen (⌘+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on macOS"
   },
   "editBarStrikeWin": {
-    "message": "Strike-through (Ctrl+Shift+s)",
+    "message": "Durchgestrichen (Ctrl+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on Windows/Linux"
   },
   "editBarTextColorMac": {
-    "message": "Text color (⌘+Shift+c)",
+    "message": "Textfarbe (⌘+Shift+c)",
     "description": "Edit bar text color button tooltip on macOS"
   },
   "editBarTextColorWin": {
-    "message": "Text color (Ctrl+Shift+c)",
+    "message": "Textfarbe (Ctrl+Shift+c)",
     "description": "Edit bar text color button tooltip on Windows/Linux"
   },
   "editBarUnderlineMac": {
-    "message": "Underline (⌘+u)",
+    "message": "Unterstrichen (⌘+u)",
     "description": "Edit bar underline button tooltip on macOS"
   },
   "editBarUnderlineWin": {
-    "message": "Underline (Ctrl+u)",
+    "message": "Unterstrichen (Ctrl+u)",
     "description": "Edit bar underline button tooltip on Windows/Linux"
   },
   "editTheme": {
-    "message": "Edit your theme",
+    "message": "Theme bearbeiten",
     "description": "Theme editor button tooltip"
   },
   "extActionTitle": {
@@ -140,7 +140,7 @@
     "description": "Toolbar button tooltip"
   },
   "extDescription": {
-    "message": "A feature-packed, customizable reader extension.",
+    "message": "Eine funktionsreiche, anpassbare Lese-Erweiterung.",
     "description": "Extension description in manifest and store"
   },
   "extName": {
@@ -148,19 +148,19 @@
     "description": "Extension name shown in browser UI and store"
   },
   "learnMore": {
-    "message": "Learn more",
+    "message": "Mehr erfahren",
     "description": "Primary button on upgrade notifications"
   },
   "leaveReview": {
-    "message": "Leave a review",
+    "message": "Bewertung abgeben",
     "description": "Button linking to extension store review page"
   },
   "maybeLater": {
-    "message": "Maybe later",
+    "message": "Vielleicht später",
     "description": "Secondary dismiss button on notifications"
   },
   "minuteReadPlural": {
-    "message": "$COUNT$ minutes read",
+    "message": "$COUNT$ Minuten Lesezeit",
     "description": "Reading time estimate for multiple minutes",
     "placeholders": {
       "count": {
@@ -170,7 +170,7 @@
     }
   },
   "minuteReadSingular": {
-    "message": "$COUNT$ minute read",
+    "message": "$COUNT$ Minute Lesezeit",
     "description": "Reading time estimate for one minute",
     "placeholders": {
       "count": {
@@ -180,7 +180,7 @@
     }
   },
   "notInterested": {
-    "message": "Not interested",
+    "message": "Nicht interessiert",
     "description": "Dismiss button on summarizer feature notification"
   },
   "ok": {
@@ -188,83 +188,83 @@
     "description": "Generic confirm button"
   },
   "openDashboard": {
-    "message": "Open dashboard",
+    "message": "Dashboard öffnen",
     "description": "Button linking to justread.link dashboard"
   },
   "openEmail": {
-    "message": "Open email",
+    "message": "E-Mail öffnen",
     "description": "Button opening mailto link"
   },
   "optionsAddOrigURL": {
-    "message": "Always add the original URL to the Just Read view.",
+    "message": "Original-URL immer zur Just-Read-Ansicht hinzufügen.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAddTimeEstimate": {
-    "message": "Always add the estimated time to read the article.",
+    "message": "Geschätzte Lesezeit des Artikels immer hinzufügen.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAdditionalPrefsHeading": {
-    "message": "Additional preferences",
+    "message": "Weitere Einstellungen",
     "description": "Options section heading"
   },
   "optionsAlwaysAddAR": {
-    "message": "Always add current site to Just Read's auto-run list when Just Read is started on a page.",
+    "message": "Aktuelle Website immer zur Auto-Run-Liste von Just Read hinzufügen, wenn Just Read auf einer Seite gestartet wird.",
     "description": "Auto-run preference checkbox"
   },
   "optionsAutorunCM": {
-    "message": "Enable auto-run context menu entry.",
+    "message": "Auto-Run-Eintrag im Kontextmenü aktivieren.",
     "description": "Context menu preference checkbox"
   },
   "optionsAutorunHeading": {
-    "message": "Auto-run domain list",
+    "message": "Auto-Run-Domainliste",
     "description": "Options section heading"
   },
   "optionsAutorunHelpBefore": {
-    "message": "This list is checked using regex. For more info, see ",
+    "message": "Diese Liste wird per Regex geprüft. Weitere Infos findest du in ",
     "description": "Auto-run help text before link"
   },
   "optionsAutorunHelpLink": {
-    "message": "this post",
+    "message": "diesem Beitrag",
     "description": "Auto-run help link text"
   },
   "optionsAutoscroll": {
-    "message": "Use JR's auto-scroll functionality.",
+    "message": "JR-Auto-Scroll-Funktion verwenden.",
     "description": "Premium feature checkbox"
   },
   "optionsBackup": {
-    "message": "Backup the most recent Just Read page (in case of accidental closure).",
+    "message": "Die zuletzt geöffnete Just-Read-Seite sichern (falls sie versehentlich geschlossen wird).",
     "description": "Backup preference checkbox"
   },
   "optionsCloseOldPage": {
-    "message": "Always close the original page that Just Read was started on when a shared page is open (Note that this can only be checked if the above option is checked).",
+    "message": "Originalseite, von der Just Read gestartet wurde, immer schließen, wenn eine geteilte Seite geöffnet ist (Hinweis: nur aktivierbar, wenn die obige Option aktiviert ist).",
     "description": "Sharing preference checkbox"
   },
   "optionsConfirmChangeBeforeSave": {
-    "message": "Do you really want to change files before saving?",
+    "message": "Möchtest du wirklich die Datei wechseln, bevor du speicherst?",
     "description": "Confirm when switching theme with unsaved edits"
   },
   "optionsConfirmRemoveFile": {
-    "message": "Do you really want to remove this file?",
+    "message": "Möchtest du diese Datei wirklich entfernen?",
     "description": "Confirm before removing theme file"
   },
   "optionsContextMenuHeading": {
-    "message": "Context menu entries",
+    "message": "Kontextmenü-Einträge",
     "description": "Options section heading"
   },
   "optionsDoneFeedback": {
-    "message": "Done!",
+    "message": "Fertig!",
     "description": "Transient feedback on use-theme button"
   },
   "optionsFeaturesHeading": {
-    "message": "Additional features",
+    "message": "Zusätzliche Funktionen",
     "description": "Options section heading"
   },
   "optionsFileLocked": {
-    "message": "This file is locked and cannot be deleted.",
+    "message": "Diese Datei ist gesperrt und kann nicht gelöscht werden.",
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Configure ",
+    "message": "Konfiguriere ",
     "description": "Options page h1 text before italic Just Read"
   },
   "optionsHeadingBrand": {
@@ -272,163 +272,175 @@
     "description": "Options page h1 brand name in italics"
   },
   "optionsHideSegments": {
-    "message": "Use hide-segments.css",
+    "message": "hide-segments.css verwenden",
     "description": "Checkbox label for hide-segments stylesheet"
   },
+  "optionsLanguageAuto": {
+    "message": "Browsersprache",
+    "description": "Option to follow the browser UI language for extension strings"
+  },
+  "optionsLanguageHeading": {
+    "message": "Sprache",
+    "description": "Options section heading for extension UI language"
+  },
+  "optionsLanguageLabel": {
+    "message": "Erweiterungssprache",
+    "description": "Label for extension language select on options page"
+  },
   "optionsLeavePres": {
-    "message": "Never reformat pre tags.",
+    "message": "pre-Tags nie neu formatieren.",
     "description": "Formatting preference checkbox"
   },
   "optionsLinkCM": {
-    "message": "Enable link context menu entry.",
+    "message": "Link-Kontextmenü-Eintrag aktivieren.",
     "description": "Context menu preference checkbox"
   },
   "optionsNewThemePlaceholder": {
-    "message": "New theme name...",
+    "message": "Neuer Theme-Name...",
     "description": "Placeholder for new theme name input"
   },
   "optionsOpenSharedPage": {
-    "message": "Always automatically open the shared page in a new tab.",
+    "message": "Geteilte Seite immer automatisch in einem neuen Tab öffnen.",
     "description": "Sharing preference checkbox"
   },
   "optionsPageCM": {
-    "message": "Enable page context menu entry.",
+    "message": "Seiten-Kontextmenü-Eintrag aktivieren.",
     "description": "Context menu preference checkbox"
   },
   "optionsPageTitle": {
-    "message": "Options - Just Read",
+    "message": "Optionen – Just Read",
     "description": "Options page document title"
   },
   "optionsRemoveOrig": {
-    "message": "Remove the original page's content once the Just Read view has opened (better performance but loses original page load if JR view closed).",
+    "message": "Inhalt der Originalseite entfernen, sobald die Just-Read-Ansicht geöffnet ist (bessere Leistung, aber Originalseite geht verloren, wenn die JR-Ansicht geschlossen wird).",
     "description": "Performance preference checkbox"
   },
   "optionsRemoveTheme": {
-    "message": "Remove theme",
+    "message": "Theme entfernen",
     "description": "Button to delete selected theme"
   },
   "optionsSaveStyles": {
-    "message": "Save style changes",
+    "message": "Stiländerungen speichern",
     "description": "Button to save CSS editor changes"
   },
   "optionsSavedFeedback": {
-    "message": "Saved!",
+    "message": "Gespeichert!",
     "description": "Transient feedback on save button"
   },
   "optionsScrollSpeed": {
-    "message": "Auto-scroll speed (closer to 0 = slower):",
+    "message": "Auto-Scroll-Geschwindigkeit (näher an 0 = langsamer):",
     "description": "Auto-scroll speed label"
   },
   "optionsScrollbar": {
-    "message": "Use a custom scrollbar instead of the browser's default.",
+    "message": "Eine benutzerdefinierte Scrollleiste statt der Browser-Standardleiste verwenden.",
     "description": "Premium feature checkbox"
   },
   "optionsSelectorsHeading": {
-    "message": "Domain-specific selectors",
+    "message": "Domain-spezifische Selektoren",
     "description": "Options section heading"
   },
   "optionsSharingHeading": {
-    "message": "Sharing preferences",
+    "message": "Freigabe-Einstellungen",
     "description": "Options section heading"
   },
   "optionsSubtitleAfterDashboard": {
-    "message": " to view your saved pages. Thanks for supporting Just Read!",
+    "message": ", um deine gespeicherten Seiten anzuzeigen. Danke, dass du Just Read unterstützt!",
     "description": "Options subtitle after dashboard link"
   },
   "optionsSubtitleBeforeDashboard": {
-    "message": "Or go to ",
+    "message": "Oder gehe zu ",
     "description": "Options subtitle before dashboard link"
   },
   "optionsSubtitleDashboardLink": {
-    "message": "your dashboard",
+    "message": "dein Dashboard",
     "description": "Options subtitle dashboard link text"
   },
   "optionsSummarizerHeading": {
-    "message": "AI summarization options",
+    "message": "KI-Zusammenfassungsoptionen",
     "description": "Options section heading"
   },
   "optionsSummarizerIntro": {
-    "message": "Just Read can summarize articles using any AI provider. Supported providers:",
+    "message": "Just Read kann Artikel mit jedem KI-Anbieter zusammenfassen. Unterstützte Anbieter:",
     "description": "Summarizer options intro before provider code list"
   },
   "optionsSummarizerLink": {
-    "message": "this post",
+    "message": "diesem Beitrag",
     "description": "Summarizer docs link text"
   },
   "optionsSummarizerProvidersHelp": {
-    "message": "Use \"provider\": \"anthropic\" for Claude, \"provider\": \"gemini\" for Google Gemini, \"provider\": \"perplexity\" for Perplexity, or \"provider\": \"custom\" with an \"endpoint\" field for any OpenAI-compatible API.",
+    "message": "Verwende \"provider\": \"anthropic\" für Claude, \"provider\": \"gemini\" für Google Gemini, \"provider\": \"perplexity\" für Perplexity oder \"provider\": \"custom\" mit einem \"endpoint\"-Feld für jede OpenAI-kompatible API.",
     "description": "Summarizer provider help text below textarea"
   },
   "optionsSummarizerSeeAlso": {
-    "message": "For more info, see",
+    "message": "Weitere Infos findest du in",
     "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
-    "message": "Automatically run the summarizer when Just Read is opened.",
+    "message": "Zusammenfassung automatisch ausführen, wenn Just Read geöffnet wird.",
     "description": "Summarizer checkbox label"
   },
   "optionsSummaryReplace": {
-    "message": "Replace the article content with the summary.",
+    "message": "Artikelinhalt durch die Zusammenfassung ersetzen.",
     "description": "Summarizer checkbox label"
   },
   "optionsUpgradeHeading": {
-    "message": "To access all of Just Read's features, upgrade to Just Read Premium! ",
+    "message": "Um alle Funktionen von Just Read zu nutzen, upgrade auf Just Read Premium! ",
     "description": "Premium upsell heading on options page"
   },
   "optionsUpgradeLink": {
-    "message": "Learn more here",
+    "message": "Mehr erfahren",
     "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
-    "message": "Use as current theme",
+    "message": "Als aktuelles Theme verwenden",
     "description": "Button to activate selected theme"
   },
   "optionsViewMoreThemes": {
-    "message": "View more themes",
+    "message": "Weitere Themes anzeigen",
     "description": "Link to community themes on GitHub"
   },
   "pauseScroll": {
-    "message": "Pause scroll",
+    "message": "Scrollen pausieren",
     "description": "Auto-scroll pause button label"
   },
   "premiumUpsellAnnotations": {
-    "message": "To annotate this article, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Annotations are just <em>one</em> of the additional features included.",
+    "message": "Um diesen Artikel zu annotieren, upgrade auf <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Anmerkungen sind nur <em>eine</em> der zusätzlichen Funktionen.",
     "description": "Highlighter premium upsell (HTML)"
   },
   "premiumUpsellComments": {
-    "message": "To add comments, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Comments are just <em>one</em> of the additional features included.",
+    "message": "Um Kommentare hinzuzufügen, upgrade auf <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Kommentare sind nur <em>eine</em> der zusätzlichen Funktionen.",
     "description": "Comments feature premium upsell (HTML)"
   },
   "premiumUpsellGeneric": {
-    "message": "To access this feature, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
+    "message": "Um diese Funktion zu nutzen, upgrade auf <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
     "description": "Premium gate notification body (HTML)"
   },
   "premiumUpsellMain": {
-    "message": "Have you considered <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? With Premium you can annotate your articles, share them with others, and more!",
+    "message": "Hast du schon an <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a> gedacht? Mit Premium kannst du Artikel annotieren, mit anderen teilen und mehr!",
     "description": "Periodic premium promotion in reader (HTML)"
   },
   "premiumUpsellShare": {
-    "message": "To share this reader view with others, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Shared pages are just <em>one</em> of the additional features included.",
+    "message": "Um diese Leseansicht mit anderen zu teilen, upgrade auf <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Geteilte Seiten sind nur <em>eine</em> der zusätzlichen Funktionen.",
     "description": "Share feature premium upsell (HTML)"
   },
   "premiumUpsellSharedEdit": {
-    "message": "To edit a shared Just Read page, sign in with a <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium account</a>.",
+    "message": "Um eine geteilte Just-Read-Seite zu bearbeiten, melde dich mit einem <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium-Konto</a> an.",
     "description": "Shared page edit premium gate (HTML)"
   },
   "printArticle": {
-    "message": "Print article",
+    "message": "Artikel drucken",
     "description": "Print button tooltip"
   },
   "reportError": {
-    "message": "Report an error",
+    "message": "Fehler melden",
     "description": "Footer link to report bugs"
   },
   "reshareToSave": {
-    "message": "Re-share to save",
+    "message": "Erneut teilen zum Speichern",
     "description": "Share button aria-label when shared page has unsaved edits"
   },
   "reviewMilestone": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='$REVIEW_URL$' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "Wow, du hast Just Read über $VIEWS$ Mal genutzt! Würdest du <a href='$REVIEW_URL$' target='_blank'>eine Bewertung hinterlassen</a> oder Just Read mit Freunden oder in sozialen Medien teilen? Ich würde mich sehr freuen!",
     "description": "Usage milestone review request (HTML)",
     "placeholders": {
       "views": {
@@ -442,7 +454,7 @@
     }
   },
   "reviewMilestonePremium": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='$REVIEW_URL$' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "Wow, du hast Just Read über $VIEWS$ Mal genutzt! Würdest du <a href='https://justread.link/#get-Just-Read' target='_blank'>auf Premium upgraden</a>, <a href='$REVIEW_URL$' target='_blank'>eine Bewertung hinterlassen</a> oder Just Read mit Freunden oder in sozialen Medien teilen? Ich würde mich sehr freuen!",
     "description": "Usage milestone notification with premium CTA (HTML)",
     "placeholders": {
       "views": {
@@ -456,7 +468,7 @@
     }
   },
   "reviewTenK": {
-    "message": "You've just started Just read for the 10,000th time! I'd love to hear from you about how you use Just Read via email if you're open to it. Please reach out to <a href='$MAILTO$'>hello@zachsaucier.com</a>",
+    "message": "Du hast Just Read gerade zum 10.000. Mal gestartet! Ich würde gerne per E-Mail erfahren, wie du Just Read nutzt, wenn du offen dafür bist. Schreib mir an <a href='$MAILTO$'>hello@zachsaucier.com</a>",
     "description": "10,000 opens milestone email request (HTML)",
     "placeholders": {
       "mailto": {
@@ -466,83 +478,83 @@
     }
   },
   "saveAndClose": {
-    "message": "Save and close",
+    "message": "Speichern und schließen",
     "description": "Theme editor save button"
   },
   "saveSharedChanges": {
-    "message": "Save changes to this shared page",
+    "message": "Änderungen an dieser geteilten Seite speichern",
     "description": "Share button tooltip on hydrated shared page"
   },
   "shareArticle": {
-    "message": "Share article",
+    "message": "Artikel teilen",
     "description": "Share button tooltip"
   },
   "shareLimitLead": {
-    "message": "You have too many shared articles - the limit is 300. Please remove some from ",
+    "message": "Du hast zu viele geteilte Artikel – das Limit liegt bei 300. Bitte entferne einige von ",
     "description": "Share limit alert text before dashboard link"
   },
   "shareLimitTail": {
-    "message": " before adding more.",
+    "message": ", bevor du weitere hinzufügst.",
     "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
-    "message": "Share to save",
+    "message": "Teilen zum Speichern",
     "description": "Share button aria-label when edits need saving"
   },
   "shareViaEmail": {
-    "message": "Share via email",
+    "message": "Per E-Mail teilen",
     "description": "Email share button tooltip"
   },
   "sharedEditNotOwner": {
-    "message": "You can only edit shared pages that you created with this Just Read account.",
+    "message": "Du kannst nur geteilte Seiten bearbeiten, die du mit diesem Just-Read-Konto erstellt hast.",
     "description": "Error when user cannot edit a shared page"
   },
   "startScroll": {
-    "message": "Start scroll",
+    "message": "Scrollen starten",
     "description": "Auto-scroll resume button label"
   },
   "stylesheetQuotaExceeded": {
-    "message": "File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/",
+    "message": "Datei wurde nicht gespeichert: Dein Stylesheet ist zu groß. Minifizieren oder weniger genutzte Einträge entfernen kann helfen.\n\nDu kannst es minifizieren unter: https://cssminifier.com/",
     "description": "Alert when theme stylesheet exceeds storage quota"
   },
   "summarizeArticle": {
-    "message": "Summarize article",
+    "message": "Artikel zusammenfassen",
     "description": "Summarize button tooltip"
   },
   "summarizerFeatureNotify": {
-    "message": "Did you know that Just Read can summarize articles using AI?",
+    "message": "Wusstest du, dass Just Read Artikel mit KI zusammenfassen kann?",
     "description": "Summarizer feature discovery notification"
   },
   "summarizerNoApiKey": {
-    "message": "To use the summarizer, add your AI provider API key to Just Read's options page. For more info, see https://justread.link/summarizer",
+    "message": "Um den Zusammenfasser zu nutzen, füge deinen KI-Anbieter-API-Schlüssel auf der Just-Read-Optionsseite hinzu. Weitere Infos: https://justread.link/summarizer",
     "description": "Alert when summarizer options are not configured"
   },
   "summaryErrorFormat": {
-    "message": "Unexpected response format from the AI provider.",
+    "message": "Unerwartetes Antwortformat vom KI-Anbieter.",
     "description": "Summary error when response JSON shape is wrong"
   },
   "summaryErrorHeading": {
-    "message": "Error getting summary",
+    "message": "Fehler beim Abrufen der Zusammenfassung",
     "description": "Heading when summary request fails"
   },
   "summaryErrorHtml": {
-    "message": "The AI provider returned an HTML page instead of a JSON summary. Check your API endpoint and key.",
+    "message": "Der KI-Anbieter hat eine HTML-Seite statt einer JSON-Zusammenfassung zurückgegeben. Überprüfe deinen API-Endpunkt und Schlüssel.",
     "description": "Summary error when provider returns HTML"
   },
   "summaryErrorUnknown": {
-    "message": "Unknown error",
+    "message": "Unbekannter Fehler",
     "description": "Fallback summary error detail"
   },
   "summaryHeading": {
-    "message": "Summary",
+    "message": "Zusammenfassung",
     "description": "Heading above generated summary"
   },
   "summaryLoading": {
-    "message": "Summary loading",
+    "message": "Zusammenfassung wird geladen",
     "description": "Heading while AI summary is being fetched"
   },
   "summaryTokensUsed": {
-    "message": ": $TOKENS$ tokens used",
+    "message": ": $TOKENS$ Tokens verwendet",
     "description": "Suffix on summary heading showing token count",
     "placeholders": {
       "tokens": {
@@ -552,63 +564,63 @@
     }
   },
   "themeEditorBackgroundColor": {
-    "message": "Background color",
+    "message": "Hintergrundfarbe",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorFontSize": {
-    "message": "Font size",
+    "message": "Schriftgröße",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkColor": {
-    "message": "Link color",
+    "message": "Linkfarbe",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkHoverColor": {
-    "message": "Link hover color",
+    "message": "Linkfarbe bei Hover",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorMaxWidth": {
-    "message": "Max width",
+    "message": "Max. Breite",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorOpenFullStyles": {
-    "message": "Open full styles",
+    "message": "Vollständige Styles öffnen",
     "description": "dat.GUI theme editor button label"
   },
   "themeEditorTextColor": {
-    "message": "Text color",
+    "message": "Textfarbe",
     "description": "dat.GUI theme editor control label"
   },
   "undoLastAction": {
-    "message": "Undo last action",
+    "message": "Letzte Aktion rückgängig machen",
     "description": "Undo button tooltip"
   },
   "unknownAuthor": {
-    "message": "Unknown author",
+    "message": "Unbekannter Autor",
     "description": "Fallback when article author cannot be detected"
   },
   "unknownDate": {
-    "message": "Unknown date",
+    "message": "Unbekanntes Datum",
     "description": "Fallback when article date cannot be detected"
   },
   "unknownTitle": {
-    "message": "Unknown title",
+    "message": "Unbekannter Titel",
     "description": "Fallback when article title cannot be detected"
   },
   "unsavedSharedEdits": {
-    "message": "You have unsaved edits.",
+    "message": "Du hast ungespeicherte Änderungen.",
     "description": "Confirm dialog when closing with unsaved shared page edits"
   },
   "viewOriginalPage": {
-    "message": "View original page",
+    "message": "Originalseite anzeigen",
     "description": "Link on shared reader pages to original URL"
   },
   "viewedUsing": {
-    "message": "Viewed using ",
+    "message": "Angesehen mit ",
     "description": "Footer prefix before Just Read link"
   },
   "yourUserPage": {
-    "message": "your user page",
+    "message": "deiner Benutzerseite",
     "description": "Link text to dashboard in share limit alert"
   }
 }

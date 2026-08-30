@@ -220,7 +220,7 @@ function checkBreakpoints() {
 function addHighlighterNotification() {
   const notification = {
     textKey: "premiumUpsellAnnotations",
-    url: "https://justread.link/#get-Just-Read",
+    url: siteUrl("/#get-Just-Read"),
     primaryKey: "learnMore",
     secondaryKey: "maybeLater",
   };

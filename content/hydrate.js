@@ -31,7 +31,7 @@ function verifyPremiumThenHydrate() {
           createNotification(
             {
               textKey: "premiumUpsellSharedEdit",
-              url: "https://justread.link/#get-Just-Read",
+              url: siteUrl("/#get-Just-Read"),
               primaryKey: "learnMore",
               secondaryKey: "maybeLater",
             },
@@ -64,7 +64,7 @@ function checkOwnershipThenHydrate() {
           createNotification(
             {
               textKey: "sharedEditNotOwner",
-              url: "https://justread.link/dashboard",
+              url: siteUrl("/dashboard/"),
               primaryKey: "openDashboard",
               secondaryKey: "ok",
             },

@@ -23,4 +23,5 @@ var hideSegments = document.getElementById("hideSegments"),
   leavePres = document.getElementById("leavePres"),
   addOrigURL = document.getElementById("addOrigURL"),
   addTimeEstimate = document.getElementById("addTimeEstimate"),
-  scrollbar = document.getElementById("scrollbar");
+  scrollbar = document.getElementById("scrollbar"),
+  extensionLocale = document.getElementById("extensionLocale");

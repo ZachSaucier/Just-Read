@@ -1,138 +1,138 @@
 {
   "addComment": {
-    "message": "Add a comment",
+    "message": "Lägg till en kommentar",
     "description": "Add comment button tooltip"
   },
   "badgeOn": {
-    "message": "on",
+    "message": "på",
     "description": "Toolbar badge text while Just Read is loading"
   },
   "cancelButton": {
-    "message": "Cancel",
+    "message": "Avbryt",
     "description": "Cancel comment button"
   },
   "closeJustRead": {
-    "message": "Close Just Read",
+    "message": "Stäng Just Read",
     "description": "Close reader button tooltip"
   },
   "closeWithoutSaving": {
-    "message": "Close without saving",
+    "message": "Stäng utan att spara",
     "description": "Theme editor close without save button"
   },
   "closeWithoutSavingConfirm": {
-    "message": " Close without saving?",
+    "message": " Stäng utan att spara?",
     "description": "Suffix for unsaved edits confirm dialog"
   },
   "commandOpenJustRead": {
-    "message": "Open the Just Read format for the current page",
+    "message": "Öppna Just Read-formatet för den aktuella sidan",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commandSelectText": {
-    "message": "Enable user text selection mode using Just Read",
+    "message": "Aktivera läget för textmarkering med Just Read",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commentButton": {
-    "message": "Comment",
+    "message": "Kommentar",
     "description": "Post comment button"
   },
   "commentLeftOnPrefix": {
-    "message": "Left on ",
+    "message": "Lämnad den ",
     "description": "Prefix before comment timestamp; keep trailing space"
   },
   "commentsPremiumAlert": {
-    "message": "Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link",
+    "message": "Tyvärr är den här funktionen endast tillgänglig för Just Read Premium-användare! Registrera dig på justread.link",
     "description": "Alert when non-premium user tries cmd-click comment"
   },
   "contextMenuAutorun": {
-    "message": "Add this site to Just Read's auto-run list",
+    "message": "Lägg till den här webbplatsen i Just Reads lista för automatisk körning",
     "description": "Page right-click context menu item for auto-run"
   },
   "contextMenuSelectContent": {
-    "message": "Select content to read",
+    "message": "Välj innehåll att läsa",
     "description": "Extension icon right-click context menu item"
   },
   "contextMenuViewLink": {
-    "message": "View the linked page using Just Read",
+    "message": "Visa den länkade sidan med Just Read",
     "description": "Link right-click context menu item"
   },
   "contextMenuViewPage": {
-    "message": "View this page using Just Read",
+    "message": "Visa den här sidan med Just Read",
     "description": "Page right-click context menu item"
   },
   "defaultSummarizerPrompt": {
-    "message": "Summarize the content you are provided as concisely as possible while retaining the key points.",
+    "message": "Sammanfatta det innehåll du får så kortfattat som möjligt samtidigt som de viktigaste punkterna behålls.",
     "description": "Default AI summarizer prompt in options textarea JSON"
   },
   "deletionMode": {
-    "message": "Start/end deletion mode",
+    "message": "Starta/avsluta raderingsläge",
     "description": "Deletion mode button tooltip"
   },
   "editBarBoldMac": {
-    "message": "Bold (⌘+b)",
+    "message": "Fet (⌘+b)",
     "description": "Edit bar bold button tooltip on macOS"
   },
   "editBarBoldWin": {
-    "message": "Bold (Ctrl+b)",
+    "message": "Fet (Ctrl+b)",
     "description": "Edit bar bold button tooltip on Windows/Linux"
   },
   "editBarClearFormatMac": {
-    "message": "Clear formatting (⌘+\\)",
+    "message": "Rensa formatering (⌘+\\)",
     "description": "Edit bar clear formatting tooltip on macOS"
   },
   "editBarClearFormatWin": {
-    "message": "Clear formatting (Ctrl+\\)",
+    "message": "Rensa formatering (Ctrl+\\)",
     "description": "Edit bar clear formatting tooltip on Windows/Linux"
   },
   "editBarDeleteSelMac": {
-    "message": "Delete highlighted text (⌘+Shift+d)",
+    "message": "Ta bort markerad text (⌘+Shift+d)",
     "description": "Edit bar delete selection tooltip on macOS"
   },
   "editBarDeleteSelWin": {
-    "message": "Delete highlighted text (Ctrl+Shift+d)",
+    "message": "Ta bort markerad text (Ctrl+Shift+d)",
     "description": "Edit bar delete selection tooltip on Windows/Linux"
   },
   "editBarHighlightMac": {
-    "message": "Highlight color (⌘+Shift+h)",
+    "message": "Markeringsfärg (⌘+Shift+h)",
     "description": "Edit bar highlight button tooltip on macOS"
   },
   "editBarHighlightWin": {
-    "message": "Highlight color (Ctrl+Shift+h)",
+    "message": "Markeringsfärg (Ctrl+Shift+h)",
     "description": "Edit bar highlight button tooltip on Windows/Linux"
   },
   "editBarItalicMac": {
-    "message": "Italicize (⌘+i)",
+    "message": "Kursiv (⌘+i)",
     "description": "Edit bar italic button tooltip on macOS"
   },
   "editBarItalicWin": {
-    "message": "Italicize (Ctrl+i)",
+    "message": "Kursiv (Ctrl+i)",
     "description": "Edit bar italic button tooltip on Windows/Linux"
   },
   "editBarStrikeMac": {
-    "message": "Strike-through (⌘+Shift+s)",
+    "message": "Genomstrykning (⌘+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on macOS"
   },
   "editBarStrikeWin": {
-    "message": "Strike-through (Ctrl+Shift+s)",
+    "message": "Genomstrykning (Ctrl+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on Windows/Linux"
   },
   "editBarTextColorMac": {
-    "message": "Text color (⌘+Shift+c)",
+    "message": "Textfärg (⌘+Shift+c)",
     "description": "Edit bar text color button tooltip on macOS"
   },
   "editBarTextColorWin": {
-    "message": "Text color (Ctrl+Shift+c)",
+    "message": "Textfärg (Ctrl+Shift+c)",
     "description": "Edit bar text color button tooltip on Windows/Linux"
   },
   "editBarUnderlineMac": {
-    "message": "Underline (⌘+u)",
+    "message": "Understrykning (⌘+u)",
     "description": "Edit bar underline button tooltip on macOS"
   },
   "editBarUnderlineWin": {
-    "message": "Underline (Ctrl+u)",
+    "message": "Understrykning (Ctrl+u)",
     "description": "Edit bar underline button tooltip on Windows/Linux"
   },
   "editTheme": {
-    "message": "Edit your theme",
+    "message": "Redigera ditt tema",
     "description": "Theme editor button tooltip"
   },
   "extActionTitle": {
@@ -140,7 +140,7 @@
     "description": "Toolbar button tooltip"
   },
   "extDescription": {
-    "message": "A feature-packed, customizable reader extension.",
+    "message": "Ett läsartillägg med många funktioner och anpassningsmöjligheter.",
     "description": "Extension description in manifest and store"
   },
   "extName": {
@@ -148,19 +148,19 @@
     "description": "Extension name shown in browser UI and store"
   },
   "learnMore": {
-    "message": "Learn more",
+    "message": "Läs mer",
     "description": "Primary button on upgrade notifications"
   },
   "leaveReview": {
-    "message": "Leave a review",
+    "message": "Lämna en recension",
     "description": "Button linking to extension store review page"
   },
   "maybeLater": {
-    "message": "Maybe later",
+    "message": "Kanske senare",
     "description": "Secondary dismiss button on notifications"
   },
   "minuteReadPlural": {
-    "message": "$COUNT$ minutes read",
+    "message": "$COUNT$ minuters läsning",
     "description": "Reading time estimate for multiple minutes",
     "placeholders": {
       "count": {
@@ -170,7 +170,7 @@
     }
   },
   "minuteReadSingular": {
-    "message": "$COUNT$ minute read",
+    "message": "$COUNT$ minuts läsning",
     "description": "Reading time estimate for one minute",
     "placeholders": {
       "count": {
@@ -180,7 +180,7 @@
     }
   },
   "notInterested": {
-    "message": "Not interested",
+    "message": "Inte intresserad",
     "description": "Dismiss button on summarizer feature notification"
   },
   "ok": {
@@ -188,83 +188,83 @@
     "description": "Generic confirm button"
   },
   "openDashboard": {
-    "message": "Open dashboard",
+    "message": "Öppna instrumentpanelen",
     "description": "Button linking to justread.link dashboard"
   },
   "openEmail": {
-    "message": "Open email",
+    "message": "Öppna e-post",
     "description": "Button opening mailto link"
   },
   "optionsAddOrigURL": {
-    "message": "Always add the original URL to the Just Read view.",
+    "message": "Lägg alltid till den ursprungliga URL:en i Just Read-vyn.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAddTimeEstimate": {
-    "message": "Always add the estimated time to read the article.",
+    "message": "Lägg alltid till den uppskattade lästiden för artikeln.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAdditionalPrefsHeading": {
-    "message": "Additional preferences",
+    "message": "Ytterligare inställningar",
     "description": "Options section heading"
   },
   "optionsAlwaysAddAR": {
-    "message": "Always add current site to Just Read's auto-run list when Just Read is started on a page.",
+    "message": "Lägg alltid till den aktuella webbplatsen i Just Reads lista för automatisk körning när Just Read startas på en sida.",
     "description": "Auto-run preference checkbox"
   },
   "optionsAutorunCM": {
-    "message": "Enable auto-run context menu entry.",
+    "message": "Aktivera menyalternativet för automatisk körning.",
     "description": "Context menu preference checkbox"
   },
   "optionsAutorunHeading": {
-    "message": "Auto-run domain list",
+    "message": "Lista över domäner för automatisk körning",
     "description": "Options section heading"
   },
   "optionsAutorunHelpBefore": {
-    "message": "This list is checked using regex. For more info, see ",
+    "message": "Den här listan kontrolleras med regex. Mer information finns i ",
     "description": "Auto-run help text before link"
   },
   "optionsAutorunHelpLink": {
-    "message": "this post",
+    "message": "det här inlägget",
     "description": "Auto-run help link text"
   },
   "optionsAutoscroll": {
-    "message": "Use JR's auto-scroll functionality.",
+    "message": "Använd JRs automatiska rullningsfunktion.",
     "description": "Premium feature checkbox"
   },
   "optionsBackup": {
-    "message": "Backup the most recent Just Read page (in case of accidental closure).",
+    "message": "Säkerhetskopiera den senaste Just Read-sidan (vid oavsiktlig stängning).",
     "description": "Backup preference checkbox"
   },
   "optionsCloseOldPage": {
-    "message": "Always close the original page that Just Read was started on when a shared page is open (Note that this can only be checked if the above option is checked).",
+    "message": "Stäng alltid den ursprungliga sidan som Just Read startades från när en delad sida är öppen (Obs! Detta kan endast markeras om alternativet ovan är markerat).",
     "description": "Sharing preference checkbox"
   },
   "optionsConfirmChangeBeforeSave": {
-    "message": "Do you really want to change files before saving?",
+    "message": "Vill du verkligen byta filer innan du sparar?",
     "description": "Confirm when switching theme with unsaved edits"
   },
   "optionsConfirmRemoveFile": {
-    "message": "Do you really want to remove this file?",
+    "message": "Vill du verkligen ta bort den här filen?",
     "description": "Confirm before removing theme file"
   },
   "optionsContextMenuHeading": {
-    "message": "Context menu entries",
+    "message": "Snabbmenyalternativ",
     "description": "Options section heading"
   },
   "optionsDoneFeedback": {
-    "message": "Done!",
+    "message": "Klart!",
     "description": "Transient feedback on use-theme button"
   },
   "optionsFeaturesHeading": {
-    "message": "Additional features",
+    "message": "Ytterligare funktioner",
     "description": "Options section heading"
   },
   "optionsFileLocked": {
-    "message": "This file is locked and cannot be deleted.",
+    "message": "Den här filen är låst och kan inte tas bort.",
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Configure ",
+    "message": "Konfigurera ",
     "description": "Options page h1 text before italic Just Read"
   },
   "optionsHeadingBrand": {
@@ -272,163 +272,175 @@
     "description": "Options page h1 brand name in italics"
   },
   "optionsHideSegments": {
-    "message": "Use hide-segments.css",
+    "message": "Använd hide-segments.css",
     "description": "Checkbox label for hide-segments stylesheet"
   },
+  "optionsLanguageAuto": {
+    "message": "Webbläsarens standardspråk",
+    "description": "Option to follow the browser UI language for extension strings"
+  },
+  "optionsLanguageHeading": {
+    "message": "Språk",
+    "description": "Options section heading for extension UI language"
+  },
+  "optionsLanguageLabel": {
+    "message": "Tilläggsspråk",
+    "description": "Label for extension language select on options page"
+  },
   "optionsLeavePres": {
-    "message": "Never reformat pre tags.",
+    "message": "Formatera aldrig om pre-taggar.",
     "description": "Formatting preference checkbox"
   },
   "optionsLinkCM": {
-    "message": "Enable link context menu entry.",
+    "message": "Aktivera snabbmenyalternativet för länkar.",
     "description": "Context menu preference checkbox"
   },
   "optionsNewThemePlaceholder": {
-    "message": "New theme name...",
+    "message": "Nytt temanamn...",
     "description": "Placeholder for new theme name input"
   },
   "optionsOpenSharedPage": {
-    "message": "Always automatically open the shared page in a new tab.",
+    "message": "Öppna alltid automatiskt den delade sidan i en ny flik.",
     "description": "Sharing preference checkbox"
   },
   "optionsPageCM": {
-    "message": "Enable page context menu entry.",
+    "message": "Aktivera snabbmenyalternativet för sidor.",
     "description": "Context menu preference checkbox"
   },
   "optionsPageTitle": {
-    "message": "Options - Just Read",
+    "message": "Alternativ – Just Read",
     "description": "Options page document title"
   },
   "optionsRemoveOrig": {
-    "message": "Remove the original page's content once the Just Read view has opened (better performance but loses original page load if JR view closed).",
+    "message": "Ta bort den ursprungliga sidans innehåll när Just Read-vyn har öppnats (bättre prestanda men förlorar den ursprungliga sidladdningen om JR-vyn stängs).",
     "description": "Performance preference checkbox"
   },
   "optionsRemoveTheme": {
-    "message": "Remove theme",
+    "message": "Ta bort tema",
     "description": "Button to delete selected theme"
   },
   "optionsSaveStyles": {
-    "message": "Save style changes",
+    "message": "Spara stiländringar",
     "description": "Button to save CSS editor changes"
   },
   "optionsSavedFeedback": {
-    "message": "Saved!",
+    "message": "Sparat!",
     "description": "Transient feedback on save button"
   },
   "optionsScrollSpeed": {
-    "message": "Auto-scroll speed (closer to 0 = slower):",
+    "message": "Hastighet för automatisk rullning (närmare 0 = långsammare):",
     "description": "Auto-scroll speed label"
   },
   "optionsScrollbar": {
-    "message": "Use a custom scrollbar instead of the browser's default.",
+    "message": "Använd en anpassad rullningslist i stället för webbläsarens standard.",
     "description": "Premium feature checkbox"
   },
   "optionsSelectorsHeading": {
-    "message": "Domain-specific selectors",
+    "message": "Domänspecifika selektorer",
     "description": "Options section heading"
   },
   "optionsSharingHeading": {
-    "message": "Sharing preferences",
+    "message": "Delningsinställningar",
     "description": "Options section heading"
   },
   "optionsSubtitleAfterDashboard": {
-    "message": " to view your saved pages. Thanks for supporting Just Read!",
+    "message": " för att se dina sparade sidor. Tack för att du stödjer Just Read!",
     "description": "Options subtitle after dashboard link"
   },
   "optionsSubtitleBeforeDashboard": {
-    "message": "Or go to ",
+    "message": "Eller gå till ",
     "description": "Options subtitle before dashboard link"
   },
   "optionsSubtitleDashboardLink": {
-    "message": "your dashboard",
+    "message": "din instrumentpanel",
     "description": "Options subtitle dashboard link text"
   },
   "optionsSummarizerHeading": {
-    "message": "AI summarization options",
+    "message": "Alternativ för AI-sammanfattning",
     "description": "Options section heading"
   },
   "optionsSummarizerIntro": {
-    "message": "Just Read can summarize articles using any AI provider. Supported providers:",
+    "message": "Just Read kan sammanfatta artiklar med valfri AI-leverantör. Leverantörer som stöds:",
     "description": "Summarizer options intro before provider code list"
   },
   "optionsSummarizerLink": {
-    "message": "this post",
+    "message": "det här inlägget",
     "description": "Summarizer docs link text"
   },
   "optionsSummarizerProvidersHelp": {
-    "message": "Use \"provider\": \"anthropic\" for Claude, \"provider\": \"gemini\" for Google Gemini, \"provider\": \"perplexity\" for Perplexity, or \"provider\": \"custom\" with an \"endpoint\" field for any OpenAI-compatible API.",
+    "message": "Använd \"provider\": \"anthropic\" för Claude, \"provider\": \"gemini\" för Google Gemini, \"provider\": \"perplexity\" för Perplexity eller \"provider\": \"custom\" med fältet \"endpoint\" för valfritt OpenAI-kompatibelt API.",
     "description": "Summarizer provider help text below textarea"
   },
   "optionsSummarizerSeeAlso": {
-    "message": "For more info, see",
+    "message": "Mer information finns i",
     "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
-    "message": "Automatically run the summarizer when Just Read is opened.",
+    "message": "Kör sammanfattaren automatiskt när Just Read öppnas.",
     "description": "Summarizer checkbox label"
   },
   "optionsSummaryReplace": {
-    "message": "Replace the article content with the summary.",
+    "message": "Ersätt artikelns innehåll med sammanfattningen.",
     "description": "Summarizer checkbox label"
   },
   "optionsUpgradeHeading": {
-    "message": "To access all of Just Read's features, upgrade to Just Read Premium! ",
+    "message": "För att få tillgång till alla Just Reads funktioner, uppgradera till Just Read Premium! ",
     "description": "Premium upsell heading on options page"
   },
   "optionsUpgradeLink": {
-    "message": "Learn more here",
+    "message": "Läs mer här",
     "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
-    "message": "Use as current theme",
+    "message": "Använd som aktuellt tema",
     "description": "Button to activate selected theme"
   },
   "optionsViewMoreThemes": {
-    "message": "View more themes",
+    "message": "Visa fler teman",
     "description": "Link to community themes on GitHub"
   },
   "pauseScroll": {
-    "message": "Pause scroll",
+    "message": "Pausa rullning",
     "description": "Auto-scroll pause button label"
   },
   "premiumUpsellAnnotations": {
-    "message": "To annotate this article, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Annotations are just <em>one</em> of the additional features included.",
+    "message": "För att anteckna den här artikeln, uppgradera till <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Anteckningar är bara <em>en</em> av de extra funktionerna.",
     "description": "Highlighter premium upsell (HTML)"
   },
   "premiumUpsellComments": {
-    "message": "To add comments, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Comments are just <em>one</em> of the additional features included.",
+    "message": "För att lägga till kommentarer, uppgradera till <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Kommentarer är bara <em>en</em> av de extra funktionerna.",
     "description": "Comments feature premium upsell (HTML)"
   },
   "premiumUpsellGeneric": {
-    "message": "To access this feature, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
+    "message": "För att få tillgång till den här funktionen, uppgradera till <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
     "description": "Premium gate notification body (HTML)"
   },
   "premiumUpsellMain": {
-    "message": "Have you considered <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? With Premium you can annotate your articles, share them with others, and more!",
+    "message": "Har du funderat på <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? Med Premium kan du anteckna dina artiklar, dela dem med andra med mera!",
     "description": "Periodic premium promotion in reader (HTML)"
   },
   "premiumUpsellShare": {
-    "message": "To share this reader view with others, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Shared pages are just <em>one</em> of the additional features included.",
+    "message": "För att dela den här läsarvy med andra, uppgradera till <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Delade sidor är bara <em>en</em> av de extra funktionerna.",
     "description": "Share feature premium upsell (HTML)"
   },
   "premiumUpsellSharedEdit": {
-    "message": "To edit a shared Just Read page, sign in with a <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium account</a>.",
+    "message": "För att redigera en delad Just Read-sida, logga in med ett <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium-konto</a>.",
     "description": "Shared page edit premium gate (HTML)"
   },
   "printArticle": {
-    "message": "Print article",
+    "message": "Skriv ut artikel",
     "description": "Print button tooltip"
   },
   "reportError": {
-    "message": "Report an error",
+    "message": "Rapportera ett fel",
     "description": "Footer link to report bugs"
   },
   "reshareToSave": {
-    "message": "Re-share to save",
+    "message": "Dela igen för att spara",
     "description": "Share button aria-label when shared page has unsaved edits"
   },
   "reviewMilestone": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='$REVIEW_URL$' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "Wow, du har använt Just Read över $VIEWS$ gånger! Skulle du kunna <a href='$REVIEW_URL$' target='_blank'>lämna en recension</a> eller dela Just Read med dina vänner eller på sociala medier? Jag skulle verkligen uppskatta det!",
     "description": "Usage milestone review request (HTML)",
     "placeholders": {
       "views": {
@@ -442,7 +454,7 @@
     }
   },
   "reviewMilestonePremium": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='$REVIEW_URL$' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "Wow, du har använt Just Read över $VIEWS$ gånger! Skulle du kunna <a href='https://justread.link/#get-Just-Read' target='_blank'>uppgradera till Premium</a>, <a href='$REVIEW_URL$' target='_blank'>lämna en recension</a> eller dela Just Read med dina vänner eller på sociala medier? Jag skulle verkligen uppskatta det!",
     "description": "Usage milestone notification with premium CTA (HTML)",
     "placeholders": {
       "views": {
@@ -456,7 +468,7 @@
     }
   },
   "reviewTenK": {
-    "message": "You've just started Just read for the 10,000th time! I'd love to hear from you about how you use Just Read via email if you're open to it. Please reach out to <a href='$MAILTO$'>hello@zachsaucier.com</a>",
+    "message": "Du har precis startat Just Read för 10 000:e gången! Jag skulle gärna höra från dig om hur du använder Just Read via e-post om du vill. Kontakta mig på <a href='$MAILTO$'>hello@zachsaucier.com</a>",
     "description": "10,000 opens milestone email request (HTML)",
     "placeholders": {
       "mailto": {
@@ -466,83 +478,83 @@
     }
   },
   "saveAndClose": {
-    "message": "Save and close",
+    "message": "Spara och stäng",
     "description": "Theme editor save button"
   },
   "saveSharedChanges": {
-    "message": "Save changes to this shared page",
+    "message": "Spara ändringar på den här delade sidan",
     "description": "Share button tooltip on hydrated shared page"
   },
   "shareArticle": {
-    "message": "Share article",
+    "message": "Dela artikel",
     "description": "Share button tooltip"
   },
   "shareLimitLead": {
-    "message": "You have too many shared articles - the limit is 300. Please remove some from ",
+    "message": "Du har för många delade artiklar – gränsen är 300. Ta bort några från ",
     "description": "Share limit alert text before dashboard link"
   },
   "shareLimitTail": {
-    "message": " before adding more.",
+    "message": " innan du lägger till fler.",
     "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
-    "message": "Share to save",
+    "message": "Dela för att spara",
     "description": "Share button aria-label when edits need saving"
   },
   "shareViaEmail": {
-    "message": "Share via email",
+    "message": "Dela via e-post",
     "description": "Email share button tooltip"
   },
   "sharedEditNotOwner": {
-    "message": "You can only edit shared pages that you created with this Just Read account.",
+    "message": "Du kan bara redigera delade sidor som du skapade med det här Just Read-kontot.",
     "description": "Error when user cannot edit a shared page"
   },
   "startScroll": {
-    "message": "Start scroll",
+    "message": "Starta rullning",
     "description": "Auto-scroll resume button label"
   },
   "stylesheetQuotaExceeded": {
-    "message": "File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/",
+    "message": "Filen sparades inte: Ditt stylesheet är för stort. Att minifiera det eller ta bort mindre använda poster kan hjälpa.\n\nDu kan minifiera det på: https://cssminifier.com/",
     "description": "Alert when theme stylesheet exceeds storage quota"
   },
   "summarizeArticle": {
-    "message": "Summarize article",
+    "message": "Sammanfatta artikel",
     "description": "Summarize button tooltip"
   },
   "summarizerFeatureNotify": {
-    "message": "Did you know that Just Read can summarize articles using AI?",
+    "message": "Visste du att Just Read kan sammanfatta artiklar med AI?",
     "description": "Summarizer feature discovery notification"
   },
   "summarizerNoApiKey": {
-    "message": "To use the summarizer, add your AI provider API key to Just Read's options page. For more info, see https://justread.link/summarizer",
+    "message": "För att använda sammanfattaren, lägg till din AI-leverantörs API-nyckel på Just Reads alternativsida. Mer information: https://justread.link/summarizer",
     "description": "Alert when summarizer options are not configured"
   },
   "summaryErrorFormat": {
-    "message": "Unexpected response format from the AI provider.",
+    "message": "Oväntat svarsformat från AI-leverantören.",
     "description": "Summary error when response JSON shape is wrong"
   },
   "summaryErrorHeading": {
-    "message": "Error getting summary",
+    "message": "Fel vid hämtning av sammanfattning",
     "description": "Heading when summary request fails"
   },
   "summaryErrorHtml": {
-    "message": "The AI provider returned an HTML page instead of a JSON summary. Check your API endpoint and key.",
+    "message": "AI-leverantören returnerade en HTML-sida i stället för en JSON-sammanfattning. Kontrollera din API-slutpunkt och nyckel.",
     "description": "Summary error when provider returns HTML"
   },
   "summaryErrorUnknown": {
-    "message": "Unknown error",
+    "message": "Okänt fel",
     "description": "Fallback summary error detail"
   },
   "summaryHeading": {
-    "message": "Summary",
+    "message": "Sammanfattning",
     "description": "Heading above generated summary"
   },
   "summaryLoading": {
-    "message": "Summary loading",
+    "message": "Sammanfattning laddas",
     "description": "Heading while AI summary is being fetched"
   },
   "summaryTokensUsed": {
-    "message": ": $TOKENS$ tokens used",
+    "message": ": $TOKENS$ tokens använda",
     "description": "Suffix on summary heading showing token count",
     "placeholders": {
       "tokens": {
@@ -552,63 +564,63 @@
     }
   },
   "themeEditorBackgroundColor": {
-    "message": "Background color",
+    "message": "Bakgrundsfärg",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorFontSize": {
-    "message": "Font size",
+    "message": "Teckenstorlek",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkColor": {
-    "message": "Link color",
+    "message": "Länkfärg",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkHoverColor": {
-    "message": "Link hover color",
+    "message": "Länkfärg vid hovring",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorMaxWidth": {
-    "message": "Max width",
+    "message": "Maxbredd",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorOpenFullStyles": {
-    "message": "Open full styles",
+    "message": "Öppna fullständiga stilar",
     "description": "dat.GUI theme editor button label"
   },
   "themeEditorTextColor": {
-    "message": "Text color",
+    "message": "Textfärg",
     "description": "dat.GUI theme editor control label"
   },
   "undoLastAction": {
-    "message": "Undo last action",
+    "message": "Ångra senaste åtgärd",
     "description": "Undo button tooltip"
   },
   "unknownAuthor": {
-    "message": "Unknown author",
+    "message": "Okänd författare",
     "description": "Fallback when article author cannot be detected"
   },
   "unknownDate": {
-    "message": "Unknown date",
+    "message": "Okänt datum",
     "description": "Fallback when article date cannot be detected"
   },
   "unknownTitle": {
-    "message": "Unknown title",
+    "message": "Okänd titel",
     "description": "Fallback when article title cannot be detected"
   },
   "unsavedSharedEdits": {
-    "message": "You have unsaved edits.",
+    "message": "Du har osparade ändringar.",
     "description": "Confirm dialog when closing with unsaved shared page edits"
   },
   "viewOriginalPage": {
-    "message": "View original page",
+    "message": "Visa originalsida",
     "description": "Link on shared reader pages to original URL"
   },
   "viewedUsing": {
-    "message": "Viewed using ",
+    "message": "Visad med ",
     "description": "Footer prefix before Just Read link"
   },
   "yourUserPage": {
-    "message": "your user page",
+    "message": "din användarsida",
     "description": "Link text to dashboard in share limit alert"
   }
 }

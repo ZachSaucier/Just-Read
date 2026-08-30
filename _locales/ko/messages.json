@@ -1,138 +1,138 @@
 {
   "addComment": {
-    "message": "Add a comment",
+    "message": "댓글 추가",
     "description": "Add comment button tooltip"
   },
   "badgeOn": {
-    "message": "on",
+    "message": "실행 중",
     "description": "Toolbar badge text while Just Read is loading"
   },
   "cancelButton": {
-    "message": "Cancel",
+    "message": "취소",
     "description": "Cancel comment button"
   },
   "closeJustRead": {
-    "message": "Close Just Read",
+    "message": "Just Read 닫기",
     "description": "Close reader button tooltip"
   },
   "closeWithoutSaving": {
-    "message": "Close without saving",
+    "message": "저장하지 않고 닫기",
     "description": "Theme editor close without save button"
   },
   "closeWithoutSavingConfirm": {
-    "message": " Close without saving?",
+    "message": " 저장하지 않고 닫으시겠습니까?",
     "description": "Suffix for unsaved edits confirm dialog"
   },
   "commandOpenJustRead": {
-    "message": "Open the Just Read format for the current page",
+    "message": "현재 페이지를 Just Read 형식으로 열기",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commandSelectText": {
-    "message": "Enable user text selection mode using Just Read",
+    "message": "Just Read를 사용하여 사용자 텍스트 선택 모드 활성화",
     "description": "Keyboard shortcut description in browser settings"
   },
   "commentButton": {
-    "message": "Comment",
+    "message": "댓글",
     "description": "Post comment button"
   },
   "commentLeftOnPrefix": {
-    "message": "Left on ",
+    "message": "작성일: ",
     "description": "Prefix before comment timestamp; keep trailing space"
   },
   "commentsPremiumAlert": {
-    "message": "Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link",
+    "message": "죄송합니다. 이 기능은 Just Read Premium 사용자만 사용할 수 있습니다! justread.link에서 가입하세요",
     "description": "Alert when non-premium user tries cmd-click comment"
   },
   "contextMenuAutorun": {
-    "message": "Add this site to Just Read's auto-run list",
+    "message": "이 사이트를 Just Read 자동 실행 목록에 추가",
     "description": "Page right-click context menu item for auto-run"
   },
   "contextMenuSelectContent": {
-    "message": "Select content to read",
+    "message": "읽을 콘텐츠 선택",
     "description": "Extension icon right-click context menu item"
   },
   "contextMenuViewLink": {
-    "message": "View the linked page using Just Read",
+    "message": "Just Read로 연결된 페이지 보기",
     "description": "Link right-click context menu item"
   },
   "contextMenuViewPage": {
-    "message": "View this page using Just Read",
+    "message": "Just Read로 이 페이지 보기",
     "description": "Page right-click context menu item"
   },
   "defaultSummarizerPrompt": {
-    "message": "Summarize the content you are provided as concisely as possible while retaining the key points.",
+    "message": "제공된 콘텐츠의 핵심 요점을 유지하면서 가능한 한 간결하게 요약하세요.",
     "description": "Default AI summarizer prompt in options textarea JSON"
   },
   "deletionMode": {
-    "message": "Start/end deletion mode",
+    "message": "삭제 모드 시작/종료",
     "description": "Deletion mode button tooltip"
   },
   "editBarBoldMac": {
-    "message": "Bold (⌘+b)",
+    "message": "굵게 (⌘+b)",
     "description": "Edit bar bold button tooltip on macOS"
   },
   "editBarBoldWin": {
-    "message": "Bold (Ctrl+b)",
+    "message": "굵게 (Ctrl+b)",
     "description": "Edit bar bold button tooltip on Windows/Linux"
   },
   "editBarClearFormatMac": {
-    "message": "Clear formatting (⌘+\\)",
+    "message": "서식 지우기 (⌘+\\)",
     "description": "Edit bar clear formatting tooltip on macOS"
   },
   "editBarClearFormatWin": {
-    "message": "Clear formatting (Ctrl+\\)",
+    "message": "서식 지우기 (Ctrl+\\)",
     "description": "Edit bar clear formatting tooltip on Windows/Linux"
   },
   "editBarDeleteSelMac": {
-    "message": "Delete highlighted text (⌘+Shift+d)",
+    "message": "강조 표시된 텍스트 삭제 (⌘+Shift+d)",
     "description": "Edit bar delete selection tooltip on macOS"
   },
   "editBarDeleteSelWin": {
-    "message": "Delete highlighted text (Ctrl+Shift+d)",
+    "message": "강조 표시된 텍스트 삭제 (Ctrl+Shift+d)",
     "description": "Edit bar delete selection tooltip on Windows/Linux"
   },
   "editBarHighlightMac": {
-    "message": "Highlight color (⌘+Shift+h)",
+    "message": "강조 색상 (⌘+Shift+h)",
     "description": "Edit bar highlight button tooltip on macOS"
   },
   "editBarHighlightWin": {
-    "message": "Highlight color (Ctrl+Shift+h)",
+    "message": "강조 색상 (Ctrl+Shift+h)",
     "description": "Edit bar highlight button tooltip on Windows/Linux"
   },
   "editBarItalicMac": {
-    "message": "Italicize (⌘+i)",
+    "message": "기울임 (⌘+i)",
     "description": "Edit bar italic button tooltip on macOS"
   },
   "editBarItalicWin": {
-    "message": "Italicize (Ctrl+i)",
+    "message": "기울임 (Ctrl+i)",
     "description": "Edit bar italic button tooltip on Windows/Linux"
   },
   "editBarStrikeMac": {
-    "message": "Strike-through (⌘+Shift+s)",
+    "message": "취소선 (⌘+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on macOS"
   },
   "editBarStrikeWin": {
-    "message": "Strike-through (Ctrl+Shift+s)",
+    "message": "취소선 (Ctrl+Shift+s)",
     "description": "Edit bar strikethrough button tooltip on Windows/Linux"
   },
   "editBarTextColorMac": {
-    "message": "Text color (⌘+Shift+c)",
+    "message": "텍스트 색상 (⌘+Shift+c)",
     "description": "Edit bar text color button tooltip on macOS"
   },
   "editBarTextColorWin": {
-    "message": "Text color (Ctrl+Shift+c)",
+    "message": "텍스트 색상 (Ctrl+Shift+c)",
     "description": "Edit bar text color button tooltip on Windows/Linux"
   },
   "editBarUnderlineMac": {
-    "message": "Underline (⌘+u)",
+    "message": "밑줄 (⌘+u)",
     "description": "Edit bar underline button tooltip on macOS"
   },
   "editBarUnderlineWin": {
-    "message": "Underline (Ctrl+u)",
+    "message": "밑줄 (Ctrl+u)",
     "description": "Edit bar underline button tooltip on Windows/Linux"
   },
   "editTheme": {
-    "message": "Edit your theme",
+    "message": "테마 편집",
     "description": "Theme editor button tooltip"
   },
   "extActionTitle": {
@@ -140,7 +140,7 @@
     "description": "Toolbar button tooltip"
   },
   "extDescription": {
-    "message": "A feature-packed, customizable reader extension.",
+    "message": "기능이 풍부하고 사용자 지정이 가능한 리더 확장 프로그램입니다.",
     "description": "Extension description in manifest and store"
   },
   "extName": {
@@ -148,19 +148,19 @@
     "description": "Extension name shown in browser UI and store"
   },
   "learnMore": {
-    "message": "Learn more",
+    "message": "자세히 알아보기",
     "description": "Primary button on upgrade notifications"
   },
   "leaveReview": {
-    "message": "Leave a review",
+    "message": "리뷰 남기기",
     "description": "Button linking to extension store review page"
   },
   "maybeLater": {
-    "message": "Maybe later",
+    "message": "나중에",
     "description": "Secondary dismiss button on notifications"
   },
   "minuteReadPlural": {
-    "message": "$COUNT$ minutes read",
+    "message": "$COUNT$분 읽기",
     "description": "Reading time estimate for multiple minutes",
     "placeholders": {
       "count": {
@@ -170,7 +170,7 @@
     }
   },
   "minuteReadSingular": {
-    "message": "$COUNT$ minute read",
+    "message": "$COUNT$분 읽기",
     "description": "Reading time estimate for one minute",
     "placeholders": {
       "count": {
@@ -180,91 +180,91 @@
     }
   },
   "notInterested": {
-    "message": "Not interested",
+    "message": "관심 없음",
     "description": "Dismiss button on summarizer feature notification"
   },
   "ok": {
-    "message": "OK",
+    "message": "확인",
     "description": "Generic confirm button"
   },
   "openDashboard": {
-    "message": "Open dashboard",
+    "message": "대시보드 열기",
     "description": "Button linking to justread.link dashboard"
   },
   "openEmail": {
-    "message": "Open email",
+    "message": "이메일 열기",
     "description": "Button opening mailto link"
   },
   "optionsAddOrigURL": {
-    "message": "Always add the original URL to the Just Read view.",
+    "message": "항상 원본 URL을 Just Read 보기에 추가합니다.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAddTimeEstimate": {
-    "message": "Always add the estimated time to read the article.",
+    "message": "항상 기사의 예상 읽기 시간을 추가합니다.",
     "description": "Reader metadata preference checkbox"
   },
   "optionsAdditionalPrefsHeading": {
-    "message": "Additional preferences",
+    "message": "추가 기본 설정",
     "description": "Options section heading"
   },
   "optionsAlwaysAddAR": {
-    "message": "Always add current site to Just Read's auto-run list when Just Read is started on a page.",
+    "message": "페이지에서 Just Read를 시작할 때 현재 사이트를 Just Read 자동 실행 목록에 항상 추가합니다.",
     "description": "Auto-run preference checkbox"
   },
   "optionsAutorunCM": {
-    "message": "Enable auto-run context menu entry.",
+    "message": "자동 실행 컨텍스트 메뉴 항목을 활성화합니다.",
     "description": "Context menu preference checkbox"
   },
   "optionsAutorunHeading": {
-    "message": "Auto-run domain list",
+    "message": "자동 실행 도메인 목록",
     "description": "Options section heading"
   },
   "optionsAutorunHelpBefore": {
-    "message": "This list is checked using regex. For more info, see ",
+    "message": "이 목록은 정규식으로 확인됩니다. 자세한 내용은 ",
     "description": "Auto-run help text before link"
   },
   "optionsAutorunHelpLink": {
-    "message": "this post",
+    "message": "이 글",
     "description": "Auto-run help link text"
   },
   "optionsAutoscroll": {
-    "message": "Use JR's auto-scroll functionality.",
+    "message": "JR 자동 스크롤 기능을 사용합니다.",
     "description": "Premium feature checkbox"
   },
   "optionsBackup": {
-    "message": "Backup the most recent Just Read page (in case of accidental closure).",
+    "message": "가장 최근 Just Read 페이지를 백업합니다(실수로 닫은 경우 대비).",
     "description": "Backup preference checkbox"
   },
   "optionsCloseOldPage": {
-    "message": "Always close the original page that Just Read was started on when a shared page is open (Note that this can only be checked if the above option is checked).",
+    "message": "공유 페이지가 열려 있을 때 Just Read를 시작한 원본 페이지를 항상 닫습니다(위 옵션이 선택된 경우에만 선택 가능).",
     "description": "Sharing preference checkbox"
   },
   "optionsConfirmChangeBeforeSave": {
-    "message": "Do you really want to change files before saving?",
+    "message": "저장하기 전에 파일을 변경하시겠습니까?",
     "description": "Confirm when switching theme with unsaved edits"
   },
   "optionsConfirmRemoveFile": {
-    "message": "Do you really want to remove this file?",
+    "message": "정말 이 파일을 제거하시겠습니까?",
     "description": "Confirm before removing theme file"
   },
   "optionsContextMenuHeading": {
-    "message": "Context menu entries",
+    "message": "컨텍스트 메뉴 항목",
     "description": "Options section heading"
   },
   "optionsDoneFeedback": {
-    "message": "Done!",
+    "message": "완료!",
     "description": "Transient feedback on use-theme button"
   },
   "optionsFeaturesHeading": {
-    "message": "Additional features",
+    "message": "추가 기능",
     "description": "Options section heading"
   },
   "optionsFileLocked": {
-    "message": "This file is locked and cannot be deleted.",
+    "message": "이 파일은 잠겨 있어 삭제할 수 없습니다.",
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Configure ",
+    "message": "설정: ",
     "description": "Options page h1 text before italic Just Read"
   },
   "optionsHeadingBrand": {
@@ -272,163 +272,175 @@
     "description": "Options page h1 brand name in italics"
   },
   "optionsHideSegments": {
-    "message": "Use hide-segments.css",
+    "message": "hide-segments.css 사용",
     "description": "Checkbox label for hide-segments stylesheet"
   },
+  "optionsLanguageAuto": {
+    "message": "브라우저 기본값",
+    "description": "Option to follow the browser UI language for extension strings"
+  },
+  "optionsLanguageHeading": {
+    "message": "언어",
+    "description": "Options section heading for extension UI language"
+  },
+  "optionsLanguageLabel": {
+    "message": "확장 프로그램 언어",
+    "description": "Label for extension language select on options page"
+  },
   "optionsLeavePres": {
-    "message": "Never reformat pre tags.",
+    "message": "pre 태그를 다시 포맷하지 않습니다.",
     "description": "Formatting preference checkbox"
   },
   "optionsLinkCM": {
-    "message": "Enable link context menu entry.",
+    "message": "링크 컨텍스트 메뉴 항목을 활성화합니다.",
     "description": "Context menu preference checkbox"
   },
   "optionsNewThemePlaceholder": {
-    "message": "New theme name...",
+    "message": "새 테마 이름...",
     "description": "Placeholder for new theme name input"
   },
   "optionsOpenSharedPage": {
-    "message": "Always automatically open the shared page in a new tab.",
+    "message": "공유 페이지를 항상 새 탭에서 자동으로 엽니다.",
     "description": "Sharing preference checkbox"
   },
   "optionsPageCM": {
-    "message": "Enable page context menu entry.",
+    "message": "페이지 컨텍스트 메뉴 항목을 활성화합니다.",
     "description": "Context menu preference checkbox"
   },
   "optionsPageTitle": {
-    "message": "Options - Just Read",
+    "message": "옵션 - Just Read",
     "description": "Options page document title"
   },
   "optionsRemoveOrig": {
-    "message": "Remove the original page's content once the Just Read view has opened (better performance but loses original page load if JR view closed).",
+    "message": "Just Read 보기가 열리면 원본 페이지의 콘텐츠를 제거합니다(성능 향상, JR 보기를 닫으면 원본 페이지 로드가 손실됨).",
     "description": "Performance preference checkbox"
   },
   "optionsRemoveTheme": {
-    "message": "Remove theme",
+    "message": "테마 제거",
     "description": "Button to delete selected theme"
   },
   "optionsSaveStyles": {
-    "message": "Save style changes",
+    "message": "스타일 변경 저장",
     "description": "Button to save CSS editor changes"
   },
   "optionsSavedFeedback": {
-    "message": "Saved!",
+    "message": "저장됨!",
     "description": "Transient feedback on save button"
   },
   "optionsScrollSpeed": {
-    "message": "Auto-scroll speed (closer to 0 = slower):",
+    "message": "자동 스크롤 속도(0에 가까울수록 느림):",
     "description": "Auto-scroll speed label"
   },
   "optionsScrollbar": {
-    "message": "Use a custom scrollbar instead of the browser's default.",
+    "message": "브라우저 기본값 대신 사용자 지정 스크롤바를 사용합니다.",
     "description": "Premium feature checkbox"
   },
   "optionsSelectorsHeading": {
-    "message": "Domain-specific selectors",
+    "message": "도메인별 선택기",
     "description": "Options section heading"
   },
   "optionsSharingHeading": {
-    "message": "Sharing preferences",
+    "message": "공유 기본 설정",
     "description": "Options section heading"
   },
   "optionsSubtitleAfterDashboard": {
-    "message": " to view your saved pages. Thanks for supporting Just Read!",
+    "message": "에서 저장한 페이지를 확인하세요. Just Read를 이용해 주셔서 감사합니다!",
     "description": "Options subtitle after dashboard link"
   },
   "optionsSubtitleBeforeDashboard": {
-    "message": "Or go to ",
+    "message": "또는 ",
     "description": "Options subtitle before dashboard link"
   },
   "optionsSubtitleDashboardLink": {
-    "message": "your dashboard",
+    "message": "대시보드",
     "description": "Options subtitle dashboard link text"
   },
   "optionsSummarizerHeading": {
-    "message": "AI summarization options",
+    "message": "AI 요약 옵션",
     "description": "Options section heading"
   },
   "optionsSummarizerIntro": {
-    "message": "Just Read can summarize articles using any AI provider. Supported providers:",
+    "message": "Just Read는 모든 AI 제공업체를 사용하여 기사를 요약할 수 있습니다. 지원되는 제공업체:",
     "description": "Summarizer options intro before provider code list"
   },
   "optionsSummarizerLink": {
-    "message": "this post",
+    "message": "이 글",
     "description": "Summarizer docs link text"
   },
   "optionsSummarizerProvidersHelp": {
-    "message": "Use \"provider\": \"anthropic\" for Claude, \"provider\": \"gemini\" for Google Gemini, \"provider\": \"perplexity\" for Perplexity, or \"provider\": \"custom\" with an \"endpoint\" field for any OpenAI-compatible API.",
+    "message": "Claude에는 \"provider\": \"anthropic\", Google Gemini에는 \"provider\": \"gemini\", Perplexity에는 \"provider\": \"perplexity\", OpenAI 호환 API에는 \"endpoint\" 필드가 있는 \"provider\": \"custom\"을 사용하세요.",
     "description": "Summarizer provider help text below textarea"
   },
   "optionsSummarizerSeeAlso": {
-    "message": "For more info, see",
+    "message": "자세한 내용은",
     "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
-    "message": "Automatically run the summarizer when Just Read is opened.",
+    "message": "Just Read를 열 때 자동으로 요약을 실행합니다.",
     "description": "Summarizer checkbox label"
   },
   "optionsSummaryReplace": {
-    "message": "Replace the article content with the summary.",
+    "message": "기사 내용을 요약으로 대체합니다.",
     "description": "Summarizer checkbox label"
   },
   "optionsUpgradeHeading": {
-    "message": "To access all of Just Read's features, upgrade to Just Read Premium! ",
+    "message": "Just Read의 모든 기능을 사용하려면 Just Read Premium으로 업그레이드하세요! ",
     "description": "Premium upsell heading on options page"
   },
   "optionsUpgradeLink": {
-    "message": "Learn more here",
+    "message": "자세히 알아보기",
     "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
-    "message": "Use as current theme",
+    "message": "현재 테마로 사용",
     "description": "Button to activate selected theme"
   },
   "optionsViewMoreThemes": {
-    "message": "View more themes",
+    "message": "더 많은 테마 보기",
     "description": "Link to community themes on GitHub"
   },
   "pauseScroll": {
-    "message": "Pause scroll",
+    "message": "스크롤 일시 정지",
     "description": "Auto-scroll pause button label"
   },
   "premiumUpsellAnnotations": {
-    "message": "To annotate this article, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Annotations are just <em>one</em> of the additional features included.",
+    "message": "이 기사에 주석을 달려면 <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>으로 업그레이드하세요! 주석은 포함된 추가 기능 중 <em>하나</em>일 뿐입니다.",
     "description": "Highlighter premium upsell (HTML)"
   },
   "premiumUpsellComments": {
-    "message": "To add comments, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Comments are just <em>one</em> of the additional features included.",
+    "message": "댓글을 추가하려면 <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>으로 업그레이드하세요! 댓글은 포함된 추가 기능 중 <em>하나</em>일 뿐입니다.",
     "description": "Comments feature premium upsell (HTML)"
   },
   "premiumUpsellGeneric": {
-    "message": "To access this feature, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
+    "message": "이 기능을 사용하려면 <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>으로 업그레이드하세요!",
     "description": "Premium gate notification body (HTML)"
   },
   "premiumUpsellMain": {
-    "message": "Have you considered <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? With Premium you can annotate your articles, share them with others, and more!",
+    "message": "<a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>을 고려해 보셨나요? Premium으로 기사에 주석을 달고 다른 사람과 공유하는 등 더 많은 기능을 사용할 수 있습니다!",
     "description": "Periodic premium promotion in reader (HTML)"
   },
   "premiumUpsellShare": {
-    "message": "To share this reader view with others, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Shared pages are just <em>one</em> of the additional features included.",
+    "message": "이 리더 보기를 다른 사람과 공유하려면 <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>으로 업그레이드하세요! 공유 페이지는 포함된 추가 기능 중 <em>하나</em>일 뿐입니다.",
     "description": "Share feature premium upsell (HTML)"
   },
   "premiumUpsellSharedEdit": {
-    "message": "To edit a shared Just Read page, sign in with a <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium account</a>.",
+    "message": "공유된 Just Read 페이지를 편집하려면 <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium 계정</a>으로 로그인하세요.",
     "description": "Shared page edit premium gate (HTML)"
   },
   "printArticle": {
-    "message": "Print article",
+    "message": "기사 인쇄",
     "description": "Print button tooltip"
   },
   "reportError": {
-    "message": "Report an error",
+    "message": "오류 신고",
     "description": "Footer link to report bugs"
   },
   "reshareToSave": {
-    "message": "Re-share to save",
+    "message": "저장하려면 다시 공유",
     "description": "Share button aria-label when shared page has unsaved edits"
   },
   "reviewMilestone": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='$REVIEW_URL$' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "와, Just Read를 $VIEWS$번 넘게 사용하셨네요! <a href='$REVIEW_URL$' target='_blank'>리뷰 남기기</a> 또는 Just Read를 친구나 소셜 미디어에 공유해 주시겠어요? 정말 감사하겠습니다!",
     "description": "Usage milestone review request (HTML)",
     "placeholders": {
       "views": {
@@ -442,7 +454,7 @@
     }
   },
   "reviewMilestonePremium": {
-    "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='$REVIEW_URL$' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!",
+    "message": "와, Just Read를 $VIEWS$번 넘게 사용하셨네요! <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium으로 업그레이드</a>, <a href='$REVIEW_URL$' target='_blank'>리뷰 남기기</a>, 또는 Just Read를 친구나 소셜 미디어에 공유해 주시겠어요? 정말 감사하겠습니다!",
     "description": "Usage milestone notification with premium CTA (HTML)",
     "placeholders": {
       "views": {
@@ -456,7 +468,7 @@
     }
   },
   "reviewTenK": {
-    "message": "You've just started Just read for the 10,000th time! I'd love to hear from you about how you use Just Read via email if you're open to it. Please reach out to <a href='$MAILTO$'>hello@zachsaucier.com</a>",
+    "message": "Just Read를 10,000번째로 시작하셨습니다! 괜찮으시다면 Just Read 사용 방법에 대해 이메일로 알려주세요. <a href='$MAILTO$'>hello@zachsaucier.com</a>으로 연락해 주세요",
     "description": "10,000 opens milestone email request (HTML)",
     "placeholders": {
       "mailto": {
@@ -466,83 +478,83 @@
     }
   },
   "saveAndClose": {
-    "message": "Save and close",
+    "message": "저장하고 닫기",
     "description": "Theme editor save button"
   },
   "saveSharedChanges": {
-    "message": "Save changes to this shared page",
+    "message": "이 공유 페이지의 변경 사항 저장",
     "description": "Share button tooltip on hydrated shared page"
   },
   "shareArticle": {
-    "message": "Share article",
+    "message": "기사 공유",
     "description": "Share button tooltip"
   },
   "shareLimitLead": {
-    "message": "You have too many shared articles - the limit is 300. Please remove some from ",
+    "message": "공유 기사가 너무 많습니다 — 한도는 300개입니다. 더 추가하기 전에 ",
     "description": "Share limit alert text before dashboard link"
   },
   "shareLimitTail": {
-    "message": " before adding more.",
+    "message": "에서 일부를 제거해 주세요.",
     "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
-    "message": "Share to save",
+    "message": "저장하려면 공유",
     "description": "Share button aria-label when edits need saving"
   },
   "shareViaEmail": {
-    "message": "Share via email",
+    "message": "이메일로 공유",
     "description": "Email share button tooltip"
   },
   "sharedEditNotOwner": {
-    "message": "You can only edit shared pages that you created with this Just Read account.",
+    "message": "이 Just Read 계정으로 만든 공유 페이지만 편집할 수 있습니다.",
     "description": "Error when user cannot edit a shared page"
   },
   "startScroll": {
-    "message": "Start scroll",
+    "message": "스크롤 시작",
     "description": "Auto-scroll resume button label"
   },
   "stylesheetQuotaExceeded": {
-    "message": "File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/",
+    "message": "파일을 저장하지 못했습니다: 스타일시트가 너무 큽니다. 압축하거나 덜 사용하는 항목을 제거해 보세요.\n\n다음에서 압축할 수 있습니다: https://cssminifier.com/",
     "description": "Alert when theme stylesheet exceeds storage quota"
   },
   "summarizeArticle": {
-    "message": "Summarize article",
+    "message": "기사 요약",
     "description": "Summarize button tooltip"
   },
   "summarizerFeatureNotify": {
-    "message": "Did you know that Just Read can summarize articles using AI?",
+    "message": "Just Read가 AI를 사용하여 기사를 요약할 수 있다는 것을 알고 계셨나요?",
     "description": "Summarizer feature discovery notification"
   },
   "summarizerNoApiKey": {
-    "message": "To use the summarizer, add your AI provider API key to Just Read's options page. For more info, see https://justread.link/summarizer",
+    "message": "요약 기능을 사용하려면 Just Read 옵션 페이지에 AI 제공업체 API 키를 추가하세요. 자세한 내용은 https://justread.link/summarizer 를 참조하세요",
     "description": "Alert when summarizer options are not configured"
   },
   "summaryErrorFormat": {
-    "message": "Unexpected response format from the AI provider.",
+    "message": "AI 제공업체에서 예기치 않은 응답 형식이 반환되었습니다.",
     "description": "Summary error when response JSON shape is wrong"
   },
   "summaryErrorHeading": {
-    "message": "Error getting summary",
+    "message": "요약 가져오기 오류",
     "description": "Heading when summary request fails"
   },
   "summaryErrorHtml": {
-    "message": "The AI provider returned an HTML page instead of a JSON summary. Check your API endpoint and key.",
+    "message": "AI 제공업체가 JSON 요약 대신 HTML 페이지를 반환했습니다. API 엔드포인트와 키를 확인하세요.",
     "description": "Summary error when provider returns HTML"
   },
   "summaryErrorUnknown": {
-    "message": "Unknown error",
+    "message": "알 수 없는 오류",
     "description": "Fallback summary error detail"
   },
   "summaryHeading": {
-    "message": "Summary",
+    "message": "요약",
     "description": "Heading above generated summary"
   },
   "summaryLoading": {
-    "message": "Summary loading",
+    "message": "요약 불러오는 중",
     "description": "Heading while AI summary is being fetched"
   },
   "summaryTokensUsed": {
-    "message": ": $TOKENS$ tokens used",
+    "message": ": $TOKENS$ 토큰 사용",
     "description": "Suffix on summary heading showing token count",
     "placeholders": {
       "tokens": {
@@ -552,63 +564,63 @@
     }
   },
   "themeEditorBackgroundColor": {
-    "message": "Background color",
+    "message": "배경색",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorFontSize": {
-    "message": "Font size",
+    "message": "글꼴 크기",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkColor": {
-    "message": "Link color",
+    "message": "링크 색상",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorLinkHoverColor": {
-    "message": "Link hover color",
+    "message": "링크 호버 색상",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorMaxWidth": {
-    "message": "Max width",
+    "message": "최대 너비",
     "description": "dat.GUI theme editor control label"
   },
   "themeEditorOpenFullStyles": {
-    "message": "Open full styles",
+    "message": "전체 스타일 열기",
     "description": "dat.GUI theme editor button label"
   },
   "themeEditorTextColor": {
-    "message": "Text color",
+    "message": "텍스트 색상",
     "description": "dat.GUI theme editor control label"
   },
   "undoLastAction": {
-    "message": "Undo last action",
+    "message": "마지막 작업 실행 취소",
     "description": "Undo button tooltip"
   },
   "unknownAuthor": {
-    "message": "Unknown author",
+    "message": "저자 알 수 없음",
     "description": "Fallback when article author cannot be detected"
   },
   "unknownDate": {
-    "message": "Unknown date",
+    "message": "날짜 알 수 없음",
     "description": "Fallback when article date cannot be detected"
   },
   "unknownTitle": {
-    "message": "Unknown title",
+    "message": "제목 알 수 없음",
     "description": "Fallback when article title cannot be detected"
   },
   "unsavedSharedEdits": {
-    "message": "You have unsaved edits.",
+    "message": "저장되지 않은 편집 내용이 있습니다.",
     "description": "Confirm dialog when closing with unsaved shared page edits"
   },
   "viewOriginalPage": {
-    "message": "View original page",
+    "message": "원본 페이지 보기",
     "description": "Link on shared reader pages to original URL"
   },
   "viewedUsing": {
-    "message": "Viewed using ",
+    "message": "다음으로 보기: ",
     "description": "Footer prefix before Just Read link"
   },
   "yourUserPage": {
-    "message": "your user page",
+    "message": "사용자 페이지",
     "description": "Link text to dashboard in share limit alert"
   }
 }

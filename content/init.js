@@ -206,13 +206,15 @@ chrome.storage.sync.get(null, function (result) {
   JR.settings = parseSettings(result);
   collectStylesheetsFromStorage(result, JR.stylesheetObj);
   applySessionFromStorage(result);
-  withPageJrSecret((pageSecret) => {
-    if (pageSecret) {
-      JR.jrSecret = pageSecret;
-      JR.jrLastChecked = "";
-      chrome.runtime.sendMessage({ jrSecret: pageSecret });
-    }
-    launch();
+  initI18n(result.extensionLocale).then(() => {
+    withPageJrSecret((pageSecret) => {
+      if (pageSecret) {
+        JR.jrSecret = pageSecret;
+        JR.jrLastChecked = "";
+        chrome.runtime.sendMessage({ jrSecret: pageSecret });
+      }
+      launch();
+    });
   });
 });
 
@@ -225,8 +227,10 @@ if (!globalThis.__jrToggleListenerRegistered) {
         JR.settings = parseSettings(result);
         collectStylesheetsFromStorage(result, JR.stylesheetObj);
         applySessionFromStorage(result);
-        launch();
-        sendResponse({ ok: true });
+        initI18n(result.extensionLocale).then(() => {
+          launch();
+          sendResponse({ ok: true });
+        });
       });
       return true;
     }

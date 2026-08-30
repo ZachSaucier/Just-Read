@@ -288,7 +288,7 @@ function addExtInfo() {
   viewedUsing.className = "simple-viewed-using";
 
   const extAnchor = document.createElement("a");
-  extAnchor.href = "https://justread.link/";
+  extAnchor.href = siteUrl("/");
   extAnchor.innerText = t("extName");
   extAnchor.target = "_blank";
   viewedUsing.appendChild(extAnchor);
@@ -311,7 +311,7 @@ function addExtInfo() {
 function addSummaryNotifier() {
   const notification = {
     textKey: "summarizerFeatureNotify",
-    url: "https://justread.link/summarizer",
+    url: siteUrl("/summarizer/"),
     primaryKey: "learnMore",
     secondaryKey: "notInterested",
   };
@@ -323,7 +323,7 @@ function addSummaryNotifier() {
 function addPremiumNotifier() {
   const notification = {
     textKey: "premiumUpsellMain",
-    url: "https://justread.link/#get-Just-Read",
+    url: siteUrl("/#get-Just-Read"),
     primaryKey: "learnMore",
     secondaryKey: "maybeLater",
   };
@@ -348,7 +348,7 @@ function addReviewNotifier(roundedNumViews, advertisePremium, tenK) {
     if (advertisePremium) {
       notification.textKey = "reviewMilestonePremium";
       notification.textSubs = [String(roundedNumViews), reviewURL];
-      notification.url = "https://justread.link/#get-Just-Read";
+      notification.url = siteUrl("/#get-Just-Read");
       notification.primaryKey = "learnMore";
     } else {
       notification.textKey = "reviewMilestone";

@@ -145,7 +145,7 @@ function shareReaderView(e) {
   if (!(JR.isPremium && JR.jrSecret)) {
     const notification = {
       textKey: "premiumUpsellShare",
-      url: "https://justread.link/#get-Just-Read",
+      url: siteUrl("/#get-Just-Read"),
       primaryKey: "learnMore",
       secondaryKey: "maybeLater",
     };

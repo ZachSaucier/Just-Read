@@ -151,7 +151,11 @@ function handleSummarizeClick() {
       }
     } catch (e) {
       JR.summarizeBtn.disabled = false;
-      return console.error("Summarizer options are invalid. See https://justread.link/summarizer for more info.");
+      return console.error(
+        "Summarizer options are invalid. See " +
+          siteUrl("/summarizer/") +
+          " for more info.",
+      );
     }
 
     const options = normalizeSummarizerOptions(rawOptions);

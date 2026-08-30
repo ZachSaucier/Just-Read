@@ -1,4 +1,6 @@
 function localizeOptionsPage() {
+  populateExtensionLocaleSelect(extensionLocale);
+
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.getAttribute("data-i18n");
     const text = t(key);
@@ -39,9 +41,14 @@ function localizeOptionsPage() {
       // leave default textarea as-is if malformed
     }
   }
+
+  applySiteLinks();
 }
 
-localizeOptionsPage();
+initI18nFromStorage().then(() => {
+  localizeOptionsPage();
+  loadOptionsFromStorage();
+});
 
 function afterOptionsStorageLoaded() {
   refreshPremiumStatus({

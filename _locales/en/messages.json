@@ -507,6 +507,18 @@
     "message": "Enable page context menu entry.",
     "description": "Context menu preference checkbox"
   },
+  "optionsLanguageAuto": {
+    "message": "Browser default",
+    "description": "Option to follow the browser UI language for extension strings"
+  },
+  "optionsLanguageHeading": {
+    "message": "Language",
+    "description": "Options section heading for extension UI language"
+  },
+  "optionsLanguageLabel": {
+    "message": "Extension language",
+    "description": "Label for extension language select on options page"
+  },
   "optionsLinkCM": {
     "message": "Enable link context menu entry.",
     "description": "Context menu preference checkbox"

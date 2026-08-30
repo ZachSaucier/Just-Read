@@ -25,6 +25,9 @@ function applySettingsToOptionsForm(settings) {
   alwaysAddAR.checked = settings.alwaysAddAR;
   autoscroll.checked = settings.autoscroll;
   scrollSpeed.value = settings.scrollSpeed;
+  if (extensionLocale) {
+    extensionLocale.value = settings.extensionLocale || "";
+  }
 
   if (settings.domainSelectors) {
     domainSelectors.value = JSON.stringify(settings.domainSelectors, null, 4);

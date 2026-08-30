@@ -201,6 +201,32 @@ Go to <a href="https://justread.link/dashboard">your Just Read dashboard</a>. If
 
 ---
 
+### Translations
+
+<details id="change_language">
+  <summary>How can I change Just Read's language?</summary>
+
+By default, Just Read follows your browser's language. To pick a different one, right-click the Just Read icon and open Options. In the Language section, use the Extension language dropdown to choose a language, or select Browser default to go back to matching your browser.
+
+The options page reloads when you save a new choice. If you already have an article open in Just Read, close it and start Just Read again on that page for the reader to update.
+
+Note that a few things still follow your browser language no matter what you pick here, like the extension name on the toolbar and the shortcut descriptions on `chrome://extensions/shortcuts`.
+
+</details>
+
+<details id="contribute_translations">
+  <summary>How can I contribute translations?</summary>
+
+The easiest way to help is through [Weblate](https://hosted.weblate.org/projects/just-read/extension/). Create an account, choose a language, and edit strings in the browser—no coding required.
+
+English source strings are in `_locales/en/messages.json`. Translations use the same GPL-3.0-only license as the extension.
+
+If you're working in the repo locally, see [docs/WEBLATE_SETUP.md](docs/WEBLATE_SETUP.md) for syncing with Weblate. After editing locale files, run `npm run i18n:check` to make sure every language still has the same keys.
+
+</details>
+
+---
+
 ### Editing Just Read's content
 
 <details id="deletion_mode">

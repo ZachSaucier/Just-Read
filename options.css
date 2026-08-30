@@ -49,6 +49,15 @@ input[type="checkbox"] {
 label {
   margin-top: 3px;
 }
+label.language-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+label.language-select select {
+  min-width: 220px;
+}
 
 .theme-section {
   border: 1px solid;

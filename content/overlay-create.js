@@ -77,7 +77,7 @@ function createCommentChrome() {
     } else {
       const notification = {
         textKey: "premiumUpsellComments",
-        url: "https://justread.link/#get-Just-Read",
+        url: siteUrl("/#get-Just-Read"),
         primaryKey: "learnMore",
         secondaryKey: "maybeLater",
       };

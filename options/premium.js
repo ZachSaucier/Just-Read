@@ -9,7 +9,7 @@ function allowPremiumStuff() {
 function showPremiumNotification() {
   const notification = {
     textKey: "premiumUpsellGeneric",
-    url: "https://justread.link/#get-Just-Read",
+    url: siteUrl("/#get-Just-Read"),
     primaryKey: "learnMore",
     secondaryKey: "maybeLater",
   };
