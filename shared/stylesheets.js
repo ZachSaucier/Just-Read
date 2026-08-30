@@ -49,9 +49,7 @@ function saveStylesheetsToStorage(stylesheetObj, onSaved) {
         chrome.runtime.lastError.message ===
           "QUOTA_BYTES_PER_ITEM quota exceeded"
       ) {
-        alert(
-          "File did not save: Your stylesheet is too big. Minifying it or removing lesser-used entries may help.\n\nYou can minify it at: https://cssminifier.com/",
-        );
+        alert(t("stylesheetQuotaExceeded"));
       } else if (onSaved) {
         onSaved();
       }

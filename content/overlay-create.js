@@ -70,17 +70,16 @@ function createCommentChrome() {
   svg.appendChild(path2);
   JR.addCommentBtn.appendChild(svg);
 
-  JR.addCommentBtn.title = "Add a comment";
+  JR.addCommentBtn.title = t("addComment");
   JR.addCommentBtn.onclick = function () {
     if (JR.isPremium) {
       addComment({ x: parseInt(this.style.left), y: parseInt(this.style.top) });
     } else {
       const notification = {
-        textContent:
-          "To add comments, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Comments are just <em>one</em> of the additional features included.",
+        textKey: "premiumUpsellComments",
         url: "https://justread.link/#get-Just-Read",
-        primaryText: "Learn more",
-        secondaryText: "Maybe later",
+        primaryKey: "learnMore",
+        secondaryKey: "maybeLater",
       };
       JR.readerDocument.body.appendChild(
         createNotification(notification, JR.readerDocument),
@@ -174,8 +173,9 @@ function applyTimeEstimate() {
   const wordCount = JR.readerDocument
     .querySelector(".content-container")
     .innerHTML.split(/\s+/).length;
+  const minutes = Math.floor(wordCount / 200);
   JR.readerDocument.querySelector(".simple-time-estimate").innerText =
-    Math.floor(wordCount / 200) + " minute read";
+    formatMinuteRead(minutes);
 }
 
 function showUsageNotifiers() {

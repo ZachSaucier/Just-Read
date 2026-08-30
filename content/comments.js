@@ -43,14 +43,14 @@ function addComment(loc) {
 
     const postBtn = document.createElement("button");
     postBtn.className = "jr-post";
-    postBtn.innerText = "Comment";
+    postBtn.innerText = t("commentButton");
     postBtn.disabled = true;
     postBtn.onclick = placeComment;
     styling.appendChild(postBtn);
 
     const cancelBtn = document.createElement("button");
     cancelBtn.className = "cancel";
-    cancelBtn.innerText = "Cancel";
+    cancelBtn.innerText = t("cancelButton");
     cancelBtn.onclick = cancelComment;
     styling.appendChild(cancelBtn);
 
@@ -102,7 +102,7 @@ function placeComment() {
     date.getMinutes();
   const timestamp = document.createElement("div");
   timestamp.className = "jr-timestamp";
-  timestamp.innerText = "Left on " + dateString;
+  timestamp.innerText = commentLeftOnPrefix() + dateString;
 
   const textarea = parent.querySelector("textarea");
 
@@ -374,9 +374,7 @@ function addInlineCommentFunctionality() {
     }
 
     if (!JR.isPremium) {
-      alert(
-        "Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link"
-      );
+      alert(t("commentsPremiumAlert"));
       return;
     }
 

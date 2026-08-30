@@ -62,7 +62,7 @@ function rename() {
 
 function confirmChange() {
   if (changed)
-    if (confirm("Do you really want to change files before saving?"))
+    if (confirm(t("optionsConfirmChangeBeforeSave")))
       return false;
     else return true;
   else return false;

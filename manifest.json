@@ -1,13 +1,14 @@
 {
-  "name": "Just Read",
+  "name": "__MSG_extName__",
   "version": "7.0.3",
   "manifest_version": 3,
-  "description": "A feature-packed, customizable reader extension.",
+  "default_locale": "en",
+  "description": "__MSG_extDescription__",
   "homepage_url": "https://github.com/ZachSaucier/Just-Read",
 
   "action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "Just Read"
+    "default_title": "__MSG_extActionTitle__"
   },
 
   "icons": {
@@ -21,13 +22,13 @@
       "suggested_key": {
         "default": "Ctrl+Shift+L"
       },
-      "description": "Open the Just Read format for the current page"
+      "description": "__MSG_commandOpenJustRead__"
     },
     "select-text": {
       "suggested_key": {
         "default": "Ctrl+Shift+K"
       },
-      "description": "Enable user text selection mode using Just Read"
+      "description": "__MSG_commandSelectText__"
     }
   },
 

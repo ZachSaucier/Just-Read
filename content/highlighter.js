@@ -219,11 +219,10 @@ function checkBreakpoints() {
 
 function addHighlighterNotification() {
   const notification = {
-    textContent:
-      "To annotate this article, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Annotations are just <em>one</em> of the additional features included.",
+    textKey: "premiumUpsellAnnotations",
     url: "https://justread.link/#get-Just-Read",
-    primaryText: "Learn more",
-    secondaryText: "Maybe later",
+    primaryKey: "learnMore",
+    secondaryKey: "maybeLater",
   };
   JR.readerDocument.body.appendChild(
     createNotification(notification, JR.readerDocument),

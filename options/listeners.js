@@ -67,7 +67,7 @@ function addEventListeners() {
     const elem = document.querySelector(".stylesheets .active");
 
     if (!elem.classList.contains("locked")) {
-      if (window.confirm("Do you really want to remove this file?")) {
+      if (window.confirm(t("optionsConfirmRemoveFile"))) {
         delete stylesheetObj[
           document.querySelector(".stylesheets .active").innerText
         ];
@@ -90,7 +90,7 @@ function addEventListeners() {
         editor.setValue("", -1);
       }
     } else
-        alert("This file is locked and cannot be deleted.");
+        alert(t("optionsFileLocked"));
   };
 
   hideSegments.onchange = function () {

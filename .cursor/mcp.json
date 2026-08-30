@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "weblate": {
+      "command": "bash",
+      "args": ["scripts/weblate-mcp.sh"]
+    }
+  }
+}

@@ -3,7 +3,7 @@ function addThemeEditorButton() {
   const button = JR.readerDocument.createElement("button");
 
   button.className = "simple-control simple-edit-theme";
-  button.title = "Edit your theme";
+  button.title = t("editTheme");
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 626 626");
@@ -300,7 +300,7 @@ function openStyleEditor() {
     }
     stylesModified = false;
     const closeBtn = document.querySelector(".dg .close-button");
-    closeBtn.innerText = "Save and close";
+    closeBtn.innerText = t("saveAndClose");
   } else {
     stylesModified = false;
     const editor = new StyleEditor();
@@ -326,6 +326,7 @@ function openStyleEditor() {
       updatePrevStyles(value);
     });
     const fontSize = JR.datGUI.add(editor, "fontSize", 8, 25);
+    fontSize.name(t("themeEditorFontSize"));
     fontSize.onChange((value) => {
       stylesModified = true;
       saved = false;
@@ -337,6 +338,7 @@ function openStyleEditor() {
       );
     });
     const maxWidth = JR.datGUI.add(editor, "maxWidth");
+    maxWidth.name(t("themeEditorMaxWidth"));
     maxWidth.onChange((value) => {
       stylesModified = true;
       saved = false;
@@ -348,12 +350,14 @@ function openStyleEditor() {
       );
     });
     const textColor = JR.datGUI.addColor(editor, "textColor");
+    textColor.name(t("themeEditorTextColor"));
     textColor.onChange((value) => {
       stylesModified = true;
       saved = false;
       changeStylesheetRule(JR.themeStylesheet, bodySelector, "color", value);
     });
     const backgroundColor = JR.datGUI.addColor(editor, "backgroundColor");
+    backgroundColor.name(t("themeEditorBackgroundColor"));
     backgroundColor.onChange((value) => {
       stylesModified = true;
       saved = false;
@@ -365,6 +369,7 @@ function openStyleEditor() {
       );
     });
     const linkColor = JR.datGUI.addColor(editor, "linkColor");
+    linkColor.name(t("themeEditorLinkColor"));
     linkColor.onChange((value) => {
       stylesModified = true;
       saved = false;
@@ -377,12 +382,13 @@ function openStyleEditor() {
       changeStylesheetRule(JR.themeStylesheet, "a[href]", "color", value);
     });
     const linkHoverColor = JR.datGUI.addColor(editor, "linkHoverColor");
+    linkHoverColor.name(t("themeEditorLinkHoverColor"));
     linkHoverColor.onChange((value) => {
       stylesModified = true;
       saved = false;
       changeStylesheetRule(JR.themeStylesheet, "a[href]:hover", "color", value);
     });
-    JR.datGUI.add(editor, "openFullStyles");
+    JR.datGUI.add(editor, "openFullStyles").name(t("themeEditorOpenFullStyles"));
 
     // Add the save and close buttons
     let closeBtn = document.querySelector(".dg .close-button");
@@ -395,8 +401,8 @@ function openStyleEditor() {
 
     saveAndClose.className += " saveAndClose";
 
-    saveAndClose.innerText = "Save and close";
-    closeBtn.innerText = "Close without saving";
+    saveAndClose.innerText = t("saveAndClose");
+    closeBtn.innerText = t("closeWithoutSaving");
 
     saveAndClose.onclick = saveStyles;
     closeBtn.onclick = closeStyleEditor;

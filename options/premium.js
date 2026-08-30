@@ -8,11 +8,10 @@ function allowPremiumStuff() {
 
 function showPremiumNotification() {
   const notification = {
-    textContent:
-      "To access this feature, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>!",
+    textKey: "premiumUpsellGeneric",
     url: "https://justread.link/#get-Just-Read",
-    primaryText: "Learn more",
-    secondaryText: "Maybe later",
+    primaryKey: "learnMore",
+    secondaryKey: "maybeLater",
   };
   document.body.appendChild(createNotification(notification));
 }

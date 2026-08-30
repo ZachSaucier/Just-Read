@@ -6,7 +6,7 @@ function createEditBar() {
 
   const bold = document.createElement("button");
   bold.className = "jr-bold";
-  bold.setAttribute("title", "Bold (Ctrl+b)");
+  bold.setAttribute("title", platformKey("editBarBold"));
   const boldSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   boldSVG.setAttribute("viewBox", "0 0 15 15");
   const boldPath = document.createElementNS(
@@ -24,7 +24,7 @@ function createEditBar() {
 
   const italics = document.createElement("button");
   italics.className = "jr-italics";
-  italics.setAttribute("title", "Italicize (Ctrl+i)");
+  italics.setAttribute("title", platformKey("editBarItalic"));
   const italicsSVG = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"
@@ -45,7 +45,7 @@ function createEditBar() {
 
   const underline = document.createElement("button");
   underline.className = "jr-underl";
-  underline.setAttribute("title", "Underline (Ctrl+u)");
+  underline.setAttribute("title", platformKey("editBarUnderline"));
   const underlineSVG = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"
@@ -66,7 +66,7 @@ function createEditBar() {
 
   const strike = document.createElement("button");
   strike.className = "jr-strike";
-  strike.setAttribute("title", "Strike-through (Ctrl+Shift+s)");
+  strike.setAttribute("title", platformKey("editBarStrike"));
   const strikeSVG = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"
@@ -87,7 +87,7 @@ function createEditBar() {
 
   const textColor = document.createElement("button");
   textColor.className = "jr-text-color";
-  textColor.setAttribute("title", "Text color (Ctrl+Shift+c)");
+  textColor.setAttribute("title", platformKey("editBarTextColor"));
   const textColorSVG = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"
@@ -108,7 +108,7 @@ function createEditBar() {
 
   const highlightColor = document.createElement("button");
   highlightColor.className = "jr-highlight-color";
-  highlightColor.setAttribute("title", "Highlight color (Ctrl+Shift+h)");
+  highlightColor.setAttribute("title", platformKey("editBarHighlight"));
   const highlightColorSVG = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"
@@ -129,7 +129,7 @@ function createEditBar() {
 
   const removeStyles = document.createElement("button");
   removeStyles.className = "jr-remove-styles";
-  removeStyles.setAttribute("title", "Clear formatting (Ctrl+\\)");
+  removeStyles.setAttribute("title", platformKey("editBarClearFormat"));
   const removeStylesSVG = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"
@@ -150,7 +150,7 @@ function createEditBar() {
 
   const deleteSel = document.createElement("button");
   deleteSel.className = "jr-deleteSel";
-  deleteSel.setAttribute("title", "Delete highlighted text (Ctrl+Shift+d)");
+  deleteSel.setAttribute("title", platformKey("editBarDeleteSel"));
   const deleteSelSVG = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"

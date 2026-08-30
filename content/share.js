@@ -33,7 +33,7 @@ function cloneReaderContentForShare(keepJR) {
   if (!copy.querySelector(".original-link")) {
     const originalLink = document.createElement("a");
     originalLink.href = JR.sharedOrigURL || window.location.href;
-    originalLink.innerText = "View original page";
+    originalLink.innerText = t("viewOriginalPage");
     originalLink.className = "original-link";
 
     const simpleMeta = copy.querySelector(".simple-meta");
@@ -128,9 +128,9 @@ function rewriteCommentTimestamps(copy) {
 
     const timestampLink = document.createElement("a");
     timestampLink.setAttribute("href", "#" + comment.id);
-    timestampLink.innerText = timestamp.innerText.split("Left on ").pop();
+    timestampLink.innerText = timestamp.innerText.split(commentLeftOnPrefix()).pop();
 
-    timestamp.innerText = "Left on ";
+    timestamp.innerText = commentLeftOnPrefix();
     timestamp.appendChild(timestampLink);
   });
 }
@@ -144,11 +144,10 @@ function shareReaderView(e) {
 
   if (!(JR.isPremium && JR.jrSecret)) {
     const notification = {
-      textContent:
-        "To share this reader view with others, upgrade to <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>! Shared pages are just <em>one</em> of the additional features included.",
+      textKey: "premiumUpsellShare",
       url: "https://justread.link/#get-Just-Read",
-      primaryText: "Learn more",
-      secondaryText: "Maybe later",
+      primaryKey: "learnMore",
+      secondaryKey: "maybeLater",
     };
     JR.readerDocument.body.appendChild(
       createNotification(notification, JR.readerDocument)
@@ -166,10 +165,10 @@ function shareReaderView(e) {
   const copy = cloneReaderContentForShare(true);
   const myTitle = copy.querySelector(".simple-title")
     ? copy.querySelector(".simple-title").innerText
-    : "Unknown title";
+    : t("unknownTitle");
   const myAuthor = copy.querySelector(".simple-author")
     ? copy.querySelector(".simple-author").innerText
-    : "Unknown author";
+    : t("unknownAuthor");
 
   rewriteCommentTimestamps(copy);
 

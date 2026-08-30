@@ -140,7 +140,7 @@ function handleSummarizeClick() {
 
     if (typeof userOptions === "undefined") {
       JR.summarizeBtn.disabled = false;
-      return window.alert("To use the summarizer, add your AI provider API key to Just Read's options page. For more info, see https://justread.link/summarizer");
+      return window.alert(t("summarizerNoApiKey"));
     }
 
     let rawOptions;
@@ -210,7 +210,7 @@ function handleSummarizeClick() {
 
     const prompt = (typeof configPrompt === "string" && configPrompt !== "")
       ? configPrompt
-      : "Summarize the content you are provided as concisely as possible while retaining the key points.";
+      : t("defaultSummarizerPrompt");
 
     const temperature = (typeof configTemperature !== "undefined" && configTemperature !== "")
       ? configTemperature
@@ -244,7 +244,7 @@ function handleSummarizeClick() {
     const summaryEl = document.createElement("div");
     summaryEl.className = "simple-summary";
     const summaryHeader = document.createElement("h3");
-    summaryHeader.innerText = "Summary loading";
+    summaryHeader.innerText = t("summaryLoading");
     summaryEl.appendChild(summaryHeader);
     contentContainer.prepend(summaryEl);
 
@@ -261,10 +261,9 @@ function handleSummarizeClick() {
           return response.text().then(function () {
             simpleSummaryContainer.replaceChildren();
             const heading = document.createElement("h3");
-            heading.textContent = "Error getting summary";
+            heading.textContent = t("summaryErrorHeading");
             const detail = document.createElement("p");
-            detail.textContent =
-              "The AI provider returned an HTML page instead of a JSON summary. Check your API endpoint and key.";
+            detail.textContent = t("summaryErrorHtml");
             simpleSummaryContainer.appendChild(heading);
             simpleSummaryContainer.appendChild(detail);
           });
@@ -278,9 +277,9 @@ function handleSummarizeClick() {
               typeof apiError === "object" ? apiError.message : apiError;
             simpleSummaryContainer.replaceChildren();
             const heading = document.createElement("h3");
-            heading.textContent = "Error getting summary";
+            heading.textContent = t("summaryErrorHeading");
             const detail = document.createElement("p");
-            detail.textContent = String(errorMsg ?? "Unknown error");
+            detail.textContent = String(errorMsg ?? t("summaryErrorUnknown"));
             simpleSummaryContainer.appendChild(heading);
             simpleSummaryContainer.appendChild(detail);
             return;
@@ -292,10 +291,9 @@ function handleSummarizeClick() {
           } catch (e) {
             simpleSummaryContainer.replaceChildren();
             const heading = document.createElement("h3");
-            heading.textContent = "Error getting summary";
+            heading.textContent = t("summaryErrorHeading");
             const detail = document.createElement("p");
-            detail.textContent =
-              "Unexpected response format from the AI provider.";
+            detail.textContent = t("summaryErrorFormat");
             simpleSummaryContainer.appendChild(heading);
             simpleSummaryContainer.appendChild(detail);
             return;
@@ -303,7 +301,7 @@ function handleSummarizeClick() {
 
           const tokensUsed = adapter.extractTokens(json);
           const tokenLabel =
-            tokensUsed != null ? `: ${tokensUsed} tokens used` : "";
+            tokensUsed != null ? t("summaryTokensUsed", [String(tokensUsed)]) : "";
 
           if (JR.settings.summaryReplace) {
             contentContainer.innerHTML = DOMPurify.sanitize(summaryText);
@@ -312,7 +310,7 @@ function handleSummarizeClick() {
           } else {
             simpleSummaryContainer.replaceChildren();
             const heading = document.createElement("h3");
-            heading.textContent = "Summary";
+            heading.textContent = t("summaryHeading");
             if (tokenLabel) {
               const span = document.createElement("span");
               span.textContent = tokenLabel;
@@ -332,7 +330,7 @@ function handleSummarizeClick() {
         if (simpleSummaryContainer) {
           simpleSummaryContainer.replaceChildren();
           const heading = document.createElement("h3");
-          heading.textContent = "Error getting summary";
+          heading.textContent = t("summaryErrorHeading");
           const detail = document.createElement("p");
           detail.textContent = String(err.message || err);
           simpleSummaryContainer.appendChild(heading);

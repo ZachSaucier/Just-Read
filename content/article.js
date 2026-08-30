@@ -728,15 +728,15 @@ function extractArticleMeta() {
 }
 
 function getArticleDate() {
-  return extractArticleMeta().date || "Unknown date";
+  return extractArticleMeta().date || t("unknownDate");
 }
 
 function getArticleTitle() {
-  return extractArticleMeta().title || "Unknown title";
+  return extractArticleMeta().title || t("unknownTitle");
 }
 
 function getArticleAuthor() {
-  return extractArticleMeta().author || "Unknown author";
+  return extractArticleMeta().author || t("unknownAuthor");
 }
 
 function getArticleContainer() {

@@ -3,7 +3,13 @@
   "private": true,
   "description": "Dev dependencies for Just Read tests only — not shipped in extension packs.",
   "scripts": {
-    "test": "node --test tests/math/*.test.mjs tests/pack.test.mjs"
+    "test": "node --test tests/math/*.test.mjs tests/pack.test.mjs",
+    "i18n:weblate:verify": "node scripts/weblate-verify.mjs",
+    "i18n:weblate:status": "node scripts/weblate-status.mjs",
+    "i18n:weblate:pull": "node scripts/weblate-pull.mjs",
+    "i18n:check": "node scripts/check-locales.mjs",
+    "i18n:translate": "node scripts/ai-translate-locales.mjs",
+    "i18n:translate:copy-en": "node scripts/ai-translate-locales.mjs --copy-en"
   },
   "devDependencies": {
     "isomorphic-dompurify": "^2.36.0",

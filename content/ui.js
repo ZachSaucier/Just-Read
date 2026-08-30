@@ -15,13 +15,13 @@ function addArticleMeta() {
   title.className = "simple-title";
 
   let dateText = getArticleDate();
-  if (dateText === "Unknown date") {
+  if (dateText === t("unknownDate")) {
     metaContainer.classList.add("unknown-date");
   }
   dateContent.innerText = dateText;
   date.appendChild(dateContent);
   let authorText = getArticleAuthor();
-  if (authorText === "Unknown author") {
+  if (authorText === t("unknownAuthor")) {
     metaContainer.classList.add("unknown-author");
   }
   authorContent.innerText = authorText;
@@ -64,7 +64,7 @@ function addArticleMeta() {
 function addCloseButton() {
   let closeButton = document.createElement("button");
   closeButton.className = "simple-control simple-close";
-  closeButton.title = "Close Just Read";
+  closeButton.title = t("closeJustRead");
   closeButton.textContent = "x";
 
   return closeButton;
@@ -74,7 +74,7 @@ function addCloseButton() {
 function addPrintButton() {
   let printButton = document.createElement("button");
   printButton.className = "simple-print simple-control";
-  printButton.title = "Print article";
+  printButton.title = t("printArticle");
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 64 64");
@@ -119,7 +119,7 @@ function addPrintButton() {
 function addDelModeButton() {
   let delModeButton = document.createElement("button");
   delModeButton.className = "simple-delete simple-control";
-  delModeButton.title = "Start/end deletion mode";
+  delModeButton.title = t("deletionMode");
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "-255.5 -411.5 1648 1676");
@@ -145,7 +145,7 @@ function addShareButton() {
   let shareButton = document.createElement("button");
   shareButton.type = "button";
   shareButton.className = "premium-feature simple-share simple-control";
-  shareButton.title = "Share article";
+  shareButton.title = t("shareArticle");
 
   const dropDown = document.createElement("div");
   dropDown.className = "simple-share-dropdown";
@@ -155,13 +155,8 @@ function addShareButton() {
 
   const shareAlert = document.createElement("div");
   shareAlert.className = "simple-share-alert";
-  shareAlert.innerText =
-    "You have too many shared articles - the limit is 300. Please remove some from ";
-  const shareLink = document.createElement("a");
-  shareLink.setAttribute("href", "https://justread.link/dashboard");
-  shareLink.innerText = "your user page";
-  shareAlert.appendChild(shareLink);
-  shareAlert.innerText += " before adding more.";
+  shareAlert.textContent = "";
+  shareAlert.appendChild(buildShareLimitAlert());
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 95.421 90.213");
@@ -196,7 +191,7 @@ function addShareButton() {
 
   const saveHint = document.createElement("div");
   saveHint.className = "simple-share-save-hint";
-  saveHint.textContent = "Re-share to save";
+  saveHint.textContent = t("reshareToSave");
   saveHint.setAttribute("aria-hidden", "true");
 
   shareButton.appendChild(dropDown);
@@ -212,7 +207,7 @@ function addShareViaEmailButton(title) {
   let shareViaEmail = document.createElement("a");
   shareViaEmail.href = `mailto:?&body=&subject=${title}`;
   shareViaEmail.className = "simple-email simple-control";
-  shareViaEmail.title = "Share via email";
+  shareViaEmail.title = t("shareViaEmail");
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 64 64");
@@ -233,7 +228,7 @@ function addShareViaEmailButton(title) {
 function addSummarizeButton() {
   JR.summarizeBtn = document.createElement("button");
   JR.summarizeBtn.className = "simple-summarize simple-control";
-  JR.summarizeBtn.title = "Summarize article";
+  JR.summarizeBtn.title = t("summarizeArticle");
 
   // Add the icon
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -268,7 +263,7 @@ function addSummarizeButton() {
 function addUndoButton() {
   JR.undoBtn = document.createElement("button");
   JR.undoBtn.className = "simple-undo simple-control";
-  JR.undoBtn.title = "Undo last action";
+  JR.undoBtn.title = t("undoLastAction");
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 438.536 438.536");
@@ -289,12 +284,12 @@ function addExtInfo() {
   const extContainer = document.createElement("div"),
     viewedUsing = document.createElement("p");
   extContainer.className = "simple-ext-info";
-  viewedUsing.innerText = "Viewed using ";
+  viewedUsing.innerText = t("viewedUsing");
   viewedUsing.className = "simple-viewed-using";
 
   const extAnchor = document.createElement("a");
   extAnchor.href = "https://justread.link/";
-  extAnchor.innerText = "Just Read";
+  extAnchor.innerText = t("extName");
   extAnchor.target = "_blank";
   viewedUsing.appendChild(extAnchor);
 
@@ -303,7 +298,7 @@ function addExtInfo() {
   const bugAnchor = document.createElement("a");
   bugAnchor.href =
     "https://github.com/ZachSaucier/Just-Read/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3Abug%20";
-  bugAnchor.innerText = "Report an error";
+  bugAnchor.innerText = t("reportError");
   bugAnchor.target = "_blank";
   bugReporter.appendChild(bugAnchor);
 
@@ -315,10 +310,10 @@ function addExtInfo() {
 
 function addSummaryNotifier() {
   const notification = {
-    textContent: "Did you know that Just Read can summarize articles using AI?",
+    textKey: "summarizerFeatureNotify",
     url: "https://justread.link/summarizer",
-    primaryText: "Learn more",
-    secondaryText: "Not interested",
+    primaryKey: "learnMore",
+    secondaryKey: "notInterested",
   };
   JR.readerDocument.body.appendChild(
     createNotification(notification, JR.readerDocument)
@@ -327,11 +322,10 @@ function addSummaryNotifier() {
 
 function addPremiumNotifier() {
   const notification = {
-    textContent:
-      "Have you considered <a href='https://justread.link/#get-Just-Read' target='_blank'>Just Read Premium</a>? With Premium you can annotate your articles, share them with others, and more!",
+    textKey: "premiumUpsellMain",
     url: "https://justread.link/#get-Just-Read",
-    primaryText: "Learn more",
-    secondaryText: "Maybe later",
+    primaryKey: "learnMore",
+    secondaryKey: "maybeLater",
   };
   JR.readerDocument.body.appendChild(
     createNotification(notification, JR.readerDocument)
@@ -346,23 +340,26 @@ function addReviewNotifier(roundedNumViews, advertisePremium, tenK) {
 
   const notification = {
     url: reviewURL,
-    primaryText: "Leave a review",
-    secondaryText: "Maybe later",
+    primaryKey: "leaveReview",
+    secondaryKey: "maybeLater",
   };
 
   if (!tenK) {
     if (advertisePremium) {
-      notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='${reviewURL}' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
+      notification.textKey = "reviewMilestonePremium";
+      notification.textSubs = [String(roundedNumViews), reviewURL];
       notification.url = "https://justread.link/#get-Just-Read";
-      notification.primaryText = "Learn more";
+      notification.primaryKey = "learnMore";
     } else {
-      notification.textContent = `Wow, you've used Just Read over ${roundedNumViews} times! Would you consider <a href='${reviewURL}' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!`;
+      notification.textKey = "reviewMilestone";
+      notification.textSubs = [String(roundedNumViews), reviewURL];
     }
   } else {
     const mailtoUrl =
       "mailto:hello@zachsaucier.com?subject=10k%20Just%20Read%20opens";
-    notification.textContent = `You've just started Just read for the 10,000th time! I'd love to hear from you about how you use Just Read via email if you're open to it. Please reach out to <a href='${mailtoUrl}'>hello@zachsaucier.com</a>`;
-    notification.primaryText = "Open email";
+    notification.textKey = "reviewTenK";
+    notification.textSubs = [mailtoUrl];
+    notification.primaryKey = "openEmail";
     notification.url = mailtoUrl;
   }
 

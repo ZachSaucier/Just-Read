@@ -193,13 +193,13 @@ function updateShareButtonSaveState() {
     shareBtn.removeAttribute("title");
     shareBtn.setAttribute(
       "aria-label",
-      JR.sharedPageUrl ? "Re-share to save" : "Share to save",
+      JR.sharedPageUrl ? t("reshareToSave") : t("shareToSave"),
     );
   } else {
     shareBtn.removeAttribute("aria-label");
     shareBtn.title = JR.sharedPageUrl
-      ? "Save changes to this shared page"
-      : "Share article";
+      ? t("saveSharedChanges")
+      : t("shareArticle");
   }
 
   if (!JR.shareDropdown) return;
@@ -213,11 +213,11 @@ function updateShareButtonSaveState() {
   }
 }
 
-const UNSAVED_SHARED_EDITS_MESSAGE = "You have unsaved edits.";
+const UNSAVED_SHARED_EDITS_MESSAGE = () => t("unsavedSharedEdits");
 
 function confirmCloseWithUnsavedEdits() {
   return window.confirm(
-    UNSAVED_SHARED_EDITS_MESSAGE + " Close without saving?",
+    UNSAVED_SHARED_EDITS_MESSAGE() + t("closeWithoutSavingConfirm"),
   );
 }
 

@@ -1,3 +1,48 @@
+function localizeOptionsPage() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    const text = t(key);
+    if (text) el.textContent = text;
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    const text = t(key);
+    if (text) el.placeholder = text;
+  });
+
+  const titleEl = document.querySelector("title[data-i18n]");
+  if (titleEl) {
+    document.title = t(titleEl.getAttribute("data-i18n"));
+  }
+
+  let fb = document.getElementById("jr-i18n-feedback");
+  if (!fb) {
+    fb = document.createElement("style");
+    fb.id = "jr-i18n-feedback";
+    document.head.appendChild(fb);
+  }
+  const saved = t("optionsSavedFeedback").replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  const done = t("optionsDoneFeedback").replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  fb.textContent =
+    `#save::before { content: "${saved}"; }\n#use::before { content: "${done}"; }`;
+
+  const summarizerEl = document.getElementById("summarizerOptions");
+  if (summarizerEl && summarizerEl.value.includes("YOUR_API_KEY_GOES_HERE")) {
+    try {
+      const opts = JSON.parse(summarizerEl.value);
+      opts.prompt = t("defaultSummarizerPrompt");
+      summarizerEl.value = JSON.stringify(opts, null, 4)
+        .replace(/^/gm, "    ")
+        .trim();
+    } catch (e) {
+      // leave default textarea as-is if malformed
+    }
+  }
+}
+
+localizeOptionsPage();
+
 function afterOptionsStorageLoaded() {
   refreshPremiumStatus({
     domain: jrDomain,

@@ -1,3 +1,5 @@
+importScripts("shared/i18n.js");
+
 function isEmpty(obj) {
   if (obj) return Object.keys(obj).length === 0;
   return true;
@@ -9,6 +11,7 @@ let injectingTabs = {};
 // Add new content/*.js files here (init.js must stay last).
 const CONTENT_SCRIPT_FILES = [
   "content/state.js",
+  "shared/i18n.js",
   "shared/helpers.js",
   "shared/settings.js",
   "shared/stylesheets.js",
@@ -74,7 +77,7 @@ function injectReaderScripts(tab) {
 
   // Add a badge to signify the extension is in use
   chrome.action.setBadgeBackgroundColor({ color: [242, 38, 19, 230] });
-  chrome.action.setBadgeText({ text: "on" });
+  chrome.action.setBadgeText({ text: t("badgeOn") });
 
   // Check if we need to add the site to JR's autorun list
   chrome.storage.sync.get("alwaysAddAR", function (result) {
@@ -112,7 +115,7 @@ function createPageContextMenu() {
   // Create a right click menu option
   pageCMId = chrome.contextMenus.create(
     {
-      title: "View this page using Just Read",
+      title: t("contextMenuViewPage"),
       id: "pageCM",
       contexts: ["page"],
     },
@@ -123,7 +126,7 @@ function createLinkContextMenu() {
   // Create an entry to allow user to open a given link using Just read
   linkCMId = chrome.contextMenus.create(
     {
-      title: "View the linked page using Just Read",
+      title: t("contextMenuViewLink"),
       id: "linkCM",
       contexts: ["link"],
     },
@@ -134,7 +137,7 @@ function createAutorunContextMenu() {
   // Create an entry to allow user to open a given link using Just read
   autorunCMId = chrome.contextMenus.create(
     {
-      title: "Add this site to Just Read's auto-run list",
+      title: t("contextMenuAutorun"),
       id: "autorunCM",
       contexts: ["page"],
     },
@@ -427,7 +430,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 chrome.contextMenus.removeAll(function () {
   chrome.contextMenus.create(
     {
-      title: "Select content to read",
+      title: t("contextMenuSelectContent"),
       contexts: ["action"],
       id: "selectContentCM",
     },

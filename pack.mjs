@@ -33,6 +33,7 @@ const GECKO_ID = "{cb2b337b-99d7-4b86-aa04-84a6f5c3e218}";
  *  for local/CI only and must never appear in customer zips.
  */
 const INCLUDE = [
+  "_locales",
   "background.js",
   "content",
   "shared",

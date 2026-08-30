@@ -1,5 +1,24 @@
+function resolveNotificationOptions(options) {
+  const resolved = Object.assign({}, options);
+
+  if (options.textKey) {
+    resolved.textContent = options.textSubs
+      ? t(options.textKey, options.textSubs)
+      : t(options.textKey);
+  }
+  if (options.primaryKey) {
+    resolved.primaryText = t(options.primaryKey);
+  }
+  if (options.secondaryKey) {
+    resolved.secondaryText = t(options.secondaryKey);
+  }
+
+  return resolved;
+}
+
 function createNotification(options, doc) {
   doc = doc || document;
+  options = resolveNotificationOptions(options);
 
   const oldNotification = doc.querySelector(".jr-notifier");
   if (oldNotification)

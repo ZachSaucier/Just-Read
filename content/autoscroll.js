@@ -23,16 +23,16 @@ function scrollPage() {
 function toggleScroll() {
   JR.readerDocument.body.classList.toggle("paused");
   if (JR.readerDocument.body.classList.contains("paused")) {
-    JR.pauseScrollBtn.innerText = "Start scroll";
+    JR.pauseScrollBtn.innerText = t("startScroll");
   } else {
-    JR.pauseScrollBtn.innerText = "Pause scroll";
+    JR.pauseScrollBtn.innerText = t("pauseScroll");
   }
 }
 
 function createPauseScrollButton() {
   JR.pauseScrollBtn = document.createElement("button");
   JR.pauseScrollBtn.className = "pause-scroll";
-  JR.pauseScrollBtn.innerText = "Pause scroll";
+  JR.pauseScrollBtn.innerText = t("pauseScroll");
   JR.pauseScrollBtn.onclick = toggleScroll;
 
   return JR.pauseScrollBtn;

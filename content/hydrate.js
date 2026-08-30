@@ -30,11 +30,10 @@ function verifyPremiumThenHydrate() {
         document.body.appendChild(
           createNotification(
             {
-              textContent:
-                "To edit a shared Just Read page, sign in with a <a href='https://justread.link/#get-Just-Read' target='_blank'>Premium account</a>.",
+              textKey: "premiumUpsellSharedEdit",
               url: "https://justread.link/#get-Just-Read",
-              primaryText: "Learn more",
-              secondaryText: "Maybe later",
+              primaryKey: "learnMore",
+              secondaryKey: "maybeLater",
             },
             document,
           ),
@@ -64,11 +63,10 @@ function checkOwnershipThenHydrate() {
         document.body.appendChild(
           createNotification(
             {
-              textContent:
-                "You can only edit shared pages that you created with this Just Read account.",
+              textKey: "sharedEditNotOwner",
               url: "https://justread.link/dashboard",
-              primaryText: "Open dashboard",
-              secondaryText: "OK",
+              primaryKey: "openDashboard",
+              secondaryKey: "ok",
             },
             document,
           ),
@@ -169,7 +167,7 @@ function injectHydrateToolbar(container) {
   const printBtn = ui.querySelector(".simple-print");
   if (!ui.querySelector(".simple-share")) {
     const share = addShareButton();
-    share.title = "Save changes to this shared page";
+    share.title = t("saveSharedChanges");
     if (printBtn && printBtn.nextSibling) {
       ui.insertBefore(share, printBtn.nextSibling);
     } else if (printBtn) {
