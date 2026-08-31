@@ -9,9 +9,11 @@
     "i18n:weblate:pull": "node scripts/weblate-pull.mjs",
     "i18n:check": "node scripts/check-locales.mjs",
     "i18n:translate": "node scripts/ai-translate-locales.mjs",
-    "i18n:translate:copy-en": "node scripts/ai-translate-locales.mjs --copy-en"
+    "i18n:translate:copy-en": "node scripts/ai-translate-locales.mjs --copy-en",
+    "vendor:ace": "node scripts/vendor-ace.mjs"
   },
   "devDependencies": {
+    "ace-builds": "1.44.0",
     "isomorphic-dompurify": "^2.36.0",
     "jsdom": "^26.1.0"
   }

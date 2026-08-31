@@ -894,3 +894,7 @@ button:disabled .simple-summary {
   top: 4px;
   right: 4px;
 }
+.jr-user-content-delete:focus-visible {
+  outline: 2px solid var(--foreground-color, currentColor);
+  outline-offset: 2px;
+}

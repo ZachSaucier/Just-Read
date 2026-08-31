@@ -1,4 +1,6 @@
-importScripts("shared/i18n.js");
+if (typeof importScripts === "function") {
+  importScripts("shared/i18n.js");
+}
 
 function isEmpty(obj) {
   if (obj) return Object.keys(obj).length === 0;
@@ -317,6 +319,17 @@ let lastClosed = Date.now();
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.jrFetch) {
     handleJrFetch(request.jrFetch, sendResponse);
+    return true;
+  }
+  if (request.getLocaleMessages) {
+    const locale = request.getLocaleMessages;
+    if (!EXTENSION_LOCALE_LABELS[locale]) {
+      sendResponse({ ok: false, error: "Unknown locale" });
+      return true;
+    }
+    fetchLocaleMessagesFile(locale)
+      .then((messages) => sendResponse({ ok: true, messages }))
+      .catch((err) => sendResponse({ ok: false, error: String(err) }));
     return true;
   }
   if (request.jrLoadMathJax) {

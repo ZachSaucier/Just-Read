@@ -1,5 +1,5 @@
 function allowPremiumStuff() {
-  document.querySelector(".options-subtitle").style.display = "block";
+  document.querySelector(".options-subtitles").style.display = "block";
   document.querySelector(".upgrade").style.display = "none";
   document
     .querySelectorAll(".disabled")

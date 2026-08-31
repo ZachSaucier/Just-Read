@@ -3,6 +3,10 @@
     "message": "Lägg till en kommentar",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "Tillbaka till kommentaren i artikeln",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "på",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "Sammanfatta det innehåll du får så kortfattat som möjligt samtidigt som de viktigaste punkterna behålls.",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "Ta bort kommentar",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "Starta/avsluta raderingsläge",
@@ -219,14 +227,6 @@
     "message": "Lista över domäner för automatisk körning",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "Den här listan kontrolleras med regex. Mer information finns i ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "det här inlägget",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "Använd JRs automatiska rullningsfunktion.",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Konfigurera ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "Konfigurera <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "Använd hide-segments.css",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "Tilläggsspråk",
+    "message": "Tilläggsspråk:",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "Delningsinställningar",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": " för att se dina sparade sidor. Tack för att du stödjer Just Read!",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "Inställningar",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "Eller gå till ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "Temaval",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "din instrumentpanel",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "CSS-redigerare",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "Stilar",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "Alternativ för AI-sammanfattning",
@@ -363,17 +363,9 @@
     "message": "Just Read kan sammanfatta artiklar med valfri AI-leverantör. Leverantörer som stöds:",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "det här inlägget",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Använd \"provider\": \"anthropic\" för Claude, \"provider\": \"gemini\" för Google Gemini, \"provider\": \"perplexity\" för Perplexity eller \"provider\": \"custom\" med fältet \"endpoint\" för valfritt OpenAI-kompatibelt API.",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "Mer information finns i",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "Kör sammanfattaren automatiskt när Just Read öppnas.",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "Ersätt artikelns innehåll med sammanfattningen.",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "För att få tillgång till alla Just Reads funktioner, uppgradera till Just Read Premium! ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "Läs mer här",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "Använd som aktuellt tema",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "Dela artikel",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "Du har för många delade artiklar – gränsen är 300. Ta bort några från ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": " innan du lägger till fler.",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "Dela för att spara",
@@ -619,8 +595,36 @@
     "message": "Visad med ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "din användarsida",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "Tack för att du stödjer Just Read!",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "Gå till <a href=\"https://justread.link/dashboard\">din instrumentpanel</a> för att se dina sparade sidor.",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "För att få tillgång till alla Just Reads funktioner, uppgradera till Just Read Premium! <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">Läs mer här</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "Den här listan kontrolleras med regex. Mer information finns i <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">det här inlägget</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " Mer information finns i <a href=\"https://justread.link/summarizer\">det här inlägget</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "Du har för många delade artiklar – gränsen är 300. Ta bort några från <a href=\"https://justread.link/dashboard/\">din användarsida</a> innan du lägger till fler.",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "Byt till ljust tema för alternativsidan",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "Byt till mörkt tema för alternativsidan",
+    "description": "Accessible label for options page dark theme button"
   }
 }

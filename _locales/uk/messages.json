@@ -3,6 +3,10 @@
     "message": "Додати коментар",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "Повернутися до коментаря в статті",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "увімк.",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "Стисло підсумуйте наданий вам вміст, зберігаючи ключові моменти.",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "Видалити коментар",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "Увімкнути/вимкнути режим видалення",
@@ -219,14 +227,6 @@
     "message": "Список доменів для автозапуску",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "Цей список перевіряється за допомогою regex. Докладніше див. ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "цю публікацію",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "Використовувати функцію автопрокрутки JR.",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Налаштування ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "Налаштування <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "Використовувати hide-segments.css",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "Мова розширення",
+    "message": "Мова розширення:",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "Налаштування спільного доступу",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": " для перегляду збережених сторінок. Дякуємо, що підтримуєте Just Read!",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "Налаштування",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "Або перейдіть до ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "Вибір теми",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "вашої панелі керування",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "CSS-редактор",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "Стилі",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "Параметри підсумовування ШІ",
@@ -363,17 +363,9 @@
     "message": "Just Read може підсумовувати статті за допомогою будь-якого провайдера ШІ. Підтримувані провайдери:",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "цю публікацію",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Використовуйте \"provider\": \"anthropic\" для Claude, \"provider\": \"gemini\" для Google Gemini, \"provider\": \"perplexity\" для Perplexity або \"provider\": \"custom\" з полем \"endpoint\" для будь-якого API, сумісного з OpenAI.",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "Докладніше див.",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "Автоматично запускати підсумовувач під час відкриття Just Read.",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "Замінити вміст статті підсумком.",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "Щоб отримати доступ до всіх функцій Just Read, оновіть до Just Read Premium! ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "Дізнатися більше тут",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "Використовувати як поточну тему",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "Поділитися статтею",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "У вас забагато спільних статей — ліміт становить 300. Будь ласка, видаліть деякі з ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": " перед додаванням нових.",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "Поділитися, щоб зберегти",
@@ -619,8 +595,36 @@
     "message": "Переглянуто за допомогою ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "вашої сторінки користувача",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "Дякуємо, що підтримуєте Just Read!",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "Перейдіть до <a href=\"https://justread.link/dashboard\">вашої панелі керування</a> для перегляду збережених сторінок.",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "Щоб отримати доступ до всіх функцій Just Read, оновіть до Just Read Premium! <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">Дізнатися більше тут</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "Цей список перевіряється за допомогою regex. Докладніше див. <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">цю публікацію</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " Докладніше див. <a href=\"https://justread.link/summarizer\">цю публікацію</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "У вас забагато спільних статей — ліміт становить 300. Будь ласка, видаліть деякі з <a href=\"https://justread.link/dashboard/\">вашої сторінки користувача</a> перед додаванням нових.",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "Перемкнути на світлу тему сторінки налаштувань",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "Перемкнути на темну тему сторінки налаштувань",
+    "description": "Accessible label for options page dark theme button"
   }
 }

@@ -3,6 +3,10 @@
     "message": "Добавить комментарий",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "Вернуться к комментарию в статье",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "вкл",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "Суммируйте предоставленное содержимое как можно более кратко, сохраняя ключевые моменты.",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "Удалить комментарий",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "Включить/выключить режим удаления",
@@ -219,14 +227,6 @@
     "message": "Список доменов автозапуска",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "Этот список проверяется с помощью regex. Подробнее см. ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "эту статью",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "Использовать функцию автопрокрутки JR.",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Настроить ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "Настроить <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "Использовать hide-segments.css",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "Язык расширения",
+    "message": "Язык расширения:",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "Настройки общего доступа",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": ", чтобы просмотреть сохранённые страницы. Спасибо, что поддерживаете Just Read!",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "Настройки",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "Или перейдите на ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "Выбор темы",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "вашу панель управления",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "CSS-редактор",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "Стили",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "Настройки ИИ-суммаризации",
@@ -363,17 +363,9 @@
     "message": "Just Read может суммировать статьи с помощью любого провайдера ИИ. Поддерживаемые провайдеры:",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "эту статью",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Используйте \"provider\": \"anthropic\" для Claude, \"provider\": \"gemini\" для Google Gemini, \"provider\": \"perplexity\" для Perplexity или \"provider\": \"custom\" с полем \"endpoint\" для любого API, совместимого с OpenAI.",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "Подробнее см.",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "Автоматически запускать суммаризатор при открытии Just Read.",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "Заменять содержимое статьи сводкой.",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "Чтобы получить доступ ко всем функциям Just Read, перейдите на Just Read Premium! ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "Подробнее здесь",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "Использовать как текущую тему",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "Поделиться статьёй",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "У вас слишком много общих статей — лимит 300. Удалите некоторые на ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": " перед добавлением новых.",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "Поделиться для сохранения",
@@ -619,8 +595,36 @@
     "message": "Просмотрено с помощью ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "вашей пользовательской странице",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "Спасибо, что поддерживаете Just Read!",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "Перейдите на <a href=\"https://justread.link/dashboard\">вашу панель управления</a>, чтобы просмотреть сохранённые страницы.",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "Чтобы получить доступ ко всем функциям Just Read, перейдите на Just Read Premium! <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">Подробнее здесь</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "Этот список проверяется с помощью regex. Подробнее см. <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">эту статью</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " Подробнее см. <a href=\"https://justread.link/summarizer\">эту статью</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "У вас слишком много общих статей — лимит 300. Удалите некоторые на <a href=\"https://justread.link/dashboard/\">вашей пользовательской странице</a> перед добавлением новых.",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "Переключить на светлую тему страницы настроек",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "Переключить на тёмную тему страницы настроек",
+    "description": "Accessible label for options page dark theme button"
   }
 }

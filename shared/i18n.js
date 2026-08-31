@@ -148,11 +148,39 @@ function t(key, substitutions) {
   return localizeSiteUrls(result);
 }
 
-function loadCustomMessages(locale) {
+function isExtensionContext() {
+  if (typeof location === "undefined") return true;
+  return (
+    location.protocol === "chrome-extension:" ||
+    location.protocol === "moz-extension:"
+  );
+}
+
+function fetchLocaleMessagesFile(locale) {
   const url = chrome.runtime.getURL(`_locales/${locale}/messages.json`);
   return fetch(url).then((res) => {
     if (!res.ok) throw new Error(`Failed to load locale ${locale}`);
     return res.json();
+  });
+}
+
+function loadCustomMessages(locale) {
+  if (isExtensionContext()) {
+    return fetchLocaleMessagesFile(locale);
+  }
+
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage({ getLocaleMessages: locale }, (response) => {
+      if (chrome.runtime.lastError) {
+        reject(new Error(chrome.runtime.lastError.message));
+        return;
+      }
+      if (!response?.ok) {
+        reject(new Error(response?.error || "Failed to load locale messages"));
+        return;
+      }
+      resolve(response.messages);
+    });
   });
 }
 
@@ -224,6 +252,12 @@ function populateExtensionLocaleSelect(selectEl) {
     });
 }
 
+function setAccessibleLabel(el, messageKey) {
+  const label = t(messageKey);
+  el.setAttribute("aria-label", label);
+  el.title = label;
+}
+
 function isMacPlatform() {
   return navigator.platform.toUpperCase().indexOf("MAC") >= 0;
 }
@@ -241,15 +275,59 @@ function formatMinuteRead(count) {
   return t(key, [String(count)]);
 }
 
-function buildShareLimitAlert() {
-  const lead = document.createTextNode(t("shareLimitLead"));
-  const link = document.createElement("a");
-  link.href = siteUrl("/dashboard/");
-  link.innerText = t("yourUserPage");
-  const tail = document.createTextNode(t("shareLimitTail"));
+function sanitizeLocalizedHtml(html) {
+  const doc = new DOMParser().parseFromString(html, "text/html");
   const frag = document.createDocumentFragment();
-  frag.appendChild(lead);
-  frag.appendChild(link);
-  frag.appendChild(tail);
+
+  function appendSanitized(node, parent) {
+    for (const child of [...node.childNodes]) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        parent.appendChild(document.createTextNode(child.textContent));
+        continue;
+      }
+      if (child.nodeType !== Node.ELEMENT_NODE) continue;
+
+      const tag = child.tagName;
+      if (tag === "A") {
+        const href = child.getAttribute("href");
+        if (!href || /^javascript:/i.test(href.trim())) continue;
+        const anchor = document.createElement("a");
+        anchor.href = href;
+        const target = child.getAttribute("target");
+        if (target) anchor.target = target;
+        const rel = child.getAttribute("rel");
+        if (rel) anchor.rel = rel;
+        appendSanitized(child, anchor);
+        parent.appendChild(anchor);
+      } else if (tag === "I" || tag === "EM") {
+        const italic = document.createElement("i");
+        appendSanitized(child, italic);
+        parent.appendChild(italic);
+      } else if (tag === "CODE") {
+        const code = document.createElement("code");
+        appendSanitized(child, code);
+        parent.appendChild(code);
+      } else if (tag === "BR") {
+        parent.appendChild(document.createElement("br"));
+      } else if (tag === "BODY") {
+        appendSanitized(child, frag);
+      } else {
+        appendSanitized(child, parent);
+      }
+    }
+  }
+
+  appendSanitized(doc.body, frag);
   return frag;
+}
+
+function setLocalizedHtml(el, key) {
+  const html = t(key);
+  if (!html) return;
+  el.textContent = "";
+  el.appendChild(sanitizeLocalizedHtml(html));
+}
+
+function buildShareLimitAlert() {
+  return sanitizeLocalizedHtml(t("shareLimitMessage"));
 }

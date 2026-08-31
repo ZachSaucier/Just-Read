@@ -24,4 +24,5 @@ var hideSegments = document.getElementById("hideSegments"),
   addOrigURL = document.getElementById("addOrigURL"),
   addTimeEstimate = document.getElementById("addTimeEstimate"),
   scrollbar = document.getElementById("scrollbar"),
-  extensionLocale = document.getElementById("extensionLocale");
+  extensionLocale = document.getElementById("extensionLocale"),
+  optionsThemeToggle = document.getElementById("optionsThemeToggle");

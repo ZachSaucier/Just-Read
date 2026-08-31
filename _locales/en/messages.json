@@ -103,23 +103,38 @@
     "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='https://justread.link/#get-Just-Read' target='_blank'>upgrading to Premium</a>, <a href='$REVIEW_URL$' target='_blank'>leaving a review</a>, or sharing Just Read with your friends or on social media? I'd really appreciate it!",
     "description": "Usage milestone notification with premium CTA (HTML)",
     "placeholders": {
-      "views": { "content": "$1", "example": "100" },
-      "review_url": { "content": "$2", "example": "https://chrome.google.com/webstore" }
+      "views": {
+        "content": "$1",
+        "example": "100"
+      },
+      "review_url": {
+        "content": "$2",
+        "example": "https://chrome.google.com/webstore"
+      }
     }
   },
   "reviewMilestone": {
     "message": "Wow, you've used Just Read over $VIEWS$ times! Would you consider <a href='$REVIEW_URL$' target='_blank'>leaving a review</a> or sharing Just Read with your friends or on social media? I'd really appreciate it!",
     "description": "Usage milestone review request (HTML)",
     "placeholders": {
-      "views": { "content": "$1", "example": "100" },
-      "review_url": { "content": "$2", "example": "https://chrome.google.com/webstore" }
+      "views": {
+        "content": "$1",
+        "example": "100"
+      },
+      "review_url": {
+        "content": "$2",
+        "example": "https://chrome.google.com/webstore"
+      }
     }
   },
   "reviewTenK": {
     "message": "You've just started Just read for the 10,000th time! I'd love to hear from you about how you use Just Read via email if you're open to it. Please reach out to <a href='$MAILTO$'>hello@zachsaucier.com</a>",
     "description": "10,000 opens milestone email request (HTML)",
     "placeholders": {
-      "mailto": { "content": "$1", "example": "mailto:hello@zachsaucier.com" }
+      "mailto": {
+        "content": "$1",
+        "example": "mailto:hello@zachsaucier.com"
+      }
     }
   },
   "closeJustRead": {
@@ -170,18 +185,6 @@
     "message": "Report an error",
     "description": "Footer link to report bugs"
   },
-  "shareLimitLead": {
-    "message": "You have too many shared articles - the limit is 300. Please remove some from ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "yourUserPage": {
-    "message": "your user page",
-    "description": "Link text to dashboard in share limit alert"
-  },
-  "shareLimitTail": {
-    "message": " before adding more.",
-    "description": "Share limit alert text after dashboard link"
-  },
   "unknownDate": {
     "message": "Unknown date",
     "description": "Fallback when article date cannot be detected"
@@ -214,6 +217,10 @@
     "message": "Add a comment",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "Back to comment in article",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "commentsPremiumAlert": {
     "message": "Sorry, this feature is only available to Just Read Premium users! Sign up at justread.link",
     "description": "Alert when non-premium user tries cmd-click comment"
@@ -222,14 +229,20 @@
     "message": "$COUNT$ minute read",
     "description": "Reading time estimate for one minute",
     "placeholders": {
-      "count": { "content": "$1", "example": "1" }
+      "count": {
+        "content": "$1",
+        "example": "1"
+      }
     }
   },
   "minuteReadPlural": {
     "message": "$COUNT$ minutes read",
     "description": "Reading time estimate for multiple minutes",
     "placeholders": {
-      "count": { "content": "$1", "example": "5" }
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
     }
   },
   "pauseScroll": {
@@ -384,7 +397,10 @@
     "message": ": $TOKENS$ tokens used",
     "description": "Suffix on summary heading showing token count",
     "placeholders": {
-      "tokens": { "content": "$1", "example": "150" }
+      "tokens": {
+        "content": "$1",
+        "example": "150"
+      }
     }
   },
   "stylesheetQuotaExceeded": {
@@ -396,24 +412,28 @@
     "description": "Options page document title"
   },
   "optionsHeading": {
-    "message": "Configure ",
-    "description": "Options page h1 text before italic Just Read"
+    "message": "Configure <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+  "optionsSubtitleThanks": {
+    "message": "Thanks for supporting Just Read!",
+    "description": "Options subtitle thank-you line"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "Or go to ",
-    "description": "Options subtitle before dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "Preferences",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "your dashboard",
-    "description": "Options subtitle dashboard link text"
+  "optionsThemeSelectionHeading": {
+    "message": "Theme selection",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": " to view your saved pages. Thanks for supporting Just Read!",
-    "description": "Options subtitle after dashboard link"
+  "optionsCssEditorHeading": {
+    "message": "CSS editor",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "Styles",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsNewThemePlaceholder": {
     "message": "New theme name...",
@@ -439,25 +459,9 @@
     "message": "Use hide-segments.css",
     "description": "Checkbox label for hide-segments stylesheet"
   },
-  "optionsUpgradeHeading": {
-    "message": "To access all of Just Read's features, upgrade to Just Read Premium! ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "Learn more here",
-    "description": "Premium upsell link on options page"
-  },
   "optionsAutorunHeading": {
     "message": "Auto-run domain list",
     "description": "Options section heading"
-  },
-  "optionsAutorunHelpBefore": {
-    "message": "This list is checked using regex. For more info, see ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "this post",
-    "description": "Auto-run help link text"
   },
   "optionsSummarizerHeading": {
     "message": "AI summarization options",
@@ -466,14 +470,6 @@
   "optionsSummarizerIntro": {
     "message": "Just Read can summarize articles using any AI provider. Supported providers:",
     "description": "Summarizer options intro before provider code list"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "For more info, see",
-    "description": "Summarizer docs link lead-in"
-  },
-  "optionsSummarizerLink": {
-    "message": "this post",
-    "description": "Summarizer docs link text"
   },
   "optionsSummarizerProvidersHelp": {
     "message": "Use \"provider\": \"anthropic\" for Claude, \"provider\": \"gemini\" for Google Gemini, \"provider\": \"perplexity\" for Perplexity, or \"provider\": \"custom\" with an \"endpoint\" field for any OpenAI-compatible API.",
@@ -511,12 +507,20 @@
     "message": "Browser default",
     "description": "Option to follow the browser UI language for extension strings"
   },
+  "optionsThemeSwitchLight": {
+    "message": "Switch to light theme for the options page",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "Switch to dark theme for the options page",
+    "description": "Accessible label for options page dark theme button"
+  },
   "optionsLanguageHeading": {
     "message": "Language",
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "Extension language",
+    "message": "Extension language:",
     "description": "Label for extension language select on options page"
   },
   "optionsLinkCM": {
@@ -598,5 +602,29 @@
   "defaultSummarizerPrompt": {
     "message": "Summarize the content you are provided as concisely as possible while retaining the key points.",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "Delete comment",
+    "description": "Accessible label for X button that removes a comment"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "Go to <a href=\"https://justread.link/dashboard\">your dashboard</a> to view your saved pages.",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "To access all of Just Read's features, upgrade to Just Read Premium! <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">Learn more here</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "This list is checked using regex. For more info, see <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">this post</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " For more info, see <a href=\"https://justread.link/summarizer\">this post</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "You have too many shared articles - the limit is 300. Please remove some from <a href=\"https://justread.link/dashboard/\">your user page</a> before adding more.",
+    "description": "Share limit alert with dashboard link"
   }
 }

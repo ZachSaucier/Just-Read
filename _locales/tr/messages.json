@@ -3,6 +3,10 @@
     "message": "Yorum ekle",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "Makaledeki yoruma dön",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "açık",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "Size sağlanan içeriği ana noktaları koruyarak mümkün olduğunca özlü şekilde özetleyin.",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "Yorumu sil",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "Silme modunu başlat/bitir",
@@ -219,14 +227,6 @@
     "message": "Otomatik çalıştırma alan adı listesi",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "Bu liste regex kullanılarak kontrol edilir. Daha fazla bilgi için bkz. ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "bu gönderi",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "JR'ın otomatik kaydırma işlevini kullan.",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Yapılandır ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "Yapılandır <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "hide-segments.css kullan",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "Uzantı dili",
+    "message": "Uzantı dili:",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "Paylaşım tercihleri",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": " kayıtlı sayfalarınızı görüntülemek için. Just Read'i desteklediğiniz için teşekkürler!",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "Tercihler",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "Veya ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "Tema seçimi",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "panonuza",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "CSS düzenleyici",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "Stiller",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "Yapay zeka özetleme seçenekleri",
@@ -363,17 +363,9 @@
     "message": "Just Read, herhangi bir yapay zeka sağlayıcısı kullanarak makaleleri özetleyebilir. Desteklenen sağlayıcılar:",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "bu gönderi",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Claude için \"provider\": \"anthropic\", Google Gemini için \"provider\": \"gemini\", Perplexity için \"provider\": \"perplexity\" veya herhangi bir OpenAI uyumlu API için \"endpoint\" alanıyla \"provider\": \"custom\" kullanın.",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "Daha fazla bilgi için bkz.",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "Just Read açıldığında özetleyiciyi otomatik olarak çalıştır.",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "Makale içeriğini özetle değiştir.",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "Just Read'in tüm özelliklerine erişmek için Just Read Premium'a yükseltin! ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "Buradan daha fazla bilgi",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "Geçerli tema olarak kullan",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "Makaleyi paylaş",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "Çok fazla paylaşılan makaleniz var — sınır 300'dür. Daha fazla eklemeden önce lütfen ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": " üzerinden bazılarını kaldırın.",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "Kaydetmek için paylaş",
@@ -619,8 +595,36 @@
     "message": "Şununla görüntülendi: ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "kullanıcı sayfanızdan",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "Just Read'i desteklediğiniz için teşekkürler!",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "<a href=\"https://justread.link/dashboard\">panonuza</a> kayıtlı sayfalarınızı görüntülemek için.",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "Just Read'in tüm özelliklerine erişmek için Just Read Premium'a yükseltin! <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">Buradan daha fazla bilgi</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "Bu liste regex kullanılarak kontrol edilir. Daha fazla bilgi için bkz. <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">bu gönderi</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " Daha fazla bilgi için bkz. <a href=\"https://justread.link/summarizer\">bu gönderi</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "Çok fazla paylaşılan makaleniz var — sınır 300'dür. Daha fazla eklemeden önce lütfen <a href=\"https://justread.link/dashboard/\">kullanıcı sayfanızdan</a> üzerinden bazılarını kaldırın.",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "Seçenekler sayfasında açık temaya geç",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "Seçenekler sayfasında koyu temaya geç",
+    "description": "Accessible label for options page dark theme button"
   }
 }

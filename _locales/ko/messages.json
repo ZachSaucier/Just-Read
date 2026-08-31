@@ -3,6 +3,10 @@
     "message": "댓글 추가",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "기사의 댓글로 돌아가기",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "실행 중",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "제공된 콘텐츠의 핵심 요점을 유지하면서 가능한 한 간결하게 요약하세요.",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "댓글 삭제",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "삭제 모드 시작/종료",
@@ -219,14 +227,6 @@
     "message": "자동 실행 도메인 목록",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "이 목록은 정규식으로 확인됩니다. 자세한 내용은 ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "이 글",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "JR 자동 스크롤 기능을 사용합니다.",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "설정: ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "설정: <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "hide-segments.css 사용",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "확장 프로그램 언어",
+    "message": "확장 프로그램 언어:",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "공유 기본 설정",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": "에서 저장한 페이지를 확인하세요. Just Read를 이용해 주셔서 감사합니다!",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "설정",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "또는 ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "테마 선택",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "대시보드",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "CSS 편집기",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "스타일",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "AI 요약 옵션",
@@ -363,17 +363,9 @@
     "message": "Just Read는 모든 AI 제공업체를 사용하여 기사를 요약할 수 있습니다. 지원되는 제공업체:",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "이 글",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Claude에는 \"provider\": \"anthropic\", Google Gemini에는 \"provider\": \"gemini\", Perplexity에는 \"provider\": \"perplexity\", OpenAI 호환 API에는 \"endpoint\" 필드가 있는 \"provider\": \"custom\"을 사용하세요.",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "자세한 내용은",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "Just Read를 열 때 자동으로 요약을 실행합니다.",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "기사 내용을 요약으로 대체합니다.",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "Just Read의 모든 기능을 사용하려면 Just Read Premium으로 업그레이드하세요! ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "자세히 알아보기",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "현재 테마로 사용",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "기사 공유",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "공유 기사가 너무 많습니다 — 한도는 300개입니다. 더 추가하기 전에 ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": "에서 일부를 제거해 주세요.",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "저장하려면 공유",
@@ -619,8 +595,36 @@
     "message": "다음으로 보기: ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "사용자 페이지",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "Just Read를 이용해 주셔서 감사합니다!",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "<a href=\"https://justread.link/dashboard\">대시보드</a>에서 저장한 페이지를 확인하세요.",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "Just Read의 모든 기능을 사용하려면 Just Read Premium으로 업그레이드하세요! <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">자세히 알아보기</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "이 목록은 정규식으로 확인됩니다. 자세한 내용은 <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">이 글</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " 자세한 내용은 <a href=\"https://justread.link/summarizer\">이 글</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "공유 기사가 너무 많습니다 — 한도는 300개입니다. 더 추가하기 전에 <a href=\"https://justread.link/dashboard/\">사용자 페이지</a>에서 일부를 제거해 주세요.",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "옵션 페이지를 밝은 테마로 전환",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "옵션 페이지를 어두운 테마로 전환",
+    "description": "Accessible label for options page dark theme button"
   }
 }

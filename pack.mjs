@@ -64,7 +64,7 @@ function buildGeckoManifest(base) {
   return {
     ...base,
     background: {
-      scripts: ["background.js"],
+      scripts: ["shared/i18n.js", "background.js"],
     },
     browser_specific_settings: {
       gecko: {

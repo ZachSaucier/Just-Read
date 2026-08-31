@@ -3,6 +3,10 @@
     "message": "新增留言",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "返回文章中的留言",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "執行中",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "在保留關鍵要點的同時，盡可能簡潔地摘要所提供的內容。",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "刪除留言",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "開始/結束刪除模式",
@@ -219,14 +227,6 @@
     "message": "自動執行網域清單",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "此清單使用正則運算式檢查。更多資訊請參閱 ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "這篇文章",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "使用 JR 的自動捲動功能。",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "設定 ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "設定 <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "使用 hide-segments.css",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "擴充功能語言",
+    "message": "擴充功能語言：",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "分享偏好設定",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": " 檢視已儲存的頁面。感謝支持 Just Read！",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "偏好設定",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "或前往 ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "主題選擇",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "您的控制台",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "CSS 編輯器",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "樣式",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "AI 摘要選項",
@@ -363,17 +363,9 @@
     "message": "Just Read 可以使用任何 AI 提供商摘要文章。支援的提供商：",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "這篇文章",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Claude 使用 \"provider\": \"anthropic\"，Google Gemini 使用 \"provider\": \"gemini\"，Perplexity 使用 \"provider\": \"perplexity\"，任何 OpenAI 相容 API 使用帶 \"endpoint\" 欄位的 \"provider\": \"custom\"。",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "更多資訊請參閱",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "開啟 Just Read 時自動執行摘要。",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "以摘要取代文章內容。",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "若要使用 Just Read 的全部功能，請升級至 Just Read Premium！ ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "在此了解更多",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "設為目前主題",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "分享文章",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "您的共享文章過多——上限為 300 篇。請先前往 ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": " 刪除一些後再新增。",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "分享以儲存",
@@ -619,8 +595,36 @@
     "message": "透過 ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "您的使用者頁面",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "感謝支持 Just Read！",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "前往<a href=\"https://justread.link/dashboard\">您的控制台</a>檢視已儲存的頁面。",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "若要使用 Just Read 的全部功能，請升級至 Just Read Premium！ <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">在此了解更多</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "此清單使用正則運算式檢查。更多資訊請參閱 <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">這篇文章</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " 更多資訊請參閱 <a href=\"https://justread.link/summarizer\">這篇文章</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "您的共享文章過多——上限為 300 篇。請先前往 <a href=\"https://justread.link/dashboard/\">您的使用者頁面</a> 刪除一些後再新增。",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "切換到選項頁面的淺色主題",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "切換到選項頁面的深色主題",
+    "description": "Accessible label for options page dark theme button"
   }
 }

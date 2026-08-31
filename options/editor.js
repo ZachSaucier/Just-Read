@@ -4,7 +4,6 @@ editor.session.setOptions({
   mode: "ace/mode/css",
   tabSize: 2,
 });
-editor.$blockScrolling = Infinity;
 
 editor.commands.addCommands([
   {

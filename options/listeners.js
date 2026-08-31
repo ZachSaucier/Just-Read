@@ -186,6 +186,14 @@ function addEventListeners() {
     });
   };
 
+  optionsThemeToggle.onclick = function () {
+    optionsColorSchemeSaved = optionsIsDarkMode() ? "light" : "dark";
+    chrome.storage.sync.set(
+      { optionsColorScheme: optionsColorSchemeSaved },
+      syncOptionsColorSchemeUI,
+    );
+  };
+
   saveButton.addEventListener("animationend", function () {
     saveButton.classList.remove("saved");
   });

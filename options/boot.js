@@ -1,6 +1,10 @@
 function localizeOptionsPage() {
   populateExtensionLocaleSelect(extensionLocale);
 
+  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+    setLocalizedHtml(el, el.getAttribute("data-i18n-html"));
+  });
+
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.getAttribute("data-i18n");
     const text = t(key);
@@ -43,6 +47,7 @@ function localizeOptionsPage() {
   }
 
   applySiteLinks();
+  syncOptionsColorSchemeUI();
 }
 
 initI18nFromStorage().then(() => {
@@ -67,6 +72,7 @@ function renderOptionsPage() {
   currTheme = currTheme || defaultStylesheet;
 
   const list = document.querySelector(".stylesheets");
+  list.textContent = "";
   for (let stylesheet in stylesheetObj) {
     const li = document.createElement("li"),
       liClassList = li.classList;
@@ -120,4 +126,3 @@ function loadOptionsFromStorage() {
   });
 }
 
-loadOptionsFromStorage();

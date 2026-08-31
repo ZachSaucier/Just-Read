@@ -39,6 +39,12 @@ function addComment(loc) {
     const textarea = document.createElement("textarea");
     textarea.onkeydown = onCommentInput;
     textarea.onkeyup = onCommentInput;
+    textarea.addEventListener("blur", function () {
+      const box = this.closest(".simple-comment-container");
+      if (!box || !box.classList.contains("jr-adding")) return;
+      if (this.value.trim() !== "") return;
+      cancelComment(null, box);
+    });
     styling.appendChild(textarea);
 
     const postBtn = document.createElement("button");
@@ -113,10 +119,12 @@ function placeComment() {
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "delete-button";
   deleteBtn.innerText = "X";
+  setAccessibleLabel(deleteBtn, "deleteComment");
 
   const backBtn = document.createElement("button");
   backBtn.className = "back-to-ref";
   backBtn.innerText = "↑";
+  setAccessibleLabel(backBtn, "backToCommentReference");
   backBtn.onclick = function () {
     JR.readerDocument.defaultView.scrollTo(0, this.dataset.scrollPos);
   };
@@ -169,6 +177,7 @@ function bindPostedSidebarComment(box) {
     deleteBtn.innerText = "X";
     styling.appendChild(deleteBtn);
   }
+  setAccessibleLabel(deleteBtn, "deleteComment");
   deleteBtn.onclick = function () {
     deletePostedComment(styling);
   };
@@ -184,10 +193,12 @@ function bindInlineCommentSection(section) {
   if (!deleteButton) {
     deleteButton = JR.readerDocument.createElement("button");
     deleteButton.className = "jr-user-content-delete";
+    deleteButton.type = "button";
     deleteButton.innerText = "X";
-    deleteButton.ariaLabel = "Delete comment";
     section.appendChild(deleteButton);
   }
+  deleteButton.type = "button";
+  setAccessibleLabel(deleteButton, "deleteComment");
   deleteButton.onclick = function () {
     if (!section.parentElement) return;
     if (content && content.innerText.trim() === "") {
@@ -210,7 +221,8 @@ function bindInlineCommentSection(section) {
       section.parentElement.removeChild(section);
     }
   });
-  section.addEventListener("click", () => {
+  section.addEventListener("click", (e) => {
+    if (e.target.closest(".jr-user-content-delete")) return;
     content.focus();
     const range = JR.readerDocument.createRange();
     range.selectNodeContents(content);

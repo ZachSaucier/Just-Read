@@ -3,6 +3,10 @@
     "message": "コメントを追加",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "記事内のコメントに戻る",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "起動中",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "提供されたコンテンツを要点を保ちながらできるだけ簡潔に要約してください。",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "コメントを削除",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "削除モードの開始/終了",
@@ -219,14 +227,6 @@
     "message": "自動実行ドメインリスト",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "このリストは正規表現でチェックされます。詳細は ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "この記事",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "JR の自動スクロール機能を使用する。",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "設定： ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "設定： <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "hide-segments.css を使用",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "拡張機能の言語",
+    "message": "拡張機能の言語：",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "共有設定",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": " で保存したページを表示できます。Just Read をご利用いただきありがとうございます！",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "設定",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "または ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "テーマの選択",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "ダッシュボード",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "CSSエディター",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "スタイル",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "AI 要約オプション",
@@ -363,17 +363,9 @@
     "message": "Just Read は任意の AI プロバイダーを使って記事を要約できます。対応プロバイダー：",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "この記事",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Claude には \"provider\": \"anthropic\"、Google Gemini には \"provider\": \"gemini\"、Perplexity には \"provider\": \"perplexity\"、OpenAI 互換 API には \"endpoint\" フィールド付きの \"provider\": \"custom\" を使用してください。",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "詳細は",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "Just Read を開いたときに自動的に要約を実行する。",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "記事の内容を要約に置き換える。",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "Just Read のすべての機能を利用するには、Just Read Premium にアップグレードしてください！ ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "詳しくはこちら",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "現在のテーマとして使用",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "記事を共有",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "共有記事が多すぎます — 上限は 300 件です。追加する前に ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": " からいくつか削除してください。",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "保存するには共有",
@@ -619,8 +595,36 @@
     "message": "表示ツール： ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "ユーザーページ",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "Just Read をご利用いただきありがとうございます！",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "<a href=\"https://justread.link/dashboard\">ダッシュボード</a>で保存したページを表示できます。",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "Just Read のすべての機能を利用するには、Just Read Premium にアップグレードしてください！ <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">詳しくはこちら</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "このリストは正規表現でチェックされます。詳細は <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">この記事</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " 詳細は <a href=\"https://justread.link/summarizer\">この記事</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "共有記事が多すぎます — 上限は 300 件です。追加する前に <a href=\"https://justread.link/dashboard/\">ユーザーページ</a> からいくつか削除してください。",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "オプションページをライトテーマに切り替え",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "オプションページをダークテーマに切り替え",
+    "description": "Accessible label for options page dark theme button"
   }
 }

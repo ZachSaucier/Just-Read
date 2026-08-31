@@ -64,7 +64,7 @@ function addArticleMeta() {
 function addCloseButton() {
   let closeButton = document.createElement("button");
   closeButton.className = "simple-control simple-close";
-  closeButton.title = t("closeJustRead");
+  setAccessibleLabel(closeButton, "closeJustRead");
   closeButton.textContent = "x";
 
   return closeButton;

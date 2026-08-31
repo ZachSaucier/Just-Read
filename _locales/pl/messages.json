@@ -3,6 +3,10 @@
     "message": "Dodaj komentarz",
     "description": "Add comment button tooltip"
   },
+  "backToCommentReference": {
+    "message": "Wróć do komentarza w artykule",
+    "description": "Sidebar comment button that scrolls to the in-article marker"
+  },
   "badgeOn": {
     "message": "on",
     "description": "Toolbar badge text while Just Read is loading"
@@ -62,6 +66,10 @@
   "defaultSummarizerPrompt": {
     "message": "Podsumuj dostarczoną treść jak najzwięźlej, zachowując kluczowe punkty.",
     "description": "Default AI summarizer prompt in options textarea JSON"
+  },
+  "deleteComment": {
+    "message": "Usuń komentarz",
+    "description": "Accessible label for X button that removes a comment"
   },
   "deletionMode": {
     "message": "Rozpocznij/zakończ tryb usuwania",
@@ -219,14 +227,6 @@
     "message": "Lista domen automatycznego uruchamiania",
     "description": "Options section heading"
   },
-  "optionsAutorunHelpBefore": {
-    "message": "Ta lista jest sprawdzana za pomocą wyrażeń regularnych. Więcej informacji znajdziesz w ",
-    "description": "Auto-run help text before link"
-  },
-  "optionsAutorunHelpLink": {
-    "message": "tym artykule",
-    "description": "Auto-run help link text"
-  },
   "optionsAutoscroll": {
     "message": "Używaj funkcji automatycznego przewijania JR.",
     "description": "Premium feature checkbox"
@@ -264,12 +264,8 @@
     "description": "Alert when deleting bundled theme"
   },
   "optionsHeading": {
-    "message": "Konfiguruj ",
-    "description": "Options page h1 text before italic Just Read"
-  },
-  "optionsHeadingBrand": {
-    "message": "Just Read",
-    "description": "Options page h1 brand name in italics"
+    "message": "Konfiguruj <i>Just Read</i>",
+    "description": "Options page h1 with brand name in italics"
   },
   "optionsHideSegments": {
     "message": "Używaj hide-segments.css",
@@ -284,7 +280,7 @@
     "description": "Options section heading for extension UI language"
   },
   "optionsLanguageLabel": {
-    "message": "Język rozszerzenia",
+    "message": "Język rozszerzenia:",
     "description": "Label for extension language select on options page"
   },
   "optionsLeavePres": {
@@ -343,17 +339,21 @@
     "message": "Preferencje udostępniania",
     "description": "Options section heading"
   },
-  "optionsSubtitleAfterDashboard": {
-    "message": ", aby wyświetlić zapisane strony. Dziękujemy za wspieranie Just Read!",
-    "description": "Options subtitle after dashboard link"
+  "optionsPreferencesHeading": {
+    "message": "Preferencje",
+    "description": "Options section heading for general settings panel"
   },
-  "optionsSubtitleBeforeDashboard": {
-    "message": "Lub przejdź do ",
-    "description": "Options subtitle before dashboard link"
+  "optionsThemeSelectionHeading": {
+    "message": "Wybór motywu",
+    "description": "Options subsection heading for theme list"
   },
-  "optionsSubtitleDashboardLink": {
-    "message": "swojego panelu",
-    "description": "Options subtitle dashboard link text"
+  "optionsCssEditorHeading": {
+    "message": "Edytor CSS",
+    "description": "Options subsection heading for stylesheet editor"
+  },
+  "optionsStylesHeading": {
+    "message": "Style",
+    "description": "Options section heading for theme and stylesheet editor"
   },
   "optionsSummarizerHeading": {
     "message": "Opcje podsumowania AI",
@@ -363,17 +363,9 @@
     "message": "Just Read może podsumowywać artykuły za pomocą dowolnego dostawcy AI. Obsługiwani dostawcy:",
     "description": "Summarizer options intro before provider code list"
   },
-  "optionsSummarizerLink": {
-    "message": "tym artykule",
-    "description": "Summarizer docs link text"
-  },
   "optionsSummarizerProvidersHelp": {
     "message": "Użyj \"provider\": \"anthropic\" dla Claude, \"provider\": \"gemini\" dla Google Gemini, \"provider\": \"perplexity\" dla Perplexity lub \"provider\": \"custom\" z polem \"endpoint\" dla dowolnego API zgodnego z OpenAI.",
     "description": "Summarizer provider help text below textarea"
-  },
-  "optionsSummarizerSeeAlso": {
-    "message": "Więcej informacji znajdziesz w",
-    "description": "Summarizer docs link lead-in"
   },
   "optionsSummaryAutoRun": {
     "message": "Automatycznie uruchamiaj podsumowywanie po otwarciu Just Read.",
@@ -382,14 +374,6 @@
   "optionsSummaryReplace": {
     "message": "Zastąp treść artykułu podsumowaniem.",
     "description": "Summarizer checkbox label"
-  },
-  "optionsUpgradeHeading": {
-    "message": "Aby uzyskać dostęp do wszystkich funkcji Just Read, przejdź na Just Read Premium! ",
-    "description": "Premium upsell heading on options page"
-  },
-  "optionsUpgradeLink": {
-    "message": "Dowiedz się więcej tutaj",
-    "description": "Premium upsell link on options page"
   },
   "optionsUseTheme": {
     "message": "Użyj jako bieżący motyw",
@@ -488,14 +472,6 @@
   "shareArticle": {
     "message": "Udostępnij artykuł",
     "description": "Share button tooltip"
-  },
-  "shareLimitLead": {
-    "message": "Masz zbyt wiele udostępnionych artykułów — limit wynosi 300. Usuń niektóre z ",
-    "description": "Share limit alert text before dashboard link"
-  },
-  "shareLimitTail": {
-    "message": " przed dodaniem kolejnych.",
-    "description": "Share limit alert text after dashboard link"
   },
   "shareToSave": {
     "message": "Udostępnij, aby zapisać",
@@ -619,8 +595,36 @@
     "message": "Wyświetlono za pomocą ",
     "description": "Footer prefix before Just Read link"
   },
-  "yourUserPage": {
-    "message": "swojej strony użytkownika",
-    "description": "Link text to dashboard in share limit alert"
+  "optionsSubtitleThanks": {
+    "message": "Dziękujemy za wspieranie Just Read!",
+    "description": "Options subtitle thank-you line"
+  },
+  "optionsSubtitleDashboard": {
+    "message": "Przejdź do <a href=\"https://justread.link/dashboard\">swojego panelu</a>, aby wyświetlić zapisane strony.",
+    "description": "Options subtitle with dashboard link"
+  },
+  "optionsUpgrade": {
+    "message": "Aby uzyskać dostęp do wszystkich funkcji Just Read, przejdź na Just Read Premium! <a href=\"https://justread.link/#get-Just-Read\" target=\"_blank\">Dowiedz się więcej tutaj</a>.",
+    "description": "Premium upsell on options page with learn-more link"
+  },
+  "optionsAutorunHelp": {
+    "message": "Ta lista jest sprawdzana za pomocą wyrażeń regularnych. Więcej informacji znajdziesz w <a href=\"https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204\">tym artykule</a>.",
+    "description": "Auto-run help text with documentation link"
+  },
+  "optionsSummarizerDocs": {
+    "message": " Więcej informacji znajdziesz w <a href=\"https://justread.link/summarizer\">tym artykule</a>.",
+    "description": "Summarizer documentation link line"
+  },
+  "shareLimitMessage": {
+    "message": "Masz zbyt wiele udostępnionych artykułów — limit wynosi 300. Usuń niektóre z <a href=\"https://justread.link/dashboard/\">swojej strony użytkownika</a> przed dodaniem kolejnych.",
+    "description": "Share limit alert with dashboard link"
+  },
+  "optionsThemeSwitchLight": {
+    "message": "Przełącz na jasny motyw strony opcji",
+    "description": "Accessible label for options page light theme button"
+  },
+  "optionsThemeSwitchDark": {
+    "message": "Przełącz na ciemny motyw strony opcji",
+    "description": "Accessible label for options page dark theme button"
   }
 }

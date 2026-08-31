@@ -9,88 +9,132 @@
     <link href="options.css" rel="stylesheet" />
   </head>
   <body>
-    <h1>
-      <span data-i18n="optionsHeading">Configure </span><i data-i18n="optionsHeadingBrand">Just Read</i>
-    </h1>
-
-    <p class="options-subtitle">
-      <span data-i18n="optionsSubtitleBeforeDashboard">Or go to </span
-      ><a href="https://justread.link/dashboard" data-i18n="optionsSubtitleDashboardLink"
-        >your dashboard</a
-      ><span data-i18n="optionsSubtitleAfterDashboard">
-        to view your saved pages. Thanks for supporting Just Read!</span
+    <div class="options-page">
+      <button
+        type="button"
+        class="options-theme-toggle"
+        id="optionsThemeToggle"
+        aria-pressed="false"
       >
-    </p>
+        <svg
+          class="options-theme-icon options-theme-icon-moon"
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          width="25"
+          height="25"
+          aria-hidden="true"
+        >
+          <path
+            d="M30.395 17.318A14.445 14.445 0 1 1 14.682 1.605a11.235 11.235 0 0 0 15.713 15.713Z"
+            fill="currentColor"
+          />
+        </svg>
+        <svg
+          class="options-theme-icon options-theme-icon-sun"
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          width="25"
+          height="25"
+          aria-hidden="true"
+        >
+          <circle cx="16" cy="16" r="6.6666665" stroke="currentColor" stroke-width="2.66667" />
+          <path
+            d="M16 1.333V4m0 24v2.667M5.627 5.627 7.52 7.52m16.96 16.96 1.893 1.893M1.333 16H4m24 0h2.667M5.627 26.373 7.52 24.48M24.48 7.52l1.893-1.893"
+            stroke="currentColor"
+            stroke-width="2.66667"
+          />
+        </svg>
+      </button>
+
+    <h1 data-i18n-html="optionsHeading">Configure <i>Just Read</i></h1>
+
+    <div class="options-subtitles">
+      <p
+        class="options-subtitle"
+        data-i18n-html="optionsSubtitleDashboard"
+      >
+        Go to <a href="https://justread.link/dashboard">your dashboard</a> to view your saved pages.
+      </p>
+      <p class="options-subtitle" data-i18n="optionsSubtitleThanks">
+        Thanks for supporting Just Read!
+      </p>
+    </div>
 
     <div class="content-section">
-      <div>
-        <div class="theme-section">
-          <div class="stylesheet-list-container">
-            <input
-              type="text"
-              id="new-file"
-              data-i18n-placeholder="optionsNewThemePlaceholder"
-              placeholder="New theme name..."
-            />
-            <button id="add">+</button>
+      <section class="options-panel language-options">
+        <h2 data-i18n="optionsLanguageHeading">Language</h2>
+        <label class="language-select">
+          <span data-i18n="optionsLanguageLabel">Extension language:</span>
+          <select id="extensionLocale"></select>
+        </label>
+      </section>
 
-            <div class="controls-container">
-              <button id="use" data-i18n="optionsUseTheme">Use as current theme</button>
-              <button id="remove" data-i18n="optionsRemoveTheme">Remove theme</button>
-            </div>
+      <section class="options-panel styles-options">
+        <h2 data-i18n="optionsStylesHeading">Styles</h2>
 
-            <ul class="stylesheets">
-              <!-- This is populated by our JS -->
-            </ul>
+        <h3 data-i18n="optionsThemeSelectionHeading">Theme selection</h3>
+        <div class="stylesheet-list-container">
+          <input
+            type="text"
+            id="new-file"
+            data-i18n-placeholder="optionsNewThemePlaceholder"
+            placeholder="New theme name..."
+          />
+          <button id="add">+</button>
+
+          <div class="controls-container">
+            <button id="use" data-i18n="optionsUseTheme">Use as current theme</button>
+            <button id="remove" data-i18n="optionsRemoveTheme">Remove theme</button>
           </div>
 
-          <a
-            class="view-other-stylesheets"
-            target="blank"
-            href="https://github.com/ZachSaucier/Just-Read/issues/4"
-            data-i18n="optionsViewMoreThemes"
-            >View more themes</a
-          >
+          <ul class="stylesheets">
+            <!-- This is populated by our JS -->
+          </ul>
         </div>
 
-        <div class="editor-container">
-          <div class="editor">
-            <div id="css-editor"></div>
-          </div>
+        <a
+          class="view-other-stylesheets"
+          target="blank"
+          href="https://github.com/ZachSaucier/Just-Read/issues/4"
+          data-i18n="optionsViewMoreThemes"
+          >View more themes</a
+        >
 
+        <h3 data-i18n="optionsCssEditorHeading">CSS editor</h3>
+        <div class="editor">
+          <div id="css-editor"></div>
+        </div>
+
+        <div class="styles-footer">
           <div class="controls-container">
             <button id="save" data-i18n="optionsSaveStyles">Save style changes</button>
           </div>
 
-          <label
+          <label class="hide-segments-option"
             ><span data-i18n="optionsHideSegments">Use hide-segments.css</span>
             <input id="hideSegments" type="checkbox" checked
           /></label>
         </div>
-      </div>
+      </section>
 
-      <h2 class="upgrade">
-        <span data-i18n="optionsUpgradeHeading"
-          >To access all of Just Read's features, upgrade to Just Read Premium!
-        </span>
-        <a href="https://justread.link/#get-Just-Read" target="_blank" data-i18n="optionsUpgradeLink"
-          >Learn more here</a
-        >.
-      </h2>
+      <p class="upgrade" data-i18n-html="optionsUpgrade">
+        To access all of Just Read's features, upgrade to Just Read Premium!
+        <a href="https://justread.link/#get-Just-Read" target="_blank">Learn more here</a>.
+      </p>
 
-      <div class="additional-options">
+      <section class="options-panel additional-options">
+        <h2 data-i18n="optionsPreferencesHeading">Preferences</h2>
         <h3 data-i18n="optionsAutorunHeading">Auto-run domain list</h3>
         <textarea
           name="domainList"
           id="domainList"
           spellcheck="false"
         ></textarea>
-        <div>
-          <span data-i18n="optionsAutorunHelpBefore"
-            >This list is checked using regex. For more info, see </span
-          ><a
-            href="https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204"
-            data-i18n="optionsAutorunHelpLink"
+        <div data-i18n-html="optionsAutorunHelp">
+          This list is checked using regex. For more info, see
+          <a href="https://github.com/ZachSaucier/Just-Read/issues/15#issuecomment-262255204"
             >this post</a
           >.
         </div>
@@ -103,10 +147,10 @@
           >
           <code>openai</code>, <code>anthropic</code>, <code>gemini</code>,
           <code>perplexity</code>, <code>custom</code>.
-          <span data-i18n="optionsSummarizerSeeAlso"> For more info, see </span
-          ><a href="https://justread.link/summarizer" data-i18n="optionsSummarizerLink"
-            >this post</a
-          >.
+          <span data-i18n-html="optionsSummarizerDocs">
+            For more info, see
+            <a href="https://justread.link/summarizer">this post</a>.
+          </span>
         </div>
         <textarea
           name="summarizerOptions"
@@ -171,12 +215,6 @@
         <label>
           <input id="autorunCM" type="checkbox" checked />
           <span data-i18n="optionsAutorunCM">Enable auto-run context menu entry.</span>
-        </label>
-
-        <h3 data-i18n="optionsLanguageHeading">Language</h3>
-        <label class="language-select">
-          <span data-i18n="optionsLanguageLabel">Extension language</span>
-          <select id="extensionLocale"></select>
         </label>
 
         <h3 data-i18n="optionsAdditionalPrefsHeading">Additional preferences</h3>
@@ -249,7 +287,8 @@
     }
 ]</textarea
         >
-      </div>
+      </section>
+    </div>
     </div>
 
     <script src="shared/i18n.js"></script>
@@ -265,6 +304,7 @@
     <script src="options/themes.js"></script>
     <script src="options/premium.js"></script>
     <script src="options/editor.js"></script>
+    <script src="options/color-scheme.js"></script>
     <script src="options/listeners.js"></script>
     <script src="options/boot.js"></script>
   </body>
