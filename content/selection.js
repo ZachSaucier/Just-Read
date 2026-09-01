@@ -169,17 +169,18 @@ function startDeleteElement(doc) {
 }
 
 function markSharedPageDirty() {
+  if (!JR.isHydratedSharedPage) return;
+
   JR.hasSavedLink = false;
   document.documentElement.dataset.jrDirty = "1";
   updateShareButtonSaveState();
 }
 
 function hasUnsavedSharedEdits() {
+  if (!JR.isHydratedSharedPage) return false;
+
   const dirty = document.documentElement.dataset.jrDirty === "1";
-  if (JR.sharedPageUrl) {
-    return dirty || !JR.hasSavedLink;
-  }
-  return JR.isPremium && dirty && !JR.hasSavedLink;
+  return dirty || !JR.hasSavedLink;
 }
 
 function updateShareButtonSaveState() {
@@ -188,16 +189,15 @@ function updateShareButtonSaveState() {
   if (!shareBtn) return;
 
   const dirty = hasUnsavedSharedEdits();
+  const saveHint = shareBtn.querySelector(".simple-share-save-hint");
   shareBtn.classList.toggle("simple-share-needs-save", dirty);
   if (dirty) {
     shareBtn.removeAttribute("title");
-    shareBtn.setAttribute(
-      "aria-label",
-      JR.sharedPageUrl ? t("reshareToSave") : t("shareToSave"),
-    );
+    shareBtn.setAttribute("aria-label", t("reshareToSave"));
+    if (saveHint) saveHint.textContent = t("reshareToSave");
   } else {
     shareBtn.removeAttribute("aria-label");
-    shareBtn.title = JR.sharedPageUrl
+    shareBtn.title = JR.isHydratedSharedPage
       ? t("saveSharedChanges")
       : t("shareArticle");
   }
