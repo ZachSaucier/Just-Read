@@ -255,9 +255,20 @@ function findCompactComment(box) {
   return JR.readerDocument.querySelector('[href*="' + box.id + '"]');
 }
 
-function recordAction(actionName, elem) {
+function commitAction(actionObj) {
   markSharedPageDirty();
 
+  if (actionObj) {
+    stack.push(actionObj);
+    if (JR.undoBtn) JR.undoBtn.classList.add("shown");
+  }
+
+  updateSavedVersion();
+  // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
+  updateScrollbarMetrics(); // Update the scrollbar sizing
+}
+
+function recordAction(actionName, elem) {
   let actionObj;
   if (actionName === "delete") {
     elem.classList.remove("jr-hovered");
@@ -279,14 +290,7 @@ function recordAction(actionName, elem) {
     syncSidebarCommentsLayout();
   }
 
-  if (actionName) {
-    stack.push(actionObj);
-    if (JR.undoBtn) JR.undoBtn.classList.add("shown");
-  }
-
-  updateSavedVersion();
-  // REMOVE WHEN SWITCHING TO CSS SCROLL ANIMATION FOR SCROLLBAR
-  updateScrollbarMetrics(); // Update the scrollbar sizing
+  if (actionName) commitAction(actionObj);
 }
 
 function undoLastAction() {
@@ -300,6 +304,8 @@ function undoLastAction() {
     restoreRemovedNode(actionObj.comment);
     restoreRemovedNode(actionObj.compact);
     syncSidebarCommentsLayout();
+  } else if (actionObj) {
+    undoHighlighterAction(actionObj);
   }
 
   updateSavedVersion();

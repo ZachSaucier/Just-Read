@@ -13,7 +13,6 @@
   --options-panel-border: #ccc;
   --options-subtle-border: #e0e0e0;
   --options-divider: #eee;
-  --options-subtitle-border: #d8d8d8;
   --options-input-bg: #fff;
   --options-input-border: #ccc;
   --options-list-bg: #fafafa;
@@ -40,7 +39,6 @@
     --options-panel-border: #444;
     --options-subtle-border: #555;
     --options-divider: #3a3a3a;
-    --options-subtitle-border: #444;
     --options-input-bg: #2f2f2f;
     --options-input-border: #555;
     --options-list-bg: #2a2a2a;
@@ -67,7 +65,6 @@
   --options-panel-border: #444;
   --options-subtle-border: #555;
   --options-divider: #3a3a3a;
-  --options-subtitle-border: #444;
   --options-input-bg: #2f2f2f;
   --options-input-border: #555;
   --options-list-bg: #2a2a2a;
@@ -136,8 +133,8 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
+  width: 18px;
+  height: 18px;
   margin: 0;
   padding: 0;
   border: none;
@@ -151,6 +148,21 @@ textarea {
   color: var(--options-text);
 }
 
+.options-theme-toggle svg {
+  color: inherit;
+}
+
+.options-theme-toggle .options-theme-icon-sun circle,
+.options-theme-toggle .options-theme-icon-sun path {
+  fill: none;
+  stroke: currentColor;
+}
+
+.options-theme-toggle .options-theme-icon-moon path {
+  fill: currentColor;
+  stroke: none;
+}
+
 .options-theme-toggle:focus-visible {
   outline: 2px solid var(--options-brand);
   outline-offset: 2px;
@@ -158,8 +170,8 @@ textarea {
 
 .options-theme-icon {
   display: block;
-  width: 25px;
-  height: 25px;
+  width: 18px;
+  height: 18px;
 }
 
 .options-theme-icon-sun {
@@ -204,7 +216,6 @@ h1 {
 .options-subtitles {
   display: none;
   width: 100%;
-  border-bottom: 1px solid var(--options-subtitle-border);
   padding-bottom: 13px;
   margin-top: 0;
 }

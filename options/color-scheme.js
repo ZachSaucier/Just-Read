@@ -70,7 +70,7 @@ function initOptionsColorScheme() {
     const saved = result.optionsColorScheme;
     optionsColorSchemeSaved =
       saved === "light" || saved === "dark" ? saved : null;
-    syncOptionsColorSchemeUI();
+    initI18nFromStorage().then(syncOptionsColorSchemeUI);
   });
 
   window

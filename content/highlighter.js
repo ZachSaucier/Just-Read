@@ -229,6 +229,48 @@ function addHighlighterNotification() {
   );
 }
 
+function snapshotHighlighterDom() {
+  const host = annotationBookmarkRoot();
+  const nativeRanges = rangesForAnnotationRemoval();
+  return {
+    type: "highlighter-dom",
+    host: host,
+    html: host ? host.innerHTML : "",
+    bookmarks: host
+      ? nativeRanges.map((range) => bookmarkNativeRange(host, range))
+      : [],
+    highlighter: highlighter ? highlighter.serialize() : "",
+    painter: highlightPainter ? highlightPainter.serialize() : "",
+  };
+}
+
+function restoreSerializedHighlights(instance, serialized) {
+  if (!instance) return;
+  try {
+    instance.deserialize(serialized || "type:textContent");
+  } catch (e) {
+    instance.highlights = [];
+  }
+}
+
+function restoreHighlighterDom(action) {
+  if (!action.host) return;
+  action.host.innerHTML = action.html;
+  restoreSerializedHighlights(highlighter, action.highlighter);
+  restoreSerializedHighlights(highlightPainter, action.painter);
+  if (typeof rewireExistingComments === "function") rewireExistingComments();
+  if (action.bookmarks && action.bookmarks.length) {
+    restoreSelectionFromBookmarks(action.host, action.bookmarks);
+  }
+}
+
+function undoHighlighterAction(actionObj) {
+  if (!actionObj) return;
+  if (actionObj.type === "highlighter-dom") {
+    restoreHighlighterDom(actionObj);
+  }
+}
+
 function highlightSelectedText(colorName) {
   JR.lastHighlightColor = colorName;
   if (JR.isPremium) {
@@ -298,18 +340,32 @@ function toggleContentEditing() {
 }
 
 function deleteSelection() {
-  if (JR.isPremium) {
-    const sel = rangy.getSelection(JR.readerDocument);
-    if (sel.rangeCount > 0) {
-      for (let i = 0; i < sel.rangeCount; i++) {
-        sel.getRangeAt(i).deleteContents();
-      }
-      hideToolbar();
-      updateSavedVersion();
-    }
-  } else {
+  if (!JR.isPremium) {
     addHighlighterNotification();
+    return;
   }
+
+  const sel = rangy.getSelection(JR.readerDocument);
+  if (!sel.rangeCount) return;
+
+  const rangyRanges = [];
+  for (let i = 0; i < sel.rangeCount; i++) {
+    const range = sel.getRangeAt(i);
+    if (!range.collapsed) rangyRanges.push(range);
+  }
+  if (!rangyRanges.length) return;
+
+  const action = snapshotHighlighterDom();
+
+  dropIntersectingHighlights(highlighter, rangyRanges);
+  dropIntersectingHighlights(highlightPainter, rangyRanges);
+
+  for (let i = rangyRanges.length - 1; i >= 0; i--) {
+    rangyRanges[i].deleteContents();
+  }
+
+  commitAction(action);
+  hideToolbar();
 }
 
 function cloneSelectionRanges() {
