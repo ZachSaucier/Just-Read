@@ -84,7 +84,7 @@ function applyThemeAndCreateOverlay() {
 }
 
 function fadeIn() {
-  if (JR.readerDocument.styleSheets.length > 2) {
+  if (JR.readerDocument.styleSheets.length > 1) {
     JR.readerIframe.classList.remove("no-trans");
     JR.readerIframe.classList.remove("simple-fade-up");
 
@@ -93,10 +93,10 @@ function fadeIn() {
         "transitionend",
         (e) => {
           [...document.body.children].forEach((child) =>
-            child !== JR.readerIframe ? document.body.removeChild(child) : null
+            child !== JR.readerIframe ? document.body.removeChild(child) : null,
           );
         },
-        { once: true }
+        { once: true },
       );
     }
   } else {
@@ -120,11 +120,7 @@ function finishOpeningReader() {
   }
 
   if (!JR.readerDocument.head.querySelector(".required-styles"))
-    addStylesheet(
-      JR.readerDocument,
-      "required-styles.css",
-      "required-styles",
-    );
+    addStylesheet(JR.readerDocument, "required-styles.css", "required-styles");
 
   if (
     JR.settings.hideSegments &&
@@ -190,14 +186,15 @@ function launch() {
         addStylesheet(document, "page.css", "page-styles");
 
       if (JR.runOnLoad && document.readyState !== "complete") {
-        window.addEventListener("load", verifyPremiumThenOpenReader, { once: true });
+        window.addEventListener("load", verifyPremiumThenOpenReader, {
+          once: true,
+        });
       } else {
         verifyPremiumThenOpenReader();
       }
     }
   } else {
-    if (document.querySelector(".simple-fade-up") == null)
-      closeOverlay();
+    if (document.querySelector(".simple-fade-up") == null) closeOverlay();
   }
 }
 

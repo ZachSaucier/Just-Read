@@ -37,9 +37,9 @@ function parseSettings(storage) {
     autorunSiteList: storage["auto-enable-site-list"],
     currentTheme:
       storage.currentTheme ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark-styles.css"
-        : "default-styles.css",
+        : "default-styles.css"),
     extensionLocale: normalizeExtensionLocale(storage.extensionLocale),
   };
 }

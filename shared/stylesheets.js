@@ -46,8 +46,9 @@ function saveStylesheetsToStorage(stylesheetObj, onSaved) {
     chrome.storage.sync.set(obj, function () {
       if (
         chrome.runtime.lastError &&
-        chrome.runtime.lastError.message ===
-          "QUOTA_BYTES_PER_ITEM quota exceeded"
+        (chrome.runtime.lastError.message ===
+          "QUOTA_BYTES_PER_ITEM quota exceeded" ||
+          chrome.runtime.lastError.message.includes("QuotaExceededError"))
       ) {
         alert(t("stylesheetQuotaExceeded"));
       } else if (onSaved) {
@@ -78,7 +79,9 @@ function ensureBundledThemes(stylesheetObj, onLoaded) {
     })
     .catch((err) => {
       console.error(err);
-      if (missingBundledThemes(stylesheetObj).length < BUNDLED_THEME_FILES.length) {
+      if (
+        missingBundledThemes(stylesheetObj).length < BUNDLED_THEME_FILES.length
+      ) {
         if (onLoaded) onLoaded();
       }
     });
