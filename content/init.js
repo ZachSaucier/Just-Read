@@ -84,7 +84,7 @@ function applyThemeAndCreateOverlay() {
 }
 
 function fadeIn() {
-  if (JR.readerDocument.styleSheets.length > 1) {
+  if (JR.styleElem.sheet) {
     JR.readerIframe.classList.remove("no-trans");
     JR.readerIframe.classList.remove("simple-fade-up");
 
