@@ -75,6 +75,7 @@ const AI_PROVIDERS = {
     buildHeaders: (apiKey) => {
       const h = new Headers();
       h.append("Authorization", `Bearer ${apiKey}`);
+      h.append("X-Pplx-Integration", "just-read");
       h.append("Content-Type", "application/json");
       return h;
     },
