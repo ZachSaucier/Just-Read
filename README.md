@@ -8,6 +8,8 @@ Premium features can be enabled by [purchasing Just Read Premium](https://justre
 
 **Please note** that this extension is meant to format **article-type pages only**. It is not built to reformat other types of websites and is liable to not perform as one might expect.
 
+<a href="https://hosted.weblate.org/engage/just-read/"><img src="https://hosted.weblate.org/widget/just-read/svg-badge.svg" alt="Translation status"></a>
+
 ---
 
 ### Installation:
