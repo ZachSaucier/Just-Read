@@ -198,6 +198,18 @@ let pageCMId = (linkCMId = autorunCMId = undefined);
 function setupContextMenus() {
   pageCMId = linkCMId = autorunCMId = undefined;
   chrome.contextMenus.removeAll(function () {
+    // Chrome already shows this, so only show for Firefox / Gecko
+    if (navigator.userAgent.includes("Firefox")) {
+      chrome.contextMenus.create(
+        {
+          title: t("contextMenuOptions"),
+          contexts: ["action"],
+          id: "openOptionsCM",
+        },
+        chrome.runtime.lastError,
+      );
+    }
+
     chrome.contextMenus.create(
       {
         title: t("contextMenuSelectContent"),
@@ -394,7 +406,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
-  if (info.menuItemId === "selectContentCM") {
+  if (info.menuItemId === "openOptionsCM") {
+    chrome.runtime.openOptionsPage();
+  } else if (info.menuItemId === "selectContentCM") {
     startSelectText();
   } else if (info.menuItemId === "pageCM") {
     startJustRead();

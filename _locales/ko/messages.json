@@ -53,7 +53,11 @@
   },
   "contextMenuSelectContent": {
     "message": "읽을 콘텐츠 선택",
-    "description": "Extension icon right-click context menu item"
+    "description": "Extension icon right-click context menu item for selecting content to read"
+  },
+  "contextMenuOptions": {
+    "message": "옵션",
+    "description": "Extension icon right-click context menu item for opening the options page"
   },
   "contextMenuViewLink": {
     "message": "Just Read로 연결된 페이지 보기",

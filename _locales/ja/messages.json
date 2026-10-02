@@ -53,7 +53,11 @@
   },
   "contextMenuSelectContent": {
     "message": "読むコンテンツを選択",
-    "description": "Extension icon right-click context menu item"
+    "description": "Extension icon right-click context menu item for selecting content to read"
+  },
+  "contextMenuOptions": {
+    "message": "オプション",
+    "description": "Extension icon right-click context menu item for opening the options page"
   },
   "contextMenuViewLink": {
     "message": "Just Read でリンク先のページを表示",

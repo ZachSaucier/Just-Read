@@ -53,7 +53,11 @@
   },
   "contextMenuSelectContent": {
     "message": "Seleziona contenuto da leggere",
-    "description": "Extension icon right-click context menu item"
+    "description": "Extension icon right-click context menu item for selecting content to read"
+  },
+  "contextMenuOptions": {
+    "message": "Opzioni",
+    "description": "Extension icon right-click context menu item for opening the options page"
   },
   "contextMenuViewLink": {
     "message": "Visualizza la pagina collegata con Just Read",
