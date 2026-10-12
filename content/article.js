@@ -747,10 +747,12 @@ function getArticleContainer() {
   } else if (safeQuery(document.head, "meta[name='articleBody']")) {
     selectedContainer = document.createElement("div");
     selectedContainer.innerHTML = DOMPurify.sanitize(
-      safeQuery(document.head, "meta[name='articleBody']").getAttribute(
-        "content"
-      )
+      Array.from(document.querySelectorAll("meta[name='articleBody']"))
+        .map(m => m.getAttribute("content"))
+        .filter(Boolean)
+        .join(" ")
     );
+    JR.pageSelectedContainer = selectedContainer;
   } else {
     const pageWords = document.body.innerText.match(/\S+/g);
     const numWordsOnPage = pageWords ? pageWords.length : 0;
