@@ -61,11 +61,11 @@ function cloneReaderContentForShare(keepJR) {
   let removeElems;
   if (keepJR) {
     removeElems = copy.querySelectorAll(
-      ".simple-control:not(.simple-print), .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete, .jr-hydrate-required-styles"
+      ".simple-control:not(.simple-print), .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete, .jr-hydrate-required-styles",
     );
   } else {
     removeElems = copy.querySelectorAll(
-      ".simple-control, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete, .jr-hydrate-required-styles"
+      ".simple-control, .simple-add-comment, .delete-button, .simple-add-comment-container, .jr-user-content-delete, .jr-hydrate-required-styles",
     );
   }
   removeElems.forEach(function (elem) {
@@ -128,7 +128,9 @@ function rewriteCommentTimestamps(copy) {
 
     const timestampLink = document.createElement("a");
     timestampLink.setAttribute("href", "#" + comment.id);
-    timestampLink.innerText = timestamp.innerText.split(commentLeftOnPrefix()).pop();
+    timestampLink.innerText = timestamp.innerText
+      .split(commentLeftOnPrefix())
+      .pop();
 
     timestamp.innerText = commentLeftOnPrefix();
     timestamp.appendChild(timestampLink);
@@ -150,7 +152,7 @@ function shareReaderView(e) {
       secondaryKey: "maybeLater",
     };
     JR.readerDocument.body.appendChild(
-      createNotification(notification, JR.readerDocument)
+      createNotification(notification, JR.readerDocument),
     );
     return;
   }

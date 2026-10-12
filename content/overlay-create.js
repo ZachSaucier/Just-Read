@@ -247,6 +247,9 @@ function bindReaderControls() {
   const shareBtn = JR.readerDocument.querySelector(".simple-share");
   if (shareBtn) shareBtn.addEventListener("click", shareReaderView);
   JR.shareDropdown = JR.readerDocument.querySelector(".simple-share-dropdown");
+  JR.shareDropdown.addEventListener("click", function () {
+    navigator.clipboard.writeText(JR.shareDropdown.innerText);
+  });
 
   const deleteModeButton = JR.readerDocument.querySelector(".simple-delete");
   if (deleteModeButton) {
@@ -314,11 +317,13 @@ function getActiveInputElement() {
     if (!root) continue;
 
     const active = root.activeElement;
-    if (!active || active === root.body || active === root.documentElement) continue;
+    if (!active || active === root.body || active === root.documentElement)
+      continue;
     if (active === JR.readerIframe) continue;
 
     const tag = active.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return active;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT")
+      return active;
     if (active.isContentEditable) return active;
   }
 
@@ -334,7 +339,9 @@ function handleReaderEscape(e) {
   if (!JR.readerIframe) return;
   if (JR.readerDocument?.body?.classList.contains("simple-deleting")) return;
 
-  const openLightbox = JR.readerDocument?.querySelector(".jr-lightbox:popover-open");
+  const openLightbox = JR.readerDocument?.querySelector(
+    ".jr-lightbox:popover-open",
+  );
   if (openLightbox) {
     openLightbox.hidePopover();
     dismissReaderEscape(e);
