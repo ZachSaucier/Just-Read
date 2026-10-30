@@ -3,6 +3,7 @@
 //   endpoint(model)  – returns the URL to POST to
 //   buildHeaders(apiKey) – returns a Headers object
 //   buildBody(model, prompt, content, temperature, rest) – returns the JSON body object
+//     (temperature is only sent when set; some newer models reject it)
 //   extractText(json) – pulls the summary string out of the response JSON
 //   extractTokens(json) – pulls total token count (may be undefined for some providers)
 const AI_PROVIDERS = {
@@ -20,7 +21,7 @@ const AI_PROVIDERS = {
         { role: "system", content: prompt },
         { role: "user", content },
       ],
-      temperature,
+      ...(temperature !== undefined && { temperature }),
       ...rest,
     }),
     extractText: (json) => json.choices[0].message.content,
@@ -42,7 +43,7 @@ const AI_PROVIDERS = {
       system: prompt,
       messages: [{ role: "user", content }],
       max_tokens: 1024,
-      temperature,
+      ...(temperature !== undefined && { temperature }),
       ...rest,
     }),
     extractText: (json) => json.content[0].text,
@@ -61,7 +62,10 @@ const AI_PROVIDERS = {
     buildBody: (model, prompt, content, temperature, rest) => ({
       system_instruction: { parts: [{ text: prompt }] },
       contents: [{ parts: [{ text: content }] }],
-      generationConfig: { temperature, ...rest },
+      generationConfig: {
+        ...(temperature !== undefined && { temperature }),
+        ...rest,
+      },
     }),
     extractText: (json) =>
       json.candidates[0].content.parts[0].text,
@@ -85,7 +89,7 @@ const AI_PROVIDERS = {
         { role: "system", content: prompt },
         { role: "user", content },
       ],
-      temperature,
+      ...(temperature !== undefined && { temperature }),
       ...rest,
     }),
     extractText: (json) => json.choices[0].message.content,
@@ -219,7 +223,7 @@ function handleSummarizeClick() {
 
     const temperature = (typeof configTemperature !== "undefined" && configTemperature !== "")
       ? configTemperature
-      : 0;
+      : undefined;
 
     // Resolve the provider adapter. "custom" uses openai-compatible format by
     // default, or anthropic format when requestFormat === "anthropic".

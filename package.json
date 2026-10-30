@@ -4,7 +4,7 @@
   "description": "Dev dependencies for Just Read tests only — not shipped in extension packs.",
   "scripts": {
     "build": "node pack.mjs",
-    "test": "node --test tests/math/*.test.mjs tests/pack.test.mjs",
+    "test": "node --test tests/math/*.test.mjs tests/pack.test.mjs tests/summarizer.test.mjs",
     "i18n:weblate:verify": "node scripts/weblate-verify.mjs",
     "i18n:weblate:status": "node scripts/weblate-status.mjs",
     "i18n:weblate:pull": "node scripts/weblate-pull.mjs",
